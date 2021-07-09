@@ -25,7 +25,7 @@ SECRET_KEY = 'n@!t!m(okei_f(!sexwhk@co0ilc=@a1l!z!7rvq408rnw*&k4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -79,10 +79,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mtrops_v2',
-        'HOST':'127.0.0.1',
         'USER':'root',
         'PASSWORD':'mysql',
-        'PORT':3306,
+        'HOST':'127.0.0.1',
+        'PORT':'3306',
     }
 }
 
@@ -125,3 +125,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'statics')]
+
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'statics','img')
+
+
+MEDIA_URL = '/media/'
+
+
+#登录认证url
+LOGIN_URL = '/auth/login/'
+
+
+SESSION_SAVE_EVERY_REQUEST = True
+
+# 关闭浏览器，则COOKIE失效
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+#30分钟
+SESSION_COOKIE_AGE = 60 * 60 * 24
