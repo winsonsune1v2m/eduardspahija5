@@ -1,0 +1,310 @@
+
+div {
+    display: block;
+}
+
+.navbar-mystyle {
+    background-color: #09C;
+    color: #FFF;
+}
+
+.navbar-fixed-top {
+    top: 0;
+    left: 160px;
+    border-width: 0 0 1px;
+}
+
+.navbar-default .navbar-brand {
+    color: #FFF;
+}
+
+
+.navbar-default .navbar-nav>li>a {
+    color: #FFF;
+}
+
+
+.topbar-num {
+    font-size: 12px;
+    color: #fff;
+    background: #f90;
+    border-radius: 5px;
+    padding: 2px 5px;
+    display: inline-block;
+    line-height: 16px;
+    vertical-align: top;
+    text-align: center;
+}
+
+
+.navbar-default .dropdown-menu {
+    width: 100%;
+    min-width: 1px;
+    border: 0px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    background-color: #FFF;
+    color: #000;
+}
+
+.mystyle-brand {
+    background-color: #0087b4;
+    display: block;
+}
+
+
+
+.left-main {
+    bottom: -13px;
+    top: -15px;
+    z-index: 100;
+    position: fixed;
+    background-color: #293038;
+}
+
+.left-full {
+    width: 160px;
+    display: block;
+}
+
+
+.my-index {
+    background-color: #eceff3;
+}
+
+.right-product {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: #FFF;
+}
+
+
+.down-main {
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    z-index: 100;
+}
+
+.sidebar-fold {
+    height: 50px;
+    width: 100%;
+    background: #394555;
+    color: #aeb9c2;
+    text-align: center;
+    font-size: 26px;
+    cursor: pointer;
+    padding-top:12px;
+}
+
+.info-center .info-title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.pull-left {
+    float: left!important;
+}
+
+
+
+.info-center .time-title {
+    height: 70px;
+}
+.pull-right {
+    float: right!important;
+}
+
+
+.time-title .year-month {
+    padding: 10px;
+    background-color: #09C;
+    height: 100%;
+    color: #FFF;
+}
+
+
+.time-title .hour-minute {
+    color: #09C;
+    line-height: 64px;
+    background-color: #FFF;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.pull-right {
+    float: right!important;
+}
+
+.my-index {
+    background-color: #eceff3;
+}
+
+.content-list {
+    margin-top: 30px;
+}
+
+
+.content-list .row .content {
+    background-color: #FFF;
+}
+
+
+.w30 {
+    width: 30%;
+}
+
+
+.w70 {
+    width: 70%;
+}
+
+
+
+
+.content-list .row .content .left-icon {
+    text-align: center;
+}
+
+
+
+.content-list .row .content .left-icon span {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 40px;
+    line-height: 40px;
+    color: #FFF;
+    border-radius: 50%;
+}
+
+
+.content .left-icon .blue {
+    background-color: #2abbeb;
+}
+
+.content-list .row .content .right-title {
+    color: #666666;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.content .right-title .number {
+    font-size: 46px;
+    margin-top: 0px;
+}
+
+.w10 {
+    width: 10%;
+}
+
+
+.w15 {
+    width: 15%;
+}
+
+.w20 {
+    width: 20%;
+}
+
+
+.w55 {
+    width: 55%;
+}
+
+.pull-left {
+    float: left!important;
+}
+
+
+.left-off {
+    width: 52px;
+    display: block;
+}
+
+.right-full {
+    left: 160px;
+}
+
+.right-off {
+    left: 52px;
+}
+
+
+.text-green-main {
+    color: #25A725 !important;
+}
+
+
+.text-gray {
+    color: #999;
+}
+
+
+.content .left-icon .green {
+    background-color: #1cbba7;
+}
+
+
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
+
+
+.nav-item {
+    position: relative;
+    margin-top:15px;
+}
+
+.nav-text{
+    margin-left:15px;
+}
+
+a {color:#C3CCD8;}
+
+.hiden{
+    display:none;
+}
+
+
+.nav-ul {
+ display:none;
+ background-color:#394555;
+}
+
+
+.nav-li-ul{
+    position: absolute;
+    padding-top:15px;
+    padding-bottom:10px;
+    width: 150px;
+    margin-top: -35px;
+    background-color: #47525F;
+    margin-left: 52px;
+}
+
+
+.nav-ul>li>a {
+    padding-left: 47px;
+}
+
+
+td>a{
+color:#337ab7;
+}
+
+

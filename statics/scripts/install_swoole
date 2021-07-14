@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#wget http://pecl.php.net/get/swoole-2.2.0.tgz
+
+#tar -zxf  swoole-2.2.0.tgz -C /opt/
+
+cd /opt/swoole-2.2.0 && phpize && ./configure --with-php-config=/usr/local/php/bin/php-config  && make  && make install 
+
+#sed -i "/extension=php_xsl.dll/aextension=swoole.so" /usr/local/php/etc/php.ini
+
+service php-fpm restart
+
+php -m | grep swoole
+
+
+
