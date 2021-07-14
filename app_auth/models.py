@@ -7,7 +7,7 @@ class Role(models.Model):
     """角色表"""
     role_title = models.CharField(max_length=64,unique=True)
     role_msg = models.CharField(max_length=128,null=True)
-    perms = models.TextField()
+    perms = models.TextField(null=True)
     menu = models.ManyToManyField(to='Menus',)
     def __unicode__(self):
         return self.role_title
@@ -20,7 +20,7 @@ class User(models.Model):
     passwd = models.CharField(max_length=256,null=True)
     email = models.CharField(max_length=64,null=True)
     phone = models.CharField(max_length=128,null=True)
-    role = models.ForeignKey(to="Role", on_delete=models.SET_NULL, null=True)
+    role = models.ManyToManyField(to="Role")
     img = models.ImageField(upload_to='img')
     status = models.CharField(max_length=64,null=True)
     creat_time = models.DateTimeField(auto_now_add=True)
@@ -33,9 +33,7 @@ class Menus(models.Model):
     """菜单表"""
     menus_title = models.CharField(max_length=64)
     menus_url = models.CharField(max_length=64)
-    menus_level = models.CharField(max_length=32)
-    menus_order= models.CharField(max_length=32)
-    pmenu_id = models.CharField(max_length=32, null=True)
+    parent = models.ForeignKey("Menus", null=True, on_delete=models.SET_NULL)
     menus_id = models.CharField(max_length=32,null=True)
     menus_icon = models.CharField(max_length=256,null=True)
     menus_perms = models.ManyToManyField(to="Perms")

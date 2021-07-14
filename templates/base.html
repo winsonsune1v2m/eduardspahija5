@@ -1,0 +1,503 @@
+﻿<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/static/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css"/>
+
+    <link rel="stylesheet" href="/static/css/base.css">
+      {% block css %}
+
+      {% endblock %}
+
+    <title>{{ title }}</title>
+
+    <script src="/static/js/echarts.min.js"  ></script>
+
+  </head>
+
+  <body>
+
+
+
+
+
+    <!--主页-->
+    <div class="down-main left-full">
+
+      <!--左侧菜单导航-->
+      <ul class="left-main left-full">
+
+        <div class="sidebar-fold"><span class="fa fa-bars"></span></div>
+
+        <ul>
+
+            <ul id="menu-left">
+
+                <a href="/" style="display:block;text-decoration:none">
+                   <i class="fa fa-home fa-2x" style="margin-left:12px"></i><span class="nav-text">首页</span>
+
+                </a>
+
+                <li class="nav-item">
+
+                    <a href="javascript:" style="display:block;text-decoration:none">
+                        <i class="fa fa-home fa-2x" style="margin-left:12px"></i><span name="menu-one" class="nav-text">后台管理</span>
+
+                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;padding-top: 10px"></i>
+
+                    </a>
+
+                    <ul class="nav-ul nav" style="display:none">
+                            <li ><a href="/auth/role/" style="display:block;text-decoration:none;padding-left: 55px;"><span>角色管理</span></a></li>
+                    </ul>
+
+                </li>
+
+
+                {% for i in request.session.menu_all_list %}
+
+                <li class="nav-item">
+                    {% if i.menu_two %}
+                    <a href="javascript:" style="display:block;text-decoration:none">
+                        <i class="{{ i.perms_icon }}" style="margin-left:12px"></i><span name="menu-one" class="nav-text">{{ i.perms_title }}</span>
+
+                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;"></i>
+
+                    </a>
+                    {% else %}
+                    <a href="{{ i.perms_url }}" style="display:block;text-decoration:none">
+                        <i class="{{ i.perms_icon }}" style="margin-left:12px"></i><span class="nav-text">{{ i.perms_title }}</span>
+
+                    </a>
+                    {% endif %}
+
+                    {% if i.menu_two %}
+
+                    <ul class="nav-ul nav" style="display:none">
+                        {% for j in i.menu_two %}
+                            {% if j.perms_url == '/tool/elk/' or  j.perms_url == '/tool/nessus/' or j.perms_url == '/tool/zabbix/' %}
+                            <li ><a href="{{ j.perms_url }}" target="_blank" style="display:block;text-decoration:none"><span>{{ j.perms_title }}</span></a></li>
+                            {% else %}
+                            <li ><a href="{{ j.perms_url }}" style="display:block;text-decoration:none"><span>{{ j.perms_title }}</span></a></li>
+                            {% endif %}
+
+                        {% endfor  %}
+                    </ul>
+
+                    {% endif %}
+
+                </li>
+
+                {% endfor %}
+
+            </ul>
+        </ul>
+
+      </ul>
+
+        <!--右侧内容-->
+      <div class="right-product my-index right-full" style="min-width:1320px;">
+
+          <div class="alert alert-warning alert-dismissible" style="position: fixed;min-width: 30%;margin-top:50px;margin-left: 25%;height: 60px;text-align: center;display: none;" role="alert" id="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <strong id="msg-alert" style="color: #00B83F;">{{ request.session.alert_msg }}</strong>
+          </div>
+
+
+          <nav class="nav navbar-default navbar-mystyle">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" style="padding-right:50px;">
+                <ul class="nav navbar-nav">
+                  <li class="li-border"><a class="mystyle-color" href="">运维管理系统</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav pull-right">
+                   <li class="li-border">
+                      <a href="/code/updatelog/" class="mystyle-color">
+                        <span class="fa fa-bell"></span>
+                        <span class="topbar-num">0</span>
+                      </a>
+                  </li>
+
+
+                  <li class="dropdown li-border" style="min-width: 80px"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">{{ request.session.username }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="min-width: 80px">
+                      <li ><a href="#" data-toggle="modal" data-target="#passwdModal" style="padding: 3px 10px;">修改密码</a></li>
+                      <li ><a href="/auth/logout/" style="padding: 3px 10px;">退出登录</a></li>
+                    </ul>
+                  </li>
+                </ul>
+            </div>
+         </nav>
+
+         <div class="container-fluid">
+           <div class="info-center" style="padding-right: 15px;">
+
+               {% block center %}
+
+               <!---title----->
+                <div class="info-title">
+                  <div class="pull-left">
+                    <h4 style="color:#09C"><strong>{{ request.session.username }}，</strong></h4>
+                    <h4 style="color:#09C">欢迎登录管理系统！</h4>
+                  </div>
+                  <div class="time-title pull-right">
+                      <div class="year-month pull-left">
+                        <p>{{ A }}</p>
+                        <p><span style="font-size:20px">{{ Y }}</span>年{{ m }}月{{ d }}日</p>
+                      </div>
+                      <div class="hour-minute pull-right">
+                         <strong style="font-size: 35px;">{{ H_M }}</strong>
+                      </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+               <!----content-list---->
+                <div class="content-list">
+                   <div class="row">
+                     <div class="col-md-3">
+                        <div class="content">
+                           <div class="right-title">
+                               <div class="row">
+                                   <div style="margin-top:10px;" class="row">
+                                       <div class="col-sm-6">
+                                           <span>主机总数</span>
+                                       </div>
+                                       <div class="col-sm-6 pull-right">
+                                           <span class="label label-primary">Hosts</span>
+                                       </div>
+
+                                   </div>
+
+                                   <hr>
+
+                                   <div>
+                                       <a href="/cmdb/hostinfo/" style="color: #428bca;text-decoration: none;"><h1>{{ host_num }}</h1></a>
+                                   </div>
+
+
+                               </div>
+                           </div>
+
+                           <div class="clearfix"></div>
+                        </div>
+                     </div>
+
+
+                      <div class="col-md-3">
+                        <div class="content">
+                            <div class="right-title">
+                               <div class="row">
+                                   <div style="margin-top:10px;" class="row">
+                                       <div class="col-sm-6">
+                                           <span>在线站点</span>
+                                       </div>
+                                       <div class="col-sm-6 pull-right">
+                                           <span class="label label-danger">Site</span>
+                                       </div>
+
+                                   </div>
+
+                                   <hr>
+
+                                   <div>
+                                       <a href="/code/postcode/" style="color: #428bca;text-decoration: none;"><h1>{{ site_num }}</h1></a>
+                                   </div>
+
+
+                               </div>
+                           </div>
+                           <div class="clearfix"></div>
+                        </div>
+                     </div>
+                      <div class="col-md-3">
+                        <div class="content">
+                           <div class="right-title">
+                               <div class="row">
+                                   <div style="margin-top:10px;" class="row">
+                                       <div class="col-sm-6">
+                                           <span>用户总数</span>
+                                       </div>
+                                       <div class="col-sm-6 pull-right">
+                                           <span class="label label-info ">Users</span>
+                                       </div>
+
+                                   </div>
+
+                                   <hr>
+
+                                   <div>
+                                       <a href="/rbac/usermg/" style="color: #428bca;text-decoration: none;"><h1>{{ user_num }}</h1></a>
+                                   </div>
+
+
+                               </div>
+                           </div>
+
+                           <div class="clearfix"></div>
+                        </div>
+                     </div>
+                      <div class="col-md-3">
+                        <div class="content">
+                           <div class="right-title">
+                               <div class="row">
+                                   <div style="margin-top:10px;" class="row">
+                                       <div class="col-sm-6">
+                                           <span>任务</span>
+                                       </div>
+                                       <div class="col-sm-6 pull-right">
+                                           <span class="label label-success ">Task</span>
+                                       </div>
+
+                                   </div>
+
+                                   <hr>
+
+                                   <div>
+                                       <a href="/code/updatelog/" style="color: #428bca;text-decoration: none;"><h1>12</h1></a>
+                                   </div>
+
+
+                               </div>
+                           </div>
+                           <div class="clearfix"></div>
+                        </div>
+                     </div>
+                   </div>
+
+
+                   <!-------信息列表------->
+                   <div class="row newslist" style="margin-top:20px;">
+                     <div class="col-md-8">
+                       <div class="panel panel-default">
+                          <div class="panel-heading">
+                              <h5><b>站点更新</b></h5>
+                          </div>
+
+                          <div class="panel-body" >
+                              <div id="site-echart" style="width: 100%;height:450px;"></div>
+
+                          </div>
+
+
+                        </div>
+                     </div>
+
+                     <div class="col-md-4">
+                         <div class="panel panel-default">
+                          <div class="panel-heading">
+                           <h5><b>项目代码</b></h5>
+                          </div>
+                          <div class="panel-body">
+                                <div id="project-echart" style="width: 100%;height:450px;"></div>
+                          </div>
+                        </div>
+
+                     </div>
+                   </div>
+                </div>
+               {% endblock %}
+
+           </div>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="passwdModal" tabindex="-1" role="dialog" aria-labelledby="passwdModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="margin-top:135px;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="passwdModalLabel">修改密码</h4>
+          </div>
+          <div class="modal-body">
+
+              <div class="form-group">
+                <label >当前密码</label>
+                <input  class="form-control"  type="password" placeholder="当前密码" id="current-passwd">
+              </div>
+              <div class="form-group">
+                <label >新密码</label>
+                <input  class="form-control" type="password"  placeholder="新密码" id="new-passwd">
+              </div>
+              <div class="form-group">
+                <label >再次输入新密码</label>
+                <input  class="form-control" type="password"  placeholder="再次输入新密码" id="rnew-passwd">
+              </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="sub-passwd">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    {% block modal %}
+
+
+
+
+    {% endblock  %}
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"  ></script>
+
+    <script type="text/javascript" src="/static/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+    <script src="/static/js/base.js"></script>
+
+
+    <script>
+    //二级菜单展开
+    var title = "{{ title }}";
+
+        $("#menu-left").find("a").each(function(){
+
+            if(title == $(this).text()){
+                $(this).parents('.nav-ul').css('display','block');
+                return false;
+            }
+        });
+
+    //修改用户密码(自身修改)
+    $("#sub-passwd").click(function(){
+        var current_passwd = $("#current-passwd").val();
+        var new_passwd = $("#new-passwd").val();
+        var rnew_passwd = $("#rnew-passwd").val();
+        if(new_passwd==rnew_passwd){
+
+            if(current_passwd==new_passwd){
+                alert("新密码不能设置为当前密码");
+            }else{
+                $.post("/auth/chpasswd/",{"new_passwd":new_passwd,"current_passwd":current_passwd},function(data){
+                    alert(data);
+                    if(data=="密码已修改,请重新登录"){
+                        location.reload();
+                    }
+                });
+
+            }
+
+        }else{
+            alert("两次输入的密码不一致");
+        }
+
+    });
+
+
+
+    </script>
+
+    {% block js %}
+
+    <script>
+
+        ///////////////代码更新统计图形///////////////////
+
+        /*
+        var myChart = echarts.init(document.getElementById('site-echart'));
+
+
+        var option = {
+            title: {
+                text: '版本发布统计',
+
+            },
+
+            tooltip: {},
+            legend: {
+                data:['发布次数']
+            },
+
+            xAxis: {
+                type: 'category',
+                data: {{ site_title_list|safe }},
+                axisLabel: {
+                    interval: 0,
+                    rotate: 15
+                    },
+                splitLine: {
+                    show: false
+                }
+            },
+
+            yAxis: {},
+            series: [{
+                name: '发布次数',
+                type: 'bar',
+                max: 30,
+                data: {{ site_pull_count |safe }}
+            }]
+        };
+
+
+        myChart.setOption(option);
+
+
+
+
+        ///////////////项目代码图形///////////////////
+        var projectChart = echarts.init(document.getElementById('project-echart'));
+
+
+        var project_option = {
+            title : {
+                text: '项目代码',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: {{ project_title_list|safe }}
+            },
+            series : [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:{{ project_site_count|safe }},
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        projectChart.setOption(project_option);
+
+        */
+    </script>
+    {% endblock %}
+
+  </body>
+</html>
