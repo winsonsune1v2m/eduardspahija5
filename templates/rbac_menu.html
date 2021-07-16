@@ -1,0 +1,456 @@
+﻿{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="javascript:;">后台管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-6">
+
+              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#menuModal">添加菜单</a>
+
+          </div>
+      </div>
+
+  </div>
+  <div class="panel-body" >
+
+            <div style="margin-bottom: 10px;">
+
+                <div class="col-sm-12">
+
+
+                    <table class="table table-hover table-bordered">
+                      <thead>
+                        <tr style="background-color: #f5f5f5;">
+                          <th>标题</th>
+                          <th>类型</th>
+                          <th>地址</th>
+                          <th>菜单ID</th>
+                          <th>上级ID</th>
+                          <th>图标</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody id="menu_table">
+
+                      {% for menu in menu_info %}
+
+                      {% if menu.menu_type == "一级菜单" %}
+                        <tr style="background-color: #28a4c9;">
+
+                          <td><i class="fa fa-list" style="margin-right:20px"></i>{{ menu.menu_title }}</td>
+                          <td>{{ menu.menu_type }}</td>
+                          <td>{{ menu.menu_url }}</td>
+                          <td>{{ menu.menu_num }}</td>
+                          <td>{{ menu.pmenu_id }}</td>
+                          <td><span class="{{ menu.menu_icon }}"></span></td>
+
+                          <td>
+                              <a  href="javascript:;" style="text-decoration:none;" name="edit-menu" menu_id="{{ menu.menu_id }}" data-toggle="tooltip" data-placement="left" title="修改"> <span class="fa fa-pencil"></span></a>&nbsp;
+
+                              <a href="javascript:;" style="text-decoration:none;" name="del-menu" menu_id="{{ menu.menu_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+
+
+                          </td>
+                        </tr>
+                      {% elif  menu.menu_type == "二级菜单" %}
+                        <tr>
+                          <td style="padding-left:30px;"><i class="fa fa-list-ul" style="margin-right:20px"></i>{{ menu.menu_title }}</td>
+                          <td>{{ menu.menu_type }}</td>
+                          <td>{{ menu.menu_url }}</td>
+                          <td>{{ menu.menu_num }}</td>
+                          <td>{{ menu.pmenu_id }}</td>
+                          <td><span class="{{ menu.menu_icon }}"></span></td>
+
+                          <td>
+
+                              <a  href="javascript:;" style="text-decoration:none;" name="edit-menu" menu_id="{{ menu.menu_id }}"  data-toggle="tooltip" data-placement="left" title="修改"> <span class="fa fa-pencil"></span></a>&nbsp;
+
+                              <a href="javascript:;" style="text-decoration:none;" name="del-menu" menu_id="{{ menu.menu_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+
+                          </td>
+                        </tr>
+
+                        {% else %}
+                        <tr>
+                          <td style="padding-left:50px;"><i class="fa fa-bars" style="margin-right:20px"></i>{{ menu.menu_title }}</td>
+                          <td>{{ menu.menu_type }}</td>
+                          <td>{{ menu.menu_url }}</td>
+                          <td>{{ menu.menu_num }}</td>
+                          <td>{{ menu.pmenu_id }}</td>
+                          <td><span class="{{ menu.menu_icon }}"></span></td>
+
+                          <td>
+                              <a  href="javascript:;" style="text-decoration:none;" name="edit-menu" menu_id="{{ menu.menu_id }}" data-toggle="tooltip" data-placement="left" title="修改"> <span class="fa fa-pencil"></span></a>&nbsp;
+
+                              <a href="javascript:;" style="text-decoration:none;" name="del-menu" menu_id="{{ menu.menu_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+
+                          </td>
+                        </tr>
+
+                        {% endif %}
+                      {% endfor %}
+
+                      </tbody>
+                    </table>
+
+                    <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                      <ul class="pagination" id="pagination">
+                      </ul>
+                    </div>
+                </div>
+
+            </div>
+
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+<div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="menuModalLabel">添加菜单</h4>
+      </div>
+      <div class="modal-body">
+
+          <div class="form-group">
+            <label >菜单标题</label>
+            <input  class="form-control"  placeholder="菜单标题" id="menu-title">
+          </div>
+          <div class="form-group">
+            <label >菜单类型</label>
+                <select class="form-control" id="menu-type">
+                    <option value="一级菜单">一级菜单</option>
+                    <option value="二级菜单">二级菜单</option>
+                    <option value="三级菜单">三级菜单</option>
+                </select>
+          </div>
+
+
+          <div class="form-group" style="display:none" id="pmenu-div">
+            <label >上级菜单</label>
+              <select class="form-control" id="pmenu-id">
+                  {% for menu in menu_list %}
+                  <option value="{{ menu.menu_id }}" pmenu_id="{{ menu.pmenu_id }}">{{ menu.menu_title }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+
+
+
+          <div class="form-group">
+            <label >地址</label>
+            <input class="form-control"  placeholder="/url/" id="menu-url">
+          </div>
+
+          <div class="form-group" id="icon-div">
+            <label >菜单图标</label>
+              <input type="text" class="form-control"  placeholder="fa-(图标名称)" id="menu-icon-input">
+              <table class="table" style="margin-top:5px;">
+                <tbody id="icon-table">
+                    <tr>
+                      <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-dashboard"></span>
+
+                      </td>
+
+
+                      <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-desktop"></span>
+
+                      </td>
+
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-code"></span>
+
+                      </td>
+
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-address-card"></span>
+
+                      </td>
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-bars"></span>
+
+                      </td>
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-wrench"></span>
+
+                      </td>
+
+                    </tr>
+
+                    <tr>
+                      <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-area-chart"></span>
+
+                      </td>
+
+
+                      <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-folder-open"></span>
+                      </td>
+
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box"/>
+                        <span class="fa fa-lg fa-cog"></span>
+
+                      </td>
+
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-home"></span>
+
+                      </td>
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg  fa-bar-chart"></span>
+
+                      </td>
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-linux" icog="fa-wrench"></span>
+
+                      </td>
+
+                    </tr>
+
+                 </tbody>
+
+              </table>
+
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-menu">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="edit-menuModal" tabindex="-1" role="dialog" aria-labelledby="edit-menuModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-menuModalLabel">修改菜单</h4>
+      </div>
+      <div class="modal-body">
+
+         <form>
+          <div class="form-group">
+            <label >菜单标题</label>
+            <input  class="form-control"  placeholder="菜单标题" id="edit-menu-title">
+          </div>
+          <div class="form-group">
+            <label >菜单类型</label>
+                <select class="form-control" id="edit-menu-type">
+                    <option value="一级菜单">一级菜单</option>
+                    <option value="二级菜单">二级菜单</option>
+                    <option value="三级菜单">三级菜单</option>
+                </select>
+          </div>
+
+
+          <div class="form-group" style="display:none" id="edit-pmenu-div">
+            <label >上级菜单</label>
+              <select class="form-control" id="edit-pmenu-id">
+                  {% for menu in menu_list %}
+                  <option value="{{ menu.menu_id }}" pmenu_id="{{ menu.pmenu_id }}">{{ menu.menu_title }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+
+
+
+          <div class="form-group">
+            <label >地址</label>
+            <input class="form-control"  placeholder="/url/" id="edit-menu-url">
+          </div>
+
+
+          <div class="form-group" id="edit-icon-div">
+            <label >菜单图标</label>
+              <input type="text" class="form-control"  placeholder="fa-(图标名称)" id="edit-menu-icon-input">
+              <table class="table" style="margin-top:5px;">
+                <tbody id="dit-icon-table">
+                    <tr>
+                      <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-dashboard"></span>
+
+                      </td>
+
+
+                      <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-desktop"></span>
+
+                      </td>
+
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-code"></span>
+
+                      </td>
+
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-address-card"></span>
+
+                      </td>
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-bars"></span>
+
+                      </td>
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-wrench"></span>
+
+                      </td>
+
+                    </tr>
+
+                    <tr>
+                      <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-area-chart"></span>
+
+                      </td>
+
+
+                      <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-folder-open"></span>
+                      </td>
+
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box"/>
+                        <span class="fa fa-lg fa-cog"></span>
+
+                      </td>
+
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-home"></span>
+
+                      </td>
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg  fa-bar-chart"></span>
+
+                      </td>
+                        <td style="padding-left:5px;">
+                        <input type="radio" name="check_box" />
+                        <span class="fa fa-lg fa-linux" icog="fa-wrench"></span>
+
+                      </td>
+
+                    </tr>
+
+                 </tbody>
+
+              </table>
+
+          </div>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-menu">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock  %}
+
+{% block js %}
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.excheck.js"></script>
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.exedit.js"></script>
+    <script type="text/javascript" src="/static/js/auth.js"></script>
+
+    <script type="text/javascript" >
+
+        $("#menu-type").change(function(){
+
+            var menu_level = $(this).val();
+
+            if (menu_level == '一级菜单'){
+                $("#icon-div").css("display",'block')
+            }
+            else{
+                $("#icon-div").css("display",'none')
+
+            }
+        });
+
+
+        $("input[name='check_box']").click(function(){
+            var menu_icon=$(this).siblings('span').attr('class');
+            $("#menu-icon-input").val(menu_icon);
+        });
+
+
+
+        $("input[name='check_box']").click(function(){
+            var menu_icon=$(this).siblings('span').attr('class');
+            $("#edit-menu-icon-input").val(menu_icon);
+        });
+
+
+    </script>
+
+{% endblock %}
+
+

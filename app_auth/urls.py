@@ -19,6 +19,9 @@ from django.urls import path,include
 
 
 urlpatterns = [
-    path("role/",views.role_mg.as_view()),
+    path("role/",views.RoleMG.as_view()),
+    path("user/",views.UserMG.as_view()),
+    path("menu/",views.MenuMG.as_view()),
+    path("perms/",views.PermsMG.as_view()),
 
 ]

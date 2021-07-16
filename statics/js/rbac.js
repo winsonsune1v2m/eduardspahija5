@@ -1,44 +1,4 @@
 
-$("#perms-type").change(function(){
-    var menu_level = $(this).val();
-    if (menu_level == '一级菜单'){
-        $("#pmenu-div").css("display",'none')
-    }else if(menu_level == '二级菜单' ){
-
-
-        $("#pmenu-id option").each(function(){
-            var pmenu_id = $(this).attr("pmenu_id")
-            if (pmenu_id==0){
-
-                $(this).css("display",'block')
-            }else{
-
-                $(this).css("display",'none')
-            }
-        })
-
-        $("#pmenu-div").css("display",'block')
-    }
-    else{
-
-        $("#pmenu-id option").each(function(){
-            var pmenu_id = $(this).attr("pmenu_id")
-            if (pmenu_id==0){
-
-                $(this).css("display",'none')
-            }else{
-
-                $(this).css("display",'block')
-            }
-        })
-
-        $("#pmenu-div").css("display",'block')
-    }
-
-});
-
-
-
 $("#edit-perms-type").change(function(){
     var menu_level = $(this).val();
     if (menu_level == '一级菜单'){
@@ -272,7 +232,6 @@ $("#sub-edit-role").click(function(){
         }
     });
 });
-
 
 
 

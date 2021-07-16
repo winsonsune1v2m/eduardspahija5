@@ -31,41 +31,35 @@
       <div class="row" style="padding-top:5px;padding-left:10px;">
           <div class="col-sm-6">
 
-              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#roleModal"> 添加角色 </a>
+              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#permsModal"> 添加权限 </a>
 
           </div>
       </div>
-
   </div>
   <div class="panel-body">
-
-
+      
         <div style="margin-bottom: 10px;">
-
             <div class="col-sm-12">
                 <table class="table table-hover table-bordered">
                   <thead>
                     <tr style="background-color: #f5f5f5;">
+                        <th>权限</th>
+                        <th>菜单</th>
 
-                      <th>角色</th>
-                      <th>描述</th>
-                      <th>授权</th>
-                      <th>操作</th>
+                        <th>描述</th>
+                        <th>操作</th>
                     </tr>
                   </thead>
                   <tbody>
 
-                  {% for role in role_list %}
+                  {% for perms in perms_list %}
                     <tr>
-
-                      <td>{{ role.role_title }}</td>
-                      <td>{{ role.role_msg }}</td>
-                      <td><a href="javascript:;" style="text-decoration:none;" name="roleperms" role_id="{{ role.role_id }}">授权</a></td>
+                      <td>{{ perms.perms_title }}</td>
+                      <td>{{ perms.menus }}</td>
+                      <td>{{ perms.perms_msg }}</td>
                       <td style="padding-left:5px;">
-
-                        <a href="javascript:;" style="text-decoration:none;" name="edit-role" role_id="{{ role.role_id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
-
-                        <a href="javascript:;" style="text-decoration:none;" name="del-role" role_id="{{ role.role_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+                        <a href="javascript:;" style="text-decoration:none;" name="edit-perms" perms_id="{{ perms.perms_id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
+                        <a href="javascript:;" style="text-decoration:none;" name="del-perms" perms_id="{{ perms.perms_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
 
                       </td>
                     </tr>
@@ -91,28 +85,30 @@
 <!-- Modal -->
 {% block modal %}
 
-<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="permsModal" tabindex="-1" perms="dialog" aria-labelledby="permsModalLabel">
+  <div class="modal-dialog" perms="document">
     <div class="modal-content" style="margin-top:135px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="roleModalLabel">添加角色</h4>
+        <h4 class="modal-title" id="permsModalLabel">添加权限</h4>
       </div>
       <div class="modal-body">
 
           <div class="form-group">
-            <label >角色名称</label>
-            <input  class="form-control"  placeholder="角色名称" id="role-title">
+            <label>权限</label>
+            <input  class="form-control"  placeholder="角色名称" id="perms-title">
           </div>
+
+
           <div class="form-group">
             <label >描述</label>
-            <input  class="form-control"  placeholder="描述" id="role-msg">
+            <input  class="form-control"  placeholder="描述" id="perms-msg">
           </div>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="sub-role">提交</button>
+        <button type="button" class="btn btn-primary" id="sub-perms">提交</button>
       </div>
     </div>
   </div>
@@ -120,23 +116,23 @@
 
 
 
-<div class="modal fade" id="edit-roleModal" tabindex="-1" role="dialog" aria-labelledby="edit-roleModalLabel">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="edit-permsModal" tabindex="-1" perms="dialog" aria-labelledby="edit-permsModalLabel">
+  <div class="modal-dialog" perms="document">
     <div class="modal-content" style="margin-top:135px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="edit-roleModalLabel">添加角色</h4>
+        <h4 class="modal-title" id="edit-permsModalLabel">添加角色</h4>
       </div>
       <div class="modal-body">
 
          <form>
           <div class="form-group">
             <label >角色名称</label>
-            <input  class="form-control"  placeholder="角色名称" id="edit-role-title">
+            <input  class="form-control"  placeholder="角色名称" id="edit-perms-title">
           </div>
           <div class="form-group">
             <label >描述</label>
-            <input  class="form-control"  placeholder="描述" id="edit-role-msg">
+            <input  class="form-control"  placeholder="描述" id="edit-perms-msg">
           </div>
 
 
@@ -154,19 +150,19 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="sub-edit-role">提交</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-perms">提交</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="edit-rolepermsModal" tabindex="-1" role="dialog" aria-labelledby="edit-rolepermsModalLabel">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="edit-permspermsModal" tabindex="-1" perms="dialog" aria-labelledby="edit-permspermsModalLabel">
+  <div class="modal-dialog" perms="document">
     <div class="modal-content" style="margin-top:135px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="edit-rolepermsModalLabel">角色授权</h4>
+        <h4 class="modal-title" id="edit-permspermsModalLabel">角色授权</h4>
       </div>
       <div class="modal-body" style="max-height:500px;overflow:auto;">
         <ul id="treeperms" class="ztree"></ul>
@@ -174,7 +170,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="sub-edit-roleperms">提交</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-permsperms">提交</button>
       </div>
     </div>
   </div>
@@ -193,10 +189,10 @@
 
     //授权
     $(document).ready(function(){
-        $('td a[name="roleperms"]').click(function(){
-            var role_id = $(this).attr("role_id");
+        $('td a[name="permsperms"]').click(function(){
+            var perms_id = $(this).attr("perms_id");
 
-            $.post("/rbac/roleperms/",{'role_id':role_id},function(data){
+            $.post("/rbac/permsperms/",{'perms_id':perms_id},function(data){
             if (data == "权限不足"){
                     alert("权限不足，请联系管理员！");
                 }else{
@@ -230,10 +226,10 @@
                 $.fn.zTree.init($("#treeperms"), setting, zNodes);
 
 
-                $("#sub-edit-roleperms").attr('role_id',role_id);
+                $("#sub-edit-permsperms").attr('perms_id',perms_id);
 
 
-                $("#edit-rolepermsModal").modal('show');
+                $("#edit-permspermsModal").modal('show');
                 }
             });
         });
@@ -242,8 +238,8 @@
 
 
     //角色授权
-    $("#sub-edit-roleperms").click(function(){
-        var role_id = $(this).attr("role_id");
+    $("#sub-edit-permsperms").click(function(){
+        var perms_id = $(this).attr("perms_id");
         var treeObj=$.fn.zTree.getZTreeObj("treeperms");
 
         var nodes = treeObj.getCheckedNodes(true);
@@ -255,7 +251,7 @@
         }
         node_id_json = JSON.stringify(node_ids)
 
-        $.post("/rbac/addroleperms/",{'node_id_json':node_id_json,'role_id':role_id},function(data){
+        $.post("/rbac/addpermsperms/",{'node_id_json':node_id_json,'perms_id':perms_id},function(data){
         if (data == "权限不足"){
             alert("权限不足，请联系管理员！");
         }else{

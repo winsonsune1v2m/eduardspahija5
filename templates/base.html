@@ -56,7 +56,10 @@
                     </a>
 
                     <ul class="nav-ul nav" style="display:none">
-                            <li ><a href="/auth/role/" style="display:block;text-decoration:none;padding-left: 55px;"><span>角色管理</span></a></li>
+                        <li ><a href="/auth/role/" style="display:block;text-decoration:none;padding-left: 55px;"><span>角色管理</span></a></li>
+                        <li ><a href="/auth/user/" style="display:block;text-decoration:none;padding-left: 55px;"><span>用户管理</span></a></li>
+                        <li ><a href="/auth/menu/" style="display:block;text-decoration:none;padding-left: 55px;"><span>菜单管理</span></a></li>
+                        <li ><a href="/auth/perms/" style="display:block;text-decoration:none;padding-left: 55px;"><span>权限管理</span></a></li>
                     </ul>
 
                 </li>
@@ -106,7 +109,7 @@
         <!--右侧内容-->
       <div class="right-product my-index right-full" style="min-width:1320px;">
 
-          <div class="alert alert-warning alert-dismissible" style="position: fixed;min-width: 30%;margin-top:50px;margin-left: 25%;height: 60px;text-align: center;display: none;" role="alert" id="alert">
+          <div class="alert alert-warning alert-dismissible" style="z-index:9999999;position: fixed;min-width: 30%;margin-top:50px;margin-left: 25%;height: 60px;text-align: center;display: none;" role="alert" id="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
               <strong id="msg-alert" style="color: #00B83F;">{{ request.session.alert_msg }}</strong>
           </div>
@@ -369,6 +372,13 @@
 
 
     <script>
+
+
+     $(function () {
+       $('[data-toggle="tooltip"]').tooltip()
+     });
+
+
     //二级菜单展开
     var title = "{{ title }}";
 
@@ -379,6 +389,7 @@
                 return false;
             }
         });
+
 
     //修改用户密码(自身修改)
     $("#sub-passwd").click(function(){
@@ -405,7 +416,77 @@
 
     });
 
+    //前端分页
+    var limit = 13; //每页显示数据条数
+    var total = $('table').find('tr').length;
+    var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
 
+    function doPage(n){
+        if(allPage>1){
+            var prevPage='',nextPage='',pageHtml='';
+
+            if (n===1) {
+                prevPage = '<li class="disabled"><a href="javascript:;">上一页</a></li>';
+                nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+            } else if(n===allPage){
+                prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+                nextPage = '<li class="disabled"><a href="javascript:;">下一页</a></li>';
+            } else {
+                prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+                nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+            }
+
+            if (n<=5){
+                for(var i=1;i<=5;i++){
+                    if (n===i) {
+                        pageHtml += '<li class="active"><a href="javascript:;">'+ i +'</a></li>';
+                    }else{
+                        if(i<=allPage) {
+                            pageHtml += '<li data-page="' + i + '"><a href="javascript:;">' + i + '</a></li>';
+                        }
+                    }
+
+                }
+            }else{
+                for(var i=1;i<=5;i++){
+
+                    cur_page = parseInt(parseInt((n-1)/5)*5);
+
+                    if (n===(cur_page+i)){
+                        pageHtml += '<li class="active"><a href="javascript:;">'+ (cur_page+i) +'</a></li>';
+                    }else{
+                        if((i+cur_page)<=allPage){
+                            pageHtml += '<li data-page="'+ (i+cur_page) +'"><a href="javascript:;">'+ (i+cur_page) +'</a></li>';
+                        }
+                    }
+
+                }
+
+            }
+
+
+            $('#pagination').html(prevPage+pageHtml+nextPage);
+        }
+
+        $('table').find('tr').hide();
+        if(n===1){
+            $('table').find('tr:lt('+ limit +')').show();
+        }else{
+            $('table').find('tr:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
+        }
+
+    }
+
+    doPage(1);
+
+    $('#pagination').on('click', 'li a', function(event) {
+        event.preventDefault();
+        var curr = parseInt($(this).parent().data('page'));
+
+        if (!isNaN(curr)) {
+            doPage(curr);
+        }
+    });
 
     </script>
 

@@ -74,9 +74,304 @@ $("td a[name='del-role']").click(function(){
 
              }
         });
-
     }
 });
 
+////////////////////////角色管理////////////////////////////
+//添加用户
+$("#add-user").click(function(){
+    var user_name = $("#user-name").val();
+    var ready_name = $("#ready-name").val();
+    var passwd = $("#passwd").val();
+    var repasswd = $("#repasswd").val();
+    var role = $("#role").val();
+    var phone = $("#phone").val();
+    var email = $("#email").val();
+
+    if(passwd==repasswd){
+        $.post("/auth/user/",{'user_name':user_name, 'ready_name':ready_name,'passwd':passwd,'role':role,'phone':phone,'email':email},function(data){
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#userModal").modal("hide");
+            $("#alert").show();
+
+        })
+
+    }else{
+        alert("两次输入密码不一致");
+    }
+
+});
+
+//获取用户修改信息
+$('td a[name="edit-user"]').click(function(){
+    var user_id = $(this).attr("user_id");
+        $.ajax({
+            url: "/auth/user/",
+            type: "PUT",
+            data: JSON.stringify({'user_id':user_id}),
+            success: function(data) {
+                var info = eval('(' + data + ')');
+                $("#edit-ready-name").val(info.ready_name);
+                $("#edit-user-name").val(info.user_name);
+                $("#edit-repasswd").val(info.passwd);
+
+                var role_info = eval('(' + info.role_info + ')');
+                for(i=0;i<role_info.length;i++){
+
+                    $("#edit-role").val(role_info[0].role_id);
+                }
+
+                $("#edit-phone").val(info.phone);
+                $("#edit-email").val(info.email);
+                $("#sub-edit-user").attr('user_id',info.user_id);
+                $("#edit-userModal").modal('show');
+
+             }
+        });
+});
 
 
+//修改用户信息
+$("#sub-edit-user").click(function(){
+    var user_id = $(this).attr('user_id');
+    var ready_name = $("#edit-ready-name").val();
+    var user_name = $("#edit-user-name").val();
+    var role_id = $("#edit-role").val();
+    var phone = $("#edit-phone").val();
+    var email = $("#edit-email").val();
+     $.ajax({
+            url: "/auth/user/",
+            type: "PUT",
+            data: JSON.stringify({'action':'edit','ready_name':ready_name, 'user_name':user_name,'role_id':role_id,'phone':phone,'email':email,'user_id':user_id}),
+            success: function(data) {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-userModal").modal("hide");
+                $("#alert").show();
+        }
+    });
+});
+
+//删除用户
+$("td a[name='del-user']").click(function(){
+    var user_id = $(this).attr('user_id');
+   var statu = confirm("是否确认删除！");
+   if (statu==true)
+    {
+        $.ajax({
+            url: "/auth/user/",
+            type: "DELETE",
+            data: JSON.stringify({'user_id':user_id}),
+            success: function(data) {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+             }
+        });
+    }
+});
+
+////////////////////////菜单管理////////////////////////////
+
+//改变菜单类型显示不同的内容
+$("#menu-type").change(function(){
+    var menu_level = $(this).val();
+    if (menu_level == '一级菜单'){
+        $("#pmenu-div").css("display",'none')
+    }else if(menu_level == '二级菜单' ){
+
+
+        $("#pmenu-id option").each(function(){
+            var pmenu_id = $(this).attr("pmenu_id")
+            if (pmenu_id==0){
+
+                $(this).css("display",'block')
+            }else{
+
+                $(this).css("display",'none')
+            }
+        })
+
+        $("#pmenu-div").css("display",'block')
+    }
+    else{
+
+        $("#pmenu-id option").each(function(){
+            var pmenu_id = $(this).attr("pmenu_id")
+            if (pmenu_id==0){
+
+                $(this).css("display",'none')
+            }else{
+
+                $(this).css("display",'block')
+            }
+        })
+
+        $("#pmenu-div").css("display",'block')
+    }
+
+});
+
+
+$("#sub-menu").click(function(){
+    var menu_title = $("#menu-title").val();
+    var menu_type = $("#menu-type").val();
+    var menu_url = $("#menu-url").val();
+    var pmenu_id = $("#pmenu-id").val();
+    var menu_icon = $("#menu-icon-input").val();
+    $.post("/auth/menu/",{'menu_title':menu_title, 'menu_url':menu_url,'menu_type':menu_type,'pmenu_id':pmenu_id,'menu_icon':menu_icon},function(data){
+        $("#msg-alert").empty();
+        $("#msg-alert").append(data);
+        $("#menuModal").modal("hide");
+        $("#alert").show();
+    })
+});
+
+//获取编辑菜单信息
+$('td a[name="edit-menu"]').click(function(){
+    var menu_id = $(this).attr("menu_id");
+
+    $.ajax({
+        url: "/auth/menu/",
+        type: "PUT",
+        data: JSON.stringify({'menu_id':menu_id}),
+        success: function(data) {
+
+            var info = eval('(' + data + ')');
+            $("#edit-menu-title").val(info.menu_title);
+            $("#edit-menu-type").val(info.menu_type);
+            $("#edit-menu-url").val(info.menu_url);
+            $("#edit-pmenu-id").val(info.pmenu_id);
+
+            $("#edit-menu-icon-input").val(info.menu_icon);
+
+            $("#sub-edit-menu").attr('menu_id',info.menu_id);
+
+            if (info.menu_type == '一级菜单'){
+
+                $("#edit-pmenu-div").css("display",'none')
+                $("#edit-icon-div").css("display",'block')
+
+            }
+
+            else if(info.menu_type == '二级菜单' ){
+
+                $("#edit-pmenu-id option").each(function(){
+                    var pmenu_id = $(this).attr("pmenu_id")
+
+                    if (pmenu_id==0){
+
+                        $(this).css("display",'block')
+                    }else{
+
+                        $(this).css("display",'none')
+                    }
+                })
+                $("#edit-icon-div").css("display",'none')
+                $("#edit-pmenu-div").css("display",'block')
+                }
+            else{
+
+                $("#edit-pmenu-id option").each(function(){
+                    var pmenu_id = $(this).attr("pmenu_id")
+
+                    if (pmenu_id==0){
+
+                            $(this).css("display",'none')
+                        }else{
+
+                            $(this).css("display",'block')
+                        }
+                    })
+                    $("#edit-icon-div").css("display",'none')
+                    $("#edit-pmenu-div").css("display",'block')
+                }
+            $("#edit-menuModal").modal('show');
+
+        }
+    })
+
+});
+
+//改变菜单类型显示不同的内容
+$("#edit-menu-type").change(function(){
+    var menu_level = $(this).val();
+    if (menu_level == '一级菜单'){
+        $("#edit-pmenu-div").css("display",'none');
+        $("#edit-icon-div").css("display",'block');
+    }else if(menu_level == '二级菜单' ){
+
+
+        $("#edit-pmenu-id option").each(function(){
+            var pmenu_id = $(this).attr("pmenu_id");
+
+            if (pmenu_id==0){
+                $(this).css("display",'block');
+                $("#edit-icon-div").css("display",'none');
+            }else{
+
+                $(this).css("display",'none')
+            }
+        })
+
+        $("#edit-pmenu-div").css("display",'block')
+    }
+    else{
+
+        $("#edit-pmenu-id option").each(function(){
+            var pmenu_id = $(this).attr("pmenu_id");
+            if (pmenu_id==0){
+
+                $(this).css("display",'block');
+                $("#edit-icon-div").css("display",'none');
+            }else{
+
+                $(this).css("display",'block')
+            }
+        })
+
+        $("#edit-pmenu-div").css("display",'block')
+    }
+});
+
+//修改菜单信息
+$("#sub-edit-menu").click(function(){
+    var menu_id = $(this).attr('menu_id');
+    var menu_title = $("#edit-menu-title").val();
+    var menu_type = $("#edit-menu-type").val();
+    var menu_url = $("#edit-menu-url").val();
+    var pmenu_id = $("#edit-pmenu-id").val();
+    var menu_icon = $("#edit-menu-icon-input").val();
+
+    $.ajax({
+        url: "/auth/menu/",
+        type: "PUT",
+        data: JSON.stringify({'action':'edit','menu_title':menu_title, 'menu_url':menu_url,'menu_type':menu_type,'pmenu_id':pmenu_id,'menu_icon':menu_icon,'menu_id':menu_id}),
+        success: function(data) {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#edit-menuModal").modal("hide");
+            $("#alert").show();
+       }
+    });
+});
+
+//删除用户
+$("td a[name='del-menu']").click(function(){
+    var menu_id = $(this).attr('menu_id');
+   var statu = confirm("是否确认删除！");
+   if (statu==true)
+    {
+        $.ajax({
+            url: "/auth/menu/",
+            type: "DELETE",
+            data: JSON.stringify({'menu_id':menu_id}),
+            success: function(data) {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+             }
+        });
+    }
+});
