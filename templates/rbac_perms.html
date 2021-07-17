@@ -43,19 +43,18 @@
                 <table class="table table-hover table-bordered">
                   <thead>
                     <tr style="background-color: #f5f5f5;">
-                        <th>权限</th>
                         <th>菜单</th>
-
+                        <th>请求</th>
                         <th>描述</th>
                         <th>操作</th>
                     </tr>
                   </thead>
                   <tbody>
 
-                  {% for perms in perms_list %}
+                  {% for perms in perms_obj %}
                     <tr>
-                      <td>{{ perms.perms_title }}</td>
-                      <td>{{ perms.menus }}</td>
+                      <td>{{ perms.menus.menu_title }}</td>
+                      <td>{{ perms.perms }}</td>
                       <td>{{ perms.perms_msg }}</td>
                       <td style="padding-left:5px;">
                         <a href="javascript:;" style="text-decoration:none;" name="edit-perms" perms_id="{{ perms.perms_id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
@@ -93,12 +92,26 @@
         <h4 class="modal-title" id="permsModalLabel">添加权限</h4>
       </div>
       <div class="modal-body">
-
           <div class="form-group">
-            <label>权限</label>
-            <input  class="form-control"  placeholder="角色名称" id="perms-title">
+                <label>权限</label>
+                <select class="form-control" id="perms">
+
+                    <option value="post">增</option>
+                    <option value="delete">删</option>
+                    <option value="put">改</option>
+                    <option value="get">查</option>
+
+                </select>
           </div>
 
+          <div class="form-group">
+            <label>菜单</label>
+            <select class="form-control" id="menus-id">
+                {% for i in menu_list %}
+                <option value="{{ i.id }}">{{ i.menu_title }}</option>
+                {% endfor %}
+            </select>
+          </div>
 
           <div class="form-group">
             <label >描述</label>
@@ -121,31 +134,36 @@
     <div class="modal-content" style="margin-top:135px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="edit-permsModalLabel">添加角色</h4>
+        <h4 class="modal-title" id="edit-permsModalLabel">修改权限</h4>
       </div>
       <div class="modal-body">
 
-         <form>
-          <div class="form-group">
-            <label >角色名称</label>
-            <input  class="form-control"  placeholder="角色名称" id="edit-perms-title">
+         <div class="form-group">
+            <label>权限</label>
+            <select class="form-control" id="edit-perms">
+
+                <option value="post">增</option>
+                <option value="delete">删</option>
+                <option value="put">改</option>
+                <option value="get">查</option>
+
+            </select>
           </div>
+
+          <div class="form-group">
+            <label>菜单</label>
+            <select class="form-control" id="edit-menu">
+                {% for i in menu_list %}
+                <option value="{{ i.id }}">{{ i.menu_title }}</option>
+                {% endfor %}
+            </select>
+          </div>
+
           <div class="form-group">
             <label >描述</label>
             <input  class="form-control"  placeholder="描述" id="edit-perms-msg">
           </div>
 
-
-          <div class="form-group" style="display:none" id="edit-pmenu-div">
-            <label >父节点</label>
-              <select class="form-control" id="edit-pmenu-id">
-                  {% for menu in menu_info %}
-                  <option value="{{ menu.menu_id }}">{{ menu.menu_title }}</option>
-                  {% endfor %}
-              </select>
-          </div>
-
-        </form>
 
       </div>
       <div class="modal-footer">

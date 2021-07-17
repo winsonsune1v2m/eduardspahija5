@@ -43,9 +43,8 @@ class Menus(models.Model):
 
 class Perms(models.Model):
     """权限表"""
-    perms_list = (('get','查'),('post','增'),('delete','删'),('put','改'))
-    perms = models.CharField(max_length=64,choices=perms_list)
-    perms_msg = models.CharField(max_length=128)
+    perms = models.CharField(max_length=64)
+    perms_msg = models.CharField(max_length=128,null=True)
     menus = models.ForeignKey(to="Menus",on_delete=models.CASCADE)
     def __unicode__(self):
         return  self.Perms

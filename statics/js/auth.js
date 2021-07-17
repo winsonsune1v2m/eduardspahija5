@@ -375,3 +375,19 @@ $("td a[name='del-menu']").click(function(){
         });
     }
 });
+
+////////////////////////权限管理////////////////////////////
+
+//添加权限
+$("#sub-perms").click(function(){
+    var perms = $("#perms").val();
+    var perms_msg = $("#perms-msg").val();
+    var menus_id = $("#menus-id").val();
+    $.post("/auth/perms/",{"perms":perms, "perms_msg":perms_msg, "menus_id":menus_id},function(data){
+        $("#msg-alert").empty();
+        $("#msg-alert").append(data);
+        $("#permsModal").modal("hide");
+        $("#alert").show();
+
+    })
+});

@@ -338,7 +338,21 @@ class PermsMG(View):
     def get(self,request):
         """查看权限"""
         title = "权限管理"
+        menu_list = auth_db.Menus.objects.all()
+
+        perms_obj = auth_db.Perms.objects.all()
+
         return  render(request,'rbac_perms.html',locals())
+
+
+    def post(self,request):
+        perms = request.POST.get("perms")
+        perms_msg = request.POST.get("perms_msg")
+        menus_id = request.POST.get("menus_id")
+        perms_obj = auth_db.Perms(perms=perms, perms_msg=perms_msg, menus_id=menus_id)
+        perms_obj.save()
+        data = "权限添加成功，请刷新查看！"
+        return  HttpResponse(data)
 
 
 
