@@ -343,7 +343,9 @@ $("#sub-edit-menu").click(function(){
     var menu_url = $("#edit-menu-url").val();
     var pmenu_id = $("#edit-pmenu-id").val();
     var menu_icon = $("#edit-menu-icon-input").val();
-
+    if(pmenu_id==null){
+        pmenu_id = 0
+    }
     $.ajax({
         url: "/auth/menu/",
         type: "PUT",
@@ -357,7 +359,7 @@ $("#sub-edit-menu").click(function(){
     });
 });
 
-//删除用户
+//删除菜单
 $("td a[name='del-menu']").click(function(){
     var menu_id = $(this).attr('menu_id');
    var statu = confirm("是否确认删除！");
@@ -380,14 +382,72 @@ $("td a[name='del-menu']").click(function(){
 
 //添加权限
 $("#sub-perms").click(function(){
-    var perms = $("#perms").val();
-    var perms_msg = $("#perms-msg").val();
+    var perms_title = $("#perms-title").val();
+    var perms_req = $("#perms-req").val();
     var menus_id = $("#menus-id").val();
-    $.post("/auth/perms/",{"perms":perms, "perms_msg":perms_msg, "menus_id":menus_id},function(data){
+    $.post("/auth/perms/",{"perms_req":perms_req, "perms_title":perms_title, "menus_id":menus_id},function(data){
         $("#msg-alert").empty();
         $("#msg-alert").append(data);
         $("#permsModal").modal("hide");
         $("#alert").show();
 
     })
+});
+
+
+//获取编辑权限信息
+$('td a[name="edit-perms"]').click(function() {
+    var perms_id = $(this).attr("perms_id");
+    $.ajax({
+        url: "/auth/perms/",
+        type: "PUT",
+        data: JSON.stringify({'perms_id': perms_id}),
+        success: function (data) {
+            var info = eval('(' + data + ')');
+            $("#edit-perms-title").val(info.perms_title);
+            $("#edit-perms-req").val(info.perms_req);
+            $("#edit-menus-id").val(info.menus_id);
+            $("#sub-edit-perms").attr('perms_id',info.perms_id);
+            $("#edit-permsModal").modal('show');
+        }
+    });
+});
+
+//修改权限信息
+$("#sub-edit-perms").click(function() {
+    var perms_id = $(this).attr("perms_id");
+    var perms_title = $("#edit-perms-title").val();
+    var perms_req = $("#edit-perms-req").val();
+    var menus_id = $("#edit-menus-id").val();
+    $.ajax({
+        url: "/auth/perms/",
+        type: "PUT",
+        data: JSON.stringify({'action':'edit','perms_id':perms_id,'perms_title':perms_title,'perms_req':perms_req,'menus_id':menus_id}),
+        success: function (data) {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#edit-permsModal").modal("hide");
+            $("#alert").show();
+        }
+    });
+});
+
+
+//删除权限
+$("td a[name='del-perms']").click(function(){
+    var perms_id = $(this).attr('perms_id');
+    var statu = confirm("是否确认删除！");
+    if (statu==true)
+    {
+        $.ajax({
+            url: "/auth/perms/",
+            type: "DELETE",
+            data: JSON.stringify({'perms_id':perms_id}),
+            success: function(data) {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+             }
+        });
+    }
 });

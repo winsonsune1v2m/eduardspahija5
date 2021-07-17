@@ -16,7 +16,6 @@ $("#IP").blur(function(){
 
 
 
-
 //端口校验
 $("#port").blur(function(){
     var port = $(this).val();
@@ -38,7 +37,7 @@ $("#sub-host").click(function(){
     var host_group = $("#host-group").val();
     var msg = $("#msg").val();
     var port = $("#port").val();
-    $.post("/cmdb/addhost/",{'IP':IP, 'username':username,'device_type':device_type,'idc':idc,'host_group':host_group,'msg':msg,'port':port},function(data){
+    $.post("/asset/host/",{'IP':IP, 'username':username,'device_type':device_type,'idc':idc,'host_group':host_group,'msg':msg,'port':port},function(data){
     if (data == "权限不足"){
             alert("权限不足，请联系管理员！");
         }else{

@@ -64,6 +64,25 @@
 
                 </li>
 
+                <li class="nav-item">
+
+                    <a href="javascript:" style="display:block;text-decoration:none">
+                        <i class="fa fa-home fa-2x" style="margin-left:12px"></i><span name="menu-one" class="nav-text">资产管理</span>
+
+                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;padding-top: 10px"></i>
+
+                    </a>
+
+                    <ul class="nav-ul nav" style="display:none">
+                        <li ><a href="/asset/host/" style="display:block;text-decoration:none;padding-left: 55px;"><span>服务器</span></a></li>
+                        <li ><a href="/asset/netwk/" style="display:block;text-decoration:none;padding-left: 55px;"><span>网络设备</span></a></li>
+                        <li ><a href="/asset/idc/" style="display:block;text-decoration:none;padding-left: 55px;"><span>IDC 机房</span></a></li>
+                        <li ><a href="/asset/hostgroup/" style="display:block;text-decoration:none;padding-left: 55px;"><span>主机分组</span></a></li>
+                        <li ><a href="/asset/supplier/" style="display:block;text-decoration:none;padding-left: 55px;"><span>设备厂商</span></a></li>
+                    </ul>
+
+                </li>
+
 
                 {% for i in request.session.menu_all_list %}
 

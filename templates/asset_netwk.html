@@ -1,0 +1,339 @@
+{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="javascript:;">资产信息</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="margin-bottom:15px;min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+
+          <div class="col-sm-3" style="display:inline-block;margin-bottom:5px;">
+              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#hostModal"> 添加资产 </a>
+              <a href="javascript:;" class="btn btn-sm btn-danger" id="delhost"> 删除资产</a>
+              <a href="javascript:;" class="btn btn-sm btn-warning" id="synchost">同步</a>
+          </div>
+
+          <div class="col-sm-6" style="display:inline-block">
+              <div style="width:200px;display: inline-block;">
+                    <select  class="form-control" id="select-idc">
+                         <option value="0">机房</option>
+                         {% for idc in idc_list %}
+                         <option value="{{ idc.idc_id }}">{{ idc.idc_name }}</option>
+                         {% endfor %}
+                     </select>
+                </div>
+
+              <div style="width:200px;display: inline-block;">
+                <select  class="form-control" id="select-hostgroup">
+                     <option value="0">主机组</option>
+                     {% for group in group_list %}
+                     <option value="{{ group.group_id }}">{{ group.group_name }}</option>
+                     {% endfor %}
+                 </select>
+              </div>
+
+              <div style="width:200px;display: inline-block;">
+                <select  class="form-control" id="select-device">
+                     <option value="设备类型">设备类型</option>
+                     <option value="服务器">服务器</option>
+                     <option value="防火墙">防火墙</option>
+                     <option value="交换机">交换机</option>
+                     <option value="路由器">路由器</option>
+                 </select>
+              </div>
+          </div>
+
+          <div class="col-sm-3" style="display:inline-block;">
+
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search for..." id="info-search">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button" id="sub-search">搜索</button>
+                    <button class="btn btn-success" type="button" style="margin-left:5px" id="export-cmdb"> 导出 </button>
+                  </span>
+                </div><!-- /input-group -->
+
+              </div>
+
+      </div>
+  </div>
+
+  <div class="panel-body" id="host-info">
+        <table class="table table-hover table-bordered" style="margin-top:5px;">
+
+          <thead>
+            <tr style="background-color: #f5f5f5;">
+              <th><input type="checkbox" id="ckb_head" name="check_box" /></th>
+
+              <th>主机名</th>
+              <th>IP地址</th>
+              <th>所属组</th>
+              <th>描述</th>
+              <th>设备类型</th>
+              <th>设备状态</th>
+              <th>机房</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="host_table">
+
+            {% for host in host_list %}
+            <tr>
+              <td><input id="{{ host.IP  }}" type="checkbox" name="ckb"/></td>
+              <td>{{ host.hostname }}</td>
+              <td>{{ host.IP }}</td>
+              <td>{{ host.host_group }}</td>
+              <td>{{ host.msg }}</td>
+              <td>{{ host.device_type }}</td>
+              <td>{{ host.status }}</td>
+              <td>{{ host.idc }}</td>
+
+              <td style="padding-left:5px;">
+                <a href="/cmdb/detailinfo/ip={{ host.IP }}" name="info" style="text-decoration:none;" data-toggle="tooltip" data-placement="left" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;
+
+                <a href="javascript:;" name="edit" ip="{{ host.IP }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="修改"><span class="fa fa-pencil" ></span> </a>&nbsp;&nbsp;&nbsp;
+
+                <a href="javascript:;" name="del"  ip="{{ host.IP }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+
+              </td>
+            </tr>
+          {% endfor %}
+
+
+          </tbody>
+
+
+        </table>
+        <div style="margin-top:-30px;padding-right:9%">
+          <ul class="pagination pull-right">
+
+          {% if current_page.has_previous %}
+
+          <li><a href="/cmdb/hostinfo/page_id={{ current_page.previous_page_number }}" disabled="disabled" >上一页</a></li>
+          {% else %}
+              <li class="disabled"><a href="javascript:;"   >上一页</a></li>
+          {% endif %}
+
+         {% for index in p.page_range %}
+
+
+             {% if current_page.number == index %}
+              <li><a href= "/cmdb/hostinfo/page_id={{ index }}" style="background-color: #ddd" >{{ index }}</a></li>
+
+             {% else %}
+              <li><a href="/cmdb/hostinfo/page_id={{ index }}">{{ index }}</a></li>
+             {% endif %}
+
+         {% endfor %}
+
+
+         {% if current_page.has_next%}
+
+          <li><a href="/cmdb/hostinfo/page_id={{ current_page.next_page_number }}">下一页</a></li>
+        {% else %}
+              <li class="disabled"><a href="javascript:;">下一页</a></li>
+         {% endif %}
+
+          </ul>
+        </div>
+
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+<!--添加主机模态框-->
+<div class="modal fade" id="hostModal" tabindex="-1" role="dialog" aria-labelledby="hostModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:100px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="hostModalLabel">添加资产</h4>
+      </div>
+      <div class="modal-body">
+
+
+          <div class="form-group">
+            <label >IP地址</label>
+            <input  class="form-control"  placeholder="IP地址" id="IP">
+          </div>
+          <div class="form-group">
+            <label>管理用户</label>
+            <select  id="username" class="form-control">
+                 {% for login_user in remote_user_list %}
+                 <option value="{{ login_user.login_user_id }}">{{ login_user.login_user_name }}</option>
+                 {% endfor %}
+             </select>
+          </div>
+
+
+          <div class="form-group">
+            <label>设备类型</label>
+            <select  id="device-type" class="form-control">
+                 <option value="服务器">物理服务器</option>
+                 <option value="防火墙">虚拟服务器</option>
+                 <option value="交换机">云服务器</option>
+             </select>
+          </div>
+
+          <div class="form-group">
+            <label>机房</label>
+            <select  id="idc" class="form-control">
+                 {% for idc in idc_list %}
+                 <option value="{{ idc.idc_id }}">{{ idc.idc_name }}</option>
+                 {% endfor %}
+             </select>
+          </div>
+
+          <div class="form-group">
+            <label>远程端口</label>
+            <input  class="form-control"  placeholder="远程端口" id="port">
+          </div>
+
+          <div class="form-group">
+            <label >所属组</label>
+                 <select  id="host-group" class="form-control">
+                     {% for group in group_list %}
+                     <option value="{{ group.group_id }}">{{ group.group_name }}</option>
+                     {% endfor %}
+                 </select>
+          </div>
+
+          <div class="form-group">
+            <label >描述</label>
+            <input  class="form-control"  placeholder="描述" id="msg">
+          </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-host">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="edit-hostModal" tabindex="-1" role="dialog" aria-labelledby="hostModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:100px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-hostModalLabel">修改主机信息</h4>
+      </div>
+      <div class="modal-body">
+
+
+          <div class="form-group">
+            <label >IP地址</label>
+            <input  class="form-control"  placeholder="IP地址" id="edit-IP">
+          </div>
+          <div class="form-group">
+            <label >管理用户</label>
+            <select  id="edit-username" class="form-control">
+                 {% for login_user in remote_user_list %}
+                 <option value="{{ login_user.login_user_id }}">{{ login_user.login_user_name }}</option>
+                 {% endfor %}
+             </select>
+          </div>
+
+
+          <div class="form-group">
+            <label>设备类型</label>
+            <select  id="edit-device-type" class="form-control">
+                 <option value="服务器">物理服务器</option>
+                 <option value="防火墙">虚拟服务器</option>
+                 <option value="交换机">云服务器</option>
+             </select>
+          </div>
+
+          <div class="form-group">
+            <label>机房</label>
+            <select  id="edit-idc" class="form-control">
+                 {% for idc in idc_list %}
+                 <option value="{{ idc.idc_id }}">{{ idc.idc_name }}</option>
+                 {% endfor %}
+             </select>
+          </div>
+
+          <div class="form-group">
+            <label>远程端口</label>
+            <input  class="form-control"  placeholder="远程端口" id="edit-port">
+          </div>
+
+          <div class="form-group">
+            <label >所属组</label>
+                 <select  id="edit-host-group" class="form-control">
+                     {% for group in group_list %}
+                     <option value="{{ group.group_id }}">{{ group.group_name }}</option>
+                     {% endfor %}
+                 </select>
+          </div>
+
+          <div class="form-group">
+            <label >描述</label>
+            <input  class="form-control"  placeholder="描述" id="edit-msg">
+          </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-host">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock  %}
+
+
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/cmdb.js"></script>
+
+   <script>
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+
+    </script>
+
+{% endblock %}
+
+
+

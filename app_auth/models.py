@@ -43,8 +43,8 @@ class Menus(models.Model):
 
 class Perms(models.Model):
     """权限表"""
-    perms = models.CharField(max_length=64)
-    perms_msg = models.CharField(max_length=128,null=True)
+    perms_title = models.CharField(max_length=128)
+    perms_req = models.CharField(max_length=64)
     menus = models.ForeignKey(to="Menus",on_delete=models.CASCADE)
     def __unicode__(self):
         return  self.Perms

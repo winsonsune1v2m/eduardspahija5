@@ -1,6 +1,5 @@
 import datetime
 import json
-
 from statics.scripts import encryption
 from mtrops_v2.settings import SECRET_KEY
 from django.views import View
@@ -71,7 +70,7 @@ class RoleMG(View):
         return HttpResponse(data)
 
     def put(self,request):
-
+        """修改角色"""
         role_info = eval(request.body.decode())
         role_id = role_info.get("role_id")
         role_title = role_info.get("role_title")
@@ -329,6 +328,7 @@ class MenuMG(View):
         return HttpResponse(data)
 
 class PermsMG(View):
+
     """权限管理"""
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -344,17 +344,44 @@ class PermsMG(View):
 
         return  render(request,'rbac_perms.html',locals())
 
-
     def post(self,request):
-        perms = request.POST.get("perms")
-        perms_msg = request.POST.get("perms_msg")
+        """添加权限"""
+        perms_req = request.POST.get("perms_req")
+        perms_title = request.POST.get("perms_title")
         menus_id = request.POST.get("menus_id")
-        perms_obj = auth_db.Perms(perms=perms, perms_msg=perms_msg, menus_id=menus_id)
+        perms_obj = auth_db.Perms(perms_title=perms_title, perms_req=perms_req, menus_id=menus_id)
         perms_obj.save()
         data = "权限添加成功，请刷新查看！"
         return  HttpResponse(data)
 
+    def put(self,request):
+        """修改权限"""
+        req_info = eval(request.body.decode())
+        perms_id = req_info.get("perms_id")
+        perms_req = req_info.get("perms_req")
+        perms_title = req_info.get("perms_title")
+        menus_id = req_info.get("menus_id")
+        action = req_info.get("action")
+        if action:
+            perms_obj = auth_db.Perms.objects.get(id=perms_id)
+            perms_obj.perms_req = perms_req
+            perms_obj.perms_title = perms_title
+            perms_obj.menus_id = menus_id
+            perms_obj.save()
+            data = "权限已修改,请刷新查看！"
+        else:
+            edit_perms_obj = auth_db.Perms.objects.get(id=perms_id)
 
+            data= json.dumps({"perms_id":edit_perms_obj.id,"perms_title":edit_perms_obj.perms_title,"perms_req":edit_perms_obj.perms_req,"menus_id":edit_perms_obj.menus.id})
 
+        return HttpResponse(data)
+
+    def delete(self,request):
+        """删除权限"""
+        req_info = eval(request.body.decode())
+        perms_id = req_info.get("perms_id")
+        auth_db.Perms.objects.get(id=perms_id).delete()
+        data = "权限已删除,请刷新查看！"
+        return HttpResponse(data)
 
 

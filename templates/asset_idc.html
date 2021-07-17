@@ -1,0 +1,192 @@
+﻿{% extends "base.html" %}
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="javascript:;">资产信息</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-6">
+
+              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#idcModal"> 添加机房 </a>
+
+          </div>
+      </div>
+
+  </div>
+  <div class="panel-body">
+
+
+        <div style="margin-bottom: 10px;">
+
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5;">
+
+                      <th>机房</th>
+                      <th>描述</th>
+                      <th>管理员</th>
+                      <th>管理员电话</th>
+                      <th>管理员邮箱</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  {% for idc in idc_obj %}
+                    <tr>
+
+                      <td>{{ idc.idc_name }}</td>
+                      <td>{{ idc.idc_msg }}</td>
+                      <td>{{ idc.idc_admin }}</td>
+                      <td>{{ idc.idc_admin_phone }}</td>
+                      <td>{{ idc.idc_admin_email }}</td>
+                      <td style="padding-left:5px;">
+
+                        <a href="javascript:;" style="text-decoration:none;" idc_id="{{ idc.id }}" name="edit-idc" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
+
+                        <a href="javascript:;" style="text-decoration:none;" idc_id="{{ idc.id }}" name="del-idc" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination">
+                  </ul>
+                </div>
+
+            </div>
+
+        </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+<div class="modal fade" id="idcModal" tabindex="-1" role="dialog" aria-labelledby="idcModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="idcModalLabel">添加机房</h4>
+      </div>
+      <div class="modal-body">
+
+          <div class="form-group">
+            <label >机房名称</label>
+            <input  class="form-control"  placeholder="机房名称" id="idc-name">
+          </div>
+          <div class="form-group">
+            <label >描述</label>
+            <input  class="form-control"  placeholder="描述" id="idc-msg">
+          </div>
+          <div class="form-group">
+            <label >管理员</label>
+            <input  class="form-control"  placeholder="描述" id="idc-admin">
+          </div>
+
+          <div class="form-group">
+            <label >管理员电话</label>
+            <input  class="form-control"  placeholder="描述" id="idc-admin-phone">
+          </div>
+
+          <div class="form-group">
+            <label >管理员邮箱</label>
+            <input  class="form-control"  placeholder="描述" id="idc-admin-email">
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-idc">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="edit-idcModal" tabindex="-1" role="dialog" aria-labelledby="edit-idcModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-idcModalLabel">修改机房</h4>
+      </div>
+      <div class="modal-body">
+
+
+          <div class="form-group">
+            <label >机房名称</label>
+            <input  class="form-control"  placeholder="机房名称" id="edit-idc-name">
+          </div>
+          <div class="form-group">
+            <label >描述</label>
+            <input  class="form-control"  placeholder="描述" id="edit-idc-msg">
+          </div>
+          <div class="form-group">
+            <label >管理员</label>
+            <input  class="form-control"  placeholder="描述" id="edit-idc-admin">
+          </div>
+
+          <div class="form-group">
+            <label >管理员电话</label>
+            <input  class="form-control"  placeholder="描述" id="edit-idc-admin-phone">
+          </div>
+
+          <div class="form-group">
+            <label >管理员邮箱</label>
+            <input  class="form-control"  placeholder="描述" id="edit-idc-admin-email">
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-idc">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock  %}
+
+{% block js %}
+    <script type="text/javascript" src="/static/js/asset.js"></script>
+
+    <script type="text/javascript" >
+
+    </script>
+
+{% endblock %}
+
+

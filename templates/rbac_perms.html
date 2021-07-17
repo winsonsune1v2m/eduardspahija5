@@ -43,9 +43,10 @@
                 <table class="table table-hover table-bordered">
                   <thead>
                     <tr style="background-color: #f5f5f5;">
+                        <th>权限</th>
                         <th>菜单</th>
-                        <th>请求</th>
-                        <th>描述</th>
+                        <th>地址</th>
+                        <th>请求类型</th>
                         <th>操作</th>
                     </tr>
                   </thead>
@@ -53,12 +54,14 @@
 
                   {% for perms in perms_obj %}
                     <tr>
+
+                      <td>{{ perms.perms_title }}</td>
                       <td>{{ perms.menus.menu_title }}</td>
-                      <td>{{ perms.perms }}</td>
-                      <td>{{ perms.perms_msg }}</td>
+                      <td>{{ perms.menus.menu_url }}</td>
+                      <td>{{ perms.perms_req }}</td>
                       <td style="padding-left:5px;">
-                        <a href="javascript:;" style="text-decoration:none;" name="edit-perms" perms_id="{{ perms.perms_id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:;" style="text-decoration:none;" name="del-perms" perms_id="{{ perms.perms_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+                        <a href="javascript:;" style="text-decoration:none;" name="edit-perms" perms_id="{{ perms.id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
+                        <a href="javascript:;" style="text-decoration:none;" name="del-perms" perms_id="{{ perms.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
 
                       </td>
                     </tr>
@@ -93,14 +96,17 @@
       </div>
       <div class="modal-body">
           <div class="form-group">
-                <label>权限</label>
-                <select class="form-control" id="perms">
+            <label >权限</label>
+            <input  class="form-control"  placeholder="描述" id="perms-title">
+          </div>
 
+          <div class="form-group">
+                <label>请求类型</label>
+                <select class="form-control" id="perms-req">
                     <option value="post">增</option>
                     <option value="delete">删</option>
                     <option value="put">改</option>
                     <option value="get">查</option>
-
                 </select>
           </div>
 
@@ -113,10 +119,6 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label >描述</label>
-            <input  class="form-control"  placeholder="描述" id="perms-msg">
-          </div>
 
       </div>
       <div class="modal-footer">
@@ -137,31 +139,28 @@
         <h4 class="modal-title" id="edit-permsModalLabel">修改权限</h4>
       </div>
       <div class="modal-body">
+          <div class="form-group">
+            <label >权限</label>
+            <input  class="form-control"  placeholder="描述" id="edit-perms-title">
+          </div>
 
-         <div class="form-group">
-            <label>权限</label>
-            <select class="form-control" id="edit-perms">
-
-                <option value="post">增</option>
-                <option value="delete">删</option>
-                <option value="put">改</option>
-                <option value="get">查</option>
-
-            </select>
+          <div class="form-group">
+                <label>请求类型</label>
+                <select class="form-control" id="edit-perms-req">
+                    <option value="post">增</option>
+                    <option value="delete">删</option>
+                    <option value="put">改</option>
+                    <option value="get">查</option>
+                </select>
           </div>
 
           <div class="form-group">
             <label>菜单</label>
-            <select class="form-control" id="edit-menu">
+            <select class="form-control" id="edit-menus-id">
                 {% for i in menu_list %}
                 <option value="{{ i.id }}">{{ i.menu_title }}</option>
                 {% endfor %}
             </select>
-          </div>
-
-          <div class="form-group">
-            <label >描述</label>
-            <input  class="form-control"  placeholder="描述" id="edit-perms-msg">
           </div>
 
 
@@ -175,25 +174,6 @@
 </div>
 
 
-<div class="modal fade" id="edit-permspermsModal" tabindex="-1" perms="dialog" aria-labelledby="edit-permspermsModalLabel">
-  <div class="modal-dialog" perms="document">
-    <div class="modal-content" style="margin-top:135px;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="edit-permspermsModalLabel">角色授权</h4>
-      </div>
-      <div class="modal-body" style="max-height:500px;overflow:auto;">
-        <ul id="treeperms" class="ztree"></ul>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="sub-edit-permsperms">提交</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 {% endblock  %}
 
@@ -202,89 +182,7 @@
     <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.excheck.js"></script>
     <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.exedit.js"></script>
     <script type="text/javascript" src="/static/js/auth.js"></script>
-
     <script type="text/javascript" >
-
-    //授权
-    $(document).ready(function(){
-        $('td a[name="permsperms"]').click(function(){
-            var perms_id = $(this).attr("perms_id");
-
-            $.post("/rbac/permsperms/",{'perms_id':perms_id},function(data){
-            if (data == "权限不足"){
-                    alert("权限不足，请联系管理员！");
-                }else{
-
-                var info = eval('(' + data + ')');
-
-                   var setting = {
-                    view: {
-                        addHoverDom: false,
-                        removeHoverDom: false,
-                        selectedMulti: false,
-                        },
-                        check: {
-                            enable: true
-                        },
-                        data: {
-                            simpleData: {
-                                enable: true
-                            }
-                        },
-                        edit: {
-                            enable: false
-                        }
-                    };
-
-                var zNodes =info;
-
-
-
-
-                $.fn.zTree.init($("#treeperms"), setting, zNodes);
-
-
-                $("#sub-edit-permsperms").attr('perms_id',perms_id);
-
-
-                $("#edit-permspermsModal").modal('show');
-                }
-            });
-        });
-
-    });
-
-
-    //角色授权
-    $("#sub-edit-permsperms").click(function(){
-        var perms_id = $(this).attr("perms_id");
-        var treeObj=$.fn.zTree.getZTreeObj("treeperms");
-
-        var nodes = treeObj.getCheckedNodes(true);
-
-        var node_ids =new Array();
-        for(var i=0;i<nodes.length;i++){
-
-           node_ids[i] = nodes[i].id;
-        }
-        node_id_json = JSON.stringify(node_ids)
-
-        $.post("/rbac/addpermsperms/",{'node_id_json':node_id_json,'perms_id':perms_id},function(data){
-        if (data == "权限不足"){
-            alert("权限不足，请联系管理员！");
-        }else{
-
-            alert(data);
-
-            if (data == "权限已更新"){
-                location.reload();
-            }
-            }
-        });
-    });
-
-
-
 
 
     </script>
