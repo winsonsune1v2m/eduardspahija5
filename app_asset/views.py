@@ -1,0 +1,254 @@
+import json
+from statics.scripts import encryption
+from mtrops_v2.settings import SECRET_KEY
+from django.shortcuts import render,HttpResponse
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from app_asset import models as asset_db
+# Create your views here.
+
+
+
+class IDC(View):
+    """机房管理"""
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(IDC,self).dispatch(request, *args, **kwargs)
+
+    def get(self,request):
+        title = "IDC 机房"
+        idc_obj = asset_db.IDC.objects.all()
+        return render(request,'asset_idc.html',locals())
+
+    def post(self,request):
+        idc_name = request.POST.get("idc_name")
+        idc_msg = request.POST.get("idc_msg")
+        idc_admin = request.POST.get("idc_admin")
+        idc_admin_phone = request.POST.get("idc_admin_phone")
+        idc_admin_email = request.POST.get("idc_admin_email")
+        idc_obj = asset_db.IDC(idc_name=idc_name,idc_msg=idc_msg,idc_admin=idc_admin,idc_admin_phone=idc_admin_phone,
+                               idc_admin_email=idc_admin_email)
+        idc_obj.save()
+        data = '机房已添加，请刷新查看！'
+        return HttpResponse(data)
+
+    def put(self,request):
+        req_info = eval(request.body.decode())
+        idc_id = req_info.get("idc_id")
+        idc_name = req_info.get("idc_name")
+        idc_msg = req_info.get("idc_msg")
+        idc_admin = req_info.get("idc_admin")
+        idc_admin_phone = req_info.get("idc_admin_phone")
+        idc_admin_email = req_info.get("idc_admin_email")
+        action = req_info.get("action",None)
+
+        if action:
+            """修改IDC信息"""
+            idc_obj = asset_db.IDC.objects.get(id=idc_id)
+            idc_obj.idc_name = idc_name
+            idc_obj.idc_msg = idc_msg
+            idc_obj.idc_admin = idc_admin
+            idc_obj.idc_admin_phone = idc_admin_phone
+            idc_obj.idc_admin_email = idc_admin_email
+            idc_obj.save()
+            data = "IDC已修改，请刷新查看！"
+            return HttpResponse(data)
+        else:
+            """获取修改信息"""
+            idc_info = asset_db.IDC.objects.get(id=idc_id)
+            info_json = {'idc_id': idc_info.id, 'idc_name': idc_info.idc_name, 'idc_msg': idc_info.idc_msg,
+                         'idc_admin': idc_info.idc_admin,'idc_admin_phone': idc_info.idc_admin_phone,'idc_admin_email': idc_info.idc_admin_email}
+            data = json.dumps(info_json)
+
+        return HttpResponse(data)
+
+
+    def delete(self,request):
+        """删除权限"""
+        req_info = eval(request.body.decode())
+        idc_id = req_info.get("idc_id")
+        asset_db.IDC.objects.get(id=idc_id).delete()
+        data = "IDC 已删除,请刷新查看！"
+        return HttpResponse(data)
+
+
+class HostGroup(View):
+    """分组管理"""
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(HostGroup,self).dispatch(request, *args, **kwargs)
+
+    def get(self,request):
+        title = "主机分组"
+        group_obj = asset_db.HostGroup.objects.all()
+        return render(request,'asset_group.html',locals())
+
+
+    def post(self,request):
+        group_name = request.POST.get("group_name")
+        group_msg = request.POST.get("group_msg")
+        group_obj = asset_db.HostGroup(host_group_name=group_name,host_group_msg=group_msg)
+        group_obj.save()
+        data = '分组已添加，请刷新查看！'
+        return HttpResponse(data)
+
+    def put(self,request):
+        '''修改分组'''
+        req_info = eval(request.body.decode())
+        group_id = req_info.get("group_id")
+        group_name = req_info.get("group_name")
+        group_msg = req_info.get("group_msg")
+        action = req_info.get("action",None)
+
+        if action:
+            """修改group信息"""
+            group_obj = asset_db.HostGroup.objects.get(id=group_id)
+            group_obj.host_group_name = group_name
+            group_obj.host_group_msg = group_msg
+            group_obj.save()
+            data = "分组已修改，请刷新查看！"
+            return HttpResponse(data)
+        else:
+            """获取修改信息"""
+            group_info = asset_db.HostGroup.objects.get(id=group_id)
+            info_json = {'group_id': group_info.id, 'group_name': group_info.host_group_name, 'group_msg': group_info.host_group_msg}
+            data = json.dumps(info_json)
+
+        return HttpResponse(data)
+
+
+    def delete(self,request):
+        """删除分组"""
+        req_info = eval(request.body.decode())
+        group_id = req_info.get("group_id")
+        asset_db.HostGroup.objects.get(id=group_id).delete()
+        data = "分组已删除,请刷新查看！"
+        return HttpResponse(data)
+
+
+
+class Supplier(View):
+    """供应商管理"""
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(Supplier,self).dispatch(request, *args, **kwargs)
+
+    def get(self,request):
+        title = "设备厂商"
+        supplier_obj = asset_db.Supplier.objects.all()
+        return render(request,'asset_supplier.html',locals())
+
+
+    def post(self,request):
+        supplier = request.POST.get("supplier")
+        supplier_head = request.POST.get("supplier_head")
+        supplier_head_phone = request.POST.get("supplier_head_phone")
+        supplier_head_email = request.POST.get("supplier_head_email")
+        supplier_obj = asset_db.Supplier(supplier=supplier,supplier_head=supplier_head,supplier_head_phone=supplier_head_phone,
+                               supplier_head_email=supplier_head_email)
+        supplier_obj.save()
+        data = '供应商已添加，请刷新查看！'
+        return HttpResponse(data)
+
+    def put(self,request):
+        req_info = eval(request.body.decode())
+        supplier_id = req_info.get("supplier_id")
+        supplier = req_info.get("supplier")
+        supplier_head = req_info.get("supplier_head")
+        supplier_head_phone = req_info.get("supplier_head_phone")
+        supplier_head_email = req_info.get("supplier_head_email")
+        action = req_info.get("action",None)
+        if action:
+            """修改supplier信息"""
+            supplier_obj = asset_db.Supplier.objects.get(id=supplier_id)
+            supplier_obj.supplier = supplier
+            supplier_obj.supplier_head = supplier_head
+            supplier_obj.supplier_head_phone = supplier_head_phone
+            supplier_obj.supplier_head_email = supplier_head_email
+            supplier_obj.save()
+            data = "供应商已修改，请刷新查看！"
+            return HttpResponse(data)
+        else:
+            """获取修改信息"""
+            print(supplier_id)
+            supplier_info = asset_db.Supplier.objects.get(id=supplier_id)
+
+            info_json = {'supplier_id': supplier_info.id, 'supplier': supplier_info.supplier,'supplier_head': supplier_info.supplier_head,
+                         'supplier_head_phone': supplier_info.supplier_head_phone,'supplier_head_email': supplier_info.supplier_head_email}
+            data = json.dumps(info_json)
+
+        return HttpResponse(data)
+
+
+    def delete(self,request):
+        """删除权限"""
+        req_info = eval(request.body.decode())
+        supplier_id = req_info.get("supplier_id")
+        asset_db.Supplier.objects.get(id=supplier_id).delete()
+        data = "supplier 已删除,请刷新查看！"
+        return HttpResponse(data)
+
+
+
+class Host(View):
+    """服务器管理"""
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(Host,self).dispatch(request, *args, **kwargs)
+
+    def get(self,request):
+        title = "服务器"
+        supplier_obj = asset_db.Supplier.objects.all()
+        group_obj = asset_db.HostGroup.objects.all()
+        idc_obj = asset_db.IDC.objects.all()
+        host_obj = asset_db.Host.objects.all()
+        return render(request,'asset_host.html',locals())
+
+    def post(self,request):
+        host_ip = request.POST.get("host_ip")
+        host_remove_port = request.POST.get("host_remove_port")
+        host_user = request.POST.get("host_user")
+        host_passwd = request.POST.get("host_passwd")
+        host_type = request.POST.get("host_type")
+        host_group = request.POST.get("host_group")
+        host_idc = request.POST.get("host_idc")
+        host_supplier = request.POST.get("host_supplier")
+        host_msg = request.POST.get("host_msg")
+        serial_num = request.POST.get("serial_num")
+        purchase_date = request.POST.get("purchase_date")
+        overdue_date = request.POST.get("overdue_date")
+
+        if host_group == "0":
+            host_group = None
+
+        if host_idc == "0":
+            host_idc = None
+
+        if host_supplier == "0":
+            host_supplier = None
+
+        # 加密密码
+        key = SECRET_KEY[2:18]
+        pc = encryption.prpcrypt(key)  # 初始化密钥
+        aes_passwd = pc.encrypt(host_passwd)
+        host_obj = asset_db.Host(host_ip=host_ip,host_remove_port=host_remove_port,host_user=host_user,host_passwd=aes_passwd,host_type=host_type,
+                                 group_id=host_group,idc_id=host_idc,supplier_id=host_supplier,host_msg=host_msg,serial_num=serial_num,
+                                 purchase_date=purchase_date,overdue_date=overdue_date)
+        host_obj.save()
+        data = '服务器已添加，请刷新查看！'
+        return HttpResponse(data)
+
+
+
+class Netwk(View):
+    """网络设备管理"""
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(Netwk,self).dispatch(request, *args, **kwargs)
+
+    def get(self,request):
+        title = "网络设备"
+        return render(request,'asset_host.html',locals())
+
+
