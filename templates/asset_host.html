@@ -109,13 +109,15 @@
               <td>{{ host.idc.idc_name }}</td>
               <td>{{ host.status }}</td>
               <td style="padding-left:5px;">
-                <a href="/cmdb/detailinfo/ip={{ host.id }}" name="info" style="text-decoration:none;" data-toggle="tooltip" data-placement="left" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;
 
-                <a href="javascript:;" name="edit" ip="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="修改"><span class="fa fa-pencil" ></span> </a>&nbsp;&nbsp;&nbsp;
 
-                <a href="javascript:;" name="del"  ip="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="删除"><span class="fa fa-trash"></span> </a>&nbsp;&nbsp;&nbsp;
+                <a href="javascript:;" name="edit-host" host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil" ></span> </a>&nbsp;&nbsp;&nbsp;
 
-                <a href="javascript:;" name="connect"  ip="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
+                <a href="javascript:;" name="del-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="删除"><span class="fa fa-trash"></span> </a>&nbsp;&nbsp;&nbsp;
+
+                <a href="/cmdb/detailinfo/ip={{ host.id }}" name="info-host" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;
+
+                <a href="javascript:;" name="connect-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
 
               </td>
             </tr>
@@ -190,9 +192,9 @@
                   <div class="form-group">
                     <label>设备类型</label>
                     <select  id="host-type" class="form-control">
-                         <option value="服务器">物理机</option>
-                         <option value="防火墙">虚拟机</option>
-                         <option value="交换机">云主机</option>
+                         <option value="物理机">物理机</option>
+                         <option value="虚拟机">虚拟机</option>
+                         <option value="云主机">云主机</option>
                      </select>
                   </div>
 
@@ -297,7 +299,7 @@
               <div class="col-sm-6">
                   <div class="form-group">
                     <label >IP地址</label>
-                    <input  class="form-control"  placeholder="IP地址" id="edit-host-IP">
+                    <input  class="form-control"  placeholder="IP地址" id="edit-host-ip">
                   </div>
 
               </div>
@@ -333,9 +335,9 @@
                   <div class="form-group">
                     <label>设备类型</label>
                     <select  id="edit-host-type" class="form-control">
-                         <option value="服务器">物理机</option>
-                         <option value="防火墙">虚拟机</option>
-                         <option value="交换机">云主机</option>
+                         <option value="物理机">物理机</option>
+                         <option value="虚拟机">虚拟机</option>
+                         <option value="云主机">云主机</option>
                      </select>
                   </div>
 

@@ -35,6 +35,6 @@ class prpcrypt():
 
 if __name__ == '__main__':
     pc = prpcrypt('keyskeyskeyskeys')  # 初始化密钥
-    e = pc.encrypt("0123456789ABCDEF")
+    e = pc.encrypt('0123456789ABCDEF')
     d = pc.decrypt(e)
-    print(e, d)
+    print(type(e),d)

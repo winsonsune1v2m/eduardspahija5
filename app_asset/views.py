@@ -171,7 +171,6 @@ class Supplier(View):
             return HttpResponse(data)
         else:
             """获取修改信息"""
-            print(supplier_id)
             supplier_info = asset_db.Supplier.objects.get(id=supplier_id)
 
             info_json = {'supplier_id': supplier_info.id, 'supplier': supplier_info.supplier,'supplier_head': supplier_info.supplier_head,
@@ -232,12 +231,91 @@ class Host(View):
         key = SECRET_KEY[2:18]
         pc = encryption.prpcrypt(key)  # 初始化密钥
         aes_passwd = pc.encrypt(host_passwd)
+
         host_obj = asset_db.Host(host_ip=host_ip,host_remove_port=host_remove_port,host_user=host_user,host_passwd=aes_passwd,host_type=host_type,
                                  group_id=host_group,idc_id=host_idc,supplier_id=host_supplier,host_msg=host_msg,serial_num=serial_num,
                                  purchase_date=purchase_date,overdue_date=overdue_date)
         host_obj.save()
         data = '服务器已添加，请刷新查看！'
         return HttpResponse(data)
+
+    def put(self,request):
+        req_info = eval(request.body.decode())
+        host_id = req_info.get("host_id")
+        host_ip = req_info.get("host_ip")
+        host_remove_port = req_info.get("host_remove_port")
+        host_user = req_info.get("host_user")
+        host_passwd = req_info.get("host_passwd")
+        host_type = req_info.get("host_type")
+        host_group = req_info.get("host_group")
+        host_idc = req_info.get("host_idc")
+        host_supplier = req_info.get("host_supplier")
+        host_msg = req_info.get("host_msg")
+        serial_num = req_info.get("serial_num")
+        purchase_date = req_info.get("purchase_date")
+        overdue_date = req_info.get("overdue_date")
+        action = req_info.get("action",None)
+        if action:
+            """修改服务器信息"""
+            # 加密密码
+            key = SECRET_KEY[2:18]
+            pc = encryption.prpcrypt(key)  # 初始化密钥
+            aes_passwd = pc.encrypt(host_passwd)
+
+            if host_group == "0":
+                host_group = None
+
+            if host_idc == "0":
+                host_idc = None
+
+            if host_supplier == "0":
+                host_supplier = None
+
+            host_obj = asset_db.Host.objects.get(id=host_id)
+            host_obj.host_ip = host_ip
+            host_obj.host_remove_port = host_remove_port
+            host_obj.host_user = host_user
+            host_obj.host_passwd = aes_passwd
+            host_obj.host_type = host_type
+            host_obj.group_id = host_group
+            host_obj.idc_id = host_idc
+            host_obj.supplier_id = host_supplier
+            host_obj.host_msg = host_msg
+            host_obj.serial_num = serial_num
+            host_obj.purchase_date = purchase_date
+            host_obj.overdue_date = overdue_date
+
+            host_obj.save()
+            data = "服务器已修改，请刷新查看！"
+            return HttpResponse(data)
+        else:
+            """获取修改信息"""
+            host_info = asset_db.Host.objects.get(id=host_id)
+
+            #密码解密
+            key = SECRET_KEY[2:18]
+            pc = encryption.prpcrypt(key)
+            passwd =host_info.host_passwd.strip("b").strip("'").encode(encoding="utf-8")
+            de_passwd = pc.decrypt(passwd).decode()
+
+
+            info_json = {'host_id': host_info.id, 'host_ip': host_info.host_ip,'host_remove_port': host_info.host_remove_port,
+                         'host_user': host_info.host_user,'host_passwd': de_passwd,'host_type': host_info.host_type,
+                         'host_group': host_info.group_id,'host_idc': host_info.idc_id,'host_supplier': host_info.supplier_id,
+                         'host_msg': host_info.host_msg,'serial_num': host_info.serial_num,'purchase_date': host_info.purchase_date,'overdue_date': host_info.overdue_date}
+            data = json.dumps(info_json,ensure_ascii=False)
+
+        return HttpResponse(data)
+
+    def delete(self,request):
+        """删除服务器"""
+        req_info = eval(request.body.decode())
+        host_id = req_info.get("host_id")
+        asset_db.Host.objects.get(id=host_id).delete()
+        data = "服务器已删除,请刷新查看！"
+        return HttpResponse(data)
+
+
 
 
 

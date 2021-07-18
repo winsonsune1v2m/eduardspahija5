@@ -251,3 +251,80 @@ $("#sub-host").click(function(){
     })
 
 });
+
+//获取编辑host信息
+$('td a[name="edit-host"]').click(function() {
+    var host_id = $(this).attr("host_id");
+    $.ajax({
+        url: "/asset/host/",
+        type: "PUT",
+        data: JSON.stringify({'host_id': host_id}),
+        success: function (data) {
+            var info = eval('(' + data + ')');
+            $("#edit-host-ip").val(info.host_ip);
+            $("#edit-host-remove-port").val(info.host_remove_port);
+            $("#edit-host-user").val(info.host_user);
+            $("#edit-host-passwd").val(info.host_passwd);
+            $("#edit-host-type").val(info.host_type);
+            $("#edit-host-group").val(info.host_group);
+            $("#edit-host-idc").val(info.host_idc);
+            $("#edit-host-supplier").val(info.host_supplier);
+            $("#edit-host-msg").val(info.host_msg);
+            $("#edit-host-serial-num").val(info.serial_num);
+            $("#edit-host-purchase-date").val(info.purchase_date);
+            $("#edit-host-overdue-date").val(info.overdue_date);
+            $("#sub-edit-host").attr('host_id',info.host_id);
+            $("#edit-hostModal").modal('show');
+        }
+    });
+});
+
+
+//修改supplier信息
+$("#sub-edit-host").click(function() {
+    var host_id = $(this).attr("host_id");
+    var host_ip = $("#edit-host-ip").val();
+    var host_remove_port = $("#edit-host-remove-port").val();
+    var host_user = $("#edit-host-user").val();
+    var host_passwd = $("#edit-host-passwd").val();
+    var host_type = $("#edit-host-type").val();
+    var host_group = $("#edit-host-group").val();
+    var host_idc = $("#edit-host-idc").val();
+    var host_supplier = $("#edit-host-supplier").val();
+    var host_msg = $("#edit-host-msg").val();
+    var serial_num = $("#edit-host-serial-num").val();
+    var purchase_date = $("#edit-host-purchase-date").val();
+    var overdue_date = $("#edit-host-overdue-date").val();
+    $.ajax({
+        url: "/asset/host/",
+        type: "PUT",
+        data: JSON.stringify({'action':'edit','host_id':host_id,'host_ip':host_ip,"host_remove_port":host_remove_port,"host_user":host_user,"host_passwd":host_passwd,
+            "host_type":host_type,"host_group":host_group,"host_idc":host_idc,"host_supplier":host_supplier,"host_msg":host_msg,
+            "serial_num":serial_num,"purchase_date":purchase_date,"overdue_date":overdue_date}),
+        success: function (data) {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#edit-hostModal").modal("hide");
+            $("#alert").show();
+        }
+    });
+});
+
+//删除服务器
+$("td a[name='del-host']").click(function(){
+    var host_id = $(this).attr('host_id');
+    var statu = confirm("是否确认删除！");
+    if (statu==true)
+    {
+        $.ajax({
+            url: "/asset/host/",
+            type: "DELETE",
+            data: JSON.stringify({'host_id':host_id}),
+            success: function(data) {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+             }
+        });
+    }
+});
