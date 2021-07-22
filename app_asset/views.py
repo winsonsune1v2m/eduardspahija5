@@ -327,6 +327,121 @@ class Netwk(View):
 
     def get(self,request):
         title = "网络设备"
-        return render(request,'asset_host.html',locals())
+        supplier_obj = asset_db.Supplier.objects.all()
+        group_obj = asset_db.HostGroup.objects.all()
+        idc_obj = asset_db.IDC.objects.all()
+        netwk_obj = asset_db.Netwk.objects.all()
+        return render(request,'asset_netwk.html',locals())
+
+    def post(self,request):
+        netwk_ip = request.POST.get("netwk_ip")
+        netwk_remove_port = request.POST.get("netwk_remove_port")
+        netwk_user = request.POST.get("netwk_user")
+        netwk_passwd = request.POST.get("netwk_passwd")
+        netwk_type = request.POST.get("netwk_type")
+        netwk_group = request.POST.get("netwk_group")
+        netwk_idc = request.POST.get("netwk_idc")
+        netwk_supplier = request.POST.get("netwk_supplier")
+        netwk_msg = request.POST.get("netwk_msg")
+        serial_num = request.POST.get("serial_num")
+        purchase_date = request.POST.get("purchase_date")
+        overdue_date = request.POST.get("overdue_date")
+
+        if netwk_group == "0":
+            netwk_group = None
+
+        if netwk_idc == "0":
+            netwk_idc = None
+
+        if netwk_supplier == "0":
+            netwk_supplier = None
+
+        # 加密密码
+        key = SECRET_KEY[2:18]
+        pc = encryption.prpcrypt(key)  # 初始化密钥
+        aes_passwd = pc.encrypt(netwk_passwd)
+
+        netwk_obj = asset_db.Netwk(netwk_ip=netwk_ip,netwk_remove_port=netwk_remove_port,netwk_user=netwk_user,netwk_passwd=aes_passwd,netwk_type=netwk_type,
+                                 group_id=netwk_group,idc_id=netwk_idc,supplier_id=netwk_supplier,netwk_msg=netwk_msg,serial_num=serial_num,
+                                 purchase_date=purchase_date,overdue_date=overdue_date)
+        netwk_obj.save()
+        data = '设备已添加，请刷新查看！'
+        return HttpResponse(data)
+
+    def put(self,request):
+        req_info = eval(request.body.decode())
+        netwk_id = req_info.get("netwk_id")
+        netwk_ip = req_info.get("netwk_ip")
+        netwk_remove_port = req_info.get("netwk_remove_port")
+        netwk_user = req_info.get("netwk_user")
+        netwk_passwd = req_info.get("netwk_passwd")
+        netwk_type = req_info.get("netwk_type")
+        netwk_group = req_info.get("netwk_group")
+        netwk_idc = req_info.get("netwk_idc")
+        netwk_supplier = req_info.get("netwk_supplier")
+        netwk_msg = req_info.get("netwk_msg")
+        serial_num = req_info.get("serial_num")
+        purchase_date = req_info.get("purchase_date")
+        overdue_date = req_info.get("overdue_date")
+        action = req_info.get("action",None)
+        if action:
+            """修改网络设备信息"""
+            # 加密密码
+            key = SECRET_KEY[2:18]
+            pc = encryption.prpcrypt(key)  # 初始化密钥
+            aes_passwd = pc.encrypt(netwk_passwd)
+
+            if netwk_group == "0":
+                netwk_group = None
+
+            if netwk_idc == "0":
+                netwk_idc = None
+
+            if netwk_supplier == "0":
+                netwk_supplier = None
+
+            netwk_obj = asset_db.Netwk.objects.get(id=netwk_id)
+            netwk_obj.netwk_ip = netwk_ip
+            netwk_obj.netwk_remove_port = netwk_remove_port
+            netwk_obj.netwk_user = netwk_user
+            netwk_obj.netwk_passwd = aes_passwd
+            netwk_obj.netwk_type = netwk_type
+            netwk_obj.group_id = netwk_group
+            netwk_obj.idc_id = netwk_idc
+            netwk_obj.supplier_id = netwk_supplier
+            netwk_obj.netwk_msg = netwk_msg
+            netwk_obj.serial_num = serial_num
+            netwk_obj.purchase_date = purchase_date
+            netwk_obj.overdue_date = overdue_date
+
+            netwk_obj.save()
+            data = "设备已修改，请刷新查看！"
+            return HttpResponse(data)
+        else:
+            """获取修改信息"""
+            netwk_info = asset_db.Netwk.objects.get(id=netwk_id)
+
+            #密码解密
+            key = SECRET_KEY[2:18]
+            pc = encryption.prpcrypt(key)
+            passwd =netwk_info.netwk_passwd.strip("b").strip("'").encode(encoding="utf-8")
+            de_passwd = pc.decrypt(passwd).decode()
+
+
+            info_json = {'netwk_id': netwk_info.id, 'netwk_ip': netwk_info.netwk_ip,'netwk_remove_port': netwk_info.netwk_remove_port,
+                         'netwk_user': netwk_info.netwk_user,'netwk_passwd': de_passwd,'netwk_type': netwk_info.netwk_type,
+                         'netwk_group': netwk_info.group_id,'netwk_idc': netwk_info.idc_id,'netwk_supplier': netwk_info.supplier_id,
+                         'netwk_msg': netwk_info.netwk_msg,'serial_num': netwk_info.serial_num,'purchase_date': netwk_info.purchase_date,'overdue_date': netwk_info.overdue_date}
+            data = json.dumps(info_json,ensure_ascii=False)
+
+        return HttpResponse(data)
+
+    def delete(self,request):
+        """删除网络设备"""
+        req_info = eval(request.body.decode())
+        netwk_id = req_info.get("netwk_id")
+        asset_db.Netwk.objects.get(id=netwk_id).delete()
+        data = "设备已删除,请刷新查看！"
+        return HttpResponse(data)
 
 

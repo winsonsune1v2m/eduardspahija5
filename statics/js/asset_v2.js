@@ -280,7 +280,7 @@ $('td a[name="edit-host"]').click(function() {
 });
 
 
-//修改supplier信息
+//修改服务器信息
 $("#sub-edit-host").click(function() {
     var host_id = $(this).attr("host_id");
     var host_ip = $("#edit-host-ip").val();
@@ -320,6 +320,110 @@ $("td a[name='del-host']").click(function(){
             url: "/asset/host/",
             type: "DELETE",
             data: JSON.stringify({'host_id':host_id}),
+            success: function(data) {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+             }
+        });
+    }
+});
+
+
+/////////////////////////网络设备管理/////////////////////////////
+//添加网络设备
+$("#sub-netwk").click(function(){
+    var netwk_ip = $("#netwk-ip").val();
+    var netwk_remove_port = $("#netwk-remove-port").val();
+    var netwk_user = $("#netwk-user").val();
+    var netwk_passwd = $("#netwk-passwd").val();
+    var netwk_type = $("#netwk-type").val();
+    var netwk_group = $("#netwk-group").val();
+    var netwk_idc = $("#netwk-idc").val();
+    var netwk_supplier = $("#netwk-supplier").val();
+    var netwk_msg = $("#netwk-msg").val();
+    var serial_num = $("#netwk-serial-num").val();
+    var purchase_date = $("#netwk-purchase-date").val();
+    var overdue_date = $("#netwk-overdue-date").val();
+    $.post("/asset/netwk/",{'netwk_ip':netwk_ip,"netwk_remove_port":netwk_remove_port,"netwk_user":netwk_user,"netwk_passwd":netwk_passwd,
+            "netwk_type":netwk_type,"netwk_group":netwk_group,"netwk_idc":netwk_idc,"netwk_supplier":netwk_supplier,"netwk_msg":netwk_msg,
+            "serial_num":serial_num,"purchase_date":purchase_date,"overdue_date":overdue_date},function(data){
+        $("#msg-alert").empty();
+        $("#msg-alert").append(data);
+        $("#netwkModal").modal("hide");
+        $("#alert").show();
+    })
+
+});
+
+//获取修改网络设备的信息
+$('td a[name="edit-netwk"]').click(function() {
+    var netwk_id = $(this).attr("netwk_id");
+    $.ajax({
+        url: "/asset/netwk/",
+        type: "PUT",
+        data: JSON.stringify({'netwk_id': netwk_id}),
+        success: function (data) {
+            var info = eval('(' + data + ')');
+            $("#edit-netwk-ip").val(info.netwk_ip);
+            $("#edit-netwk-remove-port").val(info.netwk_remove_port);
+            $("#edit-netwk-user").val(info.netwk_user);
+            $("#edit-netwk-passwd").val(info.netwk_passwd);
+            $("#edit-netwk-type").val(info.netwk_type);
+            $("#edit-netwk-group").val(info.netwk_group);
+            $("#edit-netwk-idc").val(info.netwk_idc);
+            $("#edit-netwk-supplier").val(info.netwk_supplier);
+            $("#edit-netwk-msg").val(info.netwk_msg);
+            $("#edit-netwk-serial-num").val(info.serial_num);
+            $("#edit-netwk-purchase-date").val(info.purchase_date);
+            $("#edit-netwk-overdue-date").val(info.overdue_date);
+            $("#sub-edit-netwk").attr('netwk_id',info.netwk_id);
+            $("#edit-netwkModal").modal('show');
+        }
+    });
+});
+
+
+//修改网络设备信息
+$("#sub-edit-netwk").click(function() {
+    var netwk_id = $(this).attr("netwk_id");
+    var netwk_ip = $("#edit-netwk-ip").val();
+    var netwk_remove_port = $("#edit-netwk-remove-port").val();
+    var netwk_user = $("#edit-netwk-user").val();
+    var netwk_passwd = $("#edit-netwk-passwd").val();
+    var netwk_type = $("#edit-netwk-type").val();
+    var netwk_group = $("#edit-netwk-group").val();
+    var netwk_idc = $("#edit-netwk-idc").val();
+    var netwk_supplier = $("#edit-netwk-supplier").val();
+    var netwk_msg = $("#edit-netwk-msg").val();
+    var serial_num = $("#edit-netwk-serial-num").val();
+    var purchase_date = $("#edit-netwk-purchase-date").val();
+    var overdue_date = $("#edit-netwk-overdue-date").val();
+    $.ajax({
+        url: "/asset/netwk/",
+        type: "PUT",
+        data: JSON.stringify({'action':'edit','netwk_id':netwk_id,'netwk_ip':netwk_ip,"netwk_remove_port":netwk_remove_port,"netwk_user":netwk_user,"netwk_passwd":netwk_passwd,
+            "netwk_type":netwk_type,"netwk_group":netwk_group,"netwk_idc":netwk_idc,"netwk_supplier":netwk_supplier,"netwk_msg":netwk_msg,
+            "serial_num":serial_num,"purchase_date":purchase_date,"overdue_date":overdue_date}),
+        success: function (data) {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#edit-netwkModal").modal("hide");
+            $("#alert").show();
+        }
+    });
+});
+
+//删除网络设备
+$("td a[name='del-netwk']").click(function(){
+    var netwk_id = $(this).attr('netwk_id');
+    var statu = confirm("是否确认删除！");
+    if (statu==true)
+    {
+        $.ajax({
+            url: "/asset/netwk/",
+            type: "DELETE",
+            data: JSON.stringify({'netwk_id':netwk_id}),
             success: function(data) {
                 $("#msg-alert").empty();
                 $("#msg-alert").append(data);

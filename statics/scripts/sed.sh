@@ -1,1 +1,0 @@
-sed -i "/#\*\/1 \* \* \* \* \/opt\/scripts\/scrapy\/get_num.py /d"  /var/spool/cron/opadmin

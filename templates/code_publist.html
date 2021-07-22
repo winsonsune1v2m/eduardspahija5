@@ -1,0 +1,200 @@
+﻿{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;" >
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="#">发布管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-3">
+              <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#publistModal"> 新建发布 </a>
+          </div>
+
+          <div class="col-sm-6" style="display:inline-block">
+              <div style="width:200px;display: inline-block;">
+                    <select  class="form-control" id="select-site">
+                         <option value="0">站点</option>
+                         {% for site in site_list %}
+                         <option value="{{ site.site_id }}">{{ site.site_name }}</option>
+                         {% endfor %}
+                     </select>
+                </div>
+
+              <div style="width:200px;display: inline-block;">
+                <select  class="form-control" id="select-project">
+                     <option value="0">项目</option>
+                     {% for project in project_list %}
+                     <option value="{{ project.project_id }}">{{ project.project_name }}</option>
+                     {% endfor %}
+                 </select>
+              </div>
+
+              <div style="width:200px;display: inline-block;">
+                <select  class="form-control" id="select-ip">
+                     <option value="0">IP地址</option>
+                    {% for ip in ip_list %}
+                     <option value="{{ ip }}">{{ ip }}</option>
+                    {%  endfor %}
+                 </select>
+              </div>
+          </div>
+
+      </div>
+
+  </div>
+  <div class="panel-body" id="site-info">
+
+        <div style="margin-bottom: 10px;">
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5; text-align:center">
+                      <th>站点名称</th>
+                      <th>IP地址</th>
+                      <th>目录</th>
+                      <th>项目</th>
+                      <th>描述</th>
+                      <th>版本号</th>
+                      <th>版本信息</th>
+                      <th>作者</th>
+                      <th>发布时间</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in publist_obj %}
+                    <tr>
+                      <td>{{ i.gitcode.git_name }}</td>
+                      <td>{{ i.host_ip.host_ip }}</td>
+                      <td>{{ i.publist_dir }}</td>
+                      <td>{{ i.gitcode.project.project_name }}</td>
+                      <td>{{ i.publist_msg }}</td>
+                      <td>
+                          <div style="max-width:120px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
+                              {{ i.current_version }}
+                          </div>
+                      </td>
+                      <td>
+
+                          <div style="max-width:150px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
+                              {{ i.version_info }}
+                          </div>
+
+                      </td>
+                      <td>{{ i.author }}</td>
+                      <td>{{ i.publist_date }}</td>
+                      <td style="padding-left:5px;">
+                        <a href="#" name="publist" style="text-decoration:none;" post_id="{{ i.post_id }}"><span class="fa fa-cloud-download" data-toggle="tooltip" data-placement="top" title="版本更新"></span> </a>&nbsp
+                        <a href="/code/recordlog/post_id={{ i.post_id }}" name="publist-log" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="更新记录"><span class="fa fa-list"></span></a>&nbsp
+                        <a href="#" name="del-publist" style="text-decoration:none;" post_id="{{ i.post_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa  fa-trash"></span> </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination"></ul>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+<div class="modal fade" id="publistModal" tabindex="-1" role="dialog" aria-labelledby="publistModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="publistModalLabel">新建发布</h4>
+      </div>
+      <div class="modal-body">
+
+         <form>
+          <div class="form-group">
+            <label >站点名称</label>
+              <select  class="form-control"  placeholder="站点名称" id="gitcode-name">
+                  {% for i  in gitcode_obj %}
+                  <option value="{{ i.id }}">{{ i.git_name }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          <div class="form-group" >
+            <label >发布地址</label>
+
+              <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple" id="publist-ip" style="width: 100%">
+                  {% for i in host_obj %}
+                  <option value="{{ i.id }}">{{ i.host_ip }}</option>
+                  {% endfor %}
+
+              </select>
+          </div>
+          <div class="form-group">
+            <label >目录</label>
+            <input  class="form-control"  placeholder="/dirName/" id="publist-dir">
+          </div>
+
+          <div class="form-group">
+            <label >站点描述</label>
+            <input  class="form-control"  placeholder="站点描述" id="publist-msg">
+          </div>
+
+<!--
+          <div class="alert alert-danger" role="alert">php服务异常，请检查该服务是否正常运行</div>
+-->
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+        <button type="button" class="btn btn-primary" id="sub-publist">发布</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock  %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/code_v2.js"></script>
+
+<script type="text/javascript">
+
+    $("#publist-ip").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    })
+</script>
+{% endblock %}
+
+

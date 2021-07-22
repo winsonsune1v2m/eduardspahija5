@@ -24,5 +24,6 @@ urlpatterns = [
     path("",Index.as_view()),
     path("auth/",include("app_auth.urls")),
     path("asset/",include("app_asset.urls")),
+    path("code/",include("app_code.urls")),
 
 ]

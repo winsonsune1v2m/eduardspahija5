@@ -10,7 +10,8 @@
 
     <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="/static/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css"/>
+
+    <link href="/static/select2/dist/css/select2.css" rel="stylesheet"/>
 
     <link rel="stylesheet" href="/static/css/base.css">
       {% block css %}
@@ -42,34 +43,18 @@
             <ul id="menu-left">
 
                 <a href="/" style="display:block;text-decoration:none">
-                   <i class="fa fa-home fa-2x" style="margin-left:12px"></i><span class="nav-text">首页</span>
+                   <i class="fa fa-dashboard fa-lg" style="margin-left:16px"></i><span class="nav-text">首页</span>
 
                 </a>
 
-                <li class="nav-item">
 
-                    <a href="javascript:" style="display:block;text-decoration:none">
-                        <i class="fa fa-home fa-2x" style="margin-left:12px"></i><span name="menu-one" class="nav-text">后台管理</span>
-
-                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;padding-top: 10px"></i>
-
-                    </a>
-
-                    <ul class="nav-ul nav" style="display:none">
-                        <li ><a href="/auth/role/" style="display:block;text-decoration:none;padding-left: 55px;"><span>角色管理</span></a></li>
-                        <li ><a href="/auth/user/" style="display:block;text-decoration:none;padding-left: 55px;"><span>用户管理</span></a></li>
-                        <li ><a href="/auth/menu/" style="display:block;text-decoration:none;padding-left: 55px;"><span>菜单管理</span></a></li>
-                        <li ><a href="/auth/perms/" style="display:block;text-decoration:none;padding-left: 55px;"><span>权限管理</span></a></li>
-                    </ul>
-
-                </li>
 
                 <li class="nav-item">
 
                     <a href="javascript:" style="display:block;text-decoration:none">
-                        <i class="fa fa-home fa-2x" style="margin-left:12px"></i><span name="menu-one" class="nav-text">资产管理</span>
+                        <i class="fa fa-lg fa-bars" style="margin-left:16px"></i><span name="menu-one" class="nav-text">资产管理</span>
 
-                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;padding-top: 10px"></i>
+                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;padding-top: 2px"></i>
 
                     </a>
 
@@ -83,6 +68,48 @@
 
                 </li>
 
+                <li class="nav-item">
+
+                    <a href="javascript:" style="display:block;text-decoration:none">
+                        <i class="fa fa-lg fa-code" style="margin-left:16px"></i><span name="menu-one" class="nav-text">代码管理</span>
+
+                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;"></i>
+
+                    </a>
+
+                    <ul class="nav-ul nav" style="display: none;">
+
+                            <li><a href="/code/project/" style="display:block;text-decoration:none;padding-left:55px;"><span>项目管理</span></a></li>
+
+                            <li><a href="/code/gitcode/" style="display:block;text-decoration:none;padding-left:55px;"><span>代码管理</span></a></li>
+
+                            <li><a href="/code/publist/" style="display:block;text-decoration:none;padding-left:55px;"><span>代码发布</span></a></li>
+
+                            <li><a href="/code/log/" style="display:block;text-decoration:none;padding-left:55px;"><span>发布记录</span></a></li>
+
+                    </ul>
+
+                </li>
+
+
+
+                <li class="nav-item">
+
+                    <a href="javascript:" style="display:block;text-decoration:none">
+                        <i class="fa fa-lg fa-address-card" style="margin-left:16px"></i><span name="menu-one" class="nav-text">后台管理</span>
+
+                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;padding-top: 2px"></i>
+
+                    </a>
+
+                    <ul class="nav-ul nav" style="display:none">
+                        <li ><a href="/auth/role/" style="display:block;text-decoration:none;padding-left: 55px;"><span>角色管理</span></a></li>
+                        <li ><a href="/auth/user/" style="display:block;text-decoration:none;padding-left: 55px;"><span>用户管理</span></a></li>
+                        <li ><a href="/auth/menu/" style="display:block;text-decoration:none;padding-left: 55px;"><span>菜单管理</span></a></li>
+                        <li ><a href="/auth/perms/" style="display:block;text-decoration:none;padding-left: 55px;"><span>权限管理</span></a></li>
+                    </ul>
+
+                </li>
 
                 {% for i in request.session.menu_all_list %}
 
@@ -385,10 +412,8 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/static/js/jquery-3.2.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"  ></script>
-
-    <script type="text/javascript" src="/static/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
     <script src="/static/js/base.js"></script>
-
+    <script src="/static/select2/dist/js/select2.js"></script>
 
     <script>
 
