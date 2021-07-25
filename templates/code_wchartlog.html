@@ -1,0 +1,218 @@
+﻿{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+
+{% endblock %}
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;" >
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="javascript:;">发布管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-3">
+              <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#postModal"> 更新请求 </a>
+          </div>
+          <div class="col-sm-3 pull-right">
+            <div class="input-group">
+              <input type="text" class="form-control" style="color: #20B320;" id="search-key" placeholder="search ...">
+
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" id="sub-search" >查询</button>
+                </span>
+            </div>
+          </div>
+
+      </div>
+
+  </div>
+
+  <div class="panel-body" id="site-info">
+
+        <div style="margin-bottom: 10px;">
+            <div class="col-sm-12" id="tb-log">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5; text-align:center">
+                      <th>站点名称</th>
+                      <th>用户</th>
+                      <th>更新内容</th>
+                      <th>ID</th>
+                      <th>时间</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="uplog_table">
+                    {% for i in wchartlog_obj %}
+                    <tr>
+                      <td>{{ i.site_name }}</td>
+                      <td>{{ i.from_user }}</td>
+                      <td ><div style="max-width:120px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" name="up-connect">{{ i.up_connect }}</div></td>
+                      <td>{{ i.up_id }}</td>
+                      <td>{{ i.add_time|date:"Y-m-d H:i:s" }}</td>
+                       {% if i.status == 'done' %}
+                      <td style="color:green">{{ i.status }}</td>
+                       {% else %}
+                      <td style="color:red">{{ i.status }}</td>
+                      {% endif %}
+                      <td>
+                      <a href="javascript:;" style="text-decoration:none;" name="up-wchartlog" git_id="{{ i.id }}" data-toggle="tooltip" data-placement="left" title="更新"><span class="fa fa-cloud-download"></span> </a>&nbsp;&nbsp;&nbsp;
+
+                      <a href="javascript:;" style="text-decoration:none;" name="del-wchartlog" git_id="{{ i.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+                      </td>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination">
+                  </ul>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+
+
+{% endblock  %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/code.js"></script>
+
+<script type="text/javascript">
+
+//前端分页
+var limit = 13; //每页显示数据条数
+var total = $('#uplog_table').find('tr').length;
+var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
+
+function doPage(n){
+    if(allPage>1){
+        var prevPage='',nextPage='',pageHtml='';
+
+        if (n===1) {
+            prevPage = '<li class="disabled"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+        } else if(n===allPage){
+            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li class="disabled"><a href="javascript:;">下一页</a></li>';
+        } else {
+            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+        }
+
+        if (n<=5){
+            for(var i=1;i<=5;i++){
+                if (n===i) {
+                    pageHtml += '<li class="active"><a href="javascript:;">'+ i +'</a></li>';
+                }else{
+                    if(i<=allPage) {
+                        pageHtml += '<li data-page="' + i + '"><a href="javascript:;">' + i + '</a></li>';
+                    }
+                }
+
+            }
+        }else{
+            for(var i=1;i<=5;i++){
+
+                cur_page = parseInt(parseInt((n-1)/5)*5);
+
+                if (n===(cur_page+i)){
+                    pageHtml += '<li class="active"><a href="javascript:;">'+ (cur_page+i) +'</a></li>';
+                }else{
+                    if((i+cur_page)<=allPage){
+                        pageHtml += '<li data-page="'+ (i+cur_page) +'"><a href="javascript:;">'+ (i+cur_page) +'</a></li>';
+                    }
+                }
+
+            }
+
+        }
+
+
+        $('#pagination').html(prevPage+pageHtml+nextPage);
+    }
+
+    $('#uplog_table').find('tr').hide();
+    if(n===1){
+        $('#uplog_table').find('tr:lt('+ limit +')').show();
+    }else{
+        $('#uplog_table').find('tr:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
+    }
+
+}
+
+doPage(1);
+
+$('#pagination').on('click', 'li a', function(event) {
+    event.preventDefault();
+    var curr = parseInt($(this).parent().data('page'));
+
+    if (!isNaN(curr)) {
+        doPage(curr);
+    }
+});
+
+
+$("div[name='up-connect']").mouseover(function () {
+    var up_content=$(this).html();
+    var content_list = up_content.split('##');
+    str_html = '';
+    for(i=0;i<content_list.length;i++){
+        str_html+="<p>"+content_list[i]+"</p>";
+
+    }
+    //$(this).popover('show');
+    $(this).popover({
+        trigger:"hover",
+        placement:"right",
+        html:true,
+        content:str_html,
+    });
+    $(this).popover('show');
+
+});
+
+$("#sub-search").click(function () {
+
+    var key = $("#search-key").val();
+    $.post("/code/searchlog/",{'key':key},function (data) {
+        $("#tb-log").empty();
+        $("#tb-log").append(data);
+    })
+
+});
+
+
+</script>
+{% endblock %}
+
+

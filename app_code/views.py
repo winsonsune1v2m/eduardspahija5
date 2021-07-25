@@ -1,6 +1,7 @@
 import json
 import re
 from statics.scripts import encryption
+from statics.scripts.git_clone import git_clone
 from mtrops_v2.settings import SECRET_KEY
 from django.shortcuts import render,HttpResponse
 from django.views import View
@@ -120,7 +121,6 @@ class GitCode(View):
 
         if action:
             """修改git信息"""
-
             # 加密密码
             key = SECRET_KEY[2:18]
             pc = encryption.prpcrypt(key)  # 初始化密钥
@@ -191,7 +191,11 @@ class Publist(View):
             for ip_id in host_ip_ids:
                 publist_obj = code_db.Publist(gitcode_id=gitcode_name,host_ip_id=ip_id,publist_dir=publist_dir,publist_msg=publist_msg)
                 publist_obj.save()
-
+                host_obj = asser_db.Host.objects.get(id=ip_id)
+                host_ip = host_obj.host_ip
+                gitcode_obj = code_db.GitCode.objects.get(id=gitcode_name)
+                git_url = gitcode_obj.git_url
+                #git_clone(host_ip,publist_dir,git_url)
             data = "添加成功，请刷新查看"
         except Exception as e:
             data = "添加失败：\n%s" % e
@@ -209,7 +213,8 @@ class CodeLog(View):
 
     def get(self, request):
         title = '项目管理'
-        return render(request, "code_git.html", locals())
+        wchartlog_obj = code_db.Wchartlog.objects.all()
+        return render(request, "code_wchartlog.html", locals())
 
 
 

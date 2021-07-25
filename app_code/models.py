@@ -45,7 +45,7 @@ class PublistRecord(models.Model):
         return self.publist
 
 
-class WchartReq(models.Model):
+class Wchartlog(models.Model):
     site_name = models.CharField(max_length=64, null=True)
     from_user = models.CharField(max_length=64, null=True)
     up_connect= models.CharField(max_length=2048, null=True)

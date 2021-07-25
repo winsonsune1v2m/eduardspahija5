@@ -12,6 +12,7 @@ def git_clone(site_dir,site_url):
     com_env = "kill -9 `ps -e | grep ssh-agent |awk '{print $1}'` >& /dev/null && eval `ssh-agent` && ssh-add /home/www/.ssh/id_rsa"
 
     cmd = "%s;cd %s && git clone %s" % (com_env, site_dir, site_url)
+
     os.system(cmd)
 
     cmd_chown="chown -R www.www %s" % site_dir
