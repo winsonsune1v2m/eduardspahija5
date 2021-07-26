@@ -3,15 +3,146 @@ import json
 from statics.scripts import encryption
 from mtrops_v2.settings import SECRET_KEY
 from django.views import View
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from app_auth import models as auth_db
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.backends import ModelBackend
+from django.db.models import Q
 
 # Create your views here.
 
+
+
+class CustomBackend(ModelBackend):
+    """自定义登录认证"""
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        try:
+            user = auth_db.User.objects.get(Q(user_name=username) | Q(email=username)| Q(phone=username))
+            if user:
+                # 加密密码
+                key = SECRET_KEY[2:18]
+                pc = encryption.prpcrypt(key)  # 初始化密钥
+                aes_passwd = pc.encrypt(password)
+                user_passwd = user.passwd.strip("b").strip("'").encode(encoding="utf-8")
+
+                if aes_passwd == user_passwd:
+                    return user
+        except Exception as e:
+            print (e)
+            return None
+
+
+
+def login_check(func):
+    """登录认证装饰器"""
+    def wrapper(request,*args,**kwargs):
+        next_url = request.get_full_path()
+        if request.session.get("username"):
+            return func(request, *args, **kwargs)
+        else:
+            return redirect("/auth/login/?next={}".format(next_url))
+    return wrapper
+
+
+
+
+def menus_list(username):
+    '''获取菜单列表'''
+
+    user_obj = auth_db.User.objects.get(Q(user_name=username) | Q(email=username)| Q(phone=username))
+
+    role_id=user_obj.role.all()[0].id
+
+    menu_one = []
+    menu_two = []
+
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    menu_obj = role_obj.menu.all()
+
+    for menu in menu_obj:
+        menu_title = menu.menu_title
+        menu_type = menu.menu_type
+        menu_url = menu.menu_url
+        menu_num = menu.menu_num
+        pmenu_id = menu.pmenu_id
+        menu_icon = menu.menu_icon
+
+        if menu_type == u'一级菜单':
+            menu_one.append(
+                {'menu_title': menu_title, 'menu_url': menu_url, 'menu_num': menu_num, 'menu_icon': menu_icon})
+        else:
+            menu_two.append({'menu_title': menu_title, 'menu_url': menu_url, 'menu_num': menu_num, 'menu_icon': menu_icon,'pmenu_id':pmenu_id})
+
+    # 组成菜单关系列表
+    menu_all_list = []
+    for i in menu_one:
+        menu_num = i['menu_num']
+        menu_list = []
+        for j in menu_two:
+            pmenu_id = j['pmenu_id']
+            if pmenu_id == menu_num:
+                menu_list.append(j)
+
+        i['menu_two'] = menu_list
+
+        menu_all_list.append(i)
+
+    return menu_all_list
+
+
+
+class Login(View):
+    """登录认证视图"""
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(Login, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        """
+        处理GET请求
+        """
+        return render(request, 'login.html')
+
+    def post(self, request):
+        """
+        处理POST请求
+        """
+        username = request.POST.get('username')
+        passwd = request.POST.get('passwd')
+
+        user = authenticate(username=username, password=passwd)
+        if user:
+            login(request, user)
+            request.session['username'] = user.ready_name
+            request.session['menu_all_list'] = menus_list(username)
+            next_url = request.GET.get("next")
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect('/')
+        return render(request, 'login.html')
+
+
+
+@login_check
+def Logout(request):
+    logout(request)
+    request.session.delete()
+    return render(request, "login.html")
+
+
+
 class Index(View):
     """首页"""
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_check)
+    def dispatch(self, request, *args, **kwargs):
+        return super(Index, self).dispatch(request, *args, **kwargs)
+
+
     def get(self,request,*args,**kwargs):
         title = "运维管理-首页"
 
@@ -36,6 +167,7 @@ class Index(View):
 
         site_num = 3
 
+
         return  render(request,'base.html',locals())
 
 
@@ -43,16 +175,13 @@ class Index(View):
 class RoleMG(View):
     """角色管理"""
     @method_decorator(csrf_exempt)
+    @method_decorator(login_check)
     def dispatch(self, request, *args, **kwargs):
         return super(RoleMG,self).dispatch(request, *args, **kwargs)
 
     def get(self,request):
         title = "角色管理"
         role_obj = auth_db.Role.objects.all()
-        role_list = []
-        for role in role_obj:
-            role_list.append({"role_title": role.role_title, "role_msg": role.role_msg, 'role_id': role.id})
-
         return render(request,'rbac_role.html',locals())
 
 
@@ -100,9 +229,94 @@ class RoleMG(View):
         return HttpResponse(data)
 
 
+@csrf_exempt
+def get_role_menu(request):
+    """获取角色菜单"""
+    role_id = request.POST.get("role_id")
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    # 获取用户拥有的权限
+    menu_list = role_obj.menu.all()
+    menu_num_list = []
+
+    for i in menu_list:
+        menu_num_list.append(i.menu_num)
+
+    menu_obj = auth_db.Menus.objects.all()
+
+    nodes = []
+
+    # 创建分页对象
+
+    for menu in menu_obj:
+        if menu.menu_num in menu_num_list:
+            nodes.append({"id": menu.menu_num, "pId": menu.pmenu_id, "name": menu.menu_title, 'open': True,
+                          'checked': True})
+        else:
+            nodes.append({"id": menu.menu_num, "pId": menu.pmenu_id, "name": menu.menu_title, 'open': True})
+
+    menu_data = json.dumps(nodes)
+
+    return HttpResponse(menu_data)
+
+
+#
+@csrf_exempt
+def add_role_menu(request):
+    """菜单授权"""
+    menu_nums = request.POST.get("node_id_json")
+    role_id = request.POST.get("role_id")
+
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    menu_nums = json.loads(menu_nums)
+
+    role_obj.menu.clear()
+
+    for i in menu_nums:
+        menu_obj = auth_db.Menus.objects.get(menu_num=i)
+        role_obj.menu.add(menu_obj)
+
+    data = "菜单授权已更新，重新登录即生效！"
+    return HttpResponse(data)
+
+
+@csrf_exempt
+def role_menu(request):
+    """菜单授权"""
+    role_id = request.POST.get("role_id")
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    # 获取用户拥有的权限
+    menu_list = role_obj.menu.all()
+    menu_num_list = []
+
+    for i in menu_list:
+        menu_num_list.append(i.menu_num)
+
+    menu_obj = auth_db.Menus.objects.all()
+
+    nodes = []
+
+    # 创建分页对象
+
+    for menu in menu_obj:
+        if menu.menu_num in menu_num_list:
+            nodes.append({"id": menu.menu_num, "pId": menu.pmenu_id, "name": menu.menu_title, 'open': True,
+                          'checked': True})
+        else:
+            nodes.append({"id": menu.menu_num, "pId": menu.pmenu_id, "name": menu.menu_title, 'open': True})
+
+    menu_data = json.dumps(nodes)
+
+    return HttpResponse(menu_data)
+
+
+
 class UserMG(View):
     """用户管理"""
     @method_decorator(csrf_exempt)
+    @method_decorator(login_check)
     def dispatch(self, request, *args, **kwargs):
         return super(UserMG,self).dispatch(request, *args, **kwargs)
 
@@ -207,6 +421,7 @@ class UserMG(View):
 class MenuMG(View):
     """菜单管理"""
     @method_decorator(csrf_exempt)
+    @method_decorator(login_check)
     def dispatch(self, request, *args, **kwargs):
         return super(MenuMG,self).dispatch(request, *args, **kwargs)
 
@@ -331,6 +546,7 @@ class PermsMG(View):
 
     """权限管理"""
     @method_decorator(csrf_exempt)
+    @method_decorator(login_check)
     def dispatch(self, request, *args, **kwargs):
         return super(PermsMG,self).dispatch(request, *args, **kwargs)
 
@@ -383,5 +599,3 @@ class PermsMG(View):
         auth_db.Perms.objects.get(id=perms_id).delete()
         data = "权限已删除,请刷新查看！"
         return HttpResponse(data)
-
-

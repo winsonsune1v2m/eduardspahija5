@@ -25,5 +25,8 @@ urlpatterns = [
     path("auth/",include("app_auth.urls")),
     path("asset/",include("app_asset.urls")),
     path("code/",include("app_code.urls")),
+    path("sys/",include("app_sys.urls")),
+    path("log/",include("app_log.urls")),
+    path("tool/",include("app_tool.urls")),
 
 ]

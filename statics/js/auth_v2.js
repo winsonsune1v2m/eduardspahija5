@@ -69,7 +69,6 @@ $("td a[name='del-role']").click(function(){
 
                 $("#msg-alert").empty();
                 $("#msg-alert").append(data);
-                $("#edit-roleModal").modal("hide");
                 $("#alert").show();
 
              }

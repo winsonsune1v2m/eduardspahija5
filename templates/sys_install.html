@@ -1,0 +1,276 @@
+﻿{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+
+<style  type=＂text/css＂>
+
+
+</style>
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="javascript:;">系统管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-6">
+
+              <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#sofewareModal"> 新建环境 </a>
+
+          </div>
+      </div>
+
+  </div>
+  <div class="panel-body">
+
+
+        <div style="margin-bottom: 10px;">
+
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered" >
+                  <thead>
+                    <tr style="background-color: #f5f5f5;">
+
+                      <th>服务</th>
+                      <th>服务版本</th>
+                      <th>安装脚本</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for sofeware in sofeware_obj %}
+                    <tr>
+
+                      <td>{{ sofeware.sofeware_name }}</td>
+                      <td>{{ sofeware.sofeware_version }}</td>
+                      {% if sofeware.install_script %}
+                      <td ><a href="javascript:;" style="text-decoration:none;">已设置</a></td>
+                      {% else %}
+                      <td ><a href="javascript:;" style="text-decoration:none;color:red;">未设置</a></td>
+                      {% endif %}
+                      <td style="padding-left:5px;">
+                        <a  href="javascript:;" style="text-decoration:none;" name="edit-sofeware" sofeware_id="{{ sofeware.id }}" data-toggle="tooltip" data-placement="left" title="修改"> <span class="fa fa-pencil"></span>  </a>&nbsp;
+
+                        <a  href="javascript:;" style="text-decoration:none;" name="install-sofeware" sofeware_id="{{ sofeware.id }}" data-toggle="tooltip" data-placement="top" title="部署"> <span class="fa fa-cog"></span>  </a>&nbsp;
+
+                        <a href="javascript:;" style="text-decoration:none;" name="del-sofeware" sofeware_id="{{ sofeware.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination"></ul>
+                </div>
+            </div>
+
+        </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+<div class="modal fade" id="sofewareModal" tabindex="-1" role="dialog" aria-labelledby="sofewareModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="sofewareModalLabel">新建依赖环境</h4>
+      </div>
+      <div class="modal-body">
+
+         <form>
+          <div class="form-group">
+            <label >依赖服务</label>
+            <input  class="form-control"  placeholder="依赖服务" id="sofeware-name">
+          </div>
+          <div class="form-group">
+            <label >服务版本</label>
+            <input  class="form-control"  placeholder="服务版本" id="sofeware-version">
+          </div>
+
+          <div class="form-group">
+              <label >安装命令或脚本</label>
+              <textarea id="install-script" class="form-control" placeholder="请填写能一键安装的脚本或命令"></textarea>
+          </div>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+        <button type="button" class="btn btn-primary" id="sub-sofeware">提交</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="edit-sofewareModal" tabindex="-1" role="dialog" aria-labelledby="edit-sofewareModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-sofewareModalLabel">修改依赖环境</h4>
+      </div>
+      <div class="modal-body">
+
+         <form>
+          <div class="form-group">
+            <label >依赖服务</label>
+            <input  class="form-control"  placeholder="依赖服务" id="edit-sofeware-name">
+          </div>
+          <div class="form-group">
+            <label >服务版本</label>
+            <input  class="form-control"  placeholder="服务版本" id="edit-sofeware-version">
+          </div>
+
+
+          <div class="form-group">
+            <label >安装命令或脚本</label>
+              <textarea id="edit-install-script" class="form-control"></textarea>
+          </div>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+        <button type="button" class="btn btn-primary" id="sub-edit-sofeware">提交</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--------------->
+<div class="modal fade" id="installModal" tabindex="-1" role="dialog" aria-labelledby="installModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="installModalLabel">选择服务器</h4>
+      </div>
+      <div class="modal-body" style="max-height:500px;overflow:scroll;">
+          <ul id="treeDemo" class="ztree"></ul>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+        <button type="button" class="btn btn-primary" id="sub-install">部署</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock  %}
+
+{% block js %}
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.excheck.js"></script>
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.exedit.js"></script>
+    <script type="text/javascript" src="/static/js/sys_v2.js"></script>
+    <script type="text/javascript">
+
+
+    $(document).ready(function(){
+
+        $("a[name='install-sofeware']").click(function(){
+
+            var sofeware_id = $(this).attr("sofeware_id");
+
+            var setting = {
+                view: {
+                    selectedMulti: false
+                },
+                check: {
+                    enable: true
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                edit: {
+                    enable: false
+                }
+            };
+
+
+            var zNodes = {{ znodes_data |safe }};
+
+
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
+            $("#sub-install").attr('sofeware_id',sofeware_id);
+
+            $("#installModal").modal('show');
+        })
+
+    });
+
+     //环境部署
+    $("#sub-install").click(function(){
+
+        var sofeware_id = $(this).attr("sofeware_id");
+
+        var treeObj=$.fn.zTree.getZTreeObj("treeDemo");
+
+        var nodes = treeObj.getCheckedNodes(true);
+
+        var node_ids =new Array();
+
+        for(var i=0;i<nodes.length;i++){
+
+           node_ids[i] = nodes[i].name;
+        }
+        node_id_json = JSON.stringify(node_ids)
+
+        $.post("/sys/install/",{'node_id_json':node_id_json,'sofeware_id':sofeware_id},function(data){
+        if (data == "权限不足"){
+            alert("权限不足，请联系管理员！");
+        }else{
+            alert(data);
+            }
+        });
+    });
+
+    </script>
+
+{% endblock %}
+
+

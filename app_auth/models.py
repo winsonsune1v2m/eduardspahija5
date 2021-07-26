@@ -24,6 +24,7 @@ class User(models.Model):
     img = models.ImageField(upload_to='img',null=True)
     status = models.CharField(max_length=64,default="离线")
     creat_time = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(auto_now=True)
     def __unicode__(self):
         return self.user_name
 

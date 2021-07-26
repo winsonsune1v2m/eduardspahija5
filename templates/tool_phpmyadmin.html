@@ -1,0 +1,147 @@
+﻿{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<!--
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body" >
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="javascript:;">系统管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+-->
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+
+
+          <div class="col-sm-3">
+
+            <ol class="breadcrumb" style="margin-bottom: 0px;">
+              <li><a href="/" style="color: #377CD8;">首页</a></li>
+              <li><a href="javascript:;">运维工具</a></li>
+              <li class="active">{{ title }}</li>
+            </ol>
+
+          </div>
+
+
+
+          <div class="col-sm-3">
+             <div class="input-group">
+                  <span class="input-group-addon" >主机</span>
+
+                  <input type="text" class="form-control" placeholder="IP地址" id="mysql-host" value="{{ mysql_host }}">
+
+             </div>
+
+
+          </div>
+
+          <div class="col-sm-1">
+              <div class="input-group">
+                  <span class="input-group-addon" >端口</span>
+
+                  <input type="text" class="form-control" placeholder="3306" id="mysql-port" value="{{ mysql_port }}">
+
+             </div>
+
+          </div>
+
+          <div class="col-sm-2">
+
+              <div class="input-group">
+                  <span class="input-group-addon" >用户</span>
+
+                  <input type="text" class="form-control" placeholder="用户名" id="mysql-user" value="{{ mysql_user }}">
+
+              </div>
+          </div>
+
+          <div class="col-sm-2" >
+              <div class="input-group">
+                  <span class="input-group-addon">密码</span>
+
+                  <input type="password" class="form-control" placeholder="登录密码" id="mysql-passwd" value="{{ mysql_passwd }}">
+
+                  <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" id="btn-login">登录</button>
+                  </span>
+              </div>
+
+          </div>
+
+
+      </div>
+
+  </div>
+  <div class="panel-body">
+
+        <div class="row">
+
+            <div class="col-sm-12" id="phpmyadmin">
+                <iframe src="{{ phpmyadmin_url }}" height="735px" width="100%" frameborder="0" scrolling="0"></iframe>
+
+            </div>
+
+        </div>
+
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+
+{% endblock  %}
+
+{% block js %}
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.excheck.js"></script>
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.exedit.js"></script>
+    <script type="text/javascript" src="/static/js/sys.js"></script>
+    <script type="text/javascript">
+
+
+
+        $("#btn-login").click(function(){
+            var db_ip = $("#mysql-host").val();
+            var db_port = $("#mysql-port").val();
+            var db_user = $("#mysql-user").val();
+            var db_passwd = $("#mysql-passwd").val();
+            if(db_ip&&db_user&&db_passwd){
+                $.post("/tool/phpmyadmin/",{"db_ip":db_ip,"db_port":db_port,"db_user":db_user,"db_passwd":db_passwd},function(data){
+                    location.reload();
+
+                })
+            }else{
+
+                alert("请填写完整登录信息");
+            }
+        });
+
+    </script>
+
+{% endblock %}
+
+

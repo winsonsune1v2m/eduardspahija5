@@ -17,11 +17,13 @@ Including another URLconf
 from app_auth import views
 from django.urls import path,include
 
-
 urlpatterns = [
     path("role/",views.RoleMG.as_view()),
     path("user/",views.UserMG.as_view()),
     path("menu/",views.MenuMG.as_view()),
     path("perms/",views.PermsMG.as_view()),
-
+    path("login/",views.Login.as_view()),
+    path("logout/",views.Logout),
+    path("rolemenu/",views.get_role_menu),
+    path("addrolemenu/",views.add_role_menu),
 ]

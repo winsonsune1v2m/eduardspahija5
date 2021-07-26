@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'app_auth',
     'app_asset',
     'app_code',
+    'app_sys',
+    'app_tool',
+    'app_log',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+#自定义登录认证中间件
+AUTHENTICATION_BACKENDS = (
+    'app_auth.views.CustomBackend',
+)
 
 
 # Internationalization

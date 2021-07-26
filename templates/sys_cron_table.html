@@ -1,0 +1,181 @@
+{% for i in  data_info %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <span class="panel-title" >IP地址：{{ i.IP }}</span>
+      <span class="panel-title pull-right" >用户：{{ remote_user }}</span>
+    </div>
+    <div class="panel-body">
+        {% if i.cron %}
+        <table class="table table-hover table-bordered" style="margin-top:5px;" >
+
+            <thead>
+              <tr style="background-color: #f5f5f5;">
+                <th>分</th>
+                <th>时</th>
+                <th>日</th>
+                <th>月</th>
+                <th>周</th>
+                <th>命令</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="host_table">
+              {% for j in i.cron %}
+              <tr>
+                <td name="m">{{ j.m }}</td>
+                <td name="h">{{ j.h }}</td>
+                <td name="d">{{ j.d }}</td>
+                <td name="M">{{ j.M }}</td>
+                <td name="w">{{ j.w }}</td>
+                <td name="cmd">{{ j.cmd }}</td>
+                <td style="padding-left:5px;">
+                    <a href="javascript:;" name="edit" ip="{{ i.IP }}" remote_user="{{ remote_user }}" org_cmd="{{ j.org_cmd }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;
+                    {% ifequal  j.m|slice:":1" '#' %}
+                    <a href="javascript:;" name="ban" ip="{{ i.IP }}" remote_user="{{ remote_user }}" org_cmd="{{ j.org_cmd }}" style="text-decoration:none;color: red" data-toggle="tooltip" data-placement="top" title="已禁用"><span class="fa fa-ban"></span> </a>&nbsp;
+                    {% else %}
+                    <a href="javascript:;" name="up" ip="{{ i.IP }}" remote_user="{{ remote_user }}" org_cmd="{{ j.org_cmd }}" style="text-decoration:none;color: green" data-toggle="tooltip" data-placement="top" title="运行中"><span class="fa fa-play-circle"></span> </a>&nbsp;
+                    {% endifequal %}
+                    <a href="javascript:;" name="del" ip="{{ i.IP }}" remote_user="{{ remote_user }}" org_cmd="{{ j.org_cmd }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="删除"><span class="fa fa-trash"></span> </a>
+                </td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+
+      </table>
+
+      {% else %}
+
+      <p style="color: #00B83F">未查询到计划任务！</p>
+      {% endif %}
+
+    </div>
+</div>
+{% endfor %}
+
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
+
+$("a[name='del']").click(function () {
+    var ip = $(this).attr("ip");
+    var remote_user = $(this).attr("remote_user");
+    var org_cmd = $(this).attr("org_cmd");
+    var action = "Del";
+    var statu = confirm("是否确认删除！");
+    if (statu==true){
+        $.ajax({
+        url: "/sys/cron/",
+        type: "PUT",
+        data: JSON.stringify({"ip":ip,"remote_user":remote_user,"org_cmd":org_cmd,'action':action}),
+        success: function(data) {
+
+            alert(data)
+
+         }
+        });
+
+    }
+});
+
+$("a[name='ban']").click(function () {
+    var ip = $(this).attr("ip");
+    var remote_user = $(this).attr("remote_user");
+    var org_cmd = $(this).attr("org_cmd");
+    var action = "up";
+    var statu = confirm("是否确认启用！");
+    if (statu==true){
+        $.ajax({
+        url: "/sys/cron/",
+        type: "PUT",
+        data: JSON.stringify({"ip":ip,"remote_user":remote_user,"org_cmd":org_cmd,'action':action}),
+        success: function(data) {
+
+            alert(data)
+
+         }
+        });
+
+    }
+});
+
+
+$("a[name='up']").click(function () {
+    var ip = $(this).attr("ip");
+    var remote_user = $(this).attr("remote_user");
+    var org_cmd = $(this).attr("org_cmd");
+    var action = "ban";
+    var statu = confirm("是否确认禁用！");
+    if (statu==true){
+        $.ajax({
+        url: "/sys/cron/",
+        type: "PUT",
+        data: JSON.stringify({"ip":ip,"remote_user":remote_user,"org_cmd":org_cmd,'action':action}),
+        success: function(data) {
+
+            alert(data)
+
+         }
+        });
+
+    }
+});
+
+
+$("a[name='edit']").click(function () {
+    var ip = $(this).attr("ip");
+    var remote_user = $(this).attr("remote_user");
+    var org_cmd = $(this).attr("org_cmd");
+
+    var tr_obj = $(this).parent().parent();
+    var tm_m = tr_obj.children("td[name='m']").text();
+    var tm_h = tr_obj.children("td[name='h']").text();
+    var tm_d = tr_obj.children("td[name='d']").text();
+    var tm_M = tr_obj.children("td[name='M']").text();
+    var tm_w = tr_obj.children("td[name='w']").text();
+    var cmd = tr_obj.children("td[name='cmd']").text();
+
+    $("#Minute").val(tm_m);
+    $("#Hour").val(tm_h);
+    $("#Day").val(tm_d);
+    $("#Month").val(tm_M);
+    $("#Week").val(tm_w);
+    $("#cron-cmd").val(cmd);
+    $("#edit-cron").attr('ip',ip);
+    $("#edit-cron").attr('remote_user',remote_user);
+    $("#edit-cron").attr('org_cmd',org_cmd);
+
+});
+
+
+
+$("#edit-cron").click(function () {
+    var ip = $(this).attr("ip");
+    var remote_user = $(this).attr("remote_user");
+    var org_cmd = $(this).attr("org_cmd");
+
+    var Minute = $("#Minute").val();
+    var Hour = $("#Hour").val();
+    var Day = $("#Day").val();
+    var Month = $("#Month").val();
+    var Week = $("#Week").val();
+    var cron_cmd = $("#cron-cmd").val();
+    var action = "edit";
+
+    $.ajax({
+        url: "/sys/cron/",
+        type: "PUT",
+        data: JSON.stringify({"ip":ip,'remote_user':remote_user,'Minute':Minute, 'Hour':Hour,'Day':Day,'Month':Month,'Week':Week,'cron_cmd':cron_cmd,'org_cmd':org_cmd,'action':action}),
+        success: function(data) {alert(data)}
+    });
+
+
+});
+
+
+
+
+
+</script>

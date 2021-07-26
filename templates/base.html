@@ -42,88 +42,19 @@
 
             <ul id="menu-left">
 
-                <a href="/" style="display:block;text-decoration:none">
-                   <i class="fa fa-dashboard fa-lg" style="margin-left:16px"></i><span class="nav-text">首页</span>
-
-                </a>
-
-
-
-                <li class="nav-item">
-
-                    <a href="javascript:" style="display:block;text-decoration:none">
-                        <i class="fa fa-lg fa-bars" style="margin-left:16px"></i><span name="menu-one" class="nav-text">资产管理</span>
-
-                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;padding-top: 2px"></i>
-
-                    </a>
-
-                    <ul class="nav-ul nav" style="display:none">
-                        <li ><a href="/asset/host/" style="display:block;text-decoration:none;padding-left: 55px;"><span>服务器</span></a></li>
-                        <li ><a href="/asset/netwk/" style="display:block;text-decoration:none;padding-left: 55px;"><span>网络设备</span></a></li>
-                        <li ><a href="/asset/idc/" style="display:block;text-decoration:none;padding-left: 55px;"><span>IDC 机房</span></a></li>
-                        <li ><a href="/asset/hostgroup/" style="display:block;text-decoration:none;padding-left: 55px;"><span>主机分组</span></a></li>
-                        <li ><a href="/asset/supplier/" style="display:block;text-decoration:none;padding-left: 55px;"><span>设备厂商</span></a></li>
-                    </ul>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a href="javascript:" style="display:block;text-decoration:none">
-                        <i class="fa fa-lg fa-code" style="margin-left:16px"></i><span name="menu-one" class="nav-text">代码管理</span>
-
-                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;"></i>
-
-                    </a>
-
-                    <ul class="nav-ul nav" style="display: none;">
-
-                            <li><a href="/code/project/" style="display:block;text-decoration:none;padding-left:55px;"><span>项目管理</span></a></li>
-
-                            <li><a href="/code/gitcode/" style="display:block;text-decoration:none;padding-left:55px;"><span>代码管理</span></a></li>
-
-                            <li><a href="/code/publist/" style="display:block;text-decoration:none;padding-left:55px;"><span>代码发布</span></a></li>
-
-                            <li><a href="/code/log/" style="display:block;text-decoration:none;padding-left:55px;"><span>发布记录</span></a></li>
-
-                    </ul>
-
-                </li>
-
-
-
-                <li class="nav-item">
-
-                    <a href="javascript:" style="display:block;text-decoration:none">
-                        <i class="fa fa-lg fa-address-card" style="margin-left:16px"></i><span name="menu-one" class="nav-text">后台管理</span>
-
-                        <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;padding-top: 2px"></i>
-
-                    </a>
-
-                    <ul class="nav-ul nav" style="display:none">
-                        <li ><a href="/auth/role/" style="display:block;text-decoration:none;padding-left: 55px;"><span>角色管理</span></a></li>
-                        <li ><a href="/auth/user/" style="display:block;text-decoration:none;padding-left: 55px;"><span>用户管理</span></a></li>
-                        <li ><a href="/auth/menu/" style="display:block;text-decoration:none;padding-left: 55px;"><span>菜单管理</span></a></li>
-                        <li ><a href="/auth/perms/" style="display:block;text-decoration:none;padding-left: 55px;"><span>权限管理</span></a></li>
-                    </ul>
-
-                </li>
-
                 {% for i in request.session.menu_all_list %}
 
                 <li class="nav-item">
                     {% if i.menu_two %}
                     <a href="javascript:" style="display:block;text-decoration:none">
-                        <i class="{{ i.perms_icon }}" style="margin-left:12px"></i><span name="menu-one" class="nav-text">{{ i.perms_title }}</span>
+                        <i class="{{ i.menu_icon }}" style="margin-left:12px"></i><span name="menu-one" class="nav-text">{{ i.menu_title }}</span>
 
                         <i class="my-icon fa fa-angle-down pull-right" style="margin-right:15px;"></i>
 
                     </a>
                     {% else %}
-                    <a href="{{ i.perms_url }}" style="display:block;text-decoration:none">
-                        <i class="{{ i.perms_icon }}" style="margin-left:12px"></i><span class="nav-text">{{ i.perms_title }}</span>
+                    <a href="{{ i.menu_url }}" style="display:block;text-decoration:none">
+                        <i class="{{ i.menu_icon }}" style="margin-left:12px"></i><span class="nav-text">{{ i.menu_title }}</span>
 
                     </a>
                     {% endif %}
@@ -132,12 +63,7 @@
 
                     <ul class="nav-ul nav" style="display:none">
                         {% for j in i.menu_two %}
-                            {% if j.perms_url == '/tool/elk/' or  j.perms_url == '/tool/nessus/' or j.perms_url == '/tool/zabbix/' %}
-                            <li ><a href="{{ j.perms_url }}" target="_blank" style="display:block;text-decoration:none"><span>{{ j.perms_title }}</span></a></li>
-                            {% else %}
-                            <li ><a href="{{ j.perms_url }}" style="display:block;text-decoration:none"><span>{{ j.perms_title }}</span></a></li>
-                            {% endif %}
-
+                            <li ><a href="{{ j.menu_url }}" style="display:block;text-decoration:none"><span>{{ j.menu_title }}</span></a></li>
                         {% endfor  %}
                     </ul>
 

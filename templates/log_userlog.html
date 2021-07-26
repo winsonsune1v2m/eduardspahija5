@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="#">日志管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-6">
+
+              <span style="color:#20B320" ><strong>用户日志</strong></span>
+
+          </div>
+
+      </div>
+
+  </div>
+  <div class="panel-body">
+
+        <div style="margin-bottom:10px;">
+
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5;">
+
+                      <th>操作日期</th>
+                      <th>日志内容</th>
+                      <th>用户</th>
+                      <th>操作结果</th>
+
+                    </tr>
+                  </thead>
+                  <tbody id="audit_table">
+                {% for i in userlog_list %}
+                        <tr>
+                          <td>{{ i.add_time|date:"Y-m-d H:i:s" }}</td>
+                          <td>{{ i.active }}：{{ i.url_title }}</td>
+                          <td>{{ i.username }}</td>
+                            {% if i.status == "成功" %}
+                          <td style="color:green">{{ i.status }}</td>
+                            {% else %}
+                            <td style="color:red">{{ i.status }}</td>
+                            {% endif %}
+
+                          </td>
+                        </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination">
+                  </ul>
+                </div>
+
+
+            </div>
+
+        </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block modal %}
+
+{% endblock %}
+
+
+
+
+
+
+{% block js %}
+<script type="text/javascript">
+
+//前端分页
+var limit = 13; //每页显示数据条数
+var total = $('#audit_table').find('tr').length;
+var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
+
+function doPage(n){
+    if(allPage>1){
+        var prevPage='',nextPage='',pageHtml='';
+
+        if (n===1) {
+            prevPage = '<li class="disabled"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+        } else if(n===allPage){
+            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li class="disabled"><a href="javascript:;">下一页</a></li>';
+        } else {
+            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+        }
+        if (n<=5){
+            for(var i=1;i<=5;i++){
+                if (n===i) {
+                    pageHtml += '<li class="active"><a href="javascript:;">'+ i +'</a></li>';
+                }else{
+                    if(i<=allPage) {
+                        pageHtml += '<li data-page="' + i + '"><a href="javascript:;">' + i + '</a></li>';
+                    }
+                }
+
+            }
+        }else{
+            for(var i=1;i<=5;i++){
+
+                cur_page = parseInt(parseInt((n-1)/5)*5);
+
+                if (n===(cur_page+i)){
+                    pageHtml += '<li class="active"><a href="javascript:;">'+ (cur_page+i) +'</a></li>';
+                }else{
+                    if((i+cur_page)<=allPage){
+                        pageHtml += '<li data-page="'+ (i+cur_page) +'"><a href="javascript:;">'+ (i+cur_page) +'</a></li>';
+                    }
+                }
+
+            }
+
+        }
+
+
+        $('#pagination').html(prevPage+pageHtml+nextPage);
+    }
+
+    $('#audit_table').find('tr').hide();
+    if(n===1){
+        $('#audit_table').find('tr:lt('+ limit +')').show();
+    }else{
+        $('#audit_table').find('tr:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
+    }
+
+}
+
+doPage(1);
+
+$('#pagination').on('click', 'li a', function(event) {
+    event.preventDefault();
+    var curr = parseInt($(this).parent().data('page'));
+
+    if (!isNaN(curr)) {
+        doPage(curr);
+    }
+});
+
+    </script>
+
+{% endblock %}
+
+

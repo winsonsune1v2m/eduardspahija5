@@ -1,0 +1,111 @@
+
+{% for i in dir_list %}
+<div style="display: inline-block;width: 200px;margin-top: 20px">
+    <a href="/sys/file/ip={{ ip }}/dir={{ i }}" style="text-decoration: none">
+        <div>
+            <i class="fa fa-folder-open fa-4x" style="color: #f59e1c"></i>
+        </div>
+        <div>
+            <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>{{ i }}</b></span>
+        </div>
+
+    </a>
+</div>
+
+{% endfor %}
+
+{% for i in file_list %}
+<div style="display: inline-block;width: 200px;margin-top: 20px">
+    <a href="javascript:;" style="text-decoration: none" name="file-name" filename="{{ i }}">
+        <div>
+            <i class="fa fa-file  fa-4x" style="color: #85af04"></i>
+        </div>
+        <div>
+            <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>{{ i }}</b></span>
+        </div>
+    </a>
+</div>
+
+{% endfor %}
+
+
+<script type="application/javascript">
+
+$("a[name='file-name']").click(function () {
+
+    var filename=$(this).attr('filename');
+
+    $("#down-file").val(filename);
+
+    $('#btn-remove').attr('filename',filename);
+    $('#btn-downfile').attr('filename',filename);
+
+});
+
+
+
+$('#btn-remove').click(function(){
+
+    var formData = new FormData();
+    var filename=$(this).attr('filename');
+
+    formData.append("filename", filename);
+
+    if(filename){
+        $.ajax({
+             url: "/sys/removefile/",
+             type: "POST",
+             processData: false,
+             contentType: false,
+             data: formData,
+             success: function(msg) {
+
+                if (msg == "权限不足"){
+                    alert("权限不足，请联系管理员！");
+                }else{
+
+                    alert(msg)
+                }
+
+             }
+        });
+    }else{
+        alert("文件不能为空")
+    }
+
+});
+
+
+$('#btn-downfile').click(function(){
+
+    var formData = new FormData();
+    var filename=$(this).attr('filename');
+
+    formData.append("filename", filename);
+
+    if(filename){
+        $.ajax({
+             url: "/sys/downfile/",
+             type: "POST",
+             processData: false,
+             contentType: false,
+             data: formData,
+             success: function(msg) {
+
+                if (msg == "权限不足"){
+                    alert("权限不足，请联系管理员！");
+                }else{
+
+                    window.location.href=msg
+                }
+
+             }
+        });
+    }else{
+        alert("文件不能为空")
+    }
+
+});
+
+</script>
+
