@@ -9,6 +9,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from app_code import models as code_db
 from app_asset import models as asser_db
+from app_auth import models as auth_db
+
 from app_auth.views import login_check
 
 # Create your views here.
@@ -81,18 +83,20 @@ class GitCode(View):
     def get(self, request):
         title = '代码管理'
         project_obj = code_db.Project.objects.all()
-        gitcode_obj = code_db.GitCode.objects.all()
+        role_id = request.session['role_id']
+        role_obj = auth_db.Role.objects.get(id=role_id)
+        gitcode_obj = role_obj.project.all()
         return render(request, "code_gitcode.html", locals())
 
     def post(self,request):
         '''添加项目'''
+
         git_name = request.POST.get("git_name")
         git_msg = request.POST.get("git_msg")
         git_project = request.POST.get("git_project")
         git_url = request.POST.get("git_url")
         git_user = request.POST.get("git_user")
         git_passwd = request.POST.get("git_passwd")
-
         git_sshkey = request.POST.get("git_sshkey")
 
         # 加密密码
@@ -128,8 +132,6 @@ class GitCode(View):
             key = SECRET_KEY[2:18]
             pc = encryption.prpcrypt(key)  # 初始化密钥
             aes_passwd = pc.encrypt(git_passwd)
-
-
             git_obj = code_db.GitCode.objects.get(id=git_id)
             git_obj.git_name = git_name
             git_obj.git_msg = git_msg
@@ -181,7 +183,19 @@ class Publist(View):
         title = '项目管理'
         host_obj = asser_db.Host.objects.all()
         gitcode_obj = code_db.GitCode.objects.all()
-        publist_obj = code_db.Publist.objects.all()
+
+        role_id = request.session['role_id']
+        role_obj = auth_db.Role.objects.get(id=role_id)
+        gitcode_obj = role_obj.project.all()
+
+        publist_all_obj=None
+        for i in gitcode_obj:
+            publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id)
+            try:
+                publist_all_obj = publist_all_obj | publist_obj
+            except:
+                publist_all_obj = publist_obj
+
         return render(request, "code_publist.html", locals())
 
     def post(self,request):

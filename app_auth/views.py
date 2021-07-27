@@ -1,15 +1,18 @@
 import datetime
-import json
+import json,re
 from statics.scripts import encryption
 from mtrops_v2.settings import SECRET_KEY
 from django.views import View
 from django.shortcuts import render,HttpResponse,redirect
 from app_auth import models as auth_db
+from app_asset import models as asset_db
+from app_code import models as code_db
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
+from app_auth.perms_control import menus_list
 
 # Create your views here.
 
@@ -34,7 +37,6 @@ class CustomBackend(ModelBackend):
             return None
 
 
-
 def login_check(func):
     """登录认证装饰器"""
     def wrapper(request,*args,**kwargs):
@@ -46,52 +48,17 @@ def login_check(func):
     return wrapper
 
 
-
-
-def menus_list(username):
-    '''获取菜单列表'''
-
-    user_obj = auth_db.User.objects.get(Q(user_name=username) | Q(email=username)| Q(phone=username))
-
-    role_id=user_obj.role.all()[0].id
-
-    menu_one = []
-    menu_two = []
-
-    role_obj = auth_db.Role.objects.get(id=role_id)
-
-    menu_obj = role_obj.menu.all()
-
-    for menu in menu_obj:
-        menu_title = menu.menu_title
-        menu_type = menu.menu_type
-        menu_url = menu.menu_url
-        menu_num = menu.menu_num
-        pmenu_id = menu.pmenu_id
-        menu_icon = menu.menu_icon
-
-        if menu_type == u'一级菜单':
-            menu_one.append(
-                {'menu_title': menu_title, 'menu_url': menu_url, 'menu_num': menu_num, 'menu_icon': menu_icon})
+def perms_check(func):
+    """权限装饰器"""
+    def wrapper(request,*args,**kwargs):
+        req_url = request.get_full_path()
+        req_method= request.method
+        print(req_url,req_method)
+        if request.session.get("username"):
+            return func(request, *args, **kwargs)
         else:
-            menu_two.append({'menu_title': menu_title, 'menu_url': menu_url, 'menu_num': menu_num, 'menu_icon': menu_icon,'pmenu_id':pmenu_id})
-
-    # 组成菜单关系列表
-    menu_all_list = []
-    for i in menu_one:
-        menu_num = i['menu_num']
-        menu_list = []
-        for j in menu_two:
-            pmenu_id = j['pmenu_id']
-            if pmenu_id == menu_num:
-                menu_list.append(j)
-
-        i['menu_two'] = menu_list
-
-        menu_all_list.append(i)
-
-    return menu_all_list
-
+            return redirect("/auth/login/?next={}".format(req_url))
+    return wrapper
 
 
 class Login(View):
@@ -114,9 +81,11 @@ class Login(View):
         passwd = request.POST.get('passwd')
 
         user = authenticate(username=username, password=passwd)
+
         if user:
             login(request, user)
             request.session['username'] = user.ready_name
+            request.session['role_id'] = user.role.all()[0].id
             request.session['menu_all_list'] = menus_list(username)
             next_url = request.GET.get("next")
             if next_url:
@@ -139,6 +108,7 @@ class Index(View):
     """首页"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Index, self).dispatch(request, *args, **kwargs)
 
@@ -169,6 +139,7 @@ class Index(View):
 
 
         return  render(request,'base.html',locals())
+
 
 
 
@@ -246,7 +217,7 @@ def get_role_menu(request):
 
     nodes = []
 
-    # 创建分页对象
+    
 
     for menu in menu_obj:
         if menu.menu_num in menu_num_list:
@@ -260,7 +231,7 @@ def get_role_menu(request):
     return HttpResponse(menu_data)
 
 
-#
+
 @csrf_exempt
 def add_role_menu(request):
     """菜单授权"""
@@ -277,40 +248,254 @@ def add_role_menu(request):
         menu_obj = auth_db.Menus.objects.get(menu_num=i)
         role_obj.menu.add(menu_obj)
 
-    data = "菜单授权已更新，重新登录即生效！"
+    data = "授权已更新，重新登录即生效！"
     return HttpResponse(data)
 
 
+
+
 @csrf_exempt
-def role_menu(request):
-    """菜单授权"""
+def get_role_perms(request):
+    """获取角色权限"""
+    role_id = request.POST.get("role_id")
+
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    # 获取用户拥有的权限
+    perms_list = role_obj.perms.all()
+
+    perms_num_list = []
+
+    for i in perms_list:
+        perms_num = "perms"+str(role_id)+"#"+str(i.id)
+        perms_num_list.append(perms_num)
+        perms_num_list.append(i.menus.id)
+        perms_num_list.append(i.menus.pmenu_id)
+
+
+    menu_obj = role_obj.menu.all()
+    perms_info=[]
+    for i in menu_obj:
+        menu_id = i.id
+        perms_obj = auth_db.Perms.objects.filter(menus_id=menu_id)
+        for j in perms_obj:
+            perms_info.append({"menu_id":j.menus.id,"menu_title":j.menus.menu_title,"pmenu_id":j.menus.pmenu_id})
+
+
+    nodes = []
+    menu_list = []
+    pmenu_id_list = []
+    for i in  perms_info:
+        menu_info = {"menu_id":i['menu_id'],"menu_title":i['menu_title'],"pmenu_id":i['pmenu_id']}
+        pmenu_id=i['pmenu_id']
+        if menu_info not in menu_list:
+            menu_list.append(menu_info)
+        if pmenu_id not in pmenu_id_list:
+            pmenu_id_list.append(pmenu_id)
+
+    pmenu_list=[]
+    for i in pmenu_id_list:
+        pmenu_obj = auth_db.Menus.objects.get(id=i)
+        pmenu_list.append({"pmenu_id":i,"pmenu_title":pmenu_obj.menu_title})
+
+    for i in pmenu_list:
+
+        if i['pmenu_id'] in perms_num_list:
+            nodes.append({"id": i['pmenu_id'], "pId": 0, "name": i['pmenu_title'], 'open': True,'checked': True})
+        else:
+            nodes.append({"id": i['pmenu_id'], "pId": 0, "name": i['pmenu_title'], 'open': True})
+
+        for j in menu_list:
+
+            if j["pmenu_id"] == i['pmenu_id']:
+
+                perms_obj = auth_db.Perms.objects.filter(menus_id=j['menu_id'])
+
+                menu_num = "menu"+str(j['menu_id'])
+
+                if j['menu_id'] in perms_num_list:
+                    nodes.append({"id": menu_num, "pId": i['pmenu_id'], "name": j['menu_title'], 'open': True,'checked': True})
+                else:
+                    nodes.append({"id": menu_num, "pId": i['pmenu_id'], "name": j['menu_title'], 'open': True})
+
+                for perms in perms_obj:
+
+                    perms_num = "perms"+str(role_id)+"#"+str(perms.id)
+
+                    if perms_num in perms_num_list:
+                        nodes.append({"id": perms_num, "pId": menu_num, "name": perms.perms_title, 'open': True,'checked': True})
+                    else:
+                        nodes.append({"id": perms_num, "pId": menu_num, "name": perms.perms_title, 'open': True})
+
+    perms_data = json.dumps(nodes)
+
+    return HttpResponse(perms_data)
+
+
+@csrf_exempt
+def add_role_perms(request):
+    """权限授权"""
+    perms_nums = request.POST.get("node_id_json")
+
+    role_id = request.POST.get("role_id")
+
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    perms_nums = json.loads(perms_nums)
+
+    role_obj.perms.clear()
+
+    for i in perms_nums:
+        if re.search(r"#",str(i)):
+            perms_id = i.split("#")[-1]
+            perms_obj = auth_db.Perms.objects.get(id=perms_id)
+            role_obj.perms.add(perms_obj)
+
+    data = "授权已更新，重新登录即生效！"
+    return HttpResponse(data)
+
+
+
+@csrf_exempt
+def get_role_asset(request):
+    """获取资产"""
+    role_id = request.POST.get("role_id")
+
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    # 获取用户拥有的权限
+    host_list = role_obj.host.all()
+    nwtwk_list = role_obj.netwk.all()
+
+    asset_num_list = []
+
+    for i in host_list:
+        host_num = "1" + "#" + str(role_id) + "#" + str(i.id)
+        asset_num_list.append(host_num)
+
+    for i in nwtwk_list:
+        netwk_num = "2" + "#" + str(role_id) + "#" + str(i.id)
+        asset_num_list.append(netwk_num)
+
+
+    host_obj = asset_db.Host.objects.all()
+    netwk_obj = asset_db.Netwk.objects.all()
+
+    nodes = []
+
+    nodes.append({"id": 1, "pId": 0, "name": "服务器", 'open': True, 'checked': True})
+    nodes.append({"id": 2, "pId": 0, "name": "网络设备", 'open': True, 'checked': True})
+
+    for i in host_obj:
+        host_num = "1"+"#"+str(role_id)+"#"+str(i.id)
+        if host_num in asset_num_list:
+            nodes.append({"id": host_num, "pId": 1, "name": i.host_ip, 'open': True, 'checked': True})
+        else:
+            nodes.append({"id": host_num, "pId": 1, "name": i.host_ip, 'open': True})
+
+    for j in netwk_obj:
+        netwk_num = "2"+"#" + str(role_id) +"#"+ str(j.id)
+        if netwk_num in asset_num_list:
+            nodes.append({"id": netwk_num, "pId": 2, "name": j.netwk_ip, 'open': True, 'checked': True})
+        else:
+            nodes.append({"id": netwk_num, "pId": 2, "name": j.netwk_ip, 'open': True})
+
+    asset_data = json.dumps(nodes)
+
+    return HttpResponse(asset_data)
+
+
+
+@csrf_exempt
+def add_role_asset(request):
+    """资产授权"""
+    asset_nums = request.POST.get("node_id_json")
+
+    role_id = request.POST.get("role_id")
+
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    asset_nums = json.loads(asset_nums)
+
+    role_obj.host.clear()
+    role_obj.netwk.clear()
+
+    for i in asset_nums:
+        if re.search(r"#",str(i)):
+            asset_id = i.split("#")[-1]
+            type_id = str(i.split("#")[0])
+            if type_id=="1":
+                host_obj = asset_db.Host.objects.get(id=asset_id)
+                role_obj.host.add(host_obj)
+            else:
+                netwk_obj = asset_db.Netwk.objects.get(id=asset_id)
+                role_obj.netwk.add(netwk_obj)
+
+
+    data = "授权已更新，重新登录即生效！"
+    return HttpResponse(data)
+
+
+
+@csrf_exempt
+def get_role_project(request):
+    """获取角色菜单"""
     role_id = request.POST.get("role_id")
     role_obj = auth_db.Role.objects.get(id=role_id)
 
     # 获取用户拥有的权限
-    menu_list = role_obj.menu.all()
-    menu_num_list = []
+    code_list = role_obj.project.all()
+    code_num_list = []
 
-    for i in menu_list:
-        menu_num_list.append(i.menu_num)
+    for i in code_list:
+        code_num = str(role_id) + "#" + str(i.id)
+        code_num_list.append(code_num)
 
-    menu_obj = auth_db.Menus.objects.all()
+    project_obj = code_db.Project.objects.all()
 
     nodes = []
+    for i in project_obj:
+        nodes.append({"id": i.id, "pId": 0, "name": i.project_name, 'open': True, 'checked': True})
 
-    # 创建分页对象
+        gitcode_obj = code_db.GitCode.objects.filter(project_id=i.id)
 
-    for menu in menu_obj:
-        if menu.menu_num in menu_num_list:
-            nodes.append({"id": menu.menu_num, "pId": menu.pmenu_id, "name": menu.menu_title, 'open': True,
-                          'checked': True})
-        else:
-            nodes.append({"id": menu.menu_num, "pId": menu.pmenu_id, "name": menu.menu_title, 'open': True})
 
-    menu_data = json.dumps(nodes)
+        for code in gitcode_obj:
+            code_num = str(role_id)+"#"+str(code.id)
+            if code_num in code_num_list:
+                nodes.append({"id": code_num, "pId": i.id, "name": code.git_name, 'open': True,'checked': True})
+            else:
+                nodes.append({"id": code_num, "pId": i.id, "name": code.git_name, 'open': True})
 
-    return HttpResponse(menu_data)
+    project_data = json.dumps(nodes)
 
+    return HttpResponse(project_data)
+
+
+
+@csrf_exempt
+def add_role_project(request):
+    """资产授权"""
+    code_nums = request.POST.get("node_id_json")
+
+    role_id = request.POST.get("role_id")
+
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    code_nums = json.loads(code_nums)
+
+    role_obj.project.clear()
+
+    for i in code_nums:
+        if re.search(r"#",str(i)):
+            code_id = i.split("#")[-1]
+            code_obj = code_db.GitCode.objects.get(id=code_id)
+            role_obj.project.add(code_obj)
+
+
+
+    data = "授权已更新，重新登录即生效！"
+    return HttpResponse(data)
 
 
 class UserMG(View):
@@ -534,6 +719,7 @@ class MenuMG(View):
 
         return HttpResponse(data)
 
+
     def delete(self,request):
         """删除菜单"""
         req_info = eval(request.body.decode())
@@ -541,6 +727,7 @@ class MenuMG(View):
         auth_db.Menus.objects.get(id=menu_id).delete()
         data = "菜单已删除,请刷新查看！"
         return HttpResponse(data)
+
 
 class PermsMG(View):
 
@@ -565,7 +752,10 @@ class PermsMG(View):
         perms_req = request.POST.get("perms_req")
         perms_title = request.POST.get("perms_title")
         menus_id = request.POST.get("menus_id")
-        perms_obj = auth_db.Perms(perms_title=perms_title, perms_req=perms_req, menus_id=menus_id)
+        perms_url = request.POST.get("perms_url")
+        if perms_req != "other":
+            perms_url=None
+        perms_obj = auth_db.Perms(perms_title=perms_title, perms_req=perms_req, menus_id=menus_id,perms_url=perms_url)
         perms_obj.save()
         data = "权限添加成功，请刷新查看！"
         return  HttpResponse(data)
@@ -576,19 +766,24 @@ class PermsMG(View):
         perms_id = req_info.get("perms_id")
         perms_req = req_info.get("perms_req")
         perms_title = req_info.get("perms_title")
+        perms_url = req_info.get("perms_url")
         menus_id = req_info.get("menus_id")
         action = req_info.get("action")
         if action:
+            if perms_req != "other":
+                perms_url = None
             perms_obj = auth_db.Perms.objects.get(id=perms_id)
             perms_obj.perms_req = perms_req
             perms_obj.perms_title = perms_title
+            perms_obj.perms_url = perms_url
             perms_obj.menus_id = menus_id
             perms_obj.save()
             data = "权限已修改,请刷新查看！"
         else:
             edit_perms_obj = auth_db.Perms.objects.get(id=perms_id)
 
-            data= json.dumps({"perms_id":edit_perms_obj.id,"perms_title":edit_perms_obj.perms_title,"perms_req":edit_perms_obj.perms_req,"menus_id":edit_perms_obj.menus.id})
+            data= json.dumps({"perms_id":edit_perms_obj.id,"perms_title":edit_perms_obj.perms_title,"perms_req":edit_perms_obj.perms_req,
+                              "menus_id":edit_perms_obj.menus.id,"perms_url":edit_perms_obj.perms_url})
 
         return HttpResponse(data)
 

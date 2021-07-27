@@ -26,4 +26,10 @@ urlpatterns = [
     path("logout/",views.Logout),
     path("rolemenu/",views.get_role_menu),
     path("addrolemenu/",views.add_role_menu),
+    path("roleperms/",views.get_role_perms),
+    path("addroleperms/",views.add_role_perms),
+    path("roleasset/",views.get_role_asset),
+    path("addroleasset/",views.add_role_asset),
+    path("roleproject/", views.get_role_project),
+    path("addroleproject/", views.add_role_project),
 ]

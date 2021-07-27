@@ -63,7 +63,8 @@
                       <td>
                           <a href="javascript:;" style="text-decoration:none;" name="rolemenu" role_id="{{ role.id }}">菜单</a>&nbsp;&nbsp;&nbsp;
                           <a href="javascript:;" style="text-decoration:none;" name="roleperms" role_id="{{ role.id }}">权限</a>&nbsp;&nbsp;&nbsp;
-                          <a href="javascript:;" style="text-decoration:none;" name="roleasset" role_id="{{ role.id }}">资产</a>
+                          <a href="javascript:;" style="text-decoration:none;" name="roleasset" role_id="{{ role.id }}">资产</a>&nbsp;&nbsp;&nbsp;
+                          <a href="javascript:;" style="text-decoration:none;" name="roleproject" role_id="{{ role.id }}">项目</a>
 
                       </td>
                       <td style="padding-left:5px;">
@@ -168,7 +169,7 @@
     <div class="modal-content" style="margin-top:135px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="edit-rolepermsModalLabel">cai授权</h4>
+        <h4 class="modal-title" id="edit-rolepermsModalLabel">权限授权</h4>
       </div>
       <div class="modal-body" style="max-height:500px;overflow:auto;">
         <ul id="treeperms" class="ztree"></ul>
@@ -197,6 +198,46 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
         <button type="button" class="btn btn-primary" id="sub-edit-rolemenu">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="edit-roleassetModal" tabindex="-1" role="dialog" aria-labelledby="edit-roleassetModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-roleassetModalLabel">资产授权</h4>
+      </div>
+      <div class="modal-body" style="max-height:500px;overflow:auto;">
+        <ul id="treeasset" class="ztree"></ul>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-roleasset">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="edit-roleprojectModal" tabindex="-1" role="dialog" aria-labelledby="edit-roleprojectModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-roleprojectModalLabel">项目授权</h4>
+      </div>
+      <div class="modal-body" style="max-height:500px;overflow:auto;">
+        <ul id="treeproject" class="ztree"></ul>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-roleproject">提交</button>
       </div>
     </div>
   </div>
@@ -252,7 +293,7 @@
     });
 
 
-    //角色授权
+    //角色菜单授权
     $("#sub-edit-rolemenu").click(function(){
         var role_id = $(this).attr("role_id");
         var treeObj=$.fn.zTree.getZTreeObj("treemenu");
@@ -276,9 +317,192 @@
         });
     });
 
+    //授权
+    $(document).ready(function(){
+
+        $('td a[name="roleperms"]').click(function(){
+            var role_id = $(this).attr("role_id");
+
+            $.post("/auth/roleperms/",{'role_id':role_id},function(data){
+               var info = eval('(' + data + ')');
+               var setting = {
+                view: {
+                    addHoverDom: false,
+                    removeHoverDom: false,
+                    selectedMulti: false,
+                    },
+                    check: {
+                        enable: true
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true
+                        }
+                    },
+                    edit: {
+                        enable: false
+                    }
+                };
+
+                var zNodes =info;
+
+                $.fn.zTree.init($("#treeperms"), setting, zNodes);
+
+                $("#sub-edit-roleperms").attr('role_id',role_id);
+                $("#edit-rolepermsModal").modal('show');
+            });
+        });
+
+    });
+
+    //角色权限授权
+    $("#sub-edit-roleperms").click(function(){
+        var role_id = $(this).attr("role_id");
+        var treeObj=$.fn.zTree.getZTreeObj("treeperms");
+
+        var nodes = treeObj.getCheckedNodes(true);
+
+        var node_ids =new Array();
+
+        for(var i=0;i<nodes.length;i++){
+
+           node_ids[i] = nodes[i].id;
+        }
+
+        node_id_json = JSON.stringify(node_ids)
+
+        $.post("/auth/addroleperms/",{'node_id_json':node_id_json,'role_id':role_id},function(data){
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#edit-rolepermsModal").modal('hide');
+            $("#alert").show();
+        });
+    });
 
 
+        //授权
+    $(document).ready(function(){
 
+        $('td a[name="roleasset"]').click(function(){
+            var role_id = $(this).attr("role_id");
+
+            $.post("/auth/roleasset/",{'role_id':role_id},function(data){
+               var info = eval('(' + data + ')');
+               var setting = {
+                view: {
+                    addHoverDom: false,
+                    removeHoverDom: false,
+                    selectedMulti: false,
+                    },
+                    check: {
+                        enable: true
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true
+                        }
+                    },
+                    edit: {
+                        enable: false
+                    }
+                };
+
+                var zNodes =info;
+
+                $.fn.zTree.init($("#treeasset"), setting, zNodes);
+
+                $("#sub-edit-roleasset").attr('role_id',role_id);
+                $("#edit-roleassetModal").modal('show');
+            });
+        });
+
+    });
+
+    //角色资产授权
+    $("#sub-edit-roleasset").click(function(){
+        var role_id = $(this).attr("role_id");
+        var treeObj=$.fn.zTree.getZTreeObj("treeasset");
+
+        var nodes = treeObj.getCheckedNodes(true);
+
+        var node_ids =new Array();
+
+        for(var i=0;i<nodes.length;i++){
+           node_ids[i] = nodes[i].id;
+        }
+
+        node_id_json = JSON.stringify(node_ids)
+
+        $.post("/auth/addroleasset/",{'node_id_json':node_id_json,'role_id':role_id},function(data){
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#edit-roleassetModal").modal('hide');
+            $("#alert").show();
+        });
+    });
+
+
+    //授权
+    $(document).ready(function(){
+
+        $('td a[name="roleproject"]').click(function(){
+            var role_id = $(this).attr("role_id");
+
+            $.post("/auth/roleproject/",{'role_id':role_id},function(data){
+               var info = eval('(' + data + ')');
+               var setting = {
+                view: {
+                    addHoverDom: false,
+                    removeHoverDom: false,
+                    selectedMulti: false,
+                    },
+                    check: {
+                        enable: true
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true
+                        }
+                    },
+                    edit: {
+                        enable: false
+                    }
+                };
+
+                var zNodes =info;
+
+                $.fn.zTree.init($("#treeproject"), setting, zNodes);
+
+                $("#sub-edit-roleproject").attr('role_id',role_id);
+                $("#edit-roleprojectModal").modal('show');
+            });
+        });
+
+    });
+
+
+        //授权
+    $("#sub-edit-roleproject").click(function(){
+        var role_id = $(this).attr("role_id");
+        var treeObj=$.fn.zTree.getZTreeObj("treeproject");
+
+        var nodes = treeObj.getCheckedNodes(true);
+
+        var node_ids =new Array();
+
+        for(var i=0;i<nodes.length;i++){
+           node_ids[i] = nodes[i].id;
+        }
+
+        node_id_json = JSON.stringify(node_ids)
+
+        $.post("/auth/addroleproject/",{'node_id_json':node_id_json,'role_id':role_id},function(data){
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#edit-roleprojectModal").modal('hide');
+            $("#alert").show();
+        });
+    });
 
     </script>
 

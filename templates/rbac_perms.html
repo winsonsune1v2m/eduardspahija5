@@ -43,10 +43,11 @@
                 <table class="table table-hover table-bordered">
                   <thead>
                     <tr style="background-color: #f5f5f5;">
-                        <th>权限</th>
+
                         <th>菜单</th>
                         <th>地址</th>
-                        <th>请求类型</th>
+                        <th>操作类型</th>
+                        <th>权限标题</th>
                         <th>操作</th>
                     </tr>
                   </thead>
@@ -54,11 +55,14 @@
 
                   {% for perms in perms_obj %}
                     <tr>
-
-                      <td>{{ perms.perms_title }}</td>
                       <td>{{ perms.menus.menu_title }}</td>
+                        {% if perms.perms_req == "other" %}
+                        <td>{{ perms.perms_url }}</td>
+                        {% else %}
                       <td>{{ perms.menus.menu_url }}</td>
+                        {% endif %}
                       <td>{{ perms.perms_req }}</td>
+                        <td>{{ perms.perms_title }}</td>
                       <td style="padding-left:5px;">
                         <a href="javascript:;" style="text-decoration:none;" name="edit-perms" perms_id="{{ perms.id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
                         <a href="javascript:;" style="text-decoration:none;" name="del-perms" perms_id="{{ perms.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
@@ -101,12 +105,13 @@
           </div>
 
           <div class="form-group">
-                <label>请求类型</label>
+                <label>操作类型</label>
                 <select class="form-control" id="perms-req">
                     <option value="post">增</option>
                     <option value="delete">删</option>
                     <option value="put">改</option>
                     <option value="get">查</option>
+                    <option value="other">其他</option>
                 </select>
           </div>
 
@@ -117,6 +122,11 @@
                 <option value="{{ i.id }}">{{ i.menu_title }}</option>
                 {% endfor %}
             </select>
+          </div>
+
+          <div class="form-group" style="display:none" id="div-perms">
+            <label >地址</label>
+            <input class="form-control"  placeholder="/url/" id="perms-url">
           </div>
 
 
@@ -145,12 +155,13 @@
           </div>
 
           <div class="form-group">
-                <label>请求类型</label>
+                <label>操作类型</label>
                 <select class="form-control" id="edit-perms-req">
                     <option value="post">增</option>
                     <option value="delete">删</option>
                     <option value="put">改</option>
                     <option value="get">查</option>
+                    <option value="other">其他</option>
                 </select>
           </div>
 
@@ -162,7 +173,10 @@
                 {% endfor %}
             </select>
           </div>
-
+          <div class="form-group" id="edit-div-perms" style="display: none">
+            <label >地址</label>
+            <input class="form-control"  placeholder="/url/" id="edit-perms-url">
+          </div>
 
       </div>
       <div class="modal-footer">
@@ -184,6 +198,32 @@
     <script type="text/javascript" src="/static/js/auth_v2.js"></script>
     <script type="text/javascript" >
 
+        $("#perms-req").change(function(){
+
+            var perms_req = $(this).val();
+
+            if (perms_req == 'other'){
+                $("#div-perms").css("display",'block')
+            }
+            else{
+                $("#div-perms").css("display",'none')
+
+            }
+        });
+
+
+        $("#edit-perms-req").change(function(){
+
+            var perms_req = $(this).val();
+
+            if (perms_req == 'other'){
+                $("#edit-div-perms").css("display",'block')
+            }
+            else{
+                $("#edit-div-perms").css("display",'none')
+
+            }
+        });
 
     </script>
 

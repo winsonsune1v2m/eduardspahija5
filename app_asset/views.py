@@ -6,6 +6,7 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from app_asset import models as asset_db
+from app_auth import models as auth_db
 from app_auth.views import login_check
 # Create your views here.
 
@@ -206,7 +207,13 @@ class Host(View):
         supplier_obj = asset_db.Supplier.objects.all()
         group_obj = asset_db.HostGroup.objects.all()
         idc_obj = asset_db.IDC.objects.all()
-        host_obj = asset_db.Host.objects.all()
+
+        role_id = request.session['role_id']
+
+        role_obj = auth_db.Role.objects.get(id=role_id)
+
+        host_obj = role_obj.host.all()
+
         return render(request,'asset_host.html',locals())
 
     def post(self,request):
@@ -336,7 +343,14 @@ class Netwk(View):
         supplier_obj = asset_db.Supplier.objects.all()
         group_obj = asset_db.HostGroup.objects.all()
         idc_obj = asset_db.IDC.objects.all()
-        netwk_obj = asset_db.Netwk.objects.all()
+
+        role_id = request.session['role_id']
+
+        role_obj = auth_db.Role.objects.get(id=role_id)
+
+
+        netwk_obj = role_obj.netwk.all()
+
         return render(request,'asset_netwk.html',locals())
 
     def post(self,request):

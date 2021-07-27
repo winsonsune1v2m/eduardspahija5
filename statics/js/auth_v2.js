@@ -384,7 +384,8 @@ $("#sub-perms").click(function(){
     var perms_title = $("#perms-title").val();
     var perms_req = $("#perms-req").val();
     var menus_id = $("#menus-id").val();
-    $.post("/auth/perms/",{"perms_req":perms_req, "perms_title":perms_title, "menus_id":menus_id},function(data){
+    var perms_url = $("#perms-url").val();
+    $.post("/auth/perms/",{"perms_req":perms_req, "perms_title":perms_title, "menus_id":menus_id,'perms_url':perms_url},function(data){
         $("#msg-alert").empty();
         $("#msg-alert").append(data);
         $("#permsModal").modal("hide");
@@ -405,9 +406,18 @@ $('td a[name="edit-perms"]').click(function() {
             var info = eval('(' + data + ')');
             $("#edit-perms-title").val(info.perms_title);
             $("#edit-perms-req").val(info.perms_req);
+            $("#edit-perms-url").val(info.perms_url);
             $("#edit-menus-id").val(info.menus_id);
             $("#sub-edit-perms").attr('perms_id',info.perms_id);
             $("#edit-permsModal").modal('show');
+
+            if (info.perms_req == 'other'){
+                $("#edit-div-perms").css("display",'block')
+            }
+            else{
+                $("#edit-div-perms").css("display",'none')
+            }
+
         }
     });
 });
@@ -417,11 +427,12 @@ $("#sub-edit-perms").click(function() {
     var perms_id = $(this).attr("perms_id");
     var perms_title = $("#edit-perms-title").val();
     var perms_req = $("#edit-perms-req").val();
-    var menus_id = $("#edit-menus-id").val();
+    var perms_url = $("#edit-perms-url").val();
+    var menus_id = $("#edit-edit-menus-id").val();
     $.ajax({
         url: "/auth/perms/",
         type: "PUT",
-        data: JSON.stringify({'action':'edit','perms_id':perms_id,'perms_title':perms_title,'perms_req':perms_req,'menus_id':menus_id}),
+        data: JSON.stringify({'action':'edit','perms_id':perms_id,'perms_title':perms_title,'perms_req':perms_req,'menus_id':menus_id,'perms_url':perms_url}),
         success: function (data) {
             $("#msg-alert").empty();
             $("#msg-alert").append(data);

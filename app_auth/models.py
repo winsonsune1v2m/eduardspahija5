@@ -1,4 +1,6 @@
 from django.db import models
+from app_asset.models import Host,Netwk
+from app_code.models import GitCode
 
 # Create your models here.
 
@@ -8,7 +10,10 @@ class Role(models.Model):
     role_title = models.CharField(max_length=64,unique=True)
     role_msg = models.CharField(max_length=128,null=True)
     perms = models.ManyToManyField(to='Perms')
-    menu = models.ManyToManyField(to='Menus',)
+    menu = models.ManyToManyField(to='Menus')
+    host = models.ManyToManyField(to=Host)
+    netwk = models.ManyToManyField(to=Netwk)
+    project = models.ManyToManyField(to=GitCode)
     def __unicode__(self):
         return self.role_title
 
@@ -46,6 +51,7 @@ class Perms(models.Model):
     """权限表"""
     perms_title = models.CharField(max_length=128)
     perms_req = models.CharField(max_length=64)
+    perms_url = models.CharField(max_length=64, null=True)
     menus = models.ForeignKey(to="Menus",on_delete=models.CASCADE)
     def __unicode__(self):
         return  self.Perms

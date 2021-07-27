@@ -45,7 +45,6 @@ class HostGroup(models.Model):
     """分组信息"""
     host_group_name = models.CharField(max_length=64,unique=True)
     host_group_msg = models.CharField(max_length=256,null=True)
-
     def __unicode__(self):
         return self.host_group_name
 
