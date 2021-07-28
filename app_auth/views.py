@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
-from app_auth.perms_control import menus_list
+from app_auth.perms_control import menus_list,perms_list
 
 # Create your views here.
 
@@ -53,11 +53,15 @@ def perms_check(func):
     def wrapper(request,*args,**kwargs):
         req_url = request.get_full_path()
         req_method= request.method
-        print(req_url,req_method)
-        if request.session.get("username"):
-            return func(request, *args, **kwargs)
+
+        perms_all_list = request.session['perms_all_list']
+        if req_url in perms_all_list.keys():
+            if req_method in perms_all_list[req_url]:
+                return func(request, *args, **kwargs)
+            else:
+                return HttpResponse("perms_false")
         else:
-            return redirect("/auth/login/?next={}".format(req_url))
+            return HttpResponse("perms_false")
     return wrapper
 
 
@@ -85,8 +89,11 @@ class Login(View):
         if user:
             login(request, user)
             request.session['username'] = user.ready_name
-            request.session['role_id'] = user.role.all()[0].id
+            role_id = user.role.all()[0].id
+            request.session['role_id'] = role_id
             request.session['menu_all_list'] = menus_list(username)
+            request.session['perms_all_list'] = perms_list(role_id)
+
             next_url = request.GET.get("next")
             if next_url:
                 return redirect(next_url)
@@ -108,7 +115,6 @@ class Index(View):
     """首页"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
-    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Index, self).dispatch(request, *args, **kwargs)
 
@@ -216,8 +222,6 @@ def get_role_menu(request):
     menu_obj = auth_db.Menus.objects.all()
 
     nodes = []
-
-    
 
     for menu in menu_obj:
         if menu.menu_num in menu_num_list:

@@ -5,10 +5,16 @@ $("#sub-role").click(function(){
     var role_title = $("#role-title").val();
     var role_msg = $("#role-msg").val();
     $.post("/auth/role/",{'role_title':role_title, 'role_msg':role_msg},function(data) {
-        $("#msg-alert").empty();
-        $("#msg-alert").append(data);
-        $("#roleModal").modal("hide");
-        $("#alert").show();
+        if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#roleModal").modal("hide");
+            $("#alert").show();
+        }
     })
 });
 
@@ -22,12 +28,17 @@ $('td a[name="edit-role"]').click(function(){
         type: "PUT",
         data: JSON.stringify({'role_id':role_id}),
         success: function(data) {
-
-            var info = eval('(' + data + ')');
-            $("#edit-role-title").val(info.role_title);
-            $("#edit-role-msg").val(info.role_msg);
-            $("#sub-edit-role").attr('role_id',info.role_id);
-            $("#edit-roleModal").modal('show');
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                var info = eval('(' + data + ')');
+                $("#edit-role-title").val(info.role_title);
+                $("#edit-role-msg").val(info.role_msg);
+                $("#sub-edit-role").attr('role_id', info.role_id);
+                $("#edit-roleModal").modal('show');
+            }
 
          }
         });
@@ -44,11 +55,16 @@ $("#sub-edit-role").click(function(){
         type: "PUT",
         data: JSON.stringify({'action':'edit','role_title':role_title, 'role_msg':role_msg,'role_id':role_id}),
         success: function(data) {
-
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#edit-roleModal").modal("hide");
-            $("#alert").show();
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-roleModal").modal("hide");
+                $("#alert").show();
+            }
 
          }
     });
@@ -66,10 +82,15 @@ $("td a[name='del-role']").click(function(){
             type: "DELETE",
             data: JSON.stringify({'role_id':role_id}),
             success: function(data) {
-
+                if(data=="perms_false"){
                 $("#msg-alert").empty();
-                $("#msg-alert").append(data);
+                $("#msg-alert").append("权限不足，请联系管理员");
                 $("#alert").show();
+            }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
 
              }
         });
@@ -89,10 +110,16 @@ $("#add-user").click(function(){
 
     if(passwd==repasswd){
         $.post("/auth/user/",{'user_name':user_name, 'ready_name':ready_name,'passwd':passwd,'role':role,'phone':phone,'email':email},function(data){
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#userModal").modal("hide");
-            $("#alert").show();
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#userModal").modal("hide");
+                $("#alert").show();
+            }
 
         })
 
@@ -110,21 +137,28 @@ $('td a[name="edit-user"]').click(function(){
             type: "PUT",
             data: JSON.stringify({'user_id':user_id}),
             success: function(data) {
-                var info = eval('(' + data + ')');
-                $("#edit-ready-name").val(info.ready_name);
-                $("#edit-user-name").val(info.user_name);
-                $("#edit-repasswd").val(info.passwd);
+                if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
 
-                var role_info = eval('(' + info.role_info + ')');
-                for(i=0;i<role_info.length;i++){
+                    var info = eval('(' + data + ')');
+                    $("#edit-ready-name").val(info.ready_name);
+                    $("#edit-user-name").val(info.user_name);
+                    $("#edit-repasswd").val(info.passwd);
 
-                    $("#edit-role").val(role_info[0].role_id);
+                    var role_info = eval('(' + info.role_info + ')');
+                    for (i = 0; i < role_info.length; i++) {
+
+                        $("#edit-role").val(role_info[0].role_id);
+                    }
+
+                    $("#edit-phone").val(info.phone);
+                    $("#edit-email").val(info.email);
+                    $("#sub-edit-user").attr('user_id', info.user_id);
+                    $("#edit-userModal").modal('show');
                 }
-
-                $("#edit-phone").val(info.phone);
-                $("#edit-email").val(info.email);
-                $("#sub-edit-user").attr('user_id',info.user_id);
-                $("#edit-userModal").modal('show');
 
              }
         });
@@ -144,10 +178,16 @@ $("#sub-edit-user").click(function(){
             type: "PUT",
             data: JSON.stringify({'action':'edit','ready_name':ready_name, 'user_name':user_name,'role_id':role_id,'phone':phone,'email':email,'user_id':user_id}),
             success: function(data) {
+                if(data=="perms_false"){
                 $("#msg-alert").empty();
-                $("#msg-alert").append(data);
-                $("#edit-userModal").modal("hide");
+                $("#msg-alert").append("权限不足，请联系管理员");
                 $("#alert").show();
+            }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#edit-userModal").modal("hide");
+                    $("#alert").show();
+                }
         }
     });
 });
@@ -163,9 +203,15 @@ $("td a[name='del-user']").click(function(){
             type: "DELETE",
             data: JSON.stringify({'user_id':user_id}),
             success: function(data) {
+                if(data=="perms_false"){
                 $("#msg-alert").empty();
-                $("#msg-alert").append(data);
+                $("#msg-alert").append("权限不足，请联系管理员");
                 $("#alert").show();
+            }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
              }
         });
     }
@@ -220,10 +266,16 @@ $("#sub-menu").click(function(){
     var pmenu_id = $("#pmenu-id").val();
     var menu_icon = $("#menu-icon-input").val();
     $.post("/auth/menu/",{'menu_title':menu_title, 'menu_url':menu_url,'menu_type':menu_type,'pmenu_id':pmenu_id,'menu_icon':menu_icon},function(data){
-        $("#msg-alert").empty();
-        $("#msg-alert").append(data);
-        $("#menuModal").modal("hide");
-        $("#alert").show();
+        if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#menuModal").modal("hide");
+            $("#alert").show();
+        }
     })
 });
 
@@ -236,57 +288,62 @@ $('td a[name="edit-menu"]').click(function(){
         type: "PUT",
         data: JSON.stringify({'menu_id':menu_id}),
         success: function(data) {
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                var info = eval('(' + data + ')');
+                $("#edit-menu-title").val(info.menu_title);
+                $("#edit-menu-type").val(info.menu_type);
+                $("#edit-menu-url").val(info.menu_url);
+                $("#edit-pmenu-id").val(info.pmenu_id);
 
-            var info = eval('(' + data + ')');
-            $("#edit-menu-title").val(info.menu_title);
-            $("#edit-menu-type").val(info.menu_type);
-            $("#edit-menu-url").val(info.menu_url);
-            $("#edit-pmenu-id").val(info.pmenu_id);
+                $("#edit-menu-icon-input").val(info.menu_icon);
 
-            $("#edit-menu-icon-input").val(info.menu_icon);
+                $("#sub-edit-menu").attr('menu_id', info.menu_id);
 
-            $("#sub-edit-menu").attr('menu_id',info.menu_id);
+                if (info.menu_type == '一级菜单') {
 
-            if (info.menu_type == '一级菜单'){
+                    $("#edit-pmenu-div").css("display", 'none')
+                    $("#edit-icon-div").css("display", 'block')
 
-                $("#edit-pmenu-div").css("display",'none')
-                $("#edit-icon-div").css("display",'block')
-
-            }
-
-            else if(info.menu_type == '二级菜单' ){
-
-                $("#edit-pmenu-id option").each(function(){
-                    var pmenu_id = $(this).attr("pmenu_id")
-
-                    if (pmenu_id==0){
-
-                        $(this).css("display",'block')
-                    }else{
-
-                        $(this).css("display",'none')
-                    }
-                })
-                $("#edit-icon-div").css("display",'none')
-                $("#edit-pmenu-div").css("display",'block')
                 }
-            else{
 
-                $("#edit-pmenu-id option").each(function(){
-                    var pmenu_id = $(this).attr("pmenu_id")
+                else if (info.menu_type == '二级菜单') {
 
-                    if (pmenu_id==0){
+                    $("#edit-pmenu-id option").each(function () {
+                        var pmenu_id = $(this).attr("pmenu_id")
 
-                            $(this).css("display",'none')
-                        }else{
+                        if (pmenu_id == 0) {
 
-                            $(this).css("display",'block')
+                            $(this).css("display", 'block')
+                        } else {
+
+                            $(this).css("display", 'none')
                         }
                     })
-                    $("#edit-icon-div").css("display",'none')
-                    $("#edit-pmenu-div").css("display",'block')
+                    $("#edit-icon-div").css("display", 'none')
+                    $("#edit-pmenu-div").css("display", 'block')
                 }
-            $("#edit-menuModal").modal('show');
+                else {
+
+                    $("#edit-pmenu-id option").each(function () {
+                        var pmenu_id = $(this).attr("pmenu_id")
+
+                        if (pmenu_id == 0) {
+
+                            $(this).css("display", 'none')
+                        } else {
+
+                            $(this).css("display", 'block')
+                        }
+                    })
+                    $("#edit-icon-div").css("display", 'none')
+                    $("#edit-pmenu-div").css("display", 'block')
+                }
+                $("#edit-menuModal").modal('show');
+            }
 
         }
     })
@@ -350,10 +407,16 @@ $("#sub-edit-menu").click(function(){
         type: "PUT",
         data: JSON.stringify({'action':'edit','menu_title':menu_title, 'menu_url':menu_url,'menu_type':menu_type,'pmenu_id':pmenu_id,'menu_icon':menu_icon,'menu_id':menu_id}),
         success: function(data) {
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#edit-menuModal").modal("hide");
-            $("#alert").show();
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-menuModal").modal("hide");
+                $("#alert").show();
+            }
        }
     });
 });
@@ -369,9 +432,15 @@ $("td a[name='del-menu']").click(function(){
             type: "DELETE",
             data: JSON.stringify({'menu_id':menu_id}),
             success: function(data) {
+                if(data=="perms_false"){
                 $("#msg-alert").empty();
-                $("#msg-alert").append(data);
+                $("#msg-alert").append("权限不足，请联系管理员");
                 $("#alert").show();
+            }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
              }
         });
     }
@@ -386,10 +455,16 @@ $("#sub-perms").click(function(){
     var menus_id = $("#menus-id").val();
     var perms_url = $("#perms-url").val();
     $.post("/auth/perms/",{"perms_req":perms_req, "perms_title":perms_title, "menus_id":menus_id,'perms_url':perms_url},function(data){
-        $("#msg-alert").empty();
-        $("#msg-alert").append(data);
-        $("#permsModal").modal("hide");
-        $("#alert").show();
+        if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#permsModal").modal("hide");
+            $("#alert").show();
+        }
 
     })
 });
@@ -403,19 +478,25 @@ $('td a[name="edit-perms"]').click(function() {
         type: "PUT",
         data: JSON.stringify({'perms_id': perms_id}),
         success: function (data) {
-            var info = eval('(' + data + ')');
-            $("#edit-perms-title").val(info.perms_title);
-            $("#edit-perms-req").val(info.perms_req);
-            $("#edit-perms-url").val(info.perms_url);
-            $("#edit-menus-id").val(info.menus_id);
-            $("#sub-edit-perms").attr('perms_id',info.perms_id);
-            $("#edit-permsModal").modal('show');
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                var info = eval('(' + data + ')');
+                $("#edit-perms-title").val(info.perms_title);
+                $("#edit-perms-req").val(info.perms_req);
+                $("#edit-perms-url").val(info.perms_url);
+                $("#edit-menus-id").val(info.menus_id);
+                $("#sub-edit-perms").attr('perms_id', info.perms_id);
+                $("#edit-permsModal").modal('show');
 
-            if (info.perms_req == 'other'){
-                $("#edit-div-perms").css("display",'block')
-            }
-            else{
-                $("#edit-div-perms").css("display",'none')
+                if (info.perms_req == 'other') {
+                    $("#edit-div-perms").css("display", 'block')
+                }
+                else {
+                    $("#edit-div-perms").css("display", 'none')
+                }
             }
 
         }
@@ -428,16 +509,22 @@ $("#sub-edit-perms").click(function() {
     var perms_title = $("#edit-perms-title").val();
     var perms_req = $("#edit-perms-req").val();
     var perms_url = $("#edit-perms-url").val();
-    var menus_id = $("#edit-edit-menus-id").val();
+    var menus_id = $("#edit-menus-id").val();
     $.ajax({
         url: "/auth/perms/",
         type: "PUT",
         data: JSON.stringify({'action':'edit','perms_id':perms_id,'perms_title':perms_title,'perms_req':perms_req,'menus_id':menus_id,'perms_url':perms_url}),
         success: function (data) {
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#edit-permsModal").modal("hide");
-            $("#alert").show();
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-permsModal").modal("hide");
+                $("#alert").show();
+            }
         }
     });
 });
@@ -454,9 +541,15 @@ $("td a[name='del-perms']").click(function(){
             type: "DELETE",
             data: JSON.stringify({'perms_id':perms_id}),
             success: function(data) {
+                if(data=="perms_false"){
                 $("#msg-alert").empty();
-                $("#msg-alert").append(data);
+                $("#msg-alert").append("权限不足，请联系管理员");
                 $("#alert").show();
+            }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
              }
         });
     }

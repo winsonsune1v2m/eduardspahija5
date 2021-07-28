@@ -47,3 +47,33 @@ def menus_list(username):
         menu_all_list.append(i)
 
     return menu_all_list
+
+
+def perms_list(role_id):
+    role_obj = auth_db.Role.objects.get(id=role_id)
+    perms_obj = role_obj.perms.all()
+    menu_urls = []
+    perms_urls = {}
+
+    for i in perms_obj:
+        if i.perms_req == "other":
+            perms_url = i.perms_url
+            perms_urls[perms_url] = ['POST', 'DELETE', 'PUT', 'GET']
+        else:
+            menu_url = i.menus.menu_url
+            if menu_url not in menu_urls:
+                menu_urls.append(menu_url)
+
+    perms_list = {}
+    for i in menu_urls:
+        req_method = []
+        for j in perms_obj:
+            if j.perms_req != "other":
+                if i == j.menus.menu_url:
+                    req_method.append(j.perms_req.upper())
+        perms_list[i] = req_method
+
+    perms_all_list = perms_list.copy()
+    perms_all_list.update(perms_urls)
+
+    return perms_all_list

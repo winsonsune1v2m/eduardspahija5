@@ -7,7 +7,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from app_asset import models as asset_db
 from app_auth import models as auth_db
-from app_auth.views import login_check
+from app_auth.views import login_check,perms_check
+
 # Create your views here.
 
 
@@ -16,6 +17,7 @@ class IDC(View):
     """机房管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(IDC,self).dispatch(request, *args, **kwargs)
 
@@ -80,6 +82,7 @@ class HostGroup(View):
     """分组管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(HostGroup,self).dispatch(request, *args, **kwargs)
 
@@ -136,6 +139,7 @@ class Supplier(View):
     """供应商管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Supplier,self).dispatch(request, *args, **kwargs)
 
@@ -199,6 +203,7 @@ class Host(View):
     """服务器管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Host,self).dispatch(request, *args, **kwargs)
 
@@ -335,6 +340,7 @@ class Netwk(View):
     """网络设备管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Netwk,self).dispatch(request, *args, **kwargs)
 
@@ -345,10 +351,7 @@ class Netwk(View):
         idc_obj = asset_db.IDC.objects.all()
 
         role_id = request.session['role_id']
-
         role_obj = auth_db.Role.objects.get(id=role_id)
-
-
         netwk_obj = role_obj.netwk.all()
 
         return render(request,'asset_netwk.html',locals())
