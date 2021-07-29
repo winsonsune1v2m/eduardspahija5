@@ -3,7 +3,7 @@ from django.shortcuts import render,HttpResponse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from app_auth.views import login_check
+from app_auth.views import login_check,perms_check
 
 # Create your views here.
 
@@ -11,6 +11,7 @@ class UserLog(View):
     """用户日志"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(UserLog,self).dispatch(request,*args, **kwargs)
 
@@ -23,6 +24,7 @@ class OpsLog(View):
     """操作日志"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(OpsLog,self).dispatch(request,*args, **kwargs)
 

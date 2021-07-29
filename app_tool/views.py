@@ -4,7 +4,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from app_asset import models as asset_db
-from app_auth.views import login_check
+from app_auth.views import login_check,perms_check
 
 # Create your views here.
 
@@ -12,6 +12,7 @@ class WebSSH(View):
     """webssh"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(WebSSH,self).dispatch(request,*args, **kwargs)
 
@@ -45,6 +46,7 @@ class PhpMyadmin(View):
     """phpMyadmin"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(PhpMyadmin,self).dispatch(request,*args, **kwargs)
 

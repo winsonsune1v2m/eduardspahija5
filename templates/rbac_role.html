@@ -261,32 +261,38 @@
             var role_id = $(this).attr("role_id");
 
             $.post("/auth/rolemenu/",{'role_id':role_id},function(data){
-               var info = eval('(' + data + ')');
-               var setting = {
-                view: {
-                    addHoverDom: false,
-                    removeHoverDom: false,
-                    selectedMulti: false,
-                    },
-                    check: {
-                        enable: true
-                    },
-                    data: {
-                        simpleData: {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    var info = eval('(' + data + ')');
+                    var setting = {
+                        view: {
+                            addHoverDom: false,
+                            removeHoverDom: false,
+                            selectedMulti: false,
+                        },
+                        check: {
                             enable: true
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true
+                            }
+                        },
+                        edit: {
+                            enable: false
                         }
-                    },
-                    edit: {
-                        enable: false
-                    }
-                };
+                    };
 
-                var zNodes =info;
+                    var zNodes = info;
 
-                $.fn.zTree.init($("#treemenu"), setting, zNodes);
+                    $.fn.zTree.init($("#treemenu"), setting, zNodes);
 
-                $("#sub-edit-rolemenu").attr('role_id',role_id);
-                $("#edit-rolemenuModal").modal('show');
+                    $("#sub-edit-rolemenu").attr('role_id', role_id);
+                    $("#edit-rolemenuModal").modal('show');
+                }
             });
         });
 
@@ -310,10 +316,16 @@
         node_id_json = JSON.stringify(node_ids)
 
         $.post("/auth/addrolemenu/",{'node_id_json':node_id_json,'role_id':role_id},function(data){
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#edit-rolemenuModal").modal('hide');
-            $("#alert").show();
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-rolemenuModal").modal('hide');
+                $("#alert").show();
+            }
         });
     });
 
@@ -324,32 +336,38 @@
             var role_id = $(this).attr("role_id");
 
             $.post("/auth/roleperms/",{'role_id':role_id},function(data){
-               var info = eval('(' + data + ')');
-               var setting = {
-                view: {
-                    addHoverDom: false,
-                    removeHoverDom: false,
-                    selectedMulti: false,
-                    },
-                    check: {
-                        enable: true
-                    },
-                    data: {
-                        simpleData: {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    var info = eval('(' + data + ')');
+                    var setting = {
+                        view: {
+                            addHoverDom: false,
+                            removeHoverDom: false,
+                            selectedMulti: false,
+                        },
+                        check: {
                             enable: true
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true
+                            }
+                        },
+                        edit: {
+                            enable: false
                         }
-                    },
-                    edit: {
-                        enable: false
-                    }
-                };
+                    };
 
-                var zNodes =info;
+                    var zNodes = info;
 
-                $.fn.zTree.init($("#treeperms"), setting, zNodes);
+                    $.fn.zTree.init($("#treeperms"), setting, zNodes);
 
-                $("#sub-edit-roleperms").attr('role_id',role_id);
-                $("#edit-rolepermsModal").modal('show');
+                    $("#sub-edit-roleperms").attr('role_id', role_id);
+                    $("#edit-rolepermsModal").modal('show');
+                }
             });
         });
 
@@ -372,10 +390,16 @@
         node_id_json = JSON.stringify(node_ids)
 
         $.post("/auth/addroleperms/",{'node_id_json':node_id_json,'role_id':role_id},function(data){
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#edit-rolepermsModal").modal('hide');
-            $("#alert").show();
+            if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-rolepermsModal").modal('hide');
+                $("#alert").show();
+            }
         });
     });
 
@@ -387,32 +411,39 @@
             var role_id = $(this).attr("role_id");
 
             $.post("/auth/roleasset/",{'role_id':role_id},function(data){
-               var info = eval('(' + data + ')');
-               var setting = {
-                view: {
-                    addHoverDom: false,
-                    removeHoverDom: false,
-                    selectedMulti: false,
-                    },
-                    check: {
-                        enable: true
-                    },
-                    data: {
-                        simpleData: {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    var info = eval('(' + data + ')');
+                    var setting = {
+                        view: {
+                            addHoverDom: false,
+                            removeHoverDom: false,
+                            selectedMulti: false,
+                        },
+                        check: {
                             enable: true
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true
+                            }
+                        },
+                        edit: {
+                            enable: false
                         }
-                    },
-                    edit: {
-                        enable: false
-                    }
-                };
+                    };
 
-                var zNodes =info;
+                    var zNodes = info;
 
-                $.fn.zTree.init($("#treeasset"), setting, zNodes);
+                    $.fn.zTree.init($("#treeasset"), setting, zNodes);
 
-                $("#sub-edit-roleasset").attr('role_id',role_id);
-                $("#edit-roleassetModal").modal('show');
+                    $("#sub-edit-roleasset").attr('role_id', role_id);
+                    $("#edit-roleassetModal").modal('show');
+                }
+
             });
         });
 
@@ -434,10 +465,16 @@
         node_id_json = JSON.stringify(node_ids)
 
         $.post("/auth/addroleasset/",{'node_id_json':node_id_json,'role_id':role_id},function(data){
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#edit-roleassetModal").modal('hide');
-            $("#alert").show();
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-roleassetModal").modal('hide');
+                $("#alert").show();
+            }
         });
     });
 
@@ -449,32 +486,38 @@
             var role_id = $(this).attr("role_id");
 
             $.post("/auth/roleproject/",{'role_id':role_id},function(data){
-               var info = eval('(' + data + ')');
-               var setting = {
-                view: {
-                    addHoverDom: false,
-                    removeHoverDom: false,
-                    selectedMulti: false,
-                    },
-                    check: {
-                        enable: true
-                    },
-                    data: {
-                        simpleData: {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    var info = eval('(' + data + ')');
+                    var setting = {
+                        view: {
+                            addHoverDom: false,
+                            removeHoverDom: false,
+                            selectedMulti: false,
+                        },
+                        check: {
                             enable: true
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true
+                            }
+                        },
+                        edit: {
+                            enable: false
                         }
-                    },
-                    edit: {
-                        enable: false
-                    }
-                };
+                    };
 
-                var zNodes =info;
+                    var zNodes = info;
 
-                $.fn.zTree.init($("#treeproject"), setting, zNodes);
+                    $.fn.zTree.init($("#treeproject"), setting, zNodes);
 
-                $("#sub-edit-roleproject").attr('role_id',role_id);
-                $("#edit-roleprojectModal").modal('show');
+                    $("#sub-edit-roleproject").attr('role_id', role_id);
+                    $("#edit-roleprojectModal").modal('show');
+                }
             });
         });
 
@@ -497,10 +540,16 @@
         node_id_json = JSON.stringify(node_ids)
 
         $.post("/auth/addroleproject/",{'node_id_json':node_id_json,'role_id':role_id},function(data){
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#edit-roleprojectModal").modal('hide');
-            $("#alert").show();
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-roleprojectModal").modal('hide');
+                $("#alert").show();
+            }
         });
     });
 

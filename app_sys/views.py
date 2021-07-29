@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from app_sys import models as sys_db
 from app_asset import models as asset_db
-from app_auth.views import login_check
+from app_auth.views import login_check,perms_check
 
 # Create your views here.
 
@@ -13,6 +13,7 @@ class EnvSofeware(View):
     """环境部署"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(EnvSofeware,self).dispatch(request,*args, **kwargs)
 
@@ -96,6 +97,7 @@ class Batch(View):
     """批量管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Batch,self).dispatch(request,*args, **kwargs)
 
@@ -130,6 +132,7 @@ class FileMG(View):
     """文件管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(FileMG,self).dispatch(request,*args, **kwargs)
 

@@ -542,10 +542,10 @@ $("td a[name='del-perms']").click(function(){
             data: JSON.stringify({'perms_id':perms_id}),
             success: function(data) {
                 if(data=="perms_false"){
-                $("#msg-alert").empty();
-                $("#msg-alert").append("权限不足，请联系管理员");
-                $("#alert").show();
-            }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
                     $("#msg-alert").empty();
                     $("#msg-alert").append(data);
                     $("#alert").show();

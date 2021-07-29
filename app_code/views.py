@@ -10,8 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from app_code import models as code_db
 from app_asset import models as asser_db
 from app_auth import models as auth_db
-
-from app_auth.views import login_check
+from app_auth.views import login_check,perms_check
 
 # Create your views here.
 
@@ -19,6 +18,7 @@ class Project(View):
     '''项目管理'''
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Project,self).dispatch(request, *args, **kwargs)
 
@@ -77,6 +77,7 @@ class GitCode(View):
 
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(GitCode, self).dispatch(request, *args, **kwargs)
 
@@ -176,6 +177,7 @@ class Publist(View):
     '''代码发布'''
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Publist, self).dispatch(request, *args, **kwargs)
 
@@ -227,6 +229,7 @@ class CodeLog(View):
 
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(CodeLog, self).dispatch(request, *args, **kwargs)
 

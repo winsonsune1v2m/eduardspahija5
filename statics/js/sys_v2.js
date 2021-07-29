@@ -7,10 +7,17 @@ $("#sub-sofeware").click(function(){
     var sofeware_version = $("#sofeware-version").val();
     var install_script = $("#install-script").val();
     $.post('/sys/sofeware/',{'sofeware_name':sofeware_name,'sofeware_version':sofeware_version,'install_script':install_script},function(data){
-        $("#msg-alert").empty();
-        $("#msg-alert").append(data);
-        $("#sofewareModal").modal("hide");
-        $("#alert").show();
+
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#sofewareModal").modal("hide");
+            $("#alert").show();
+        }
     });
 });
 
@@ -24,12 +31,20 @@ $('td a[name="edit-sofeware"]').click(function(){
         type: "PUT",
         data: JSON.stringify({'sofeware_id':sofeware_id}),
         success: function(data) {
-            var info = eval('(' + data + ')');
-            $("#edit-sofeware-name").val(info.sofeware_name);
-            $("#edit-sofeware-version").val(info.sofeware_version);
-            $("#edit-install-script").val(info.install_script);
-            $("#sub-edit-sofeware").attr('sofeware_id',info.sofeware_id);
-            $("#edit-sofewareModal").modal('show');
+
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                var info = eval('(' + data + ')');
+                $("#edit-sofeware-name").val(info.sofeware_name);
+                $("#edit-sofeware-version").val(info.sofeware_version);
+                $("#edit-install-script").val(info.install_script);
+                $("#sub-edit-sofeware").attr('sofeware_id', info.sofeware_id);
+                $("#edit-sofewareModal").modal('show');
+
+            }
 
          }
         });
@@ -48,11 +63,16 @@ $("#sub-edit-sofeware").click(function(){
         data: JSON.stringify({'action':'edit','sofeware_name':sofeware_name,'sofeware_version':sofeware_version,
             'install_script':install_script,"sofeware_id":sofeware_id}),
         success: function(data) {
-
-            $("#msg-alert").empty();
-            $("#msg-alert").append(data);
-            $("#edit-sofewareModal").modal("hide");
-            $("#alert").show();
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-sofewareModal").modal("hide");
+                $("#alert").show();
+            }
 
          }
     });
@@ -70,9 +90,16 @@ $("td a[name='del-sofeware']").click(function(){
             type: "DELETE",
             data: JSON.stringify({'sofeware_id':sofeware_id}),
             success: function(data) {
-                $("#msg-alert").empty();
-                $("#msg-alert").append(data);
-                $("#alert").show();
+
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
              }
         });
     }

@@ -17,7 +17,6 @@ from app_auth.perms_control import menus_list,perms_list
 # Create your views here.
 
 
-
 class CustomBackend(ModelBackend):
     """自定义登录认证"""
     def authenticate(self, request, username=None, password=None, **kwargs):
@@ -102,13 +101,11 @@ class Login(View):
         return render(request, 'login.html')
 
 
-
 @login_check
 def Logout(request):
     logout(request)
     request.session.delete()
     return render(request, "login.html")
-
 
 
 class Index(View):
@@ -117,7 +114,6 @@ class Index(View):
     @method_decorator(login_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Index, self).dispatch(request, *args, **kwargs)
-
 
     def get(self,request,*args,**kwargs):
         title = "运维管理-首页"
@@ -136,16 +132,11 @@ class Index(View):
 
         # 主机数量
         host_count = 3
-
         host_num = 3
-
         site_count = 3
-
         site_num = 3
 
-
         return  render(request,'base.html',locals())
-
 
 
 
@@ -153,6 +144,7 @@ class RoleMG(View):
     """角色管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(RoleMG,self).dispatch(request, *args, **kwargs)
 
@@ -207,6 +199,8 @@ class RoleMG(View):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def get_role_menu(request):
     """获取角色菜单"""
     role_id = request.POST.get("role_id")
@@ -237,6 +231,8 @@ def get_role_menu(request):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def add_role_menu(request):
     """菜单授权"""
     menu_nums = request.POST.get("node_id_json")
@@ -259,6 +255,8 @@ def add_role_menu(request):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def get_role_perms(request):
     """获取角色权限"""
     role_id = request.POST.get("role_id")
@@ -337,6 +335,8 @@ def get_role_perms(request):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def add_role_perms(request):
     """权限授权"""
     perms_nums = request.POST.get("node_id_json")
@@ -361,6 +361,8 @@ def add_role_perms(request):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def get_role_asset(request):
     """获取资产"""
     role_id = request.POST.get("role_id")
@@ -411,6 +413,8 @@ def get_role_asset(request):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def add_role_asset(request):
     """资产授权"""
     asset_nums = request.POST.get("node_id_json")
@@ -442,8 +446,10 @@ def add_role_asset(request):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def get_role_project(request):
-    """获取角色菜单"""
+    """获取项目菜单"""
     role_id = request.POST.get("role_id")
     role_obj = auth_db.Role.objects.get(id=role_id)
 
@@ -478,6 +484,8 @@ def get_role_project(request):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def add_role_project(request):
     """资产授权"""
     code_nums = request.POST.get("node_id_json")
@@ -506,6 +514,7 @@ class UserMG(View):
     """用户管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(UserMG,self).dispatch(request, *args, **kwargs)
 
@@ -611,6 +620,7 @@ class MenuMG(View):
     """菜单管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(MenuMG,self).dispatch(request, *args, **kwargs)
 
@@ -738,6 +748,7 @@ class PermsMG(View):
     """权限管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(PermsMG,self).dispatch(request, *args, **kwargs)
 
