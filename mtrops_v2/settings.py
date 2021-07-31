@@ -154,3 +154,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 #30分钟
 SESSION_COOKIE_AGE = 60 * 60 * 24
+
+
+SERVER_TAG = ['php', 'nginx', 'redis', 'mysql', 'python', 'java','sshd']

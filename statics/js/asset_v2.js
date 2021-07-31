@@ -572,3 +572,34 @@ $("td a[name='del-netwk']").click(function(){
         });
     }
 });
+
+//////////////////////服务器操作//////////////////////////
+//同步服务器信息
+$("#synchost").click(function(){
+    var ids ='';
+    $("input[name='ckb']").each(function(){
+        if($(this).is(":checked"))
+        {
+            ids +=  $(this).attr('id')+",";
+        }
+    });
+    if (ids){
+        ids =ids;
+    } else{
+        ids = 'all';
+    }
+
+    $.post("/asset/synchost/",{'ids':ids},function(data){
+        if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+            }
+
+    });
+
+});

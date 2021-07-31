@@ -17,8 +17,35 @@ class Host(models.Model):
     purchase_date = models.CharField(max_length=128,null=True)
     overdue_date = models.CharField(max_length=128,null=True)
     creat_time = models.DateTimeField(auto_now_add=True)
+    host_status = models.CharField(max_length=32, null=True)
     def __unicode__(self):
         return self.host_ip
+
+class HostDetail(models.Model):
+    """服务器基本信息"""
+    host = models.ForeignKey(to="Host",on_delete=models.CASCADE)
+    host_name = models.CharField(max_length=128, null=True)
+    mem_size = models.CharField(max_length=128, null=True)
+    swap_size = models.CharField(max_length=64,null=True)
+    cpu_model = models.CharField(max_length=128,null=True)
+    cpu_nums = models.CharField(max_length=128, null=True)
+    disk_info = models.TextField(null=True)
+    interface = models.TextField(null=True)
+    os_type = models.CharField(max_length=128,null=True)
+    kernel_version =models.CharField(max_length=128,null=True)
+    os_version = models.CharField(max_length=128,null=True)
+    product_name = models.CharField(max_length=128,null=True)
+    def __unicode__(self):
+        return self.host_ip
+
+
+class software(models.Model):
+    host = models.ForeignKey(to=Host,on_delete=models.CASCADE)
+    server_name = models.CharField(max_length=256)
+    server_version = models.CharField(max_length=512,null=True)
+    server_port = models.CharField(max_length=1026,null=True)
+    def __unicode__(self):
+        return self.IP
 
 
 
