@@ -30,37 +30,37 @@
       <div class="row" style="padding-top:5px;padding-left:10px;">
 
           <div class="col-sm-3" style="display:inline-block;margin-bottom:5px;">
-              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#hostModal"> 添加服务器 </a>
-              <a href="javascript:;" class="btn btn-sm btn-danger" id="delhost"> 删除资产</a>
+              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#hostModal"> 添加 </a>
+              <a href="javascript:;" class="btn btn-sm btn-danger" id="delhost"> 删除</a>
               <a href="javascript:;" class="btn btn-sm btn-warning" id="synchost">同步</a>
+              <a href="javascript:;" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#importModal">导入</a>
           </div>
 
           <div class="col-sm-6" style="display:inline-block">
               <div style="width:200px;display: inline-block;">
                     <select  class="form-control" id="select-idc">
-                         <option value="0">机房</option>
-                         {% for idc in idc_list %}
-                         <option value="{{ idc.idc_id }}">{{ idc.idc_name }}</option>
+                         <option value="host_idc">机房</option>
+                         {% for idc in idc_obj %}
+                         <option value="{{ idc.id }}">{{ idc.idc_name }}</option>
                          {% endfor %}
                      </select>
                 </div>
 
               <div style="width:200px;display: inline-block;">
                 <select  class="form-control" id="select-hostgroup">
-                     <option value="0">主机组</option>
-                     {% for group in group_list %}
-                     <option value="{{ group.group_id }}">{{ group.group_name }}</option>
+                     <option value="host_group">主机组</option>
+                     {% for group in group_obj %}
+                     <option value="{{ group.id }}">{{ group.host_group_name }}</option>
                      {% endfor %}
                  </select>
               </div>
 
               <div style="width:200px;display: inline-block;">
                 <select  class="form-control" id="select-device">
-                     <option value="设备类型">设备类型</option>
-                     <option value="服务器">服务器</option>
-                     <option value="防火墙">防火墙</option>
-                     <option value="交换机">交换机</option>
-                     <option value="路由器">路由器</option>
+                     <option value="host_type">设备类型</option>
+                     <option value="物理机">物理机</option>
+                     <option value="虚拟机">虚拟机</option>
+                     <option value="云主机">云主机</option>
                  </select>
               </div>
           </div>
@@ -68,14 +68,14 @@
           <div class="col-sm-3" style="display:inline-block;">
 
               <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search for..." id="info-search">
+                  <input type="text" class="form-control" placeholder="Search for..." id="search-key">
                   <span class="input-group-btn">
                     <button class="btn btn-primary" type="button" id="sub-search">搜索</button>
-                    <button class="btn btn-success" type="button" style="margin-left:5px" id="export-cmdb"> 导出 </button>
+                    <button class="btn btn-success" type="button" style="margin-left:5px" id="export-host"> 导出 </button>
                   </span>
                 </div><!-- /input-group -->
 
-              </div>
+          </div>
 
       </div>
   </div>
@@ -107,7 +107,11 @@
               <td>{{ host.host_type }}</td>
               <td>{{ host.supplier.supplier }}</td>
               <td>{{ host.idc.idc_name }}</td>
-              <td>{{ host.host_status }}</td>
+                {% if host.host_status == "up" %}
+              <td><span class="fa fa-lg fa-check-circle" style="color: #00B83F" data-toggle="tooltip" data-placement="right" title="运行中"></span></td>
+                {% else %}
+              <td><span class="fa fa-lg fa-times-circle" style="color: #cc1111" data-toggle="tooltip" data-placement="right" title="异常"></span></td>
+                {% endif %}
               <td style="padding-left:5px;">
 
 
@@ -257,7 +261,6 @@
               </div>
           </div>
 
-
           <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
@@ -273,7 +276,6 @@
                   </div>
               </div>
           </div>
-
 
       </div>
       <div class="modal-footer">
@@ -428,6 +430,31 @@
 
 
 
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:150px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="importModalLabel">导入服务器信息</h4>
+      </div>
+      <div class="modal-body">
+          <form method="post" action="/asset/importhost/" enctype="multipart/form-data">
+              <input id="lefile" type="file" style="display:none" name="upload_file">
+              <div class="input-group" style="margin-bottom: 10px;">
+                  <input id="photoCover" class="input-large form-control" type="text">
+                  <span class="input-group-btn">
+                    <a class="btn btn-success" onclick="$('input[id=lefile]').click();">选择</a>
+                  </span>
+              </div>
+              <button type="submit" class="btn btn-primary pull-right form-control" id="sub-import-host">提交</button>
+          </form>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock  %}
 
@@ -446,6 +473,22 @@
            $("input[name='ckb']").removeAttr("checked");
        }
     });
+
+    $("#host-purchase-date" ).datepicker();
+    $("#host-overdue-date" ).datepicker();
+    $("#edit-host-purchase-date" ).datepicker();
+    $("#edit-host-overdue-date" ).datepicker();
+    $("#host-purchase-date").datepicker( "option", "dateFormat","yy-mm-dd");
+    $("#host-overdue-date").datepicker( "option", "dateFormat","yy-mm-dd");
+    $("#edit-host-purchase-date").datepicker( "option", "dateFormat","yy-mm-dd");
+    $("#edit-host-overdue-date").datepicker( "option", "dateFormat","yy-mm-dd");
+
+    $('input[id=lefile]').change(function() {
+        $('#photoCover').val($(this).val());
+    });
+
+
+
 </script>
 
 {% endblock %}

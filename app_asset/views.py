@@ -1,7 +1,7 @@
 import json
-from statics.scripts import encryption
+from statics.scripts import encryption,read_excel
 from mtrops_v2.settings import SECRET_KEY
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +11,7 @@ from app_auth.views import login_check,perms_check
 from statics.scripts import get_host_info,get_software_info
 from mtrops_v2.settings import SERVER_TAG
 from django.db.models import Q
+
 
 # Create your views here.
 
@@ -338,7 +339,9 @@ class Host(View):
 
 
 @login_check
+@perms_check
 def host_detail(request):
+    """查看服务器详细信息"""
     title = "服务器"
     host_id = request.GET.get("host_id")
     host_obj = asset_db.Host.objects.get(id=host_id)
@@ -364,8 +367,10 @@ def host_detail(request):
 
 
 @csrf_exempt
+@login_check
+@perms_check
 def sync_host_info(request):
-
+    """同步服务器系统信息"""
     ids = request.POST.get("ids")
     ips = []
     if ids == 'all':
@@ -436,6 +441,130 @@ def sync_host_info(request):
 
 
     return  HttpResponse('已同步')
+
+
+@csrf_exempt
+@login_check
+@perms_check
+def search_host(request):
+    """过滤服务器信息"""
+    idc_id = request.POST.get('idc_id',None)
+    group_id = request.POST.get('hostgroup_id',None)
+    host_type = request.POST.get('host_type',None)
+    search_key = request.POST.get('search_key', None)
+    if search_key:
+        host_obj = asset_db.Host.objects.filter(Q(host_ip__icontains=search_key) | Q(host_msg__icontains=search_key) | Q(host_type__icontains=search_key))
+
+    if idc_id:
+        host_obj = asset_db.Host.objects.filter(idc_id=idc_id)
+
+    if group_id:
+        host_obj = asset_db.Host.objects.filter(group_id=group_id)
+
+    if host_type:
+        host_obj = asset_db.Host.objects.filter(host_type=host_type)
+
+    return render(request, "asset_host_search.html", locals())
+
+
+
+@csrf_exempt
+@login_check
+@perms_check
+def del_host(request):
+    """批量删除服务器"""
+    ids = request.POST.get("ids")
+
+    ids = ids.strip(',').split(',')
+
+    for ids in ids:
+        asset_db.Host.objects.get(id=ids).delete()
+
+    return HttpResponse("服务器已删除,请刷新页面")
+
+
+
+
+@csrf_exempt
+@login_check
+#@perms_check
+def import_host(request):
+    """导入服务器信息"""
+    upload_file = request.FILES.get("upload_file", None)
+    filename = "E:\Dev\mtrops_v2\statics\media\import_asset.xlsx"
+
+    file_obj = open(filename, 'wb');
+    for chrunk in upload_file.chunks():
+        file_obj.write(chrunk)
+        file_obj.close()
+
+    data = read_excel.import_host(filename)
+
+    for i in data:
+        host_ip = i[0]
+        host_idc = i[1]
+        host_type = i[2]
+        host_group = i[3]
+        host_user = i[4]
+        host_passwd = i[5]
+        host_msg = i[6]
+        host_remove_port = i[7]
+        serial_num = i[8]
+        purchase_date = i[9]
+        overdue_date = i[10]
+        host_supplier = i[11]
+
+        supplier_head = i[12]
+        supplier_head_phone = i[13]
+        supplier_head_email = i[14]
+
+        try:
+            idc_obj = asset_db.IDC.objects.get(idc_name=host_idc)
+
+        except:
+            idc_obj = asset_db.IDC(idc_name=host_idc)
+            idc_obj.save()
+
+        idc_id = idc_obj.id
+
+        try:
+            group_obj = asset_db.HostGroup.objects.get(host_group_name=host_group)
+        except:
+            group_obj = asset_db.HostGroup(host_group_name=host_group)
+            group_obj.save()
+
+
+        group_id = group_obj.id
+
+        try:
+            supplier_obj = asset_db.Supplier.objects.get(supplier=host_supplier)
+
+        except:
+            supplier_obj = asset_db.Supplier(supplier=host_supplier, supplier_head=supplier_head,
+                                                                   supplier_head_phone=supplier_head_phone,
+                                                                   supplier_head_email=supplier_head_email)
+            supplier_obj.save()
+
+        supplier_id = supplier_obj.id
+
+        # 加密密码
+        key = SECRET_KEY[2:18]
+        pc = encryption.prpcrypt(key)  # 初始化密钥
+        aes_passwd = pc.encrypt(host_passwd)
+
+        try:
+            print(idc_id,group_id,supplier_id)
+            host_obj = asset_db.Host(host_ip=host_ip, host_remove_port=host_remove_port, host_user=host_user,
+                                     host_passwd=aes_passwd, host_type=host_type,
+                                     group_id=group_id, idc_id=idc_id, supplier_id=supplier_id, host_msg=host_msg,
+                                     serial_num=serial_num,
+                                     purchase_date=purchase_date, overdue_date=overdue_date)
+            host_obj.save()
+        except Exception as e:
+            print(e)
+            continue
+
+    return redirect('/asset/host/')
 
 
 

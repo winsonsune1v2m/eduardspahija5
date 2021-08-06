@@ -591,15 +591,126 @@ $("#synchost").click(function(){
 
     $.post("/asset/synchost/",{'ids':ids},function(data){
         if(data=="perms_false"){
-                $("#msg-alert").empty();
-                $("#msg-alert").append("权限不足，请联系管理员");
-                $("#alert").show();
-            }else {
-                $("#msg-alert").empty();
-                $("#msg-alert").append(data);
-                $("#alert").show();
-            }
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#alert").show();
+        }
 
     });
 
 });
+
+
+//关键字查询服务器
+$("#sub-search").click(function(){
+    var search_key= $("#search-key").val();
+    $("#select-idc").val("host_idc");
+    $("#select-hostgroup").val("host_group");
+    $("#select-device").val("host_type");
+    $.post('/asset/searchhost/',{'search_key':search_key},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#host-info").empty();
+            $("#host-info").append(data);
+        }
+    });
+});
+
+
+//通过设备类型查询
+$("#select-device").change(function(){
+    var host_type= $("#select-device").val();
+    $("#select-idc").val("host_idc");
+    $("#select-hostgroup").val("host_group");
+    $.post('/asset/searchhost/',{'host_type':host_type},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#host-info").empty();
+            $("#host-info").append(data);
+        }
+    });
+});
+
+//通过分组查询
+$("#select-hostgroup").change(function(){
+    var hostgroup_id = $("#select-hostgroup").val();
+    $("#select-idc").val("host_idc");
+    $("#select-device").val("host_type");
+    $.post('/asset/searchhost/',{'hostgroup_id':hostgroup_id},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#host-info").empty();
+            $("#host-info").append(data);
+        }
+    });
+});
+
+//通过机房查询
+$("#select-idc").change(function(){
+    var idc_id = $("#select-idc").val();
+    $("#select-hostgroup").val("host_group");
+    $("#select-device").val("host_type");
+    $.post('/asset/searchhost/',{'idc_id':idc_id},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#host-info").empty();
+            $("#host-info").append(data);
+        }
+    });
+});
+
+
+//批量删除服务器
+$("#delhost").click(function(){
+    var ids ='';
+    $("input[name='ckb']").each(function(){
+        if($(this).is(":checked"))
+        {
+            ids +=  $(this).attr('id')+",";
+        }
+    });
+
+   if (ids){
+       var statu = confirm("是否确认删除！");
+       if (statu==true)
+        {
+            $.post("/asset/delhost/",{'ids':ids},function(data){
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
+            })
+
+        }
+
+    } else{
+
+        alert('至少选择一个删除目标！')
+    }
+
+});
+
+
+
+

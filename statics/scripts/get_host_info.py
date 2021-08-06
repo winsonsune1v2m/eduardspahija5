@@ -92,7 +92,6 @@ def get_mem_info(tgt):
 
     return mem_info
 
-
 def main(tgt):
     os_info = get_os_info(tgt)
     disk_info = get_disk_info(tgt)
@@ -105,7 +104,6 @@ def main(tgt):
         except:
             continue
     return data
-
 
 
 if __name__ == '__main__':
