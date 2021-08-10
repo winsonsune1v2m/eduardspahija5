@@ -1,6 +1,6 @@
-import json
+import json,os
 from statics.scripts import encryption,read_excel
-from mtrops_v2.settings import SECRET_KEY
+from mtrops_v2.settings import SECRET_KEY,BASE_DIR
 from django.shortcuts import render,HttpResponse,redirect
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -474,9 +474,7 @@ def search_host(request):
 def del_host(request):
     """批量删除服务器"""
     ids = request.POST.get("ids")
-
     ids = ids.strip(',').split(',')
-
     for ids in ids:
         asset_db.Host.objects.get(id=ids).delete()
 
@@ -487,13 +485,16 @@ def del_host(request):
 
 @csrf_exempt
 @login_check
-#@perms_check
+@perms_check
 def import_host(request):
     """导入服务器信息"""
     upload_file = request.FILES.get("upload_file", None)
-    filename = "E:\Dev\mtrops_v2\statics\media\import_asset.xlsx"
 
-    file_obj = open(filename, 'wb');
+
+    filename = os.path.join(BASE_DIR,"statics/media/import_asset.xlsx")
+
+    file_obj = open(filename, 'wb')
+    
     for chrunk in upload_file.chunks():
         file_obj.write(chrunk)
         file_obj.close()

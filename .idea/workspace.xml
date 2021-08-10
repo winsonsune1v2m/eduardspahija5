@@ -2,38 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/AUTHORS.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/external/jquery/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/images/ui-icons_444444_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/images/ui-icons_555555_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/images/ui-icons_777620_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/images/ui-icons_777777_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/images/ui-icons_cc0000_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/images/ui-icons_ffffff_256x240.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/jquery-ui.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/jquery-ui.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/jquery-ui.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/jquery-ui.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/jquery-ui.structure.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/jquery-ui.structure.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/jquery-ui.theme.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/jquery-ui.theme.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/jquery-ui/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/scripts/read_excel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/asset_host_search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_asset/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/asset_v2.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/asset_v2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/media/cmdb.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/statics/media/cmdb.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/scripts/get_host_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/get_host_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_host.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_host.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_netwk.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_netwk.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +42,7 @@
           <entry key="html" value="3993" />
           <entry key="js" value="2465" />
           <entry key="md" value="5" />
-          <entry key="py" value="13009" />
+          <entry key="py" value="13031" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -84,7 +53,7 @@
           <entry key="JavaScript" value="2464" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="25" />
-          <entry key="Python" value="13009" />
+          <entry key="Python" value="13031" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -148,25 +117,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_asset/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="539" column="56" selection-start-line="539" selection-start-column="56" selection-end-line="539" selection-end-column="56" />
+            <state relative-caret-position="288">
+              <caret line="493" column="71" lean-forward="true" selection-start-line="493" selection-start-column="71" selection-end-line="493" selection-end-column="71" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <marker date="1539675297465" expanded="true" signature="16931:20562" ph="..." />
-                <marker date="1539675297465" expanded="true" signature="17792:20562" ph="..." />
+                <element signature="e#0#14#0" expanded="true" />
+                <marker date="1539676429084" expanded="true" signature="16943:20579" ph="..." />
+                <marker date="1539676429084" expanded="true" signature="17804:20579" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/asset_netwk.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="514">
-              <caret line="119" column="18" selection-start-line="119" selection-start-column="18" selection-end-line="119" selection-end-column="18" />
+              <caret line="119" selection-start-line="119" selection-end-line="119" />
             </state>
           </provider>
         </entry>
@@ -391,8 +360,8 @@
         <option value="$PROJECT_DIR$/templates/asset_host.html" />
         <option value="$PROJECT_DIR$/statics/scripts/read_excel.py" />
         <option value="$PROJECT_DIR$/app_asset/models.py" />
-        <option value="$PROJECT_DIR$/app_asset/views.py" />
         <option value="$PROJECT_DIR$/templates/asset_netwk.html" />
+        <option value="$PROJECT_DIR$/app_asset/views.py" />
       </list>
     </option>
   </component>
@@ -628,14 +597,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14605543" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14605543" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.2407809" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.27874187" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1041,22 +1009,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="539" column="56" selection-start-line="539" selection-start-column="56" selection-end-line="539" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1539675297465" expanded="true" signature="16931:20562" ph="..." />
-            <marker date="1539675297465" expanded="true" signature="17792:20562" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/asset_netwk.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="514">
-          <caret line="119" column="18" selection-start-line="119" selection-start-column="18" selection-end-line="119" selection-end-column="18" />
+          <caret line="119" selection-start-line="119" selection-end-line="119" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="493" column="71" lean-forward="true" selection-start-line="493" selection-start-column="71" selection-end-line="493" selection-end-column="71" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1539676429084" expanded="true" signature="16943:20579" ph="..." />
+            <marker date="1539676429084" expanded="true" signature="17804:20579" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
