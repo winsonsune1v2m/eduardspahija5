@@ -494,7 +494,7 @@ def import_host(request):
     filename = os.path.join(BASE_DIR,"statics/media/import_asset.xlsx")
 
     file_obj = open(filename, 'wb')
-    
+
     for chrunk in upload_file.chunks():
         file_obj.write(chrunk)
         file_obj.close()
@@ -533,7 +533,6 @@ def import_host(request):
         except:
             group_obj = asset_db.HostGroup(host_group_name=host_group)
             group_obj.save()
-
 
         group_id = group_obj.id
 
@@ -669,7 +668,6 @@ class Netwk(View):
             netwk_obj.serial_num = serial_num
             netwk_obj.purchase_date = purchase_date
             netwk_obj.overdue_date = overdue_date
-
             netwk_obj.save()
             data = "设备已修改，请刷新查看！"
             return HttpResponse(data)
