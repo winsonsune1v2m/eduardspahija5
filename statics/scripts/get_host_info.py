@@ -2,27 +2,20 @@
 # -*- coding: utf-8 -*-
 
 import re, json
+from statics.scripts import salt_api
 
 
-def Client(tgt, module, argv):
-    import salt.client
-
-    local = salt.client.LocalClient()
-    if argv:
-        result = local.cmd(tgt, module, [argv], tgt_type='list')
-    else:
-        result = local.cmd(tgt, module, tgt_type='list')
-    return result
-
-
-def get_os_info(tgt):
+def get_os_info(salt_url, salt_user, salt_passwd,tgt):
     os_argvs = ['localhost', 'kernel', 'kernelrelease', 'cpu_model', 'num_cpus', 'productname', 'os', 'osrelease',
                 'mem_total']
 
     os_module = 'grains.items'
-    result = Client(tgt, os_module, None)
+
+    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+    hosts = ",".join(tgt)
+    result = salt.salt_run(hosts,os_module)
     interface_module = 'network.interfaces'
-    interface_result = Client(tgt, interface_module, None)
+    interface_result = salt.salt_run(hosts, interface_module,)
     os_info_dict = {}
     for ip in tgt:
         try:
@@ -44,11 +37,15 @@ def get_os_info(tgt):
     return os_info_dict
 
 
-def get_disk_info(tgt):
+def get_disk_info(salt_url,salt_user,salt_passwd,tgt):
     argv = "fdisk -l | grep -E 'sda:|sdb:|sdc:|vda:|vdb:|vdc:' |awk -F ',' '{print $1}'"
     disk_module = 'cmd.run'
 
-    result = Client(tgt, disk_module, argv)
+    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+    hosts = ",".join(tgt)
+
+    result = salt.salt_run_arg(hosts, disk_module, argv)
+
     disk_dict = {}
 
     for i in result.keys():
@@ -57,10 +54,8 @@ def get_disk_info(tgt):
         if re.search("Disk", result[i]):
             disk_infos = result[i].split("\n")
         else:
-            argv = None
             disk_module = 'disk.usage'
-            ip_tgt = [i]
-            result_w = Client(ip_tgt, disk_module, argv)
+            result_w = salt.salt_run(i, disk_module, argv)
             for j in result_w.keys():
 
                 for k in result_w[j].keys():
@@ -77,10 +72,13 @@ def get_disk_info(tgt):
     return disk_dict
 
 
-def get_mem_info(tgt):
-    argv = None
+def get_mem_info(salt_url,salt_user,salt_passwd,tgt):
     module = 'status.meminfo'
-    result = Client(tgt, module, argv)
+
+    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+    hosts = ",".join(tgt)
+
+    result = salt.salt_run(hosts, module)
     mem_info = {}
     for ip in tgt:
         try:
@@ -92,21 +90,28 @@ def get_mem_info(tgt):
 
     return mem_info
 
-def main(tgt):
-    os_info = get_os_info(tgt)
-    disk_info = get_disk_info(tgt)
-    mem_info = get_mem_info(tgt)
+def main(salt_url,salt_user,salt_passwd,tgt):
+    os_info = get_os_info(salt_url,salt_user,salt_passwd,tgt)
+    disk_info = get_disk_info(salt_url,salt_user,salt_passwd,tgt)
+    mem_info = get_mem_info(salt_url,salt_user,salt_passwd,tgt)
     data = {}
     for ip in tgt:
+        sys_info = {}
         try:
-            sys_info = dict(os_info[ip].items() + disk_info[ip].items() + mem_info[ip].items())
+            sys_info.update(os_info[ip])
+            sys_info.update(disk_info[ip])
+            sys_info.update(mem_info[ip])
             data[ip] = sys_info
         except:
             continue
     return data
 
 
-if __name__ == '__main__':
-    tgt = ['192.168.1.196', '192.168.1.199']
-    result = main(tgt)
+
+if __name__ == "__main__":
+    salt_url = "https://192.168.1.126:8081"
+    salt_user = "saltapi"
+    salt_passwd = "saltapi"
+    tgt = ['192.168.1.126', '192.168.1.191']
+    result = main(salt_url,salt_user,salt_passwd,tgt)
     print (result)

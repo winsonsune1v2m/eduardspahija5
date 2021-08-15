@@ -9,7 +9,7 @@ from app_asset import models as asset_db
 from app_auth import models as auth_db
 from app_auth.views import login_check,perms_check
 from statics.scripts import get_host_info,get_software_info
-from mtrops_v2.settings import SERVER_TAG
+from mtrops_v2.settings import SERVER_TAG,SALT_API
 from django.db.models import Q
 
 
@@ -383,9 +383,13 @@ def sync_host_info(request):
             host_obj = asset_db.Host.objects.get(id=i)
             ips.append(host_obj.host_ip)
 
-    data = get_host_info.main(ips)
+    salt_url=SALT_API['url']
+    salt_user = SALT_API['user']
+    salt_passwd = SALT_API['passwd']
 
-    software_data = get_software_info.main(ips, SERVER_TAG)
+    data = get_host_info.main(salt_url,salt_user,salt_passwd,ips)
+
+    software_data = get_software_info.get_sofeware(salt_url,salt_user,salt_passwd,ips, SERVER_TAG)
 
     for ip in data.keys():
         host_obj = asset_db.Host.objects.get(host_ip = ip)
