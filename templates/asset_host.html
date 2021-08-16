@@ -436,6 +436,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="importModalLabel">导入服务器信息</h4>
+		 
       </div>
       <div class="modal-body">
           <form method="post" action="/asset/importhost/" enctype="multipart/form-data">
@@ -444,6 +445,7 @@
                   <input id="photoCover" class="input-large form-control" type="text">
                   <span class="input-group-btn">
                     <a class="btn btn-success" onclick="$('input[id=lefile]').click();">选择</a>
+					<a class="btn btn-success" href="/static/template_dl/import_asset.xlsx" >模版下载</a>
                   </span>
               </div>
               <button type="submit" class="btn btn-primary pull-right form-control" id="sub-import-host">提交</button>
