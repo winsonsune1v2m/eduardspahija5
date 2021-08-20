@@ -1,0 +1,210 @@
+<table class="table table-hover table-bordered" style="margin-top:5px;min-width:1300px;" >
+
+  <thead>
+    <tr style="background-color: #f5f5f5;">
+      <th><input type="checkbox" id="ckb_head" name="check_box" /></th>
+      <th>IP</th>
+      <th>分组</th>
+      <th>描述</th>
+      <th>类型</th>
+      <th>厂商</th>
+      <th>IDC</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody id="host_table">
+
+    {% for host in host_obj %}
+    <tr>
+      <td><input id="{{ host.id  }}" type="checkbox" name="ckb"/></td>
+      <td>{{ host.host_ip }}</td>
+      <td>{{ host.group.host_group_name }}</td>
+      <td>{{ host.host_msg }}</td>
+      <td>{{ host.host_type }}</td>
+      <td>{{ host.supplier.supplier }}</td>
+      <td>{{ host.idc.idc_name }}</td>
+        {% if host.host_status == "up" %}
+      <td><span class="fa fa-lg fa-check-circle" style="color: #00B83F" data-toggle="tooltip" data-placement="right" title="运行中"></span></td>
+        {% else %}
+      <td><span class="fa fa-lg fa-times-circle" style="color: #cc1111" data-toggle="tooltip" data-placement="right" title="异常"></span></td>
+        {% endif %}
+      <td style="padding-left:5px;">
+
+
+        <a href="javascript:;" name="edit-host" host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil" ></span> </a>&nbsp;&nbsp;&nbsp;
+
+        <a href="javascript:;" name="del-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="删除"><span class="fa fa-trash"></span> </a>&nbsp;&nbsp;&nbsp;
+
+        <a href="/asset/hostdetail/?host_id={{ host.id }}" name="info-host" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;
+
+        <a href="javascript:;" name="connect-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
+
+      </td>
+    </tr>
+
+
+  {% endfor %}
+
+
+  </tbody>
+
+
+</table>
+<div class="text-right" style="margin-top:-30px;padding-right:9%">
+  <ul class="pagination" id="pagination"></ul>
+</div>
+
+
+<script>
+
+  //多选按钮，全选，全不选
+  $("#ckb_head").click(function(){
+     if($(this).prop("checked")){//全选
+         $("input[name='ckb']").attr("checked","true");
+     }else{//全不选
+         $("input[name='ckb']").removeAttr("checked");
+     }
+  });
+
+
+//前端分页
+var limit = 13; //每页显示数据条数
+var total = $('#host_table').find('tr').length;
+var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
+
+function doPage(n){
+    if(allPage>1){
+        var prevPage='',nextPage='',pageHtml='';
+
+        if (n===1) {
+            prevPage = '<li class="disabled"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+        } else if(n===allPage){
+            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li class="disabled"><a href="javascript:;">下一页</a></li>';
+        } else {
+            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+        }
+
+        if (n<=5){
+            for(var i=1;i<=5;i++){
+                if (n===i) {
+                    pageHtml += '<li class="active"><a href="javascript:;">'+ i +'</a></li>';
+                }else{
+                    if(i<=allPage) {
+                        pageHtml += '<li data-page="' + i + '"><a href="javascript:;">' + i + '</a></li>';
+                    }
+                }
+
+            }
+        }else{
+            for(var i=1;i<=5;i++){
+
+                cur_page = parseInt(parseInt((n-1)/5)*5);
+
+                if (n===(cur_page+i)){
+                    pageHtml += '<li class="active"><a href="javascript:;">'+ (cur_page+i) +'</a></li>';
+                }else{
+                    if((i+cur_page)<=allPage){
+                        pageHtml += '<li data-page="'+ (i+cur_page) +'"><a href="javascript:;">'+ (i+cur_page) +'</a></li>';
+                    }
+                }
+
+            }
+
+        }
+
+
+        $('#pagination').html(prevPage+pageHtml+nextPage);
+    }
+
+    $('#host_table').find('tr').hide();
+    if(n===1){
+        $('#host_table').find('tr:lt('+ limit +')').show();
+    }else{
+        $('#host_table').find('tr:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
+    }
+
+}
+
+doPage(1);
+
+$('#pagination').on('click', 'li a', function(event) {
+    event.preventDefault();
+    var curr = parseInt($(this).parent().data('page'));
+
+    if (!isNaN(curr)) {
+        doPage(curr);
+    }
+});
+
+
+
+//删除服务器
+$("td a[name='del-host']").click(function(){
+    var host_id = $(this).attr('host_id');
+    var statu = confirm("是否确认删除！");
+    if (statu==true)
+    {
+        $.ajax({
+            url: "/asset/host/",
+            type: "DELETE",
+            data: JSON.stringify({'host_id':host_id}),
+            success: function(data) {
+
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
+             }
+        });
+    }
+});
+
+
+
+//获取编辑host信息
+$('td a[name="edit-host"]').click(function() {
+    var host_id = $(this).attr("host_id");
+    $.ajax({
+        url: "/asset/host/",
+        type: "PUT",
+        data: JSON.stringify({'host_id': host_id}),
+        success: function (data) {
+
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+            var info = eval('(' + data + ')');
+            $("#edit-host-ip").val(info.host_ip);
+            $("#edit-host-remove-port").val(info.host_remove_port);
+            $("#edit-host-user").val(info.host_user);
+            $("#edit-host-passwd").val(info.host_passwd);
+            $("#edit-host-type").val(info.host_type);
+            $("#edit-host-group").val(info.host_group);
+            $("#edit-host-idc").val(info.host_idc);
+            $("#edit-host-supplier").val(info.host_supplier);
+            $("#edit-host-msg").val(info.host_msg);
+            $("#edit-host-serial-num").val(info.serial_num);
+            $("#edit-host-purchase-date").val(info.purchase_date);
+            $("#edit-host-overdue-date").val(info.overdue_date);
+            $("#sub-edit-host").attr('host_id',info.host_id);
+            $("#edit-hostModal").modal('show');
+
+            }
+        }
+    });
+});
+
+
+
+</script>

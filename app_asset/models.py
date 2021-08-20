@@ -88,7 +88,7 @@ class IDC(models.Model):
 
 
 class Supplier(models.Model):
-    supplier = models.CharField(max_length=256, null=True)
+    supplier = models.CharField(max_length=128,unique=True)
     supplier_head = models.CharField(max_length=128, null=True)
     supplier_head_phone = models.CharField(max_length=128, null=True)
     supplier_head_email = models.CharField(max_length=128, null=True)

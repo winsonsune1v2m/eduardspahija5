@@ -51,8 +51,11 @@ def perms_check(func):
     """权限装饰器"""
     def wrapper(request,*args,**kwargs):
         req_url = request.get_full_path()
-        req_method= request.method
 
+        if re.search("\?",str(req_url)):
+            req_url = req_url.split(r"?")[0]
+
+        req_method= request.method
         perms_all_list = request.session['perms_all_list']
         if req_url in perms_all_list.keys():
             if req_method in perms_all_list[req_url]:
@@ -295,10 +298,12 @@ def get_role_perms(request):
         if pmenu_id not in pmenu_id_list:
             pmenu_id_list.append(pmenu_id)
 
-    pmenu_list=[]
+    pmenu_list = []
+
     for i in pmenu_id_list:
-        pmenu_obj = auth_db.Menus.objects.get(id=i)
-        pmenu_list.append({"pmenu_id":i,"pmenu_title":pmenu_obj.menu_title})
+        if i != '0':
+            pmenu_obj = auth_db.Menus.objects.get(id=i)
+            pmenu_list.append({"pmenu_id":i,"pmenu_title":pmenu_obj.menu_title})
 
     for i in pmenu_list:
 

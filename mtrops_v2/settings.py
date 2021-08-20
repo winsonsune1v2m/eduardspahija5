@@ -157,3 +157,9 @@ SESSION_COOKIE_AGE = 60 * 60 * 24
 
 
 SERVER_TAG = ['php', 'nginx', 'redis', 'mysql', 'python', 'java','sshd']
+
+SALT_API={
+    "url":"https://192.168.1.126:8081",
+    "user":"saltapi",
+    "passwd":"saltapi",
+}

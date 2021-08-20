@@ -26,4 +26,8 @@ urlpatterns = [
     path("supplier/", views.Supplier.as_view()),
     path("hostdetail/", views.host_detail),
     path("synchost/", views.sync_host_info),
+    path("searchhost/", views.search_host),
+    path("delhost/",views.del_host),
+    path("importhost/",views.import_host),
+
 ]
