@@ -1,6 +1,6 @@
 import json,os
 from statics.scripts import encryption,read_excel
-from mtrops_v2.settings import SECRET_KEY,BASE_DIR
+from mtrops_v2.settings import SECRET_KEY,BASE_DIR,DATABASES
 from django.shortcuts import render,HttpResponse,redirect
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -11,6 +11,9 @@ from app_auth.views import login_check,perms_check
 from statics.scripts import get_host_info,get_software_info
 from mtrops_v2.settings import SERVER_TAG,SALT_API
 from django.db.models import Q
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import PatternFill, Border, Side, Alignment, Protection, Font,Color,colors,GradientFill,NamedStyle
 
 
 # Create your views here.
@@ -222,6 +225,7 @@ class Host(View):
         role_obj = auth_db.Role.objects.get(id=role_id)
 
         host_obj = role_obj.host.all()
+        print(host_obj)
 
         return render(request,'asset_host.html',locals())
 
@@ -456,17 +460,23 @@ def search_host(request):
     group_id = request.POST.get('hostgroup_id',None)
     host_type = request.POST.get('host_type',None)
     search_key = request.POST.get('search_key', None)
-    if search_key:
-        host_obj = asset_db.Host.objects.filter(Q(host_ip__icontains=search_key) | Q(host_msg__icontains=search_key) | Q(host_type__icontains=search_key))
+    role_id = request.session['role_id']
 
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    host_obj = role_obj.host.all()
+
+    if search_key:
+        #host_obj = asset_db.Host.objects.filter(Q(host_ip__icontains=search_key) | Q(host_msg__icontains=search_key) | Q(host_type__icontains=search_key))
+        host_obj = host_obj.filter(Q(host_ip__icontains=search_key) | Q(host_msg__icontains=search_key) | Q(host_type__icontains=search_key))
     if idc_id:
-        host_obj = asset_db.Host.objects.filter(idc_id=idc_id)
+        host_obj = host_obj.filter(idc_id=idc_id)
 
     if group_id:
-        host_obj = asset_db.Host.objects.filter(group_id=group_id)
+        host_obj = host_obj.filter(group_id=group_id)
 
     if host_type:
-        host_obj = asset_db.Host.objects.filter(host_type=host_type)
+        host_obj = host_obj.filter(host_type=host_type)
 
     return render(request, "asset_host_search.html", locals())
 
@@ -570,7 +580,138 @@ def import_host(request):
 
     return redirect('/asset/host/')
 
+@csrf_exempt
+@login_check
+@perms_check
+def export_host(request):
+    """批量导出服务器"""
+    role_id = request.session['role_id']
 
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+    host_obj = role_obj.host.all()
+    host_obj = host_obj.filter()
+    data_list = []
+
+    key = SECRET_KEY[2:18]
+    pc = encryption.prpcrypt(key)
+ 
+    for i in host_obj:
+        host_info = [i.host_ip,i.idc.idc_name,i.host_type,i.group.host_group_name,i.host_user,pc.decrypt(i.host_passwd.strip("b").strip("'").encode(encoding="utf-8")).decode(),i.host_msg,i.host_remove_port,i.serial_num,i.purchase_date,i.overdue_date,i.supplier.supplier,i.idc.idc_admin,i.idc.idc_admin_phone,i.idc.idc_admin_email]
+        
+        data_list.append(host_info)
+    print(data_list)
+                #密码解密
+
+
+    def headStyle():
+        ft = Font(size=14,name='SimSun')  # color="0F0F0F"字体颜色,italic=False,是否斜体,字体样式,大小,bold=False是否粗体
+
+        align = Alignment(horizontal="center", vertical="center")  # 居中对齐
+
+        fill = PatternFill("solid", fgColor="FFFF00")  # 背景填充颜色
+
+        # fill = GradientFill(stop=("000000", "FFFFFF")) #背景填充颜色，渐变
+
+        bd = Side(style='thin', color="000000")
+
+        border = Border(left=bd, top=bd, right=bd, bottom=bd)
+
+        mystyle = NamedStyle(name="mystyle")
+
+        mystyle.font = ft
+        mystyle.alignment = align
+        mystyle.fill = fill
+        mystyle.border = border
+
+        return mystyle
+
+
+    def boderStyle():
+        ft = Font(size=12,name='SimSun')  # color="0F0F0F"字体颜色,italic=False,是否斜体,字体样式,大小,bold=False是否粗体
+
+        align = Alignment(horizontal="center", vertical="center")  # 居中对齐
+
+        #fill = PatternFill("solid", fgColor="FFFF00")  # 背景填充颜色
+
+        # fill = GradientFill(stop=("000000", "FFFFFF")) #背景填充颜色，渐变
+
+        bd = Side(style='thin', color="000000")
+
+        border = Border(left=bd, top=bd, right=bd, bottom=bd)
+
+        bdstyle = NamedStyle(name="bdstyle")
+
+        bdstyle.font = ft
+        bdstyle.alignment = align
+       # mystyle.fill = fill
+       # mystyle.border = border
+
+        return bdstyle
+
+
+
+    def makeExcel(data_list):
+        global statuss
+        try:
+            base_dir = BASE_DIR
+
+            path_dir = base_dir + '/statics/media/'
+       
+           
+            wb = Workbook()
+         
+            
+            filename = path_dir + 'cmdb.xlsx'
+
+            ws = wb.active
+
+            ws.title = u'资产清单'
+
+            N= 1
+            head = ['IP地址','机房','设备类型','主机组','管理用户','用户密码','描述','远程端口','序列号','购买日期','过保日期','厂商','管理员','电话','邮箱']
+
+
+            data_list.insert(0,head)
+
+            head_Style = headStyle()
+            boder_Style = boderStyle()
+            for i in data_list:
+                n =1
+
+                for j in i:
+                    col = get_column_letter(n)
+                    ws["%s%d" % (col,N)] = j
+
+                    if N == 1:
+                        ws["%s%d" % (col, N)].style = head_Style
+                        ws.column_dimensions['%s' % col ].width = 18  # 设置列宽
+                    else:
+                        ws["%s%d" % (col, N)].style = boder_Style
+
+                    n+=1
+                N+=1
+
+            ws.row_dimensions[1].height = 30  #设置行高
+
+
+            wb.save(filename)
+            statuss = 0
+        except Exception as e:
+            print(e)
+            statuss = 1
+
+    makeExcel(data_list)
+
+    if data_list:
+        if statuss == 0:
+            success = 1
+        else:
+            success = 0;
+    else:
+        success = 0;
+    info_json = {'code':success,'message':'获取成功'}
+    return HttpResponse(json.dumps(info_json,ensure_ascii=False), content_type="application/json")
 
 class Netwk(View):
     """网络设备管理"""

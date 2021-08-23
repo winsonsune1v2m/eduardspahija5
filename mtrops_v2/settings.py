@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mtrops_v2',
         'USER':'root',
-        'PASSWORD':'15210100',
+        'PASSWORD':'mysql',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }

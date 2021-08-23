@@ -712,5 +712,17 @@ $("#delhost").click(function(){
 });
 
 
+$("#export-host").click(function(){
+    $.get('/asset/exporthost',{},function(data){
+        if(data.code == 1){
+			$("#exportModal").modal();
+        }else {
+            $("#msg-alert").empty();
+            $("#msg-alert").append("导出失败");
+            $("#alert").show();
+        }
+    });
+});
+
 
 

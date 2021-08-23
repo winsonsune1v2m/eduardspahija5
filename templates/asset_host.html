@@ -71,7 +71,7 @@
                   <input type="text" class="form-control" placeholder="Search for..." id="search-key">
                   <span class="input-group-btn">
                     <button class="btn btn-primary" type="button" id="sub-search">搜索</button>
-                    <button class="btn btn-success" type="button" style="margin-left:5px" id="export-host"> 导出 </button>
+                    <button class="btn btn-success" type="button" style="margin-left:5px"  id="export-host">导出</button>
                   </span>
                 </div><!-- /input-group -->
 
@@ -457,6 +457,31 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:150px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="importModalLabel">导出成功</h4>
+      </div>
+      <div class="modal-body">
+		 <div class="row">
+			  <div class="col-sm-6">
+				<div class="form-group">
+					<a class="btn btn-success" href="/static/media/cmdb.xlsx">点此下载</a>
+				</div>
+			  </div>
+		</div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
 
 {% endblock  %}
 
