@@ -46,54 +46,50 @@ class SaltAPI(object):
         return content
 
 
-    def salt_run_arg(self, tgt, fun, arg=""):
+    def salt_run_arg(self, tgt, fun, arg,runas='root'):
         """
-            远程执行模块，有参数
+        远程执行模块，有参数
         :param tgt: "host1,host2"
         :param fun: 模块
         :param arg: 参数
         :return: dict, {'minion1': 'ret', 'minion2': 'ret'}
         """
-        params = {'client': 'local', 'tgt': tgt, 'fun': fun, 'arg': arg, 'expr_form': 'list'}
+        #添加同名参数
+        run_user = 'runas=%s' % runas
+        params = ([('client', 'local'), ('tgt', tgt),('fun', fun),('arg',arg),('expr_form','list'),('arg',run_user)])
         obj = urllib.parse.urlencode(params).encode('utf-8')
+
         self.token_id()
         content = self.postRequest(obj)
-        # print(content)
-        # {'return': [{'salt-master': 'root', 'salt-minion': 'root'}]}
         ret = content['return'][0]
         return ret
 
-    def salt_run(self, tgt, fun, arg=""):
+    def salt_run(self, tgt, fun,runas='root'):
         """
-            远程执行模块，有参数
+        远程执行模块，无参数
         :param tgt: "host1,host2"
         :param fun: 模块
         :param arg: 参数
         :return: dict, {'minion1': 'ret', 'minion2': 'ret'}
         """
-        params = {'client': 'local', 'tgt': tgt, 'fun': fun,'expr_form': 'list'}
+        run_user = 'runas=%s' % runas
+        params = ([('client', 'local'), ('tgt', tgt), ('fun', fun),('expr_form', 'list'), ('arg', run_user)])
         obj = urllib.parse.urlencode(params).encode('utf-8')
         self.token_id()
         content = self.postRequest(obj)
-        # print(content)
-        # {'return': [{'salt-master': 'root', 'salt-minion': 'root'}]}
         ret = content['return'][0]
         return ret
 
 
 
 if __name__ == '__main__':
-
-    # minions, minions_pre = salt.list_all_key()
-    # 说明如果'expr_form': 'list',表示minion是以主机列表形式执行时，需要把list拼接成字符串，如下所示
-
     salt_url = "https://192.168.1.126:8081"
     salt_user = "saltapi"
     salt_passwd = "saltapi"
 
     salt = SaltAPI(salt_url,salt_user,salt_passwd)
-    minions = ['192.168.1.126', '192.168.1.191']
+    minions = ['192.168.1.207']
     hosts=",".join(minions)
-    ret = salt.salt_run(hosts,'grains.items')
+    ret = salt.salt_run_arg(hosts,'cmd.run','ls /root')
     print(ret)
     # print(type(ret))
