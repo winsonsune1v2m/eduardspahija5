@@ -16,6 +16,7 @@ def get_os_info(salt_url, salt_user, salt_passwd,tgt):
     result = salt.salt_run(hosts,os_module)
     interface_module = 'network.interfaces'
     interface_result = salt.salt_run(hosts, interface_module,)
+
     os_info_dict = {}
     for ip in tgt:
         try:
@@ -26,8 +27,11 @@ def get_os_info(salt_url, salt_user, salt_passwd,tgt):
             interface_info = []
             for j in interface_result[ip].keys():
                 inter_info = interface_result[ip][j]
-                interface_info.append({"hwaddr": inter_info['hwaddr'], "ipaddr": inter_info['inet'][0]["address"],
-                                           "label": inter_info['inet'][0]["label"],"netmask": inter_info['inet'][0]["netmask"]})
+                try:
+                    interface_info.append({"hwaddr": inter_info['hwaddr'], "ipaddr": inter_info['inet'][0]["address"],
+                                               "label": inter_info['inet'][0]["label"],"netmask": inter_info['inet'][0]["netmask"]})
+                except:
+                    continue
 
             host_info["interface"] = interface_info
             os_info_dict[ip] = host_info
@@ -94,6 +98,7 @@ def main(salt_url,salt_user,salt_passwd,tgt):
     os_info = get_os_info(salt_url,salt_user,salt_passwd,tgt)
     disk_info = get_disk_info(salt_url,salt_user,salt_passwd,tgt)
     mem_info = get_mem_info(salt_url,salt_user,salt_passwd,tgt)
+
     data = {}
     for ip in tgt:
         sys_info = {}
@@ -112,6 +117,6 @@ if __name__ == "__main__":
     salt_url = "https://192.168.1.126:8081"
     salt_user = "saltapi"
     salt_passwd = "saltapi"
-    tgt = ['192.168.1.126', '192.168.1.191']
+    tgt = ['192.168.1.207']
     result = main(salt_url,salt_user,salt_passwd,tgt)
     print (result)
