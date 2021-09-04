@@ -156,10 +156,24 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 60 * 60 * 24
 
 
+#服务器软件列表
 SERVER_TAG = ['php', 'nginx', 'redis', 'mysql', 'python', 'java','sshd']
 
+
+#salt api 接口及认证信息
 SALT_API={
     "url":"https://192.168.1.126:8081",
     "user":"saltapi",
     "passwd":"saltapi",
 }
+
+
+#webssh 访问地址
+WEBSSH_URL = "http://192.168.1.126:8000/"
+
+
+#redis 服务信息
+REDIS_INFO = {"host":"192.168.1.126", "port":6379}
+
+#代码运行用户
+CODE_RUNAS = "www"

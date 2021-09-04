@@ -1,0 +1,184 @@
+<table class="table table-hover table-bordered" style="margin-top:5px;min-width:1300px;" >
+
+  <thead>
+      <tr style="background-color: #f5f5f5; text-align:center">
+
+        <th>站点名称</th>
+        <th>IP地址</th>
+        <th>站点目录</th>
+        <th>项目</th>
+        <th>描述</th>
+        <th>版本号</th>
+        <th>版本信息</th>
+        <th>提交作者</th>
+        <th>发布时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in publist_all_obj %}
+        <tr>
+          <td>{{ i.gitcode.git_name }}</td>
+          <td>{{ i.host_ip.host_ip }}</td>
+          <td>{{ i.publist_dir }}</td>
+          <td>{{ i.gitcode.project.project_name }}</td>
+          <td>{{ i.publist_msg }}</td>
+          <td>
+              <div style="max-width:120px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
+                  {{ i.current_version }}
+              </div>
+          </td>
+          <td>
+
+              <div style="max-width:150px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
+                  {{ i.version_info }}
+              </div>
+
+          </td>
+          <td>{{ i.author }}</td>
+          <td>{{ i.publist_date }}</td>
+          <td style="padding-left:5px;">
+            <a href="#" name="publist" style="text-decoration:none;" post_id="{{ i.post_id }}"><span class="fa fa-cloud-download" data-toggle="tooltip" data-placement="top" title="版本更新"></span> </a>&nbsp
+            <a href="/code/recordlog/post_id={{ i.post_id }}" name="publist-log" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="更新记录"><span class="fa fa-list"></span></a>&nbsp
+            <a href="#" name="del-publist" style="text-decoration:none;" post_id="{{ i.post_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa  fa-trash"></span> </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+</table>
+<div class="text-right" style="margin-top:-30px;padding-right:9%">
+  <ul class="pagination" id="pagination">
+  </ul>
+</div>
+
+
+<script>
+
+
+//前端分页
+var limit = 13; //每页显示数据条数
+var total = $('#site_table').find('tr').length;
+var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
+
+function doPage(n){
+    if(allPage>1){
+        var prevPage='',nextPage='',pageHtml='';
+
+        if (n===1) {
+            prevPage = '<li class="disabled"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+        } else if(n===allPage){
+            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li class="disabled"><a href="javascript:;">下一页</a></li>';
+        } else {
+            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+        }
+        for(var i=1;i<=allPage;i++){
+            if (n===i) {
+                pageHtml += '<li class="active"><a href="javascript:;">'+ i +'</a></li>';
+            }else{
+                pageHtml += '<li data-page="'+ i +'"><a href="javascript:;">'+ i +'</a></li>';
+            }
+        }
+        $('#pagination').html(prevPage+pageHtml+nextPage);
+    }
+
+    $('#site_table').find('tr').hide();
+    if(n===1){
+        $('#site_table').find('tr:lt('+ limit +')').show();
+    }else{
+        $('#site_table').find('tr:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
+    }
+
+}
+
+doPage(1);
+
+$('#pagination').on('click', 'li a', function(event) {
+    event.preventDefault();
+    var curr = parseInt($(this).parent().data('page'));
+
+    if (!isNaN(curr)) {
+        doPage(curr);
+    }
+});
+
+
+
+
+//更新代码
+$("a[name='upcode']").click(function(){
+
+    var post_id = $(this).attr("post_id");
+    $.post('/code/upcode/',{'post_id':post_id},function(data){
+    if (data == "权限不足"){
+        alert("权限不足，请联系管理员！");
+    }else{
+
+        alert(data);
+        //location.reload();
+        }
+    });
+});
+
+
+
+//删除已发布站点
+$("td a[name='delcode']").click(function(){
+   var post_id = $(this).attr('post_id');
+
+   var statu = confirm("是否确认删除！");
+
+   if (statu==true)
+    {
+    $.post("/code/delpost/",{'post_id':post_id},function(data){
+    if (data == "权限不足"){
+            alert("权限不足，请联系管理员！");
+        }else{
+
+        if (data == "已删除"){
+
+            location.reload();
+        }
+    }
+    })
+
+    }
+});
+
+
+//指定更新
+$("a[name='upfile']").click(function(){
+    var post_id = $(this).attr("post_id");
+    $("#file-path").val("");
+
+    $("#sub-upfile").click(function(){
+
+        var file_path = $("#file-path").val();
+
+        if (post_id){
+            if (file_path){
+                $.post('/code/upfile/',{'post_id':post_id,"file_path":file_path},function(data){
+                    if (data == "权限不足"){
+                        alert("权限不足，请联系管理员！");
+                    }else{
+
+                        alert(data);
+                        post_id=undefined;
+                        $("#upfileModal").modal("hide");
+                        }
+                    });
+            }else{
+
+                alert("更新路径不能为空");
+            }
+        }
+
+    })
+
+});
+
+
+</script>

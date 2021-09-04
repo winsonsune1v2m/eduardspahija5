@@ -121,7 +121,7 @@
 
                 <a href="/asset/hostdetail/?host_id={{ host.id }}" name="info-host" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;
 
-                <a href="javascript:;" name="connect-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
+                <a href="{{ webssh_url }}" target="_blank" name="connect-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
 
               </td>
             </tr>
@@ -287,7 +287,6 @@
 </div>
 
 
-
 <div class="modal fade" id="edit-hostModal" tabindex="-1" role="dialog" aria-labelledby="hostModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="margin-top:100px;">
@@ -428,15 +427,12 @@
 </div>
 
 
-
-
 <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="margin-top:150px;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="importModalLabel">导入服务器信息</h4>
-		 
       </div>
       <div class="modal-body" style="height: 54px;">
           <form method="post" action="/asset/importhost/" enctype="multipart/form-data">
@@ -467,6 +463,10 @@
 <script type="text/javascript" src="/static/js/asset_v2.js"></script>
 
 <script>
+    $(function () {
+       $('[data-toggle="tooltip"]').tooltip()
+     });
+
 
     $("#ckb_head").click(function(){
        if($(this).prop("checked")){//全选

@@ -38,7 +38,7 @@
 
         <a href="/asset/hostdetail/?host_id={{ host.id }}" name="info-host" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;
 
-        <a href="javascript:;" name="connect-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
+        <a href="{{ webssh_url }}" target="_blank" name="connect-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
 
       </td>
     </tr>
@@ -203,6 +203,30 @@ $('td a[name="edit-host"]').click(function() {
             }
         }
     });
+});
+
+//连接服务器
+$("td a[name='connect-host']").click(function(){
+    var host_id = $(this).attr('host_id');
+
+    $.ajax({
+        url: "/asset/connecthost/",
+        type: "POST",
+        data: JSON.stringify({'host_id':host_id}),
+        success: function(data) {
+
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+            }
+         }
+    });
+
 });
 
 

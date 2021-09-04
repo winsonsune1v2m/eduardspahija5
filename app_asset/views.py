@@ -1,4 +1,6 @@
-import json,os
+import json
+import os
+import redis
 from statics.scripts import encryption,read_excel
 from mtrops_v2.settings import SECRET_KEY,BASE_DIR
 from django.shortcuts import render,HttpResponse,redirect
@@ -9,7 +11,7 @@ from app_asset import models as asset_db
 from app_auth import models as auth_db
 from app_auth.views import login_check,perms_check
 from statics.scripts import get_host_info,get_software_info
-from mtrops_v2.settings import SERVER_TAG,SALT_API
+from mtrops_v2.settings import SERVER_TAG,SALT_API,WEBSSH_URL,REDIS_INFO
 from django.db.models import Q
 
 
@@ -222,6 +224,8 @@ class Host(View):
         role_obj = auth_db.Role.objects.get(id=role_id)
 
         host_obj = role_obj.host.all()
+
+        webssh_url = WEBSSH_URL
 
         return render(request,'asset_host.html',locals())
 
@@ -456,17 +460,21 @@ def search_host(request):
     group_id = request.POST.get('hostgroup_id',None)
     host_type = request.POST.get('host_type',None)
     search_key = request.POST.get('search_key', None)
+    role_id = request.session['role_id']
+
+    webssh_url = WEBSSH_URL
+
     if search_key:
-        host_obj = asset_db.Host.objects.filter(Q(host_ip__icontains=search_key) | Q(host_msg__icontains=search_key) | Q(host_type__icontains=search_key))
+        host_obj = asset_db.Host.objects.filter((Q(host_ip__icontains=search_key) | Q(host_msg__icontains=search_key) | Q(host_type__icontains=search_key))& Q(role__id=role_id))
 
     if idc_id:
-        host_obj = asset_db.Host.objects.filter(idc_id=idc_id)
+        host_obj = asset_db.Host.objects.filter(Q(idc_id=idc_id) & Q(role__id=role_id))
 
     if group_id:
-        host_obj = asset_db.Host.objects.filter(group_id=group_id)
+        host_obj = asset_db.Host.objects.filter(Q(group_id=group_id) & Q(role__id=role_id))
 
     if host_type:
-        host_obj = asset_db.Host.objects.filter(host_type=host_type)
+        host_obj = asset_db.Host.objects.filter(Q(host_type=host_type) & Q(role__id=role_id))
 
     return render(request, "asset_host_search.html", locals())
 
@@ -485,6 +493,34 @@ def del_host(request):
     return HttpResponse("服务器已删除,请刷新页面")
 
 
+@csrf_exempt
+@login_check
+@perms_check
+def connect_host(request):
+    """连接服务器"""
+
+    req_info = eval(request.body.decode())
+
+    host_id = req_info.get("host_id")
+
+    host_obj = asset_db.Host.objects.get(id=host_id)
+
+    redis_obj = redis.Redis(host=REDIS_INFO["host"],port=REDIS_INFO["port"])
+
+    key = SECRET_KEY[2:18]
+    pc = encryption.prpcrypt(key)
+
+    passwd = host_obj.host_passwd.strip("b").strip("'").encode(encoding="utf-8")
+
+    de_passwd = pc.decrypt(passwd).decode()
+
+    webssh_info = {"username": host_obj.host_user, "publickey": "None", "password":de_passwd , "hostname": host_obj.host_ip, "port":host_obj.host_remove_port}
+
+    redis_obj.set("webssh_info",json.dumps(webssh_info),ex=5,nx=True)
+
+    return HttpResponse("已连接到服务器")
+
+
 
 
 @csrf_exempt
@@ -494,10 +530,9 @@ def import_host(request):
     """导入服务器信息"""
     upload_file = request.FILES.get("upload_file", None)
 
-
     filename = os.path.join(BASE_DIR,"statics/media/import_asset.xlsx")
 
-    file_obj = open(filename, 'wb')
+    file_obj = open(filename,'wb')
 
     for chrunk in upload_file.chunks():
         file_obj.write(chrunk)
@@ -557,7 +592,6 @@ def import_host(request):
         aes_passwd = pc.encrypt(host_passwd)
 
         try:
-            print(idc_id,group_id,supplier_id)
             host_obj = asset_db.Host(host_ip=host_ip, host_remove_port=host_remove_port, host_user=host_user,
                                      host_passwd=aes_passwd, host_type=host_type,
                                      group_id=group_id, idc_id=idc_id, supplier_id=supplier_id, host_msg=host_msg,

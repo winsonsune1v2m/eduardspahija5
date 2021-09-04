@@ -290,3 +290,59 @@ $("#sub-publist").click(function(){
     })
 });
 
+
+//通过站点名称查询
+$("#select-code").change(function(){
+    var code_id = $("#select-code").val();
+    $("#select-project").val("project");
+    $("#select-host").val("host");
+    $.post('/code/search/',{'code_id':code_id},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#publist-info").empty();
+            $("#publist-info").append(data);
+        }
+    })
+});
+
+
+
+//通过项目查询
+$("#select-project").change(function(){
+    var project_id= $("#select-project").val();
+    $("#select-code").val("code");
+    $("#select-host").val("host");
+    $.post('/code/search/',{'project_id':project_id},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#publist-info").empty();
+            $("#publist-info").append(data);
+        }
+    })
+});
+
+
+//通过设备类型查询
+$("#select-host").change(function(){
+    var host_id = $("#select-host").val();
+    $("#select-project").val("project");
+    $("#select-code").val("code");
+    $.post('/code/search/',{'host_id':host_id},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#publist-info").empty();
+            $("#publist-info").append(data);
+        }
+    })
+});
+
+

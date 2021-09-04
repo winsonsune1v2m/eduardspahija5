@@ -32,28 +32,28 @@
 
           <div class="col-sm-6" style="display:inline-block">
               <div style="width:200px;display: inline-block;">
-                    <select  class="form-control" id="select-site">
-                         <option value="0">站点</option>
-                         {% for site in site_list %}
-                         <option value="{{ site.site_id }}">{{ site.site_name }}</option>
+                    <select  class="form-control" id="select-code">
+                         <option value="code">代码</option>
+                         {% for code in gitcode_obj %}
+                         <option value="{{ code.id }}">{{ code.git_name }}</option>
                          {% endfor %}
                      </select>
                 </div>
 
               <div style="width:200px;display: inline-block;">
                 <select  class="form-control" id="select-project">
-                     <option value="0">项目</option>
-                     {% for project in project_list %}
-                     <option value="{{ project.project_id }}">{{ project.project_name }}</option>
+                     <option value="project">项目</option>
+                     {% for project in project_obj %}
+                     <option value="{{ project.id }}">{{ project.project_name }}</option>
                      {% endfor %}
                  </select>
               </div>
 
               <div style="width:200px;display: inline-block;">
-                <select  class="form-control" id="select-ip">
-                     <option value="0">IP地址</option>
-                    {% for ip in ip_list %}
-                     <option value="{{ ip }}">{{ ip }}</option>
+                <select  class="form-control" id="select-host">
+                     <option value="host">IP地址</option>
+                    {% for host in host_obj %}
+                     <option value="{{ host.id }}">{{ host.host_ip }}</option>
                     {%  endfor %}
                  </select>
               </div>
@@ -62,7 +62,7 @@
       </div>
 
   </div>
-  <div class="panel-body" id="site-info">
+  <div class="panel-body" id="publist-info">
 
         <div style="margin-bottom: 10px;">
             <div class="col-sm-12">
@@ -194,6 +194,7 @@
         tags: true,
         tokenSeparators: [',', ' ']
     })
+
 </script>
 {% endblock %}
 

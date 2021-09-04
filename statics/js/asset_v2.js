@@ -711,6 +711,29 @@ $("#delhost").click(function(){
 
 });
 
+//连接服务器
+$("td a[name='connect-host']").click(function(){
+    var host_id = $(this).attr('host_id');
+
+    $.ajax({
+        url: "/asset/connecthost/",
+        type: "POST",
+        data: JSON.stringify({'host_id':host_id}),
+        success: function(data) {
+
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+            }
+         }
+    });
+
+});
 
 
 

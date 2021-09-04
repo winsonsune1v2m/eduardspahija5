@@ -17,7 +17,7 @@ class GitCode(models.Model):
     git_url = models.CharField(max_length=128,unique=True)
     git_user = models.CharField(max_length=64, null=True)
     git_passwd = models.CharField(max_length=64, null=True)
-    git_sshkey = models.CharField(max_length=512, null=True)
+    git_sshkey = models.TextField( null=True)
     def __unicode__(self):
         return self.git_name
 
