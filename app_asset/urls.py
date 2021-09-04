@@ -29,5 +29,11 @@ urlpatterns = [
     path("searchhost/", views.search_host),
     path("delhost/",views.del_host),
     path("importhost/",views.import_host),
+
     path("exporthost/",views.export_host),
+
+    path("connecthost/",views.connect_host),
+
+
+
 ]

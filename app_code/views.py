@@ -1,8 +1,6 @@
 import json
 import re
 from statics.scripts import encryption
-from statics.scripts.git_clone import git_clone
-from mtrops_v2.settings import SECRET_KEY
 from django.shortcuts import render,HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -11,6 +9,9 @@ from app_code import models as code_db
 from app_asset import models as asser_db
 from app_auth import models as auth_db
 from app_auth.views import login_check,perms_check
+from django.db.models import Q
+from statics.scripts import salt_api
+from mtrops_v2.settings import SECRET_KEY,CODE_RUNAS,SALT_API
 
 # Create your views here.
 
@@ -172,7 +173,6 @@ class GitCode(View):
         return HttpResponse(data)
 
 
-
 class Publist(View):
     '''代码发布'''
     @method_decorator(csrf_exempt)
@@ -182,15 +182,17 @@ class Publist(View):
         return super(Publist, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        title = '项目管理'
-        host_obj = asser_db.Host.objects.all()
-        gitcode_obj = code_db.GitCode.objects.all()
+        title = '代码发布'
 
         role_id = request.session['role_id']
-        role_obj = auth_db.Role.objects.get(id=role_id)
-        gitcode_obj = role_obj.project.all()
+
+        host_obj = asser_db.Host.objects.filter(role__id=role_id)
+        gitcode_obj = code_db.GitCode.objects.filter(role__id=role_id)
+
+        project_obj = code_db.Project.objects.all()
 
         publist_all_obj=None
+
         for i in gitcode_obj:
             publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id)
             try:
@@ -201,7 +203,7 @@ class Publist(View):
         return render(request, "code_publist.html", locals())
 
     def post(self,request):
-        '''添加项目'''
+        '''添加发布'''
         gitcode_name = request.POST.get("gitcode_name")
         publist_ip = request.POST.get("publist_ip")
         publist_dir = request.POST.get("publist_dir")
@@ -210,17 +212,87 @@ class Publist(View):
         try:
             for ip_id in host_ip_ids:
                 publist_obj = code_db.Publist(gitcode_id=gitcode_name,host_ip_id=ip_id,publist_dir=publist_dir,publist_msg=publist_msg)
-                publist_obj.save()
+                #publist_obj.save()
                 host_obj = asser_db.Host.objects.get(id=ip_id)
                 host_ip = host_obj.host_ip
                 gitcode_obj = code_db.GitCode.objects.get(id=gitcode_name)
                 git_url = gitcode_obj.git_url
-                #git_clone(host_ip,publist_dir,git_url)
+
+                if gitcode_obj.git_sshkey:
+                    git_sshkey = gitcode_obj.git_sshkey
+                else:
+                    git_sshkey = None
+
+                if gitcode_obj.git_user and gitcode_obj.git_passwd:
+                    git_user = gitcode_obj.git_user
+
+                    key = SECRET_KEY[2:18]
+                    pc = encryption.prpcrypt(key)
+                    passwd = gitcode_obj.git_passwd.strip("b").strip("'").encode(encoding="utf-8")
+                    de_passwd = pc.decrypt(passwd).decode()
+                    git_passwd = de_passwd
+
+                else:
+                    git_user =None
+                    git_passwd = None
+
+                git_info = {"git_dir": publist_dir, "git_url": git_url, "git_user": git_user, "git_passwd": git_passwd, "git_sshkey": git_sshkey,"code_runas": CODE_RUNAS}
+
+                json_git_info = json.dumps(git_info)
+
+                salt_url = SALT_API['url']
+                salt_user = SALT_API['user']
+                salt_passwd = SALT_API['passwd']
+
+                salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+
+                result = salt.salt_run_script(host_ip, "cmd.script","salt://opt/mtrops_v2/statics/scripts/git_clone.py",json_git_info)
+
+                print(json_git_info)
             data = "添加成功，请刷新查看"
         except Exception as e:
             data = "添加失败：\n%s" % e
 
         return HttpResponse(data)
+
+
+@csrf_exempt
+@login_check
+@perms_check
+def search_publist(request):
+    """过滤发布信息"""
+    gitcode_id = request.POST.get('code_id')
+    project_id = request.POST.get('project_id')
+    host_id = request.POST.get('host_id')
+
+    role_id = request.session['role_id']
+
+    publist_all_obj = None
+
+    gitcode_obj=None
+
+    if gitcode_id:
+        gitcode_obj = code_db.GitCode.objects.filter(Q(id=gitcode_id) & Q(role__id=role_id))
+
+
+    if project_id:
+        gitcode_obj = code_db.GitCode.objects.filter(Q(project_id=project_id)& Q(role__id=role_id))
+
+    if gitcode_obj:
+        for i in gitcode_obj:
+            publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id)
+            try:
+                publist_all_obj = publist_all_obj | publist_obj
+            except:
+                publist_all_obj = publist_obj
+
+
+    if host_id:
+        publist_all_obj = code_db.Publist.objects.filter(host_ip_id=host_id)
+
+    return render(request, "code_publist_search.html", locals())
+
 
 
 
@@ -234,7 +306,7 @@ class CodeLog(View):
         return super(CodeLog, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        title = '项目管理'
+        title = '发布记录'
         wchartlog_obj = code_db.Wchartlog.objects.all()
         return render(request, "code_wchartlog.html", locals())
 

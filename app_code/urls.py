@@ -23,4 +23,5 @@ urlpatterns = [
     path("gitcode/",views.GitCode.as_view()),
     path("publist/", views.Publist.as_view()),
     path("log/", views.CodeLog.as_view()),
+    path("search/", views.search_publist),
 ]
