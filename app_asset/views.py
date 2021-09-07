@@ -624,7 +624,8 @@ def export_host(request):
     role_id = request.session['role_id']
 
     role_obj = auth_db.Role.objects.get(id=role_id)
-
+    role_obj1 = auth_db.User.objects.get(id=role_id)
+    print(role_obj.role_msg)
     host_obj = role_obj.host.all()
     host_obj = host_obj.filter()
     data_list = []
@@ -633,11 +634,11 @@ def export_host(request):
     pc = encryption.prpcrypt(key)
  
     for i in host_obj:
-        host_info = [i.host_ip,i.idc.idc_name,i.host_type,i.group.host_group_name,i.host_user,pc.decrypt(i.host_passwd.strip("b").strip("'").encode(encoding="utf-8")).decode(),i.host_msg,i.host_remove_port,i.serial_num,i.purchase_date,i.overdue_date,i.supplier.supplier,i.idc.idc_admin,i.idc.idc_admin_phone,i.idc.idc_admin_email]
+        host_info = [i.host_ip,i.idc.idc_name,i.host_type,i.group.host_group_name,i.host_user,pc.decrypt(i.host_passwd.strip("b").strip("'").encode(encoding="utf-8")).decode(),i.host_msg,i.host_remove_port,i.serial_num,i.purchase_date,i.overdue_date,i.supplier.supplier,i.supplier.supplier_head,i.supplier.supplier_head_phone,i.supplier.supplier_head_email,role_obj1.user_name,role_obj.role_msg,role_obj1.phone,role_obj1.email]
         
         data_list.append(host_info)
     print(data_list)
-                #密码解密
+       
 
 
     def headStyle():
@@ -705,7 +706,7 @@ def export_host(request):
             ws.title = u'资产清单'
 
             N= 1
-            head = ['IP地址','机房','设备类型','主机组','管理用户','用户密码','描述','远程端口','序列号','购买日期','过保日期','厂商','管理员','电话','邮箱']
+            head = ['IP地址','机房','设备类型','主机组','管理用户','用户密码','描述','远程端口','序列号','购买日期','过保日期','厂商','厂商负责人','厂商电话','厂商邮箱','管理员','角色','电话','邮箱']
 
 
             data_list.insert(0,head)
