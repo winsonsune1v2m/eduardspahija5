@@ -466,16 +466,8 @@ def search_host(request):
     search_key = request.POST.get('search_key', None)
     role_id = request.session['role_id']
 
-
-    #role_obj = auth_db.Role.objects.get(id=role_id)
-
-
     if search_key:
         host_obj = asset_db.Host.objects.filter((Q(host_ip__icontains=search_key) | Q(host_msg__icontains=search_key) | Q(host_type__icontains=search_key))& Q(role__id=role_id))
-
-
-    host_obj = role_obj.host.all()
-
 
     if idc_id:
 
