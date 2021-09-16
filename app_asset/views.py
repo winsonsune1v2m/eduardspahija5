@@ -227,7 +227,7 @@ class Host(View):
         role_obj = auth_db.Role.objects.get(id=role_id)
 
         host_obj = role_obj.host.all()
-        #print(host_obj)
+       
 
         webssh_url = WEBSSH_URL
 
@@ -617,7 +617,7 @@ def export_host(request):
 
     role_obj = auth_db.Role.objects.get(id=role_id)
     role_obj1 = auth_db.User.objects.get(id=role_id)
-    #print(role_obj.role_msg)
+   
     host_obj = role_obj.host.all()
     host_obj = host_obj.filter()
     data_list = []
@@ -629,7 +629,7 @@ def export_host(request):
         host_info = [i.host_ip,i.idc.idc_name,i.host_type,i.group.host_group_name,i.host_user,pc.decrypt(i.host_passwd.strip("b").strip("'").encode(encoding="utf-8")).decode(),i.host_msg,i.host_remove_port,i.serial_num,i.purchase_date,i.overdue_date,i.supplier.supplier,i.supplier.supplier_head,i.supplier.supplier_head_phone,i.supplier.supplier_head_email,role_obj1.user_name,role_obj.role_msg,role_obj1.phone,role_obj1.email]
         
         data_list.append(host_info)
-    #print(data_list)
+  
        
 
 
