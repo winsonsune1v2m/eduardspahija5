@@ -735,15 +735,24 @@ $("td a[name='connect-host']").click(function(){
 
 });
 
+//导出服务器信息
 $("#export-host").click(function(){
     $.get('/asset/exporthost',{},function(data){
-        if(data.code == 1){
-			$("#exportModal").modal();
-        }else {
-            $("#msg-alert").empty();
-            $("#msg-alert").append("导出失败");
-            $("#alert").show();
-        }
+		if(data=="perms_false"){
+			$("#msg-alert").empty();
+			$("#msg-alert").append("权限不足，请联系管理员");
+			$("#alert").show();
+		}else {
+			if(data.code == 1){
+				$("#exportModal").modal();
+            }else {
+	
+				$("#msg-alert").empty();
+				$("#msg-alert").append(data.message);
+				$("#alert").show();
+				
+			}
+		}
     });
 });
 

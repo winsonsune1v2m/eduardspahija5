@@ -735,11 +735,14 @@ def export_host(request):
     if data_list:
         if statuss == 0:
             success = 1
+            message = '服务器信息导出成功'
         else:
-            success = 0;
+            success = 0
+            message = '服务器信息转表失败'
     else:
-        success = 0;
-    info_json = {'code':success,'message':'获取成功'}
+        success = 0
+        message = '获取服务器信息失败'
+    info_json = {'code':success,'message':message}
     return HttpResponse(json.dumps(info_json,ensure_ascii=False), content_type="application/json")
 
 class Netwk(View):
