@@ -108,6 +108,6 @@ if __name__ == '__main__':
     minions = ['192.168.1.216']
     hosts=",".join(minions)
 
-    ret = salt.salt_run_arg(hosts,'cmd.script','/opt/mtrops_v2/statics/scripts/git_clone.py')
+    ret = salt.salt_run_arg(hosts,'cmd.script','/opt/mtrops_v2/statics/scripts/git_clone.py','')
     print(ret)
     # print(type(ret))

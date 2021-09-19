@@ -7,14 +7,14 @@ import sys
 import json
 
 def git_clone(argv):
-    print(argv)
-    clone_info = json.loads(argv)
-    git_dir = clone_info['git_dir']
-    git_url = clone_info['git_url']
-    git_user = clone_info['git_user']
-    git_passwd = clone_info['git_passwd']
-    git_sshkey = clone_info['git_sshkey']
-    code_runas = clone_info['code_runas']
+
+    os.system("echo %s >/home/test.txt" % json.dumps(argv))
+    git_dir = argv['git_dir']
+    git_url = argv['git_url']
+    git_user = argv['git_user']
+    git_passwd = argv['git_passwd']
+    git_sshkey = argv['git_sshkey']
+    code_runas = argv['code_runas']
 
     if os.path.exists(git_dir):
         pass
@@ -43,9 +43,7 @@ def git_clone(argv):
 
     else:
         if git_user and git_passwd:
-
             lg_info = "%s:%s" % (git_user,git_passwd)
-
             lg_info= re.sub("@","%40",lg_info)
             url_list =  git_url.split("//")
             new_url = "%s//%s@%s" % (url_list[0],lg_info,url_list[1])
@@ -61,5 +59,17 @@ def git_clone(argv):
 
 
 if __name__ == "__main__":
-    argv = sys.argv[1]
-    git_clone(argv)
+    argv = sys.argv[1:]
+    data_key = []
+    data_val = []
+    n = 1
+    for i in argv:
+        j = i.strip(',').strip("{}").strip(":")
+        if n % 2 == 1:
+            data_key.append(j)
+        else:
+            data_val.append(j)
+        n += 1
+
+    data_dict = dict(map(lambda x, y: [x, y], data_key, data_val))
+    git_clone(data_dict)

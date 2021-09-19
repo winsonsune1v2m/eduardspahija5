@@ -247,9 +247,10 @@ class Publist(View):
                 salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
 
-                result = salt.salt_run_script(host_ip, "cmd.script","salt://opt/mtrops_v2/statics/scripts/git_clone.py",json_git_info)
+                result = salt.salt_run_script(host_ip, "cmd.script","salt://opt/mtrops_v2/statics/scripts/git_clone.py",git_info)
 
-                print(json_git_info)
+                print(result)
+
             data = "添加成功，请刷新查看"
         except Exception as e:
             data = "添加失败：\n%s" % e
