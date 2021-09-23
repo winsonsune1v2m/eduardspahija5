@@ -7,8 +7,6 @@ import sys
 import json
 
 def git_clone(argv):
-
-    os.system("echo %s >/home/test.txt" % json.dumps(argv))
     git_dir = argv['git_dir']
     git_url = argv['git_url']
     git_user = argv['git_user']
@@ -31,13 +29,17 @@ def git_clone(argv):
         ssh_key_file =  os.path.join(sshkey_dir,"id_rsa")
 
         f=open(ssh_key_file,'wb')
-        f.write(git_sshkey)
+
+        for i in git_sshkey.split("\n"):
+            line = i+"\n"
+            f.write(line)
+
         f.close()
 
         cmd_chmod = "chmod 600 %s" % ssh_key_file
         os.system(cmd_chmod)
 
-        com_env = "kill -9 $SSH_AGENT_PID && eval `ssh-agent` && ssh-add %s" % (git_dir,ssh_key_file)
+        com_env = "kill -9 $SSH_AGENT_PID>&/dev/null;eval `ssh-agent` && ssh-add %s" % (git_dir,ssh_key_file)
 
         cmd = "%s&&cd %s && git clone %s" % (com_env, git_dir, git_url)
 

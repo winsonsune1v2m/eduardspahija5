@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_code/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/media/cmdb.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/statics/media/cmdb.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/statics/scripts/git_clone.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/git_clone.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/scripts/salt_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/salt_api.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +50,7 @@
           <entry key="html" value="4119" />
           <entry key="js" value="2580" />
           <entry key="md" value="5" />
-          <entry key="py" value="15884" />
+          <entry key="py" value="15885" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -66,7 +61,7 @@
           <entry key="JavaScript" value="2579" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="25" />
-          <entry key="Python" value="15884" />
+          <entry key="Python" value="15885" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -130,7 +125,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_code/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="342">
@@ -154,11 +149,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-468">
-              <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
+            <state relative-caret-position="450">
+              <caret line="37" column="69" lean-forward="true" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="69" />
               <folding>
                 <element signature="e#34#43#0" expanded="true" />
               </folding>
@@ -181,7 +176,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="587">
+            <state relative-caret-position="388">
               <caret line="110" column="94" lean-forward="true" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
               <folding>
                 <element signature="e#69#87#0" expanded="true" />
@@ -331,8 +326,8 @@
         <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
         <option value="$PROJECT_DIR$/app_asset/views.py" />
         <option value="$PROJECT_DIR$/statics/scripts/salt_api.py" />
-        <option value="$PROJECT_DIR$/statics/scripts/git_clone.py" />
         <option value="$PROJECT_DIR$/app_code/views.py" />
+        <option value="$PROJECT_DIR$/statics/scripts/git_clone.py" />
       </list>
     </option>
   </component>
@@ -349,7 +344,7 @@
       <path value="$PROJECT_DIR$/statics/select2/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="517" />
     <option name="y" value="28" />
     <option name="width" value="1504" />
@@ -622,7 +617,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.44251627" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.19414316" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1030,9 +1025,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app_code/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="249" column="128" selection-start-line="249" selection-start-column="128" selection-end-line="249" selection-end-column="128" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
+        <state relative-caret-position="388">
           <caret line="110" column="94" lean-forward="true" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
           <folding>
             <element signature="e#69#87#0" expanded="true" />
@@ -1042,20 +1047,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-468">
-          <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
+        <state relative-caret-position="450">
+          <caret line="37" column="69" lean-forward="true" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="69" />
           <folding>
             <element signature="e#34#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_code/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="249" column="128" selection-start-line="249" selection-start-column="128" selection-end-line="249" selection-end-column="128" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
