@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/statics/scripts/git_clone.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/git_clone.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_code/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_code/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +50,7 @@
           <entry key="html" value="4119" />
           <entry key="js" value="2580" />
           <entry key="md" value="5" />
-          <entry key="py" value="15938" />
+          <entry key="py" value="15962" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -61,7 +61,7 @@
           <entry key="JavaScript" value="2579" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="25" />
-          <entry key="Python" value="15938" />
+          <entry key="Python" value="15962" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -128,8 +128,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_code/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-590">
-              <caret line="249" column="128" selection-start-line="249" selection-start-column="128" selection-end-line="249" selection-end-column="128" />
+            <state relative-caret-position="562">
+              <caret line="251" selection-start-line="251" selection-end-line="251" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -149,10 +149,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="670">
+            <state relative-caret-position="598">
               <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
               <folding>
                 <element signature="e#34#43#0" expanded="true" />
@@ -173,11 +173,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="110" column="94" lean-forward="true" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
+            <state relative-caret-position="598">
+              <caret line="108" column="27" lean-forward="true" selection-start-line="108" selection-start-column="4" selection-end-line="108" selection-end-column="27" />
               <folding>
                 <element signature="e#69#87#0" expanded="true" />
               </folding>
@@ -325,9 +325,9 @@
         <option value="$PROJECT_DIR$/statics/scripts/test.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
         <option value="$PROJECT_DIR$/app_asset/views.py" />
+        <option value="$PROJECT_DIR$/statics/scripts/git_clone.py" />
         <option value="$PROJECT_DIR$/statics/scripts/salt_api.py" />
         <option value="$PROJECT_DIR$/app_code/views.py" />
-        <option value="$PROJECT_DIR$/statics/scripts/git_clone.py" />
       </list>
     </option>
   </component>
@@ -1025,32 +1025,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
+    <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="110" column="94" lean-forward="true" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
+        <state relative-caret-position="598">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
           <folding>
-            <element signature="e#69#87#0" expanded="true" />
+            <element signature="e#34#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app_code/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-590">
-          <caret line="249" column="128" selection-start-line="249" selection-start-column="128" selection-end-line="249" selection-end-column="128" />
+        <state relative-caret-position="562">
+          <caret line="251" selection-start-line="251" selection-end-line="251" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
+    <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+        <state relative-caret-position="598">
+          <caret line="108" column="27" lean-forward="true" selection-start-line="108" selection-start-column="4" selection-end-line="108" selection-end-column="27" />
           <folding>
-            <element signature="e#34#43#0" expanded="true" />
+            <element signature="e#69#87#0" expanded="true" />
           </folding>
         </state>
       </provider>
