@@ -626,7 +626,10 @@ def export_host(request):
     pc = encryption.prpcrypt(key)
  
     for i in host_obj:
-        host_info = [i.host_ip,i.idc.idc_name,i.host_type,i.group.host_group_name,i.host_user,pc.decrypt(i.host_passwd.strip("b").strip("'").encode(encoding="utf-8")).decode(),i.host_msg,i.host_remove_port,i.serial_num,i.purchase_date,i.overdue_date,i.supplier.supplier,i.supplier.supplier_head,i.supplier.supplier_head_phone,i.supplier.supplier_head_email,role_obj1.user_name,role_obj.role_msg,role_obj1.phone,role_obj1.email]
+        host_info = [i.host_ip,i.idc.idc_name,i.host_type,i.group.host_group_name,i.host_user,
+                     pc.decrypt(i.host_passwd.strip("b").strip("'").encode(encoding="utf-8")).decode(),i.host_msg,
+                     i.host_remove_port,i.serial_num,i.purchase_date,i.overdue_date,i.supplier.supplier,i.supplier.supplier_head,
+                     i.supplier.supplier_head_phone,i.supplier.supplier_head_email,role_obj1.ready_name,role_obj.role_msg,role_obj1.phone,role_obj1.email]
         
         data_list.append(host_info)
   

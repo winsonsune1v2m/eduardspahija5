@@ -107,7 +107,5 @@ if __name__ == '__main__':
     salt = SaltAPI(salt_url,salt_user,salt_passwd)
     minions = ['192.168.1.216']
     hosts=",".join(minions)
-
-    ret = salt.salt_run_arg(hosts,'cmd.script','/opt/mtrops_v2/statics/scripts/git_clone.py')
+    ret = salt.salt_run_arg(hosts,'cmd.run','ls')
     print(ret)
-    # print(type(ret))

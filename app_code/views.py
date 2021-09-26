@@ -209,12 +209,14 @@ class Publist(View):
         publist_dir = request.POST.get("publist_dir")
         publist_msg = request.POST.get("publist_msg")
         host_ip_ids = json.loads(publist_ip)
+        minions=[]
         try:
             for ip_id in host_ip_ids:
                 publist_obj = code_db.Publist(gitcode_id=gitcode_name,host_ip_id=ip_id,publist_dir=publist_dir,publist_msg=publist_msg)
-                #publist_obj.save()
+                publist_obj.save()
                 host_obj = asser_db.Host.objects.get(id=ip_id)
                 host_ip = host_obj.host_ip
+                minions.append(host_ip)
                 gitcode_obj = code_db.GitCode.objects.get(id=gitcode_name)
                 git_url = gitcode_obj.git_url
 
@@ -238,19 +240,18 @@ class Publist(View):
 
                 git_info = {"git_dir": publist_dir, "git_url": git_url, "git_user": git_user, "git_passwd": git_passwd, "git_sshkey": git_sshkey,"code_runas": CODE_RUNAS}
 
-                json_git_info = json.dumps(git_info)
+            salt_url = SALT_API['url']
+            salt_user = SALT_API['user']
+            salt_passwd = SALT_API['passwd']
 
-                salt_url = SALT_API['url']
-                salt_user = SALT_API['user']
-                salt_passwd = SALT_API['passwd']
+            salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
-                salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+            hosts = ",".join(minions)
 
+            result = salt.salt_run_script(hosts, "cmd.script","salt://opt/mtrops_v2/statics/scripts/git_clone.py",git_info)
 
-                result = salt.salt_run_script(host_ip, "cmd.script","salt://opt/mtrops_v2/statics/scripts/git_clone.py",json_git_info)
-
-                print(json_git_info)
             data = "添加成功，请刷新查看"
+
         except Exception as e:
             data = "添加失败：\n%s" % e
 
