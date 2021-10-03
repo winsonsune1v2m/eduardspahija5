@@ -257,7 +257,6 @@ $("td a[name='del-git']").click(function(){
                 }else {
                     $("#msg-alert").empty();
                     $("#msg-alert").append(data);
-                    $("#edit-gitModal").modal("hide");
                     $("#alert").show();
                 }
 
@@ -288,6 +287,34 @@ $("#sub-publist").click(function(){
             $("#alert").show();
         }
     })
+});
+
+
+
+//删除代码
+$("td a[name='del-publist']").click(function(){
+   var publist_id = $(this).attr('publist_id');
+   var statu = confirm("是否确认删除！");
+   if (statu==true)
+    {
+        $.ajax({
+            url: "/code/publist/",
+            type: "DELETE",
+            data: JSON.stringify({'publist_id':publist_id}),
+            success: function(data) {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
+
+             }
+        });
+    }
 });
 
 

@@ -1,5 +1,6 @@
 import json
 import re
+import os
 from statics.scripts import encryption
 from django.shortcuts import render,HttpResponse
 from django.views import View
@@ -11,7 +12,7 @@ from app_auth import models as auth_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
 from statics.scripts import salt_api
-from mtrops_v2.settings import SECRET_KEY,CODE_RUNAS,SALT_API
+from mtrops_v2.settings import SECRET_KEY,CODE_RUNAS,SALT_API,BASE_DIR
 
 # Create your views here.
 
@@ -187,6 +188,7 @@ class Publist(View):
         role_id = request.session['role_id']
 
         host_obj = asser_db.Host.objects.filter(role__id=role_id)
+
         gitcode_obj = code_db.GitCode.objects.filter(role__id=role_id)
 
         project_obj = code_db.Project.objects.all()
@@ -243,18 +245,27 @@ class Publist(View):
             salt_url = SALT_API['url']
             salt_user = SALT_API['user']
             salt_passwd = SALT_API['passwd']
-
             salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
             hosts = ",".join(minions)
 
-            result = salt.salt_run_script(hosts, "cmd.script","salt://opt/mtrops_v2/statics/scripts/git_clone.py",git_info)
+            script_file = os.path.join(BASE_DIR,"statics/scripts/git_clone.py")
+
+            result = salt.salt_run_script(hosts, "cmd.script",script_file,git_info)
 
             data = "添加成功，请刷新查看"
 
         except Exception as e:
             data = "添加失败：\n%s" % e
 
+        return HttpResponse(data)
+
+
+    def delete(self,request):
+        req_info = eval(request.body.decode())
+        publist_id = req_info.get("publist_id")
+        code_db.Publist.objects.get(id=publist_id).delete()
+        data = "发布已删除，代码保留在服务器，如需彻底删除，请登录系操作！"
         return HttpResponse(data)
 
 
@@ -266,16 +277,12 @@ def search_publist(request):
     gitcode_id = request.POST.get('code_id')
     project_id = request.POST.get('project_id')
     host_id = request.POST.get('host_id')
-
     role_id = request.session['role_id']
-
     publist_all_obj = None
-
     gitcode_obj=None
 
     if gitcode_id:
         gitcode_obj = code_db.GitCode.objects.filter(Q(id=gitcode_id) & Q(role__id=role_id))
-
 
     if project_id:
         gitcode_obj = code_db.GitCode.objects.filter(Q(project_id=project_id)& Q(role__id=role_id))
@@ -287,7 +294,6 @@ def search_publist(request):
                 publist_all_obj = publist_all_obj | publist_obj
             except:
                 publist_all_obj = publist_obj
-
 
     if host_id:
         publist_all_obj = code_db.Publist.objects.filter(host_ip_id=host_id)

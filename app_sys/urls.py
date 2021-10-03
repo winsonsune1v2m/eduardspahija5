@@ -20,6 +20,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path("sofeware/",views.EnvSofeware.as_view()),
+    path("install/", views.sofeware_install),
     path("batch/",views.Batch.as_view()),
     path("filemg/", views.FileMG.as_view()),
 ]

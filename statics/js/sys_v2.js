@@ -42,6 +42,9 @@ $('td a[name="edit-sofeware"]').click(function(){
                 $("#edit-sofeware-version").val(info.sofeware_version);
                 $("#edit-install-script").val(info.install_script);
                 $("#sub-edit-sofeware").attr('sofeware_id', info.sofeware_id);
+
+                $("#div-sofeware-name").css('display', 'block');
+                $("#div-sofeware-version").css('display', 'block');
                 $("#edit-sofewareModal").modal('show');
 
             }
@@ -49,6 +52,39 @@ $('td a[name="edit-sofeware"]').click(function(){
          }
         });
 });
+
+
+//获取修改环境信息
+$('td a[name="edit-sofeware-script"]').click(function(){
+    var sofeware_id = $(this).attr("sofeware_id");
+
+    $.ajax({
+        url: "/sys/sofeware/",
+        type: "PUT",
+        data: JSON.stringify({'sofeware_id':sofeware_id}),
+        success: function(data) {
+
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                var info = eval('(' + data + ')');
+                $("#edit-sofeware-name").val(info.sofeware_name);
+                $("#edit-sofeware-version").val(info.sofeware_version);
+                $("#edit-install-script").val(info.install_script);
+                $("#sub-edit-sofeware").attr('sofeware_id', info.sofeware_id);
+
+                $("#div-sofeware-name").css('display', 'none');
+                $("#div-sofeware-version").css('display', 'none');
+                $("#edit-sofewareModal").modal('show');
+
+            }
+
+         }
+        });
+});
+
 
 
 //修改环境信息

@@ -64,12 +64,12 @@
                       <td>{{ sofeware.sofeware_name }}</td>
                       <td>{{ sofeware.sofeware_version }}</td>
                       {% if sofeware.install_script %}
-                      <td ><a href="javascript:;" style="text-decoration:none;">已设置</a></td>
+                      <td ><a  href="javascript:;" style="text-decoration:none;" name="edit-sofeware-script" sofeware_id="{{ sofeware.id }}" data-toggle="tooltip" data-placement="left" title="修改"> 已设置 </a></td>
                       {% else %}
-                      <td ><a href="javascript:;" style="text-decoration:none;color:red;">未设置</a></td>
+                      <td ><a  href="javascript:;" style="color:red;text-decoration:none;" name="edit-sofeware-script" sofeware_id="{{ sofeware.id }}" data-toggle="tooltip" data-placement="left" title="修改"> 未设置 </a></td>
                       {% endif %}
                       <td style="padding-left:5px;">
-                        <a  href="javascript:;" style="text-decoration:none;" name="edit-sofeware" sofeware_id="{{ sofeware.id }}" data-toggle="tooltip" data-placement="left" title="修改"> <span class="fa fa-pencil"></span>  </a>&nbsp;
+                        <a  href="javascript:;" style="text-decoration:none;" name="edit-sofeware" sofeware_id="{{ sofeware.id }}" data-toggle="tooltip" data-placement="left" title="修改"> <span class="fa fa-pencil"></span> </a>&nbsp;
 
                         <a  href="javascript:;" style="text-decoration:none;" name="install-sofeware" sofeware_id="{{ sofeware.id }}" data-toggle="tooltip" data-placement="top" title="部署"> <span class="fa fa-cog"></span>  </a>&nbsp;
 
@@ -138,18 +138,17 @@
 <div class="modal fade" id="edit-sofewareModal" tabindex="-1" role="dialog" aria-labelledby="edit-sofewareModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="margin-top:135px;">
-      <div class="modal-header">
+      <div class="modal-header" >
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="edit-sofewareModalLabel">修改依赖环境</h4>
       </div>
       <div class="modal-body">
 
-         <form>
-          <div class="form-group">
+          <div class="form-group" id="div-sofeware-name">
             <label >依赖服务</label>
             <input  class="form-control"  placeholder="依赖服务" id="edit-sofeware-name">
           </div>
-          <div class="form-group">
+          <div class="form-group" id="div-sofeware-version">
             <label >服务版本</label>
             <input  class="form-control"  placeholder="服务版本" id="edit-sofeware-version">
           </div>
@@ -159,8 +158,6 @@
             <label >安装命令或脚本</label>
               <textarea id="edit-install-script" class="form-control"></textarea>
           </div>
-
-        </form>
 
       </div>
       <div class="modal-footer">
@@ -261,10 +258,15 @@
         node_id_json = JSON.stringify(node_ids)
 
         $.post("/sys/install/",{'node_id_json':node_id_json,'sofeware_id':sofeware_id},function(data){
-        if (data == "权限不足"){
-            alert("权限不足，请联系管理员！");
-        }else{
-            alert(data);
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#installModal").modal("hide");
+                $("#alert").show();
             }
         });
     });
