@@ -118,7 +118,7 @@ def sofeware_install(request):
 
     script_file = os.path.join(BASE_DIR, 'statics', 'scripts', script_name)
 
-    f = open(script_file, 'wb')
+    f = open(script_file, 'w')
 
     f.write(install_script)
 
