@@ -78,7 +78,7 @@ class EnvSofeware(View):
             sofeware_obj.sofeware_version = sofeware_version
             sofeware_obj.install_script = install_script
             sofeware_obj.save()
-            data = "角色已修改，请刷新查看！"
+            data = "部署信息已修改，请刷新查看！"
             return HttpResponse(data)
         else:
             """获取修改信息"""

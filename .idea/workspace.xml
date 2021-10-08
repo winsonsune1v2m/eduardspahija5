@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_code/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/code_v2.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/code_v2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/sys_v2.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/sys_v2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/code_publist.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_publist.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sys_install.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sys_install.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +51,7 @@
           <entry key="html" value="4176" />
           <entry key="js" value="2606" />
           <entry key="md" value="5" />
-          <entry key="py" value="16384" />
+          <entry key="py" value="16391" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -69,7 +62,7 @@
           <entry key="JavaScript" value="2605" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="25" />
-          <entry key="Python" value="16384" />
+          <entry key="Python" value="16391" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -136,12 +129,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_sys/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="135" column="4" lean-forward="true" selection-start-line="135" selection-start-column="4" selection-end-line="135" selection-end-column="4" />
+            <state relative-caret-position="305">
+              <caret line="80" column="24" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#383#3591#0" />
-                <marker date="1539934254492" expanded="true" signature="4793:4828" ph="..." />
+                <marker date="1539934642016" expanded="true" signature="4794:4829" ph="..." />
               </folding>
             </state>
           </provider>
@@ -332,8 +324,8 @@
         <option value="$PROJECT_DIR$/statics/js/code_v2.js" />
         <option value="$PROJECT_DIR$/statics/js/sys_v2.js" />
         <option value="$PROJECT_DIR$/templates/sys_install.html" />
-        <option value="$PROJECT_DIR$/app_sys/views.py" />
         <option value="$PROJECT_DIR$/app_code/views.py" />
+        <option value="$PROJECT_DIR$/app_sys/views.py" />
       </list>
     </option>
   </component>
@@ -605,7 +597,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.119936034" />
@@ -1051,12 +1043,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_sys/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="135" column="4" lean-forward="true" selection-start-line="135" selection-start-column="4" selection-end-line="135" selection-end-column="4" />
+        <state relative-caret-position="305">
+          <caret line="80" column="24" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#383#3591#0" />
-            <marker date="1539934254492" expanded="true" signature="4793:4828" ph="..." />
+            <marker date="1539934642016" expanded="true" signature="4794:4829" ph="..." />
           </folding>
         </state>
       </provider>
