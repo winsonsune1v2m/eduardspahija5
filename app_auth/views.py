@@ -91,6 +91,7 @@ class Login(View):
         if user:
             login(request, user)
             request.session['username'] = user.ready_name
+            request.session['user_name'] = user.user_name
             role_id = user.role.all()[0].id
             request.session['role_id'] = role_id
             request.session['menu_all_list'] = menus_list(username)
@@ -153,7 +154,9 @@ class RoleMG(View):
 
     def get(self,request):
         title = "角色管理"
+
         role_obj = auth_db.Role.objects.all()
+
         return render(request,'rbac_role.html',locals())
 
 
@@ -530,7 +533,16 @@ class UserMG(View):
         for role in roles:
             role_list.append({"role_title": role.role_title, "role_id": role.id})
 
-        user_info = auth_db.User.objects.all()
+
+        role_id = request.session['role_id']
+        role_obj = auth_db.Role.objects.get(id=role_id)
+
+        if role_obj.role_title == "administrator":
+            user_info = auth_db.User.objects.all()
+        else:
+            user_name = request.session['user_name']
+            user_info = auth_db.User.objects.filter(user_name=user_name)
+
         user_list = []
         for user in user_info:
             role_obj = user.role.all()

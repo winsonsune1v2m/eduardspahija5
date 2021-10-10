@@ -21,6 +21,15 @@ from django.urls import path,include
 urlpatterns = [
     path("sofeware/",views.EnvSofeware.as_view()),
     path("install/", views.sofeware_install),
+
+
     path("batch/",views.Batch.as_view()),
+    path("runcmd/",views.batch_run_cmd),
+    path('upfile/',views.batch_upload_file),
+    path('script/',views.batch_script),
+    path('cron/',views.CronView.as_view()),
+
     path("filemg/", views.FileMG.as_view()),
+
+
 ]

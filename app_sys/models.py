@@ -8,3 +8,6 @@ class EnvSofeware(models.Model):
     install_script = models.TextField(null=True)
     def __unicode__(self):
         return self.sofeware_name
+
+
+

@@ -43,7 +43,7 @@
             <div class="col-sm-10" id="dir-list">
                 <ul class="nav nav-tabs" id="nav-change">
                   <li role="presentation" class="active"><a href="javascript:;">执行命令</a></li>
-                  <li role="presentation" ><a href="javascript:;">文件管理</a></li>
+                  <li role="presentation" ><a href="javascript:;">上传文件</a></li>
                   <li role="presentation"><a href="javascript:;">执行脚本</a></li>
                   <li role="presentation"><a href="javascript:;">计划任务</a></li>
                 </ul>
@@ -280,13 +280,15 @@ $(document).ready(function(){
 });
 
 
+//ip地址正则匹配
 function isValidIP(ip)
-        {
-            var reg =  /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
-            return reg.test(ip);
-        }
+{
+    var reg =  /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+    return reg.test(ip);
+}
 
-//批量执行命令，提交命令
+
+//批量执行命令
 $("#sub-cmd").click(function () {
     var treeObj=$.fn.zTree.getZTreeObj("treeDemo");
 
@@ -308,9 +310,15 @@ $("#sub-cmd").click(function () {
     if (node_id_list.length>0){
         if(cmd){
 
-            $.post("/sys/cmdrun/",{"ip_list":node_id_json,"cmd":cmd},function (data) {
+            $.post("/sys/runcmd/",{"ip_list":node_id_json,"cmd":cmd},function (data) {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
 
-                $("#txt-cmd").text(data);
+                    $("#txt-cmd").text(data);
+                }
             });
             msg="";
         }else{
@@ -321,14 +329,15 @@ $("#sub-cmd").click(function () {
         var msg='请选择服务器！'
     }
     if(msg) {
-        $("#alert-msg").empty();
-        $("#alert-msg").append(msg);
+        $("#msg-alert").empty();
+        $("#msg-alert").append(msg);
         $("#alert").show();
     }else{
         $("#alert").hide();
     }
 
 });
+
 
 
 //批量上传文件
@@ -356,7 +365,7 @@ $("#sub-file").click(function () {
         if(upfile){
             formData.append("upfile",upfile);
             $.ajax({
-                 url: "/sys/uploadfile/",
+                 url: "/sys/upfile/",
                  type: "POST",
                  processData: false,
                  contentType: false,
@@ -374,11 +383,11 @@ $("#sub-file").click(function () {
         msg="请选择服务器！"
     }
     if(msg) {
-        $("#alert-file-msg").empty();
-        $("#alert-file-msg").append(msg);
-        $("#alert-file").show();
+        $("#msg-alert").empty();
+        $("#msg-alert").append(msg);
+        $("#alert").show();
     }else{
-        $("#alert-file").hide();
+        $("#alert").hide();
     }
 });
 
@@ -425,11 +434,11 @@ $("#sub-script").click(function () {
         msg="请选择服务器！"
     }
     if(msg) {
-        $("#alert-script-msg").empty();
-        $("#alert-script-msg").append(msg);
-        $("#alert-script").show();
+        $("#msg-alert").empty();
+        $("#msg-alert").append(msg);
+        $("#alert").show();
     }else{
-        $("#alert-script").hide();
+        $("#alert").hide();
     }
 });
 
@@ -497,11 +506,11 @@ $("#check-cron").click(function () {
         msg="请选择服务器！"
     }
     if(msg) {
-        $("#alert-cron-msg").empty();
-        $("#alert-cron-msg").append(msg);
-        $("#alert-cron").show();
+        $("#msg-alert").empty();
+        $("#msg-alert").append(msg);
+        $("#alert").show();
     }else{
-        $("#alert-cron").hide();
+        $("#alert").hide();
     }
 
 });
@@ -551,20 +560,14 @@ $("#add-cron").click(function () {
         msg="请选择服务器！"
     }
     if(msg) {
-        $("#alert-cron-msg").empty();
-        $("#alert-cron-msg").append(msg);
-        $("#alert-cron").show();
+        $("#msg-alert").empty();
+        $("#msg-alert").append(msg);
+        $("#alert").show();
     }else{
-        $("#alert-cron").hide();
+        $("#alert").hide();
     }
 
 });
-
-
-
-$(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    });
 
 
 
