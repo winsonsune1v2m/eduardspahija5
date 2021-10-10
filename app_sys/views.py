@@ -269,7 +269,7 @@ def batch_script(request):
 
     ip_list = json.loads(request.POST.get("ip_list"))
 
-    script_dir = os.path.join(BASE_DIR, 'static', 'scripts')
+    script_dir = os.path.join(BASE_DIR, 'statics', 'scripts')
 
     if os.path.exists(script_dir):
         pass
@@ -462,7 +462,7 @@ class CronView(View):
 
             cmd = '''sed -i "s/%s/%s/"  /var/spool/cron/%s''' % (d, D, remote_user)
 
-        f_sed = os.path.join(BASE_DIR, 'static', 'scripts', 'sed.sh')
+        f_sed = os.path.join(BASE_DIR, 'statics', 'scripts', 'sed.sh')
         f = open(f_sed, 'w')
         f.write(cmd)
         f.close()
