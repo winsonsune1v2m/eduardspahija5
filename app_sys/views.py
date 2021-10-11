@@ -284,7 +284,7 @@ def batch_script(request):
     else:
         pass
 
-    f = open(script_file, 'w')
+    f = open(script_file, 'wb')
 
     for chunk in up_script.chunks():
         f.write(chunk)

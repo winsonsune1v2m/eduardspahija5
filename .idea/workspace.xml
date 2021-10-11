@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/sys_v2.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/sys_v2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/scripts/salt_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/salt_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sys_batch.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sys_batch.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +51,7 @@
           <entry key="html" value="4208" />
           <entry key="js" value="2610" />
           <entry key="md" value="5" />
-          <entry key="py" value="16750" />
+          <entry key="py" value="16753" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -69,7 +62,7 @@
           <entry key="JavaScript" value="2609" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="25" />
-          <entry key="Python" value="16750" />
+          <entry key="Python" value="16753" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -133,15 +126,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_sys/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="476" column="65" selection-start-line="476" selection-start-column="65" selection-end-line="476" selection-end-column="65" />
+            <state relative-caret-position="197">
+              <caret line="288" column="33" selection-start-line="288" selection-start-column="27" selection-end-line="288" selection-end-column="33" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <marker date="1539939073475" expanded="true" signature="4811:4846" ph="..." />
-                <marker date="1539939073475" expanded="true" signature="6073:13914" ph="..." />
+                <marker date="1539939560988" expanded="true" signature="4811:4846" ph="..." />
+                <marker date="1539939560988" expanded="true" signature="6073:13917" ph="..." />
               </folding>
             </state>
           </provider>
@@ -156,11 +149,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+            <state relative-caret-position="396">
+              <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
               <folding>
                 <element signature="e#634#659#0" expanded="true" />
               </folding>
@@ -336,9 +329,9 @@
         <option value="$PROJECT_DIR$/app_sys/models.py" />
         <option value="$PROJECT_DIR$/statics/js/sys_v2.js" />
         <option value="$PROJECT_DIR$/statics/scripts/salt_api.py" />
-        <option value="$PROJECT_DIR$/app_sys/views.py" />
         <option value="$PROJECT_DIR$/templates/sys_batch.html" />
         <option value="$PROJECT_DIR$/app_sys/urls.py" />
+        <option value="$PROJECT_DIR$/app_sys/views.py" />
       </list>
     </option>
   </component>
@@ -624,12 +617,12 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.119936034" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.119936034" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.10954447" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.37418655" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1059,24 +1052,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_sys/views.py">
+    <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="476" column="65" selection-start-line="476" selection-start-column="65" selection-end-line="476" selection-end-column="65" />
+        <state relative-caret-position="396">
+          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1539939073475" expanded="true" signature="4811:4846" ph="..." />
-            <marker date="1539939073475" expanded="true" signature="6073:13914" ph="..." />
+            <element signature="e#634#659#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
+    <entry file="file://$PROJECT_DIR$/app_sys/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+        <state relative-caret-position="197">
+          <caret line="288" column="33" selection-start-line="288" selection-start-column="27" selection-end-line="288" selection-end-column="33" />
           <folding>
-            <element signature="e#634#659#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1539939560988" expanded="true" signature="4811:4846" ph="..." />
+            <marker date="1539939560988" expanded="true" signature="6073:13917" ph="..." />
           </folding>
         </state>
       </provider>
