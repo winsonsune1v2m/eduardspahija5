@@ -97,7 +97,7 @@ class SaltAPI(object):
         content = self.postRequest(obj)
         ret = content['return'][0]
         return ret
-    def salt_run_upfile(self, tgt, fun, arg,arg_src,arg_dest,runas='root'):
+    def salt_run_upfile(self, tgt, fun,arg_src,arg_dest,runas='root'):
         """
         远程执行模块，有参数
         :param tgt: "host1,host2"
@@ -107,7 +107,7 @@ class SaltAPI(object):
         """
         #添加同名参数
         run_user = 'runas=%s' % runas
-        params = ([('client', 'local'), ('tgt', tgt),('fun', fun),('arg',arg),('arg',arg_src),('arg',arg_dest),('arg','makedirs=True'),('arg',run_user),('expr_form','list')])
+        params = ([('client', 'local'), ('tgt', tgt),('fun', fun),('arg',arg_src),('arg',arg_dest),('arg','makedirs=True'),('arg',run_user),('expr_form','list')])
         obj = urllib.parse.urlencode(params).encode('utf-8')
 
         self.token_id()
