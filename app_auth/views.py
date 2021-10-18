@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from app_auth.perms_control import menus_list,perms_list
+from django.contrib.sessions.models import Session
 
 # Create your views here.
 
@@ -92,10 +93,15 @@ class Login(View):
             login(request, user)
             request.session['username'] = user.ready_name
             request.session['user_name'] = user.user_name
+
             role_id = user.role.all()[0].id
+
             request.session['role_id'] = role_id
             request.session['menu_all_list'] = menus_list(username)
             request.session['perms_all_list'] = perms_list(role_id)
+
+            user.status = "在线"
+            user.save()
 
             next_url = request.GET.get("next")
             if next_url:
@@ -107,6 +113,10 @@ class Login(View):
 
 @login_check
 def Logout(request):
+    user_name = request.session['user_name']
+    user_obj = auth_db.User.objects.get(user_name=user_name)
+    user_obj.status = "离线"
+    user_obj.save()
     logout(request)
     request.session.delete()
     return render(request, "login.html")
@@ -139,7 +149,6 @@ class Index(View):
         host_num = 3
         site_count = 3
         site_num = 3
-
         return  render(request,'base.html',locals())
 
 
@@ -518,6 +527,8 @@ def add_role_project(request):
     return HttpResponse(data)
 
 
+
+
 class UserMG(View):
     """用户管理"""
     @method_decorator(csrf_exempt)
@@ -532,6 +543,12 @@ class UserMG(View):
         role_list = []
         for role in roles:
             role_list.append({"role_title": role.role_title, "role_id": role.id})
+
+        #当前所有在线会话
+        session_obj = Session.objects.all()
+        online_user = []
+        for i in session_obj:
+            online_user.append(i.get_decoded()['user_name'])
 
 
         role_id = request.session['role_id']
@@ -550,11 +567,20 @@ class UserMG(View):
             for i in  role_obj:
                 role_title.append(i.role_title)
 
+            if user.user_name in online_user:
+                status = "在线"
+            else:
+                status = "离线"
+
             user_list.append({"ready_name": user.ready_name, "user_id": user.id, "user_name": user.user_name,
                               'phone': user.phone, 'email': user.email, 'role_title': ",".join(role_title),
-                              'status': user.status})
+                              'status': status})
+
+            user.status = status
+            user.save()
 
         return render(request, 'rbac_user.html', locals())
+
 
     def post(self,request):
         """添加用户"""
@@ -631,6 +657,39 @@ class UserMG(View):
         auth_db.User.objects.get(id=user_id).delete()
         data = "用户已删除,请刷新查看！"
         return HttpResponse(data)
+
+
+
+
+@csrf_exempt
+@login_check
+#@perms_check
+def change_passwd(request):
+    """修改用户密码"""
+    new_passwd = request.POST.get("new_passwd")
+
+    user_id = request.POST.get("user_id")
+
+    action = request.POST.get("action")
+
+    if action:
+        user_name = request.session['user_name']
+        user_obj = auth_db.User.objects.get(user_name=user_name)
+    else:
+        user_obj = auth_db.User.objects.get(id=user_id)
+
+    # 加密密码
+    key = SECRET_KEY[2:18]
+    pc = encryption.prpcrypt(key)  # 初始化密钥
+    aes_passwd = pc.encrypt(new_passwd)
+
+    user_obj.passwd = aes_passwd
+
+    user_obj.save()
+
+    data = "密码已修改,请重新登录！"
+
+    return HttpResponse(data)
 
 
 class MenuMG(View):

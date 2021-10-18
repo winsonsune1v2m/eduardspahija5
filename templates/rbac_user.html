@@ -60,10 +60,15 @@
               <td style="padding-top: 20px;">{{ user.role_title }}</td>
               <td style="padding-top: 20px;">{{ user.phone }}</td>
               <td style="padding-top: 20px;">{{ user.email }}</td>
+              {% if user.status == "在线" %}
+              <td style="padding-top: 20px;color: #00B83F">{{ user.status }}</td>
+              {% else %}
               <td style="padding-top: 20px;">{{ user.status }}</td>
+              {% endif %}
               <td style="padding-top: 20px;">
                   <a href="javascript:;" name="edit-user" user_id="{{ user.user_id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="left" title="修改信息"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
                   <a href="javascript:;" name="ch-passwd"  user_id="{{ user.user_id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="修改密码"><span class="fa fa-cog"></span> </a>&nbsp;&nbsp;&nbsp;
+                  <a href="javascript:;" name="add-remoteuser"  user_id="{{ user.user_id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="远程用户"><span class="fa fa-user-plus"></span> </a>&nbsp;&nbsp;&nbsp;
                   <a href="javascript:;" name="del-user"  user_id="{{ user.user_id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
               </td>
             </tr>
@@ -217,6 +222,40 @@
 </div>
 
 
+<!--添加远程管理用户-->
+<div class="modal fade" id="rbac-remoteModal" tabindex="-1" role="dialog" aria-labelledby="rbac-remoteModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="rbac-remoteModalLabel">添加远程管理用户</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label>远程管理用户</label>
+            <input  class="form-control" type="password"  placeholder="新密码" id="lg-user">
+          </div>
+
+          <div class="form-group">
+            <label >新密码</label>
+            <input  class="form-control" type="password"  placeholder="新密码" id="lg-passwd">
+          </div>
+          <div class="form-group">
+            <label >秘钥</label>
+            <input  class="form-control" type="password"  placeholder="再次输入新密码" id="lg-key">
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-remote">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 {% endblock  %}
 
 
@@ -225,42 +264,8 @@
 <script type="text/javascript" src="/static/js/auth_v2.js"></script>
 
 <script>
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
 
 
-    //修改用户密码
-    $("td a[name='ch-passwd']").click(function(){
-        var user_id = $(this).attr('user_id');
-        $("#rbac-new-passwd").val("");
-        $("#rbac-rnew-passwd").val("");
-        $("#rbac-passwdModal").modal('show');
-
-        //修改密码
-        $("#rbac-sub-passwd").click(function(){
-
-           var new_passwd = $("#rbac-new-passwd").val();
-           var rnew_passwd = $("#rbac-rnew-passwd").val();
-
-
-            if(new_passwd==rnew_passwd){
-
-
-                $.post("/rbac/chpasswd/",{"new_passwd":new_passwd,"user_id":user_id},function(data){
-                    alert(data);
-                    if(data=="密码已修改"){
-                        location.reload();
-                    }
-                });
-
-            }else{
-                alert("两次输入的密码不一致");
-            }
-
-        });
-
-    });
 
 </script>
 

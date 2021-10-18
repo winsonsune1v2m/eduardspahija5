@@ -297,10 +297,6 @@
           <div class="modal-body">
 
               <div class="form-group">
-                <label >当前密码</label>
-                <input  class="form-control"  type="password" placeholder="当前密码" id="current-passwd">
-              </div>
-              <div class="form-group">
                 <label >新密码</label>
                 <input  class="form-control" type="password"  placeholder="新密码" id="new-passwd">
               </div>
@@ -353,28 +349,30 @@
 
     //修改用户密码(自身修改)
     $("#sub-passwd").click(function(){
-        var current_passwd = $("#current-passwd").val();
+
         var new_passwd = $("#new-passwd").val();
         var rnew_passwd = $("#rnew-passwd").val();
+
+        var action = "self";
         if(new_passwd==rnew_passwd){
-
-            if(current_passwd==new_passwd){
-                alert("新密码不能设置为当前密码");
-            }else{
-                $.post("/auth/chpasswd/",{"new_passwd":new_passwd,"current_passwd":current_passwd},function(data){
-                    alert(data);
-                    if(data=="密码已修改,请重新登录"){
-                        location.reload();
-                    }
-                });
-
-            }
+            $.post("/auth/chpasswd/", {"new_passwd": new_passwd,'action':action}, function (data) {
+                if (data == "perms_false") {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                } else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#passwdModal").modal("hide");
+                    $("#alert").show();
+                }
+            });
 
         }else{
             alert("两次输入的密码不一致");
         }
-
     });
+
 
     //前端分页
     var limit = 13; //每页显示数据条数
@@ -395,7 +393,6 @@
                 prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
                 nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
             }
-
             if (n<=5){
                 for(var i=1;i<=5;i++){
                     if (n===i) {
@@ -405,7 +402,6 @@
                             pageHtml += '<li data-page="' + i + '"><a href="javascript:;">' + i + '</a></li>';
                         }
                     }
-
                 }
             }else{
                 for(var i=1;i<=5;i++){
@@ -423,7 +419,6 @@
                 }
 
             }
-
 
             $('#pagination').html(prevPage+pageHtml+nextPage);
         }
@@ -492,10 +487,7 @@
             }]
         };
 
-
         myChart.setOption(option);
-
-
 
 
         ///////////////项目代码图形///////////////////

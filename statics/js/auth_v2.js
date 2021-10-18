@@ -41,7 +41,43 @@ $('td a[name="edit-role"]').click(function(){
             }
 
          }
-        });
+    });
+});
+
+//修改用户密码
+$("td a[name='ch-passwd']").click(function(){
+    var user_id = $(this).attr('user_id');
+    $("#rbac-new-passwd").val("");
+    $("#rbac-rnew-passwd").val("");
+    $("#rbac-passwdModal").modal('show');
+
+    //修改密码
+    $("#rbac-sub-passwd").click(function(){
+
+       var new_passwd = $("#rbac-new-passwd").val();
+       var rnew_passwd = $("#rbac-rnew-passwd").val();
+
+        if(new_passwd==rnew_passwd){
+
+            $.post("/auth/chpasswd/",{"new_passwd":new_passwd,"user_id":user_id},function(data){
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#rbac-passwdModal").modal("hide");
+                    $("#alert").show();
+                }
+            });
+
+        }else{
+            alert("两次输入的密码不一致");
+        }
+
+    });
+
 });
 
 
@@ -161,8 +197,9 @@ $('td a[name="edit-user"]').click(function(){
                 }
 
              }
-        });
+    });
 });
+
 
 
 //修改用户信息
@@ -216,6 +253,7 @@ $("td a[name='del-user']").click(function(){
         });
     }
 });
+
 
 ////////////////////////菜单管理////////////////////////////
 

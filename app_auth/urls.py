@@ -20,6 +20,8 @@ from django.urls import path,include
 urlpatterns = [
     path("role/",views.RoleMG.as_view()),
     path("user/",views.UserMG.as_view()),
+    path("chpasswd/",views.change_passwd),
+
     path("menu/",views.MenuMG.as_view()),
     path("perms/",views.PermsMG.as_view()),
     path("login/",views.Login.as_view()),
