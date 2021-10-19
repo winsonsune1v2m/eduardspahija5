@@ -1,6 +1,7 @@
 import json
 import re
 import os
+import time
 from statics.scripts import encryption
 from django.shortcuts import render,HttpResponse
 from django.views import View
@@ -206,22 +207,28 @@ class Publist(View):
 
     def post(self,request):
         '''添加发布'''
+        
         gitcode_name = request.POST.get("gitcode_name")
         publist_ip = request.POST.get("publist_ip")
         publist_dir = request.POST.get("publist_dir")
         publist_msg = request.POST.get("publist_msg")
+        from_user = request.session.get('username')
+       
+      
         host_ip_ids = json.loads(publist_ip)
         minions=[]
         try:
             for ip_id in host_ip_ids:
+                
                 publist_obj = code_db.Publist(gitcode_id=gitcode_name,host_ip_id=ip_id,publist_dir=publist_dir,publist_msg=publist_msg)
                 publist_obj.save()
+
                 host_obj = asser_db.Host.objects.get(id=ip_id)
                 host_ip = host_obj.host_ip
                 minions.append(host_ip)
                 gitcode_obj = code_db.GitCode.objects.get(id=gitcode_name)
                 git_url = gitcode_obj.git_url
-
+                
                 if gitcode_obj.git_sshkey:
                     git_sshkey = gitcode_obj.git_sshkey
                 else:
@@ -252,12 +259,20 @@ class Publist(View):
             script_file = os.path.join(BASE_DIR,"statics/scripts/git_clone.py")
 
             result = salt.salt_run_script(hosts, "cmd.script",script_file,git_info)
-
+            print(result)
+            #publist_obj = code_db.Publist()
+            #添加发布记录
+            #status = 'done'
+            #record_obj = code_db.Wchartlog(site_name=gitcode_obj.git_name,from_user=from_user,up_connect=publist_obj.version_info,up_id=publist_ip,status=status,add_time=publist_obj.publist_date)
+            #record_obj.save()
             data = "添加成功，请刷新查看"
 
         except Exception as e:
             data = "添加失败：\n%s" % e
-
+            #更新发布记录
+            #status = 'Error'
+            #record_obj = code_db.Wchartlog(site_name=gitcode_obj.git_name,from_user=from_user,up_connect=publist_obj.version_info,up_id=publist_ip,status=status,add_time=publist_obj.publist_date)
+            #record_obj.save()
         return HttpResponse(data)
 
 
@@ -265,8 +280,75 @@ class Publist(View):
         req_info = eval(request.body.decode())
         publist_id = req_info.get("publist_id")
         code_db.Publist.objects.get(id=publist_id).delete()
-        data = "发布已删除，代码保留在服务器，如需彻底删除，请登录系操作！"
+        data = "发布已删除，代码保留在服务器，如需彻底删除，请登陆服务器操作！"
         return HttpResponse(data)
+        
+    def put(self,request):
+        '''版本更新'''
+        try:
+            
+            req_info = eval(request.body.decode())
+            publist_id = req_info.get("publist_id")
+            #print(publist_id)
+            publist_obj = code_db.Publist.objects.filter(id=publist_id)
+            for i in publist_obj:
+                git_name = i.gitcode.git_name
+                host_ip = i.host_ip.host_ip
+                publist_dir = i.publist_dir
+                
+            
+            git_info = {"git_dir": publist_dir+'/'+git_name,"gitcode_name": git_name,"code_runas": CODE_RUNAS}
+            
+            salt_url = SALT_API['url']
+            salt_user = SALT_API['user']
+            salt_passwd = SALT_API['passwd']
+            salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+            minions = host_ip
+            
+            cmd = "cd %s && git stash && git pull origin master" % (publist_dir+'/'+git_name)
+            result = salt.salt_run_arg(minions, "cmd.run",cmd)
+            cmdform = '-1  --pretty=format:"%H-%an-%ad-%s"'
+            cmd = "cd %s && git log %s" % (publist_dir+'/'+git_name,cmdform)
+            result1 = salt.salt_run_arg(minions, "cmd.run", cmd)
+            
+            if result:
+                #print(result[minions])
+                log_msg = result[minions]
+                log_msg1= result1[minions]
+                log_info = log_msg.split("\n")[3].strip()
+                log_info1 = log_msg1.split('-')
+                
+                if log_info[0] == "A":
+                    data = '已经是最新版本,无需更新'
+                else:
+                    current_version = log_info.strip()[-7:]
+                    #print(current_version)
+                    version_info = log_info1[-1]
+                    author = log_info1[1]
+                    upcode_date = log_info1[2]
+                    str_date = upcode_date.strip('+0800').strip()
+                    array_date = time.strptime(str_date, "%a %b %d %H:%M:%S %Y")
+                    upcode_date = time.strftime('%Y-%m-%d %H:%M:%S', array_date)
+                    #print(upcode_date)
+                    publist_obj = code_db.Publist.objects.get(id=publist_id)
+                    publist_obj.current_version = current_version
+                    publist_obj.version_info = version_info
+                    publist_obj.author = author
+                    publist_obj.publist_date = upcode_date
+                    publist_obj.save()
+                    #添加更新记录
+                    record_obj = code_db.PublistRecord(current_version=current_version,version_info=version_info,author=author,publist_date=upcode_date,publist_id=publist_id)
+                    record_obj.save()
+
+                    data = "代码更新成功"
+            else:
+                data = "更新失败：salt执行出错"
+
+        except Exception as e:
+            data = "更新失败：\n%s" % e
+
+        return HttpResponse(data)
+
 
 
 @csrf_exempt
@@ -300,9 +382,97 @@ def search_publist(request):
 
     return render(request, "code_publist_search.html", locals())
 
+@csrf_exempt
+@login_check
+@perms_check
+def git_log(request):
+    '''git更新记录'''
+    title = '代码发布'
+    
+    publist_id = request.GET['publist_id']
+    
+    record_info = code_db.PublistRecord.objects.filter(publist_id=publist_id).order_by('-publist_date')
+
+    post_obj = code_db.Publist.objects.get(id=publist_id)
+
+    current_version = post_obj.current_version
+
+    record_list = []
+
+    for  i in  record_info:
+        upcode_date = i.publist_date
+        site_name = i.publist.gitcode.git_name
+        post_ip = i.publist.host_ip.host_ip
+
+        if i.current_version == current_version:
+            version_status = u"当前版本"
+        else:
+            version_status = u"历史版本"
+
+        record_list.append({'record_id':i.id,'site_name':site_name,'post_ip':post_ip,'current_version':i.current_version,'version_info':i.version_info,'author':i.author,'upcode_date':upcode_date,'version_status':version_status})
+
+       
+    return render(request, "publist_record.html", locals())
+
+    
+@csrf_exempt
+@login_check
+@perms_check
+def  RollBack(request):
+    if request.method == 'POST':
+
+        record_id = request.POST.get('record_id')
+
+        record_obj = code_db.PublistRecord.objects.get(id=record_id)
+
+        rollback_version = record_obj.current_version
+
+        post_id = record_obj.publist_id
+
+        post_obj = code_db.Publist.objects.get(id=post_id)
+
+        site_name = post_obj.gitcode.git_name
+        ip = post_obj.host_ip.host_ip
+
+        site_path = post_obj.publist_dir
+        
+        salt_url = SALT_API['url']
+        salt_user = SALT_API['user']
+        salt_passwd = SALT_API['passwd']
+        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+        
+        cmd = "salt '%s' cmd.run 'cd %s/%s && git reset %s'   runas='www'"  % (ip,site_path,site_name,rollback_version)
+        result = salt.salt_run_arg(ip, "cmd.run",cmd)
+        
+
+        if result:
+
+            current_version = record_obj.current_version
+            version_info = record_obj.version_info
+            author = record_obj.author
+            upcode_date = record_obj.publist_date
 
 
+            #同步版本信息
+            post_obj.current_version = current_version
+            post_obj.version_info = version_info
+            post_obj.author = author
+            post_obj.publist_date = upcode_date
 
+            post_obj.save()
+
+            msg = "代码回滚成功！"
+
+
+        else:
+            msg = "代码回滚失败,salt执行失败\n"
+
+        return HttpResponse(msg)
+
+    else:
+        return HttpResponse("未知请求")    
+    
+    
 class CodeLog(View):
     '''发布记录'''
 

@@ -7,16 +7,15 @@
 <link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
 {% endblock %}
 
-
 {% block center %}
 
 
 <!--头部导航-->
-<div class="panel panel-default center-top" style="min-width:1300px;">
+<div class="panel panel-default center-top" style="min-width:1300px;" >
   <div class="panel-body">
     <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
       <li><a href="/" style="color: #377CD8;">首页</a></li>
-      <li><a href="javascript:;">发布管理</a></li>
+      <li><a href="#">代码管理</a></li>
       <li class="active">{{ title }}</li>
     </ol>
   </div>
@@ -35,7 +34,7 @@
           </div>
 
           <span class="group-btn pull-right" style="margin-right:30px;">
-            <a href="/code/postcode/page_id=1/" class="btn btn-success"  style="margin-left:5px" > 返回</a>
+            <a href="/code/publist/" class="btn btn-success"  style="margin-left:5px" > 返回</a>
           </span>
 
       </div>
@@ -112,7 +111,7 @@
 
 {% block js %}
 
-    <script type="text/javascript" src="/static/js/code.js"></script>
+    <script type="text/javascript" src="/static/js/code_v2.js"></script>
 
 
 {% endblock %}

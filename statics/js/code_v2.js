@@ -317,6 +317,62 @@ $("td a[name='del-publist']").click(function(){
     }
 });
 
+//更新代码
+$("td a[name='publist']").click(function(){
+   var publist_id = $(this).attr('publist_id');
+   var statu = confirm("是否确认更新！");
+   if (statu==true)
+    {
+        $.ajax({
+            url: "/code/publist/",
+            type: "PUT",
+            data: JSON.stringify({'publist_id':publist_id}),
+            success: function(data) {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
+
+             }
+        });
+    }
+});
+
+
+//更新记录
+$("td a[name='publist-log']").click(function(){
+    var publist_id = $(this).attr('publist_id'); 
+	window.location.href = "/code/gitlog?publist_id=" + publist_id;  
+});
+
+
+//回滚代码
+$("td a[name='record_rollback']").click(function(){
+   var record_id = $(this).attr('record_id');
+   var statu = confirm("是否确认回滚代码！");
+   if (statu==true)
+    {
+        $.post('/code/RollBack/',{'record_id':record_id},function(data){
+           
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
+
+             
+        });
+    }
+});
 
 //通过站点名称查询
 $("#select-code").change(function(){

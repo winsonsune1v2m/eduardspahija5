@@ -194,7 +194,7 @@ def batch_run_cmd(request):
     hosts = ",".join(ip_list)
 
     data = salt.salt_run_arg(hosts, "cmd.run", cmd)
-
+    
     data_txt = ''
     for ip in ip_list:
         head_txt = '=================== %s ===================\n' % ip
