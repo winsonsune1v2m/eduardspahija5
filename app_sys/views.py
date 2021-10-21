@@ -8,9 +8,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from app_sys import models as sys_db
 from app_asset import models as asset_db
+from app_auth import models as auth_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
-from mtrops_v2.settings import BASE_DIR,SALT_API
+from mtrops_v2.settings import BASE_DIR,SALT_API,MTROPS_HOST
 from statics.scripts import salt_api
 # Create your views here.
 
@@ -174,13 +175,15 @@ class Batch(View):
 
         znodes_data = json.dumps(tree_info, ensure_ascii=False)
 
-
+        user_name = request.session['user_name']
+        user_obj = auth_db.User.objects.get(user_name=user_name)
+        remote_user_list = user_obj.remoteuser_set.all()
         return render(request,'sys_batch.html',locals())
 
 
 @csrf_exempt
 @login_check
-#@perms_check
+@perms_check
 def batch_run_cmd(request):
     """批量执行命令"""
     cmd = request.POST.get('cmd')
@@ -193,20 +196,26 @@ def batch_run_cmd(request):
 
     hosts = ",".join(ip_list)
 
-    data = salt.salt_run_arg(hosts, "cmd.run", cmd)
+    runas = request.session['remote_user']
+    if runas:
+        data = salt.salt_run_arg(hosts, "cmd.run", cmd,runas)
+        data_txt = ''
+        for ip in ip_list:
+            head_txt = '=================== %s ===================\n' % ip
+            result_info = "%sCommand：%s\nOutput：\n%s\n\r" % (head_txt, cmd, data[ip])
+            data_txt += result_info
+    else:
+        data_txt = "远程管理用户未设置，无法执行！"
 
-    data_txt = ''
-    for ip in ip_list:
-        head_txt = '=================== %s ===================\n' % ip
-        result_info = "%sCommand：%s\nOutput：\n%s\n\r" % (head_txt, cmd, data[ip])
-        data_txt += result_info
+
+
 
     return HttpResponse(data_txt)
 
 
 @csrf_exempt
 @login_check
-#@perms_check
+@perms_check
 def batch_upload_file(request):
     """批量上传文件"""
 
@@ -248,21 +257,26 @@ def batch_upload_file(request):
 
     hosts = ",".join(ip_list)
 
-    data = salt.salt_run_upfile(hosts, "cp.get_file", src, dest)
+    runas = request.session['remote_user']
+    if runas:
+        data = salt.salt_run_upfile(hosts, "cp.get_file", src, dest,runas)
 
+        data_txt=''
+        for ip in  ip_list:
+            head_txt='=================== %s ===================\n' % ip
+            result_info = "%sOutput：\n%s\n\r" % (head_txt,data[ip])
+            data_txt+=result_info
 
-    data_txt=''
-    for ip in  ip_list:
-        head_txt='=================== %s ===================\n' % ip
-        result_info = "%sOutput：\n%s\n\r" % (head_txt,data[ip])
-        data_txt+=result_info
+    else:
+        data_txt = "远程管理用户未设置，无法执行！"
+
 
     return HttpResponse(data_txt)
 
 
 @csrf_exempt
 @login_check
-#@perms_check
+@perms_check
 def batch_script(request):
     """批量执行脚本"""
     up_script = request.FILES.get("script_file")
@@ -297,17 +311,23 @@ def batch_script(request):
     salt_url = SALT_API['url']
     salt_user = SALT_API['user']
     salt_passwd = SALT_API['passwd']
+
+
     salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
     hosts = ",".join(ip_list)
 
-    data = salt.salt_run_arg(hosts, "cmd.script", script_src)
+    runas = request.session['remote_user']
+    if runas:
+        data = salt.salt_run_arg(hosts, "cmd.script", script_src,runas)
 
-    data_txt=''
-    for ip in  ip_list:
-        head_txt='=================== %s ===================\n' % ip
-        result_info = "%sOutput：\n%s\n\r" % (head_txt,data[ip]['stdout'])
-        data_txt+=result_info
+        data_txt=''
+        for ip in  ip_list:
+            head_txt='=================== %s ===================\n' % ip
+            result_info = "%sOutput：\n%s\n\r" % (head_txt,data[ip]['stdout'])
+            data_txt+=result_info
+    else:
+        data_txt = "远程管理用户未设置，无法执行！"
 
     return HttpResponse(data_txt)
 
@@ -317,7 +337,13 @@ class CronView(View):
     计划任务管理
     """
 
-    @csrf_exempt
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_check)
+    @method_decorator(perms_check)
+    def dispatch(self, request, *args, **kwargs):
+        return super(CronView, self).dispatch(request, *args, **kwargs)
+
+
     def get(self, request):
 
         ip_list = json.loads(request.GET.get('ip_list'))
@@ -333,28 +359,34 @@ class CronView(View):
 
         hosts = ",".join(ip_list)
 
-        data = salt.salt_run_arg(hosts, "cmd.run", cmd)
+        runas = request.session['remote_user']
+        if runas:
 
-        data_info = []
+            data = salt.salt_run_arg(hosts, "cmd.run", cmd,runas)
 
-        for ip in data.keys():
+            data_info = []
 
-            data_list = data[ip].split('\n')
-            cron_list = []
-            if re.match('no', data_list[0]) or re.match('crontab', data_list[0]):
+            for ip in data.keys():
+
+                data_list = data[ip].split('\n')
                 cron_list = []
-            else:
-                for i in data_list:
-                    A = i.split()
-                    if A:
-                        B = A[0:5]
-                        C = A[5:]
-                        cmd = " ".join(C)
-                        B.append(cmd)
-                        cron_list.append(
-                            {'m': B[0], 'h': B[1], 'd': B[2], 'M': B[3], 'w': B[4], 'cmd': B[5], 'org_cmd': i})
+                if re.match('no', data_list[0]) or re.match('crontab', data_list[0]) or re.search('must be privileged', data_list[0]):
+                    cron_list = []
+                else:
+                    for i in data_list:
+                        A = i.split()
+                        if A:
+                            B = A[0:5]
+                            C = A[5:]
+                            cmd = " ".join(C)
+                            B.append(cmd)
+                            cron_list.append(
+                                {'m': B[0], 'h': B[1], 'd': B[2], 'M': B[3], 'w': B[4], 'cmd': B[5], 'org_cmd': i})
 
-            data_info.append({"IP": ip, "cron": cron_list})
+                data_info.append({"IP": ip, "cron": cron_list})
+        else:
+
+            cron_list = []
 
         return render(request, "sys_cron_table.html", locals())
 
@@ -397,14 +429,20 @@ class CronView(View):
 
         hosts = ",".join(ip_list)
 
-        data = salt.salt_run_arg(hosts, "cmd.run", cmd)
+        runas = request.session['remote_user']
+        if runas:
 
-        data_txt = ''
 
-        for ip in ip_list:
-            head_txt = '=================== %s ===================\n' % ip
-            result_info = "%sOutput：\n%s\n\r" % (head_txt, data[ip])
-            data_txt += result_info
+            data = salt.salt_run_arg(hosts, "cmd.run", cmd,runas)
+
+            data_txt = ''
+
+            for ip in ip_list:
+                head_txt = '=================== %s ===================\n' % ip
+                result_info = "%sOutput：\n%s\n\r" % (head_txt, data[ip])
+                data_txt += result_info
+        else:
+            data_txt = "远程管理用户未设置，无法执行！"
 
         return HttpResponse(data_txt)
 
@@ -474,13 +512,18 @@ class CronView(View):
 
         hosts = ",".join(ip_list)
         script_src = "salt://" + f_sed
-        data = salt.salt_run_arg(hosts, "cmd.script", script_src)
 
-        result = data[ip]
+        runas = request.session['remote_user']
+        if runas:
 
-        msg = "执行错误：%s\n\r执行结果：%s" % (result['stderr'], result['stdout'])
+            data = salt.salt_run_arg(hosts, "cmd.script", script_src,runas)
+            result = data[ip]
 
-        return HttpResponse(msg)
+            data_txt = "执行错误：%s\n\r执行结果：%s" % (result['stderr'], result['stdout'])
+        else:
+            data_txt = "远程管理用户未设置，无法执行！"
+
+        return HttpResponse(data_txt)
 
 
 
@@ -514,6 +557,77 @@ class FileMG(View):
 
         znodes_data = json.dumps(tree_info, ensure_ascii=False)
 
+        salt_url = SALT_API['url']
+        salt_user = SALT_API['user']
+        salt_passwd = SALT_API['passwd']
+        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+
+        home_dir = "~"
+
+        runas = request.session['remote_user']
+
+        file_list = []
+        dir_list = []
+        ip = MTROPS_HOST
+        if runas:
+
+            cmd = "cd %s && pwd && ls -al| grep -v total | awk '{print $1,$9}'" % home_dir
+            data = salt.salt_run_arg(ip, "cmd.run",cmd, runas)
+
+            result = data[ip]
+
+            cur_dir = result.split("\n")[0]
+
+            for i in result.split("\n")[1:]:
+                F = i.split()
+                if re.match(r"-", F[0]):
+                    file_list.append(F[1])
+
+                else:
+                    dir_list.append(F[1])
+
+        request.session['cur_dir'] = home_dir
+
         return render(request,'sys_file.html',locals())
 
 
+
+@login_check
+#@perms_check
+def cd_dir(request,ip,ch_dir):
+
+    cur_dir = request.session['cur_dir']
+
+    dir_path = os.path.join(cur_dir,ch_dir)
+
+    cmd = "cd %s && pwd && ls -al| grep -v total | awk '{print $1,$9}'" % dir_path
+
+    runas = request.session['remote_user']
+
+    salt_url = SALT_API['url']
+    salt_user = SALT_API['user']
+    salt_passwd = SALT_API['passwd']
+    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+    file_list = []
+    dir_list = []
+    ip = MTROPS_HOST
+
+    data = salt.salt_run_arg(ip, "cmd.run", cmd, runas)
+
+    result = data[ip]
+
+    cur_dir = result.split("\n")[0]
+
+    request.session['cur_dir'] = cur_dir
+
+    for i in result.split("\n")[1:]:
+        F = i.split()
+        if re.match(r"-", F[0]):
+            file_list.append(F[1])
+
+        else:
+            dir_list.append(F[1])
+
+    return render(request, 'sys_file.html', locals())

@@ -592,7 +592,8 @@ def import_host(request):
 
         # 加密密码
         key = SECRET_KEY[2:18]
-        pc = encryption.prpcrypt(key)  # 初始化密钥
+        # 初始化密钥
+        pc = encryption.prpcrypt(key)
         aes_passwd = pc.encrypt(host_passwd)
 
         try:

@@ -167,6 +167,8 @@ SALT_API={
     "passwd":"saltapi",
 }
 
+MTROPS_HOST = "192.168.1.126"
+
 
 #webssh 访问地址
 WEBSSH_URL = "http://192.168.1.126:8000/"
