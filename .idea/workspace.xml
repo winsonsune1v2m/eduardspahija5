@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sys_file.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sys_file.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +52,7 @@
           <entry key="html" value="4462" />
           <entry key="js" value="2785" />
           <entry key="md" value="5" />
-          <entry key="py" value="18509" />
+          <entry key="py" value="18547" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -65,7 +63,7 @@
           <entry key="JavaScript" value="2784" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="27" />
-          <entry key="Python" value="18509" />
+          <entry key="Python" value="18547" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -144,11 +142,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_sys/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="596" column="40" lean-forward="true" selection-start-line="596" selection-start-column="40" selection-end-line="596" selection-end-column="40" />
+            <state relative-caret-position="546">
+              <caret line="655" column="16" selection-start-line="655" selection-start-column="16" selection-end-line="655" selection-end-column="16" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <marker date="1540196670570" expanded="true" signature="17606:17607" ph="..." />
+                <marker date="1540196954807" expanded="true" signature="17713:17714" ph="..." />
               </folding>
             </state>
           </provider>
@@ -646,7 +644,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.5835141" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.16160521" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1073,11 +1071,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_sys/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="596" column="40" lean-forward="true" selection-start-line="596" selection-start-column="40" selection-end-line="596" selection-end-column="40" />
+        <state relative-caret-position="546">
+          <caret line="655" column="16" selection-start-line="655" selection-start-column="16" selection-end-line="655" selection-end-column="16" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <marker date="1540196670570" expanded="true" signature="17606:17607" ph="..." />
+            <marker date="1540196954807" expanded="true" signature="17713:17714" ph="..." />
           </folding>
         </state>
       </provider>

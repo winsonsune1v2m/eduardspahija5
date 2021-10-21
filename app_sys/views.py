@@ -612,7 +612,7 @@ def cd_dir(request,ip,ch_dir):
         ch_dir = ".."
     else:
         ch_dir = ch_dir
-        
+
     cur_dir = request.session['cur_dir']
 
     dir_path = os.path.join(cur_dir,ch_dir)
@@ -644,6 +644,16 @@ def cd_dir(request,ip,ch_dir):
             file_list.append(F[1])
 
         else:
-            dir_list.append(F[1])
+
+            if F[1] == "..":
+                dir = "返回"
+
+            elif F[1] == ".":
+                dir = "刷新"
+
+            else:
+                dir = F[1]
+                
+            dir_list.append(dir)
 
     return render(request, 'sys_file.html', locals())
