@@ -582,10 +582,19 @@ class FileMG(View):
             for i in result.split("\n")[1:]:
                 F = i.split()
                 if re.match(r"-", F[0]):
-                    file_list.append(F[1])
 
+                    file_list.append(F[1])
                 else:
-                    dir_list.append(F[1])
+                    if F[1] == "..":
+                        dir = "返回"
+
+                    elif F[1] == ".":
+                        dir = "刷新"
+
+                    else:
+                        dir = F[1]
+
+                    dir_list.append(dir)
 
         request.session['cur_dir'] = home_dir
 
@@ -597,6 +606,13 @@ class FileMG(View):
 #@perms_check
 def cd_dir(request,ip,ch_dir):
 
+    if ch_dir == "刷新":
+        ch_dir ="."
+    elif ch_dir == "返回":
+        ch_dir = ".."
+    else:
+        ch_dir = ch_dir
+        
     cur_dir = request.session['cur_dir']
 
     dir_path = os.path.join(cur_dir,ch_dir)
