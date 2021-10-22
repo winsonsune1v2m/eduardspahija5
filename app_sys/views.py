@@ -603,8 +603,28 @@ class FileMG(View):
 
 
 @login_check
-#@perms_check
 def cd_dir(request,ip,ch_dir):
+
+    title = "文件管理"
+    role_id = request.session["role_id"]
+    hostgroup_obj = asset_db.HostGroup.objects.all()
+    tree_info = []
+    n = 1
+    for i in hostgroup_obj:
+        hostgroup_id = i.id
+        hostgroup_name = i.host_group_name
+        hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
+
+        tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
+        n += 1
+        for j in hostinfo_obj:
+            host_id = j.id
+            host_ip = j.host_ip
+            id = hostgroup_id * 10 + host_id
+            tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
+
+    znodes_data = json.dumps(tree_info, ensure_ascii=False)
+    
 
     if ch_dir == "刷新":
         ch_dir ="."
@@ -653,7 +673,7 @@ def cd_dir(request,ip,ch_dir):
 
             else:
                 dir = F[1]
-                
+
             dir_list.append(dir)
 
     return render(request, 'sys_file.html', locals())
