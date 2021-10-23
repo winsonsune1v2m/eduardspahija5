@@ -1,16 +1,46 @@
 
 {% for i in dir_list %}
-<div style="display: inline-block;width: 200px;margin-top: 20px">
-    <a href="/sys/file/ip={{ ip }}/dir={{ i }}" style="text-decoration: none">
-        <div>
-            <i class="fa fa-folder-open fa-4x" style="color: #f59e1c"></i>
-        </div>
-        <div>
-            <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>{{ i }}</b></span>
-        </div>
+    {% if i == "dir_reply" %}
+    <div style="display: inline-block;width: 200px;margin-top: 20px">
+        <a href="/sys/chdir/{{ ip }}/{{ i }}/" style="text-decoration: none">
+            <div>
+                <i class="fa fa-refresh fa-3x" style="color: #f59e1c"></i>
+            </div>
+            <div>
+                <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>刷新</b></span>
+            </div>
 
-    </a>
-</div>
+        </a>
+    </div>
+
+    {% elif i == "dir_reback" %}
+
+    <div style="display: inline-block;width: 200px;margin-top: 20px">
+        <a href="/sys/chdir/{{ ip }}/{{ i }}/" style="text-decoration: none">
+            <div>
+                <i class="fa fa-reply fa-3x" style="color: #f59e1c"></i>
+            </div>
+            <div>
+                <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>返回</b></span>
+            </div>
+
+        </a>
+    </div>
+
+    {% else %}
+
+    <div style="display: inline-block;width: 200px;margin-top: 20px">
+        <a href="/sys/chdir/{{ ip }}/{{ i }}/" style="text-decoration: none">
+            <div>
+                <i class="fa fa-folder-open fa-4x" style="color: #f59e1c"></i>
+            </div>
+            <div>
+                <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>{{ i }}</b></span>
+            </div>
+
+        </a>
+    </div>
+    {% endif %}
 
 {% endfor %}
 
@@ -18,7 +48,7 @@
 <div style="display: inline-block;width: 200px;margin-top: 20px">
     <a href="javascript:;" style="text-decoration: none" name="file-name" filename="{{ i }}">
         <div>
-            <i class="fa fa-file  fa-4x" style="color: #85af04"></i>
+            <i class="fa fa-file  fa-3x" style="color: #85af04"></i>
         </div>
         <div>
             <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>{{ i }}</b></span>
@@ -59,13 +89,7 @@ $('#btn-remove').click(function(){
              contentType: false,
              data: formData,
              success: function(msg) {
-
-                if (msg == "权限不足"){
-                    alert("权限不足，请联系管理员！");
-                }else{
-
-                    alert(msg)
-                }
+                alert(msg)
 
              }
         });
@@ -91,13 +115,7 @@ $('#btn-downfile').click(function(){
              contentType: false,
              data: formData,
              success: function(msg) {
-
-                if (msg == "权限不足"){
-                    alert("权限不足，请联系管理员！");
-                }else{
-
-                    window.location.href=msg
-                }
+                 window.location.href=msg
 
              }
         });

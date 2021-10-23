@@ -27,6 +27,7 @@ urlpatterns = [
     path('script/',views.batch_script),
     path('cron/',views.CronView.as_view()),
     path("filemg/", views.FileMG.as_view()),
-    path("chdir/<str:ip>/<str:ch_dir>/", views.cd_dir),
+    path("chdir/<str:ip>/<str:ch_dir>/", views.ch_dir),
+    path("cddir/", views.cd_dir),
 
 ]

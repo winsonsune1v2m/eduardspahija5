@@ -2,6 +2,7 @@ import json
 import re
 import os
 import datetime
+import shutil
 from django.shortcuts import render,HttpResponse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -547,7 +548,7 @@ class FileMG(View):
             hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
 
 
-            tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
+            tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
             n += 1
             for j in hostinfo_obj:
                 host_id = j.id
@@ -586,10 +587,10 @@ class FileMG(View):
                     file_list.append(F[1])
                 else:
                     if F[1] == "..":
-                        dir = "返回"
+                        dir = "dir_reback"
 
                     elif F[1] == ".":
-                        dir = "刷新"
+                        dir = "dir_reply"
 
                     else:
                         dir = F[1]
@@ -597,14 +598,15 @@ class FileMG(View):
                     dir_list.append(dir)
 
         request.session['cur_dir'] = home_dir
+        request.session['cur_host'] = ip
 
         return render(request,'sys_file.html',locals())
 
 
 
 @login_check
-def cd_dir(request,ip,ch_dir):
-
+def ch_dir(request,ip,ch_dir):
+    """点击文件加进行跳转"""
     title = "文件管理"
     role_id = request.session["role_id"]
     hostgroup_obj = asset_db.HostGroup.objects.all()
@@ -615,7 +617,7 @@ def cd_dir(request,ip,ch_dir):
         hostgroup_name = i.host_group_name
         hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
 
-        tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
+        tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
         n += 1
         for j in hostinfo_obj:
             host_id = j.id
@@ -624,7 +626,7 @@ def cd_dir(request,ip,ch_dir):
             tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
 
     znodes_data = json.dumps(tree_info, ensure_ascii=False)
-    
+
 
     if ch_dir == "刷新":
         ch_dir ="."
@@ -648,7 +650,6 @@ def cd_dir(request,ip,ch_dir):
 
     file_list = []
     dir_list = []
-    ip = MTROPS_HOST
 
     data = salt.salt_run_arg(ip, "cmd.run", cmd, runas)
 
@@ -657,6 +658,7 @@ def cd_dir(request,ip,ch_dir):
     cur_dir = result.split("\n")[0]
 
     request.session['cur_dir'] = cur_dir
+    request.session['cur_host'] = ip
 
     for i in result.split("\n")[1:]:
         F = i.split()
@@ -666,10 +668,10 @@ def cd_dir(request,ip,ch_dir):
         else:
 
             if F[1] == "..":
-                dir = "返回"
+                dir = "dir_reback"
 
             elif F[1] == ".":
-                dir = "刷新"
+                dir = "dir_reply"
 
             else:
                 dir = F[1]
@@ -677,3 +679,191 @@ def cd_dir(request,ip,ch_dir):
             dir_list.append(dir)
 
     return render(request, 'sys_file.html', locals())
+
+
+@csrf_exempt
+@login_check
+#@Perms_required
+def cd_dir(request):
+    """直接跳转"""
+    cd_dir = request.POST.get("cd_dir")
+
+    ip = request.POST.get("ip")
+
+    cmd = "cd %s && pwd && ls -al| grep -v total | awk '{print $1,$9}'" % cd_dir
+
+    runas = request.session['remote_user']
+
+    salt_url = SALT_API['url']
+    salt_user = SALT_API['user']
+    salt_passwd = SALT_API['passwd']
+    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+    file_list = []
+    dir_list = []
+
+    data = salt.salt_run_arg(ip, "cmd.run", cmd, runas)
+
+    result = data[ip]
+
+    cur_dir = result.split("\n")[0]
+
+    request.session['cur_dir'] = cur_dir
+    request.session['cur_host'] = ip
+
+    for i in result.split("\n")[1:]:
+        F = i.split()
+        if re.match(r"-", F[0]):
+            file_list.append(F[1])
+
+        else:
+
+            if F[1] == "..":
+                dir = "dir_reback"
+
+            elif F[1] == ".":
+                dir = "dir_reply"
+
+            else:
+                dir = F[1]
+
+            dir_list.append(dir)
+
+    return render(request, "sys_file_list.html", locals())
+
+
+#上传文件
+@csrf_exempt
+@login_check
+#@perms_check
+def Upfile(request):
+    if request.method == "POST":
+
+        path = request.session['cur_dir']
+
+        upfile = request.FILES.get("upfile")
+
+        ip = request.session['cur_host']
+
+        up_file_path = os.path.join(BASE_DIR,'static', 'upload', ip)
+
+        if os.path.exists(up_file_path):
+            pass
+        else:
+            os.makedirs(up_file_path)
+
+        file_path = os.path.join(up_file_path, upfile.name)
+
+
+        src = "salt://"+file_path
+
+        dest = path.rstrip("/")+"/"+upfile.name
+
+
+        if os.path.exists(file_path):
+            date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+            os.rename(file_path, file_path+"_"+date_str)
+        else:
+            pass
+
+        f = open(file_path,'wb')
+
+        for chunk in upfile.chunks():
+            f.write(chunk)
+        f.close()
+
+        runas = request.session['remote_user']
+
+        salt_url = SALT_API['url']
+        salt_user = SALT_API['user']
+        salt_passwd = SALT_API['passwd']
+        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+        result = salt.salt_run_upfile(ip, "cp.get_file", src, dest,runas)
+
+        if result[ip]:
+            msg = "上传成功"
+        else:
+            msg = "上传失败"
+        return HttpResponse(msg)
+    else:
+        return HttpResponse("未知请求")
+
+
+# 下载文件
+@csrf_exempt
+@login_check
+#@perms_check
+def Downfile(request):
+    if request.method == "POST":
+
+        filename = request.POST.get("filename")
+
+
+        path = request.session['cur_dir'] + filename
+
+        ip = request.session['cur_host']
+
+        salt_url = SALT_API['url']
+        salt_user = SALT_API['user']
+        salt_passwd = SALT_API['passwd']
+        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+        result = salt.salt_run_arg(ip, "cp.push", path, runas)
+
+
+        if result[ip]:
+            salt_file_path = "/var/cache/salt/master/minions/%s/files" % ip
+
+            downfile_path = os.path.join(BASE_DIR, 'static', 'download', ip)
+
+            if os.path.exists(downfile_path):
+                pass
+            else:
+                os.makedirs(downfile_path)
+
+
+            salt_file = salt_file_path + path
+
+            save_file = downfile_path + "/" + filename
+
+
+            if os.path.exists(save_file):
+                date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+                os.rename(save_file, save_file + "_" + date_str)
+            else:
+                pass
+
+            shutil.move(salt_file,save_file)
+
+            msg = "http://%s:8080/static/download/%s/%s" % (MTROPS_HOST,ip, filename)
+
+        else:
+            msg = "下载失败，请检查文件是否存在"
+
+        return HttpResponse(msg)
+    else:
+        return HttpResponse("未知请求")
+
+
+
+@csrf_exempt
+@login_check
+#@perms_check
+def Removefile(request):
+    '''文件管理-删除文件'''
+    if request.method == "POST":
+        filename = request.POST.get("filename")
+        path = request.session['cur_dir'] + filename
+        ip = request.session['cur_host']
+        salt_url = SALT_API['url']
+        salt_user = SALT_API['user']
+        salt_passwd = SALT_API['passwd']
+        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+        result = salt.salt_run_arg(ip, "file.remove", path, runas)
+        return HttpResponse(result)
+    else:
+        return HttpResponse("未知请求")
+
+
+
