@@ -606,7 +606,7 @@ class FileMG(View):
 
 @login_check
 def ch_dir(request,ip,ch_dir):
-    """点击文件加进行跳转"""
+    """点击文件夹加进行跳转"""
     title = "文件管理"
     role_id = request.session["role_id"]
     hostgroup_obj = asset_db.HostGroup.objects.all()
@@ -628,9 +628,9 @@ def ch_dir(request,ip,ch_dir):
     znodes_data = json.dumps(tree_info, ensure_ascii=False)
 
 
-    if ch_dir == "刷新":
+    if ch_dir == "dir_reback":
         ch_dir ="."
-    elif ch_dir == "返回":
+    elif ch_dir == "dir_reply":
         ch_dir = ".."
     else:
         ch_dir = ch_dir
