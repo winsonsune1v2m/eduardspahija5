@@ -628,9 +628,9 @@ def ch_dir(request,ip,ch_dir):
     znodes_data = json.dumps(tree_info, ensure_ascii=False)
 
 
-    if ch_dir == "dir_reback":
+    if ch_dir == "dir_reply":
         ch_dir ="."
-    elif ch_dir == "dir_reply":
+    elif ch_dir == "dir_reback":
         ch_dir = ".."
     else:
         ch_dir = ch_dir
