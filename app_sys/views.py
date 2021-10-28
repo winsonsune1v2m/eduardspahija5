@@ -809,6 +809,8 @@ def Downfile(request):
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
+        runas = request.session['remote_user']
+
         result = salt.salt_run_arg(ip, "cp.push", path, runas)
 
 
@@ -856,10 +858,13 @@ def Removefile(request):
         filename = request.POST.get("filename")
         path = request.session['cur_dir'] + filename
         ip = request.session['cur_host']
+
         salt_url = SALT_API['url']
         salt_user = SALT_API['user']
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+        runas = request.session['remote_user']
         result = salt.salt_run_arg(ip, "file.remove", path, runas)
         return HttpResponse(result)
     else:
