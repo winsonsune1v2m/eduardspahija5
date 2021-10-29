@@ -795,57 +795,55 @@ def Upfile(request):
 @login_check
 #@perms_check
 def Downfile(request):
-    if request.method == "POST":
 
-        filename = request.POST.get("filename")
+    filename = request.POST.get("filename")
 
+    path = request.session['cur_dir'] +'/'+ filename
 
-        path = request.session['cur_dir'] + filename
+    ip = request.session['cur_host']
 
-        ip = request.session['cur_host']
+    salt_url = SALT_API['url']
+    salt_user = SALT_API['user']
+    salt_passwd = SALT_API['passwd']
+    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
-        salt_url = SALT_API['url']
-        salt_user = SALT_API['user']
-        salt_passwd = SALT_API['passwd']
-        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+    runas = request.session['remote_user']
 
-        runas = request.session['remote_user']
-
-        result = salt.salt_run_arg(ip, "cp.push", path, runas)
+    result = salt.salt_run_arg(ip, "cp.push", path, runas)
 
 
-        if result[ip]:
-            salt_file_path = "/var/cache/salt/master/minions/%s/files" % ip
+    if result[ip]:
 
-            downfile_path = os.path.join(BASE_DIR, 'static', 'download', ip)
+        salt_file_path = "/var/cache/salt/master/minions/%s/files" % ip
 
-            if os.path.exists(downfile_path):
-                pass
-            else:
-                os.makedirs(downfile_path)
+        downfile_path = os.path.join(BASE_DIR, 'statics', 'download', ip)
 
-
-            salt_file = salt_file_path + path
-
-            save_file = downfile_path + "/" + filename
-
-
-            if os.path.exists(save_file):
-                date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-                os.rename(save_file, save_file + "_" + date_str)
-            else:
-                pass
-
-            shutil.move(salt_file,save_file)
-
-            msg = "http://%s:8080/static/download/%s/%s" % (MTROPS_HOST,ip, filename)
-
+        if os.path.exists(downfile_path):
+            pass
         else:
-            msg = "下载失败，请检查文件是否存在"
+            os.makedirs(downfile_path)
 
-        return HttpResponse(msg)
+
+        salt_file = salt_file_path + path
+
+        save_file = downfile_path + "/" + filename
+
+
+        if os.path.exists(save_file):
+            date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+            os.rename(save_file, save_file + "_" + date_str)
+        else:
+            pass
+
+        #shutil.move(salt_file,save_file)
+
+        msg = "http://%s:8080/static/download/%s/%s" % (MTROPS_HOST,ip, filename)
+
     else:
-        return HttpResponse("未知请求")
+        msg = "下载失败，请检查文件是否存在"
+
+    return HttpResponse(msg)
+
 
 
 
