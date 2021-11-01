@@ -745,7 +745,7 @@ def Upfile(request):
 
         ip = request.session['cur_host']
 
-        up_file_path = os.path.join(BASE_DIR,'static', 'upload', ip)
+        up_file_path = os.path.join(BASE_DIR,'statics', 'upload', ip)
 
         if os.path.exists(up_file_path):
             pass
@@ -807,14 +807,12 @@ def Downfile(request):
     salt_passwd = SALT_API['passwd']
     salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
-    runas = request.session['remote_user']
-
-    result = salt.salt_run_arg(ip, "cp.push", path, runas)
+    result = salt.salt_run_downfile(ip, "cp.push", path)
 
 
     if result[ip]:
 
-        salt_file_path = "/var/cache/salt/master/minions/%s/files" % ip
+        salt_file_path = "/var/cache/salt/master/minions/%s/files%s" % (ip,path)
 
         downfile_path = os.path.join(BASE_DIR, 'statics', 'download', ip)
 
@@ -823,11 +821,7 @@ def Downfile(request):
         else:
             os.makedirs(downfile_path)
 
-
-        salt_file = salt_file_path + path
-
         save_file = downfile_path + "/" + filename
-
 
         if os.path.exists(save_file):
             date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
@@ -835,9 +829,9 @@ def Downfile(request):
         else:
             pass
 
-        #shutil.move(salt_file,save_file)
+        shutil.move(salt_file_path,save_file)
 
-        msg = "http://%s:8080/static/download/%s/%s" % (MTROPS_HOST,ip, filename)
+        msg = "http://%s:8080/static/download/%s/%s" % (MTROPS_HOST,ip,filename)
 
     else:
         msg = "下载失败，请检查文件是否存在"

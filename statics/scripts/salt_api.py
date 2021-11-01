@@ -115,6 +115,22 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
+    def salt_run_downfile(self, tgt, fun, arg):
+        """
+        远程执行模块，有参数
+        :param tgt: "host1,host2"
+        :param fun: 模块
+        :param arg: 参数
+        :return: dict, {'minion1': 'ret', 'minion2': 'ret'}
+        """
+        #添加同名参数
+        params = ([('client', 'local'), ('tgt', tgt),('fun', fun),('arg',arg),('expr_form','list')])
+        obj = urllib.parse.urlencode(params).encode('utf-8')
+
+        self.token_id()
+        content = self.postRequest(obj)
+        ret = content['return'][0]
+        return ret
 
 
 if __name__ == '__main__':

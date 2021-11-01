@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,7 +52,7 @@
           <entry key="html" value="4658" />
           <entry key="js" value="2785" />
           <entry key="md" value="5" />
-          <entry key="py" value="18700" />
+          <entry key="py" value="18713" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -64,7 +63,7 @@
           <entry key="JavaScript" value="2784" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="27" />
-          <entry key="Python" value="18700" />
+          <entry key="Python" value="18713" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -143,11 +142,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_sys/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="799" lean-forward="true" selection-start-line="799" selection-end-line="799" />
+            <state relative-caret-position="414">
+              <caret line="811" column="31" lean-forward="true" selection-start-line="811" selection-start-column="31" selection-end-line="811" selection-end-column="57" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <marker date="1540255411371" expanded="true" signature="18534:18535" ph="..." />
+                <marker date="1540257416681" expanded="true" signature="18534:18535" ph="..." />
               </folding>
             </state>
           </provider>
@@ -361,7 +360,7 @@
       <path value="$PROJECT_DIR$/statics/select2/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="517" />
     <option name="y" value="28" />
     <option name="width" value="1504" />
@@ -1080,11 +1079,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_sys/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="799" lean-forward="true" selection-start-line="799" selection-end-line="799" />
+        <state relative-caret-position="414">
+          <caret line="811" column="31" lean-forward="true" selection-start-line="811" selection-start-column="31" selection-end-line="811" selection-end-column="57" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <marker date="1540255411371" expanded="true" signature="18534:18535" ph="..." />
+            <marker date="1540257416681" expanded="true" signature="18534:18535" ph="..." />
           </folding>
         </state>
       </provider>
