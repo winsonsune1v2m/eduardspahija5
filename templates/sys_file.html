@@ -255,7 +255,7 @@ $('#up-file').click(function(){
     if(upfile){
         formData.append("upfile",upfile);
         $.ajax({
-             url: "/sys/upfile/",
+             url: "/sys/pushfile/",
              type: "POST",
              processData: false,
              contentType: false,

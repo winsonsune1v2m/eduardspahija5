@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_sys/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +52,7 @@
           <entry key="html" value="4658" />
           <entry key="js" value="2785" />
           <entry key="md" value="5" />
-          <entry key="py" value="18713" />
+          <entry key="py" value="18733" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -63,7 +63,7 @@
           <entry key="JavaScript" value="2784" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="27" />
-          <entry key="Python" value="18713" />
+          <entry key="Python" value="18733" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -130,8 +130,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="34" column="21" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
+            <state relative-caret-position="576">
+              <caret line="32" column="18" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="18" />
               <folding>
                 <element signature="e#634#659#0" expanded="true" />
               </folding>
@@ -139,23 +139,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_sys/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="811" column="31" lean-forward="true" selection-start-line="811" selection-start-column="31" selection-end-line="811" selection-end-column="57" />
+            <state relative-caret-position="342">
+              <caret line="226" column="53" lean-forward="true" selection-start-line="226" selection-start-column="4" selection-end-line="226" selection-end-column="53" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <marker date="1540257416681" expanded="true" signature="18534:18535" ph="..." />
+                <marker date="1540257801877" expanded="true" signature="18534:18535" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/sys_file_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2106">
+            <state relative-caret-position="435">
               <caret line="117" column="17" selection-start-line="117" selection-start-column="17" selection-end-line="117" selection-end-column="17" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -204,8 +204,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1908">
-              <caret line="109" column="66" selection-start-line="109" selection-start-column="66" selection-end-line="109" selection-end-column="66" />
+            <state relative-caret-position="435">
+              <caret line="117" column="25" selection-start-line="117" selection-start-column="8" selection-end-line="117" selection-end-column="25" />
               <folding>
                 <element signature="e#69#87#0" expanded="true" />
               </folding>
@@ -329,7 +329,6 @@
         <option value="$PROJECT_DIR$/app_code/views.py" />
         <option value="$PROJECT_DIR$/app_sys/models.py" />
         <option value="$PROJECT_DIR$/statics/js/sys_v2.js" />
-        <option value="$PROJECT_DIR$/statics/scripts/salt_api.py" />
         <option value="$PROJECT_DIR$/statics/scripts/test.py" />
         <option value="$PROJECT_DIR$/app_auth/models.py" />
         <option value="$PROJECT_DIR$/templates/base.html" />
@@ -342,8 +341,9 @@
         <option value="$PROJECT_DIR$/app_auth/views.py" />
         <option value="$PROJECT_DIR$/templates/sys_file_list.html" />
         <option value="$PROJECT_DIR$/templates/sys_file.html" />
-        <option value="$PROJECT_DIR$/app_sys/urls.py" />
+        <option value="$PROJECT_DIR$/statics/scripts/salt_api.py" />
         <option value="$PROJECT_DIR$/app_sys/views.py" />
+        <option value="$PROJECT_DIR$/app_sys/urls.py" />
       </list>
     </option>
   </component>
@@ -653,7 +653,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.1637744" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.12255965" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1014,35 +1014,6 @@
         <state relative-caret-position="-160" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="34" column="21" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
-          <folding>
-            <element signature="e#634#659#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/sys_file_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2106">
-          <caret line="117" column="17" selection-start-line="117" selection-start-column="17" selection-end-line="117" selection-end-column="17" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#a#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#a#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#a#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#a#0;n#div#2;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/sys_file.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4032">
@@ -1069,8 +1040,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1908">
-          <caret line="109" column="66" selection-start-line="109" selection-start-column="66" selection-end-line="109" selection-end-column="66" />
+        <state relative-caret-position="435">
+          <caret line="117" column="25" selection-start-line="117" selection-start-column="8" selection-end-line="117" selection-end-column="25" />
           <folding>
             <element signature="e#69#87#0" expanded="true" />
           </folding>
@@ -1079,11 +1050,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_sys/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="811" column="31" lean-forward="true" selection-start-line="811" selection-start-column="31" selection-end-line="811" selection-end-column="57" />
+        <state relative-caret-position="342">
+          <caret line="226" column="53" lean-forward="true" selection-start-line="226" selection-start-column="4" selection-end-line="226" selection-end-column="53" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <marker date="1540257416681" expanded="true" signature="18534:18535" ph="..." />
+            <marker date="1540257801877" expanded="true" signature="18534:18535" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="32" column="18" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="18" />
+          <folding>
+            <element signature="e#634#659#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/sys_file_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="117" column="17" selection-start-line="117" selection-start-column="17" selection-end-line="117" selection-end-column="17" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#1;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#a#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#1;n#a#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#a#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#1;n#a#0;n#div#2;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

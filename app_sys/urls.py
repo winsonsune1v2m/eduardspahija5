@@ -30,7 +30,7 @@ urlpatterns = [
     path("chdir/<str:ip>/<str:ch_dir>/", views.ch_dir),
     path("cddir/", views.cd_dir),
 
-    path('upfile/', views.Upfile),
+    path('pushfile/', views.Upfile),
     path('downfile/', views.Downfile),
     path('removefile/',views.Removefile),
 
