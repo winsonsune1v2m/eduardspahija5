@@ -7,7 +7,7 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from app_code import models as code_db
-from app_asset import models as asser_db
+from app_asset import models as asset_db
 from app_auth import models as auth_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
@@ -187,7 +187,7 @@ class Publist(View):
 
         role_id = request.session['role_id']
 
-        host_obj = asser_db.Host.objects.filter(role__id=role_id)
+        host_obj = asset_db.Host.objects.filter(role__id=role_id)
 
         gitcode_obj = code_db.GitCode.objects.filter(role__id=role_id)
 
@@ -216,7 +216,7 @@ class Publist(View):
             for ip_id in host_ip_ids:
                 publist_obj = code_db.Publist(gitcode_id=gitcode_name,host_ip_id=ip_id,publist_dir=publist_dir,publist_msg=publist_msg)
                 publist_obj.save()
-                host_obj = asser_db.Host.objects.get(id=ip_id)
+                host_obj = asset_db.Host.objects.get(id=ip_id)
                 host_ip = host_obj.host_ip
                 minions.append(host_ip)
                 gitcode_obj = code_db.GitCode.objects.get(id=gitcode_name)

@@ -106,10 +106,25 @@ class Login(View):
                 lg_obj = remote_user_obj.first()
                 remote_user = lg_obj.lg_user
 
+                remote_sshkey = lg_obj.lg_key
+
+                key = SECRET_KEY[2:18]
+                pc = encryption.prpcrypt(key)
+
+                passwd = lg_obj.lg_passwd.strip("b").strip("'").encode(encoding="utf-8")
+
+                de_passwd = pc.decrypt(passwd).decode()
+
+                remote_passwd = de_passwd
+
             else:
                 remote_user = None
+                remote_passwd = None
+                remote_sshkey = None
 
             request.session['remote_user'] = remote_user
+            request.session['remote_passwd'] = remote_passwd
+            request.session['remote_sshkey'] = remote_sshkey
 
             user.status = "在线"
             user.save()

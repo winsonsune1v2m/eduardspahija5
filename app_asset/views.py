@@ -373,7 +373,6 @@ def host_detail(request):
 
 
 
-
 @csrf_exempt
 @login_check
 @perms_check
@@ -484,6 +483,7 @@ def search_host(request):
 
 
 
+
 @csrf_exempt
 @login_check
 @perms_check
@@ -495,6 +495,8 @@ def del_host(request):
         asset_db.Host.objects.get(id=ids).delete()
 
     return HttpResponse("服务器已删除,请刷新页面")
+
+
 
 
 @csrf_exempt
@@ -511,20 +513,19 @@ def connect_host(request):
 
     redis_obj = redis.Redis(host=REDIS_INFO["host"],port=REDIS_INFO["port"])
 
-    key = SECRET_KEY[2:18]
-    pc = encryption.prpcrypt(key)
+    remote_user = request.session['remote_user']
+    remote_passwd = request.session['remote_passwd']
+    remote_sshkey = request.session['remote_sshkey']
+    if remote_sshkey:
+        pass
+    else:
+        remote_sshkey = "None"
 
-    passwd = host_obj.host_passwd.strip("b").strip("'").encode(encoding="utf-8")
-
-    de_passwd = pc.decrypt(passwd).decode()
-
-    webssh_info = {"username": host_obj.host_user, "publickey": "None", "password":de_passwd , "hostname": host_obj.host_ip, "port":host_obj.host_remove_port}
+    webssh_info = {"username": remote_user, "publickey": remote_sshkey, "password": remote_passwd,"hostname": host_obj.host_ip, "port": host_obj.host_remove_port}
 
     redis_obj.set("webssh_info",json.dumps(webssh_info),ex=5,nx=True)
 
     return HttpResponse("已连接到服务器")
-
-
 
 
 @csrf_exempt

@@ -20,5 +20,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path("webssh/",views.WebSSH.as_view()),
+    path('upfile/', views.Upfile),
+    path('downfile/', views.Downfile),
     path("phpmyadmin/",views.PhpMyadmin.as_view()),
 ]
