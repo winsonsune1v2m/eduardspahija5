@@ -758,7 +758,7 @@ def add_remote_user(request):
         else:
             lg_obj = auth_db.RemoteUser(lg_user=lg_user,lg_passwd = aes_passwd,lg_key = lg_key,user_id=user_id)
             lg_obj.save()
-        return HttpResponse("远程管理用户已设置")
+        return HttpResponse("远程管理用户已设置，重新登录生效！")
 
 
 
