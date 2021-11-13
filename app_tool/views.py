@@ -149,14 +149,9 @@ def Upfile(request):
 @login_check
 #@perms_check
 def Downfile(request):
-
     ip = request.POST.get("ip")
 
-
-    filename = request.POST.get("filename")
-
-    file_path = request.POST.get("path") +'/'+ filename
-
+    file_path = request.POST.get("path")
 
     salt_url = SALT_API['url']
     salt_user = SALT_API['user']

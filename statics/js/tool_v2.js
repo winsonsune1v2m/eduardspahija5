@@ -31,6 +31,7 @@ $(document).ready(function(){
     $('#btn-downfile').click(function(){
 
         var path = $("#down-path").val();
+
         var ip = $("#cur-host").html();
         var formData = new FormData();
 
