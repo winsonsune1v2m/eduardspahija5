@@ -172,7 +172,9 @@ def Downfile(request):
         else:
             os.makedirs(downfile_path)
 
-        save_file = downfile_path + "/" + filename
+        file_name = file_path.split("/")[-1]
+
+        save_file = downfile_path + "/" + file_name
 
         if os.path.exists(save_file):
             date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
@@ -182,7 +184,7 @@ def Downfile(request):
 
         shutil.move(salt_file_path,save_file)
 
-        msg = "http://%s:8080/static/download/%s/%s" % (MTROPS_HOST,ip,filename)
+        msg = "http://%s:8080/static/download/%s/%s" % (MTROPS_HOST,ip,file_name)
 
     else:
         msg = "下载失败，请检查文件是否存在"
