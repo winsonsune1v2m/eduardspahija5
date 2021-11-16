@@ -2,7 +2,7 @@
 $(document).ready(function(){
     $('#btn-upfile').click(function(){
         var path = $("#up-path").val();
-        var ip = $("#cur-host").html();
+        var ip = $("#cur-host").text();
         var formData = new FormData();
         formData.append("path", path);
         formData.append("ip", ip);
@@ -32,7 +32,8 @@ $(document).ready(function(){
 
         var path = $("#down-path").val();
 
-        var ip = $("#cur-host").html();
+        var ip = $("#cur-host").text();
+
         var formData = new FormData();
 
         formData.append("path", path);
