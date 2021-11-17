@@ -16,7 +16,7 @@
   <tbody id="host_table">
 
     {% for host in host_obj %}
-    <tr>
+    <tr name="tbody">
       <td><input id="{{ host.id  }}" type="checkbox" name="ckb"/></td>
       <td>{{ host.host_ip }}</td>
       <td>{{ host.group.host_group_name }}</td>
@@ -69,7 +69,7 @@
 
 
 //前端分页
-var limit = 13; //每页显示数据条数
+var limit = 14; //每页显示数据条数
 var total = $('#host_table').find('tr').length;
 var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
 
@@ -120,11 +120,11 @@ function doPage(n){
         $('#pagination').html(prevPage+pageHtml+nextPage);
     }
 
-    $('#host_table').find('tr').hide();
+    $('#host_table').find('tr[name="tbody"]').hide();
     if(n===1){
-        $('#host_table').find('tr:lt('+ limit +')').show();
+        $('#host_table').find('tr[name="tbody"]:lt('+ limit +')').show();
     }else{
-        $('#host_table').find('tr:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
+        $('#host_table').find('tr[name="tbody"]:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
     }
 
 }

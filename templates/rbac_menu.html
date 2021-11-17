@@ -63,7 +63,7 @@
                       {% for menu in menu_info %}
 
                       {% if menu.menu_type == "一级菜单" %}
-                        <tr style="background-color: #28a4c9;">
+                        <tr style="background-color: #28a4c9;" name="tbody">
 
                           <td><i class="fa fa-list" style="margin-right:20px"></i>{{ menu.menu_title }}</td>
                           <td>{{ menu.menu_type }}</td>
@@ -81,7 +81,7 @@
                           </td>
                         </tr>
                       {% elif  menu.menu_type == "二级菜单" %}
-                        <tr>
+                        <tr name="tbody">
                           <td style="padding-left:30px;"><i class="fa fa-list-ul" style="margin-right:20px"></i>{{ menu.menu_title }}</td>
                           <td>{{ menu.menu_type }}</td>
                           <td>{{ menu.menu_url }}</td>
@@ -99,7 +99,7 @@
                         </tr>
 
                         {% else %}
-                        <tr>
+                        <tr name="tbody">
                           <td style="padding-left:50px;"><i class="fa fa-bars" style="margin-right:20px"></i>{{ menu.menu_title }}</td>
                           <td>{{ menu.menu_type }}</td>
                           <td>{{ menu.menu_url }}</td>

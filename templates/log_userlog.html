@@ -55,18 +55,18 @@
                   </thead>
                   <tbody id="audit_table">
                 {% for i in userlog_list %}
-                        <tr>
-                          <td>{{ i.add_time|date:"Y-m-d H:i:s" }}</td>
-                          <td>{{ i.active }}：{{ i.url_title }}</td>
-                          <td>{{ i.username }}</td>
-                            {% if i.status == "成功" %}
-                          <td style="color:green">{{ i.status }}</td>
-                            {% else %}
-                            <td style="color:red">{{ i.status }}</td>
-                            {% endif %}
+                    <tr name="tbody">
+                      <td>{{ i.add_time|date:"Y-m-d H:i:s" }}</td>
+                      <td>{{ i.active }}：{{ i.url_title }}</td>
+                      <td>{{ i.username }}</td>
+                        {% if i.status == "成功" %}
+                      <td style="color:green">{{ i.status }}</td>
+                        {% else %}
+                        <td style="color:red">{{ i.status }}</td>
+                        {% endif %}
 
-                          </td>
-                        </tr>
+                      </td>
+                    </tr>
                   {% endfor %}
                   </tbody>
                 </table>

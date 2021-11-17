@@ -100,7 +100,7 @@
           <tbody id="netwk_table">
 
             {% for netwk in netwk_obj %}
-            <tr>
+            <tr name="tbody">
               <td><input id="{{ netwk.IP  }}" type="checkbox" name="ckb"/></td>
               <td>{{ netwk.netwk_ip }}</td>
               <td>{{ netwk.group.host_group_name }}</td>

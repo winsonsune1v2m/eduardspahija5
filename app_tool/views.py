@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from app_asset import models as asset_db
 from app_auth.views import login_check,perms_check
-from mtrops_v2.settings import WEBSSH_URL,REDIS_INFO,SALT_API,BASE_DIR,MTROPS_HOST
+from mtrops_v2.settings import WEBSSH_URL,REDIS_INFO,SALT_API,BASE_DIR,MTROPS_HOST,PHPMYADMIN_URL,REDIS_INFO
 from statics.scripts import encryption,salt_api
 from django.db.models import Q
 
@@ -86,8 +86,6 @@ class WebSSH(View):
         return HttpResponse("已连接到服务器")
 
 
-
-
 #上传文件
 @csrf_exempt
 @login_check
@@ -141,7 +139,6 @@ def Upfile(request):
     else:
         msg = "上传失败"
     return HttpResponse(msg)
-
 
 
 # 下载文件
@@ -199,9 +196,42 @@ class PhpMyadmin(View):
     @method_decorator(login_check)
     @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
+
         return super(PhpMyadmin,self).dispatch(request,*args, **kwargs)
 
     def get(self,request):
+        r = redis.Redis(host=REDIS_INFO['host'], port=REDIS_INFO['port'], db=0)
+
         title = "phpMyadmin"
 
+        phpmyadmin_url = PHPMYADMIN_URL
+
+        mysql_host = r.get('mysql_host')
+        mysql_user = r.get('mysql_user')
+        mysql_passwd = r.get('mysql_passwd')
+        mysql_port = r.get('mysql_port')
+
+        if mysql_host:
+            pass
+        else:
+            mysql_host = ""
+            mysql_user = ""
+            mysql_passwd = ""
+            mysql_port = ""
+
         return render(request,'tool_phpmyadmin.html',locals())
+
+    def post(self,request):
+        r = redis.Redis(host=REDIS_INFO['host'], port=REDIS_INFO['port'], db=0)
+        db_ip = request.POST.get("db_ip")
+        db_user = request.POST.get("db_user")
+        db_passwd = request.POST.get("db_passwd")
+        db_port = int(request.POST.get("db_port"))
+
+        r.set('mysql_host', db_ip,ex=10,nx=True)
+        r.set('mysql_user', db_user,ex=10,nx=True)
+        r.set('mysql_passwd', db_passwd,ex=10,nx=True)
+        r.set('mysql_port', db_port,ex=10,nx=True)
+
+
+        return HttpResponse("正在连接phpmyadmin！")

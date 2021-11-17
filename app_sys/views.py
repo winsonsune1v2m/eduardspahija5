@@ -30,16 +30,14 @@ class EnvSofeware(View):
         role_id = request.session["role_id"]
         hostgroup_obj = asset_db.HostGroup.objects.all()
         tree_info = []
-        n = 1
+
         for i in hostgroup_obj:
             hostgroup_id = i.id
             hostgroup_name = i.host_group_name
             hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id)&Q(role__id=role_id))
-            if n == 1:
-                tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
-            else:
-                tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
-            n += 1
+
+            tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
+
             for j in hostinfo_obj:
                 host_id = j.id
                 host_ip = j.host_ip
@@ -128,7 +126,6 @@ def sofeware_install(request):
     f.close()
 
 
-
     salt_url = SALT_API['url']
     salt_user = SALT_API['user']
     salt_passwd = SALT_API['passwd']
@@ -207,9 +204,6 @@ def batch_run_cmd(request):
             data_txt += result_info
     else:
         data_txt = "远程管理用户未设置，无法执行！"
-
-
-
 
     return HttpResponse(data_txt)
 
@@ -331,6 +325,7 @@ def batch_script(request):
         data_txt = "远程管理用户未设置，无法执行！"
 
     return HttpResponse(data_txt)
+
 
 
 class CronView(View):

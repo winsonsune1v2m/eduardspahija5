@@ -54,7 +54,7 @@
                   <tbody>
 
                   {% for perms in perms_obj %}
-                    <tr>
+                    <tr name="tbody">
                       <td>{{ perms.menus.menu_title }}</td>
                         {% if perms.perms_req == "other" %}
                         <td>{{ perms.perms_url }}</td>

@@ -99,7 +99,7 @@
           <tbody id="host_table">
 
             {% for host in host_obj %}
-            <tr>
+            <tr name="tbody">
               <td><input id="{{ host.id  }}" type="checkbox" name="ckb"/></td>
               <td>{{ host.host_ip }}</td>
               <td>{{ host.group.host_group_name }}</td>
