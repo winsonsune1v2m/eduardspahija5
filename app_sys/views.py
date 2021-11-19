@@ -135,7 +135,7 @@ def sofeware_install(request):
 
     script_file = "salt://%s" % script_file
 
-    result = salt.salt_run_arg(hosts, "cmd.script", script_file)
+    salt.salt_run_arg(hosts, "cmd.script", script_file)
 
     data = "服务已部署，请检查！"
 
@@ -332,7 +332,6 @@ class CronView(View):
     """
     计划任务管理
     """
-
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
     @method_decorator(perms_check)
@@ -678,7 +677,6 @@ def ch_dir(request,ip,ch_dir):
 
 @csrf_exempt
 @login_check
-#@Perms_required
 def cd_dir(request):
     """直接跳转"""
     cd_dir = request.POST.get("cd_dir")
@@ -730,7 +728,6 @@ def cd_dir(request):
 #上传文件
 @csrf_exempt
 @login_check
-#@perms_check
 def Upfile(request):
     if request.method == "POST":
 
@@ -788,7 +785,6 @@ def Upfile(request):
 # 下载文件
 @csrf_exempt
 @login_check
-#@perms_check
 def Downfile(request):
 
     filename = request.POST.get("filename")
@@ -838,7 +834,7 @@ def Downfile(request):
 
 @csrf_exempt
 @login_check
-#@perms_check
+@perms_check
 def Removefile(request):
     '''文件管理-删除文件'''
     if request.method == "POST":

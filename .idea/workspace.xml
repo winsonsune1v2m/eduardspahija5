@@ -3,31 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_tool/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_tool/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mtrops_v2/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_group.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_group.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_host.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_host.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_host_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_host_search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_idc.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_idc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_netwk.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_netwk.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_supplier.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_supplier.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/code_gitcode.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_gitcode.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/code_project.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_project.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/code_publist.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_publist.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/code_publist_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_publist_search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/code_wchartlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_wchartlog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/log_opslog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/log_opslog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/log_userlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/log_userlog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/publist_record.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/publist_record.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rbac_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rbac_perms.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_perms.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rbac_role.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_role.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rbac_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_user.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sys_install.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sys_install.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/tool_phpmyadmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tool_phpmyadmin.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +27,7 @@
     <session id="361001133">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="20" />
+          <entry key="project.closed" value="22" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="2" />
@@ -66,8 +43,9 @@
           <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.6" value="3" />
           <entry key="project.open.time.7" value="2" />
+          <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="26" />
+          <entry key="project.opened" value="27" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -96,7 +74,7 @@
           <entry key="html" value="145" />
           <entry key="js" value="40" />
           <entry key="md" value="1" />
-          <entry key="py" value="188" />
+          <entry key="py" value="190" />
           <entry key="txt" value="3" />
         </counts>
       </usages-collector>
@@ -106,7 +84,7 @@
           <entry key="JavaScript" value="40" />
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="188" />
+          <entry key="Python" value="190" />
         </counts>
       </usages-collector>
     </session>
@@ -151,47 +129,7 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/tool_phpmyadmin.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="109" selection-start-line="109" selection-end-line="109" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app_tool/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="234" column="8" selection-start-line="234" selection-start-column="8" selection-end-line="234" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_asset/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="474">
-              <caret line="525" column="56" selection-start-line="525" selection-start-column="56" selection-end-line="525" selection-end-column="68" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="177" column="10" selection-start-line="177" selection-end-line="177" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -319,9 +257,9 @@
         <option value="$PROJECT_DIR$/templates/sys_install.html" />
         <option value="$PROJECT_DIR$/templates/asset_host_search.html" />
         <option value="$PROJECT_DIR$/templates/code_publist_search.html" />
-        <option value="$PROJECT_DIR$/app_sys/views.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
         <option value="$PROJECT_DIR$/app_tool/views.py" />
+        <option value="$PROJECT_DIR$/app_sys/views.py" />
       </list>
     </option>
   </component>
@@ -364,6 +302,16 @@
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
               <item name="app_asset" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="app_code" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="app_log" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
@@ -598,14 +546,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1359275" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1369936" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.07049891" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8976546" weight="0.2624729" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -780,16 +727,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_code/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3492">
-          <caret line="218" column="35" selection-start-line="218" selection-start-column="35" selection-end-line="218" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_tool/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
@@ -819,9 +756,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="22" column="17" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="17" />
-          <folding>
-            <element signature="e#634#659#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -829,9 +763,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="101" column="28" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="28" />
-          <folding>
-            <element signature="n#style#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -951,16 +882,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3150">
           <caret line="257" column="32" selection-start-line="257" selection-start-column="32" selection-end-line="257" selection-end-column="32" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#a#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -975,9 +896,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1188">
           <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#li#0;n#ol#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -985,9 +903,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="954">
           <caret line="80" column="40" selection-start-line="80" selection-start-column="40" selection-end-line="80" selection-end-column="40" />
-          <folding>
-            <element signature="n#style#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -995,17 +910,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="59" column="14" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_sys/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="38" column="12" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <marker date="1540279395793" expanded="true" signature="18351:18352" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1023,34 +927,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="177" column="10" selection-start-line="177" selection-end-line="177" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_asset/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
+        <state relative-caret-position="9144">
           <caret line="525" column="56" selection-start-line="525" selection-start-column="56" selection-end-line="525" selection-end-column="68" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tool_phpmyadmin.html">
+    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
+        <state relative-caret-position="3186">
+          <caret line="177" column="10" selection-start-line="177" selection-end-line="177" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app_tool/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="234" column="8" selection-start-line="234" selection-start-column="8" selection-end-line="234" selection-end-column="8" />
+        <state relative-caret-position="-594">
+          <caret line="144" column="12" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_code/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1090">
+          <caret line="218" column="35" selection-start-line="218" selection-start-column="35" selection-end-line="218" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_sys/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2466">
+          <caret line="137" column="4" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <marker date="1540281851890" expanded="true" signature="18341:18342" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tool_phpmyadmin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
         </state>
       </provider>
     </entry>

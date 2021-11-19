@@ -89,7 +89,6 @@ class WebSSH(View):
 #上传文件
 @csrf_exempt
 @login_check
-#@perms_check
 def Upfile(request):
 
     path = request.POST.get("path")
@@ -144,7 +143,6 @@ def Upfile(request):
 # 下载文件
 @csrf_exempt
 @login_check
-#@perms_check
 def Downfile(request):
     ip = request.POST.get("ip")
 
