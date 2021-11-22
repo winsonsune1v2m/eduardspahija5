@@ -210,7 +210,10 @@ class PhpMyadmin(View):
         mysql_port = r.get('mysql_port')
 
         if mysql_host:
-            pass
+            mysql_host = mysql_host.decode('utf-8')
+            mysql_user = mysql_user.decode('utf-8')
+            mysql_passwd = mysql_passwd.decode('utf-8')
+            mysql_port = mysql_port.decode('utf-8')
         else:
             mysql_host = ""
             mysql_user = ""
@@ -220,11 +223,13 @@ class PhpMyadmin(View):
         return render(request,'tool_phpmyadmin.html',locals())
 
     def post(self,request):
-        r = redis.Redis(host=REDIS_INFO['host'], port=REDIS_INFO['port'], db=0)
+        r = redis.Redis(host=REDIS_INFO['host'], port=REDIS_INFO['port'])
         db_ip = request.POST.get("db_ip")
         db_user = request.POST.get("db_user")
         db_passwd = request.POST.get("db_passwd")
         db_port = int(request.POST.get("db_port"))
+
+        print("post_get",db_ip)
 
         r.set('mysql_host', db_ip,ex=10,nx=True)
         r.set('mysql_user', db_user,ex=10,nx=True)
