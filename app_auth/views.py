@@ -1,7 +1,8 @@
 import datetime
 import json,re
+import redis
 from statics.scripts import encryption
-from mtrops_v2.settings import SECRET_KEY
+from mtrops_v2.settings import SECRET_KEY,DATABASES,REDIS_INFO
 from django.views import View
 from django.shortcuts import render,HttpResponse,redirect
 from app_auth import models as auth_db
@@ -125,6 +126,12 @@ class Login(View):
             request.session['remote_user'] = remote_user
             request.session['remote_passwd'] = remote_passwd
             request.session['remote_sshkey'] = remote_sshkey
+
+            database_info = DATABASES['default']
+
+            r = redis.Redis(host=REDIS_INFO["host"],port=REDIS_INFO['port'])
+
+            r.set("database_info",json.dumps(database_info))
 
             user.status = "在线"
             user.save()

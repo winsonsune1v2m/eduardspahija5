@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_tool/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_tool/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_log/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_log/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mtrops_v2/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,7 +15,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/mtrops_v2$encryption.coverage" NAME="encryption Coverage Results" MODIFIED="1539091706251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
     <SUITE FILE_PATH="coverage/mtrops_v2$git_clone.coverage" NAME="git_clone Coverage Results" MODIFIED="1539846895648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$manage.coverage" NAME="manage Coverage Results" MODIFIED="1540283703557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$manage.coverage" NAME="manage Coverage Results" MODIFIED="1540287761402" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mtrops_v2$tests.coverage" NAME="tests Coverage Results" MODIFIED="1539744996328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_sys" />
     <SUITE FILE_PATH="coverage/mtrops_v2$test.coverage" NAME="test Coverage Results" MODIFIED="1539850047648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
     <SUITE FILE_PATH="coverage/mtrops_v2$salt_api.coverage" NAME="salt_api Coverage Results" MODIFIED="1539767502012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
@@ -54,7 +55,7 @@
           <entry key="html" value="4733" />
           <entry key="js" value="2787" />
           <entry key="md" value="5" />
-          <entry key="py" value="19532" />
+          <entry key="py" value="19721" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -65,25 +66,25 @@
           <entry key="JavaScript" value="2786" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="27" />
-          <entry key="Python" value="19532" />
+          <entry key="Python" value="19721" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="146" />
+          <entry key="html" value="147" />
           <entry key="js" value="40" />
           <entry key="md" value="1" />
-          <entry key="py" value="192" />
+          <entry key="py" value="196" />
           <entry key="txt" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="146" />
+          <entry key="HTML" value="147" />
           <entry key="JavaScript" value="40" />
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="192" />
+          <entry key="Python" value="196" />
         </counts>
       </usages-collector>
     </session>
@@ -130,10 +131,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app_tool/views.py">
+        <entry file="file://$PROJECT_DIR$/app_log/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="215" column="35" selection-start-line="215" selection-start-column="35" selection-end-line="215" selection-end-column="35" />
+            <state relative-caret-position="378">
+              <caret line="21" column="57" selection-start-line="21" selection-start-column="57" selection-end-line="21" selection-end-column="57" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -142,10 +143,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/tool_phpmyadmin.html">
+        <entry file="file://$PROJECT_DIR$/templates/log_opslog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="66" column="121" lean-forward="true" selection-start-line="66" selection-start-column="121" selection-end-line="66" selection-end-column="121" />
+            <state relative-caret-position="252">
+              <caret line="56" column="38" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+              <folding>
+                <element signature="n#style#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#pre#0;n#div#1;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -230,7 +236,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/statics/scripts/get_software_info.py" />
         <option value="$PROJECT_DIR$/statics/scripts/get_host_info.py" />
         <option value="$PROJECT_DIR$/app_asset/urls.py" />
         <option value="$PROJECT_DIR$/statics/js/base.js" />
@@ -252,7 +257,6 @@
         <option value="$PROJECT_DIR$/app_code/views.py" />
         <option value="$PROJECT_DIR$/app_asset/views.py" />
         <option value="$PROJECT_DIR$/app_tool/urls.py" />
-        <option value="$PROJECT_DIR$/app_auth/views.py" />
         <option value="$PROJECT_DIR$/templates/tool_webssh.html" />
         <option value="$PROJECT_DIR$/statics/js/tool_v2.js" />
         <option value="$PROJECT_DIR$/templates/tool_phpmyadmin.html" />
@@ -268,7 +272,6 @@
         <option value="$PROJECT_DIR$/templates/code_project.html" />
         <option value="$PROJECT_DIR$/templates/code_publist.html" />
         <option value="$PROJECT_DIR$/templates/code_wchartlog.html" />
-        <option value="$PROJECT_DIR$/templates/log_opslog.html" />
         <option value="$PROJECT_DIR$/templates/log_userlog.html" />
         <option value="$PROJECT_DIR$/templates/publist_record.html" />
         <option value="$PROJECT_DIR$/templates/rbac_menu.html" />
@@ -278,9 +281,12 @@
         <option value="$PROJECT_DIR$/templates/sys_install.html" />
         <option value="$PROJECT_DIR$/templates/asset_host_search.html" />
         <option value="$PROJECT_DIR$/templates/code_publist_search.html" />
-        <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
         <option value="$PROJECT_DIR$/app_sys/views.py" />
         <option value="$PROJECT_DIR$/app_tool/views.py" />
+        <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
+        <option value="$PROJECT_DIR$/app_auth/views.py" />
+        <option value="$PROJECT_DIR$/templates/log_opslog.html" />
+        <option value="$PROJECT_DIR$/app_log/views.py" />
       </list>
     </option>
   </component>
@@ -322,12 +328,7 @@
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="app_tool" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="app_log" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
@@ -554,7 +555,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.30260304" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.8976546" visible="true" weight="0.4208243" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -617,20 +618,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/statics/scripts/get_host_info.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-666">
-          <caret line="47" column="4" selection-start-line="47" selection-start-column="4" selection-end-line="50" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1332">
-          <caret line="77" selection-start-line="77" selection-end-line="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/statics/js/code_v2.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="937">
@@ -736,17 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_auth/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="760" column="48" selection-start-line="760" selection-start-column="48" selection-end-line="760" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1540265404924" expanded="true" signature="21039:22566" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/statics/js/tool_v2.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -828,13 +804,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
           <caret line="65" column="36" selection-start-line="65" selection-start-column="36" selection-end-line="65" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/log_opslog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="57" selection-start-line="57" selection-end-line="67" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -936,13 +905,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3186">
-          <caret line="177" column="10" selection-start-line="177" selection-end-line="177" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_code/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1090">
@@ -969,8 +931,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_tool/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="215" column="35" selection-start-line="215" selection-start-column="35" selection-end-line="215" selection-end-column="35" />
+        <state relative-caret-position="129">
+          <caret line="217" column="26" selection-start-line="217" selection-start-column="26" selection-end-line="217" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="177" column="49" selection-start-line="177" selection-start-column="45" selection-end-line="177" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_log/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_auth/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="134" selection-start-line="134" selection-end-line="134" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1540284901337" expanded="true" signature="21263:22790" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/log_opslog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="56" column="38" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+          <folding>
+            <element signature="n#style#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#pre#0;n#div#1;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_log/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="57" selection-start-line="21" selection-start-column="57" selection-end-line="21" selection-end-column="57" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

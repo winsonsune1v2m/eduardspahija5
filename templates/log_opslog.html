@@ -62,7 +62,7 @@
                       <td>{{ i.start_time }}</td>
                       <td style="padding-left:15px;">
 
-                        <a href="javascript:;" name="check-audit-log" audit_id="{{ i.audit_id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="查看"><span class="fa fa-file-text fa-lg"></span></a>&nbsp;&nbsp;&nbsp;
+                        <a href="javascript:;" name="check-audit-log" audit_id="{{ i.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="查看"><span class="fa fa-file-text fa-lg"></span></a>&nbsp;&nbsp;&nbsp;
 
                       </td>
                     </tr>
@@ -122,7 +122,7 @@ $(function () {
 
 $("a[name='check-audit-log']").click(function(){
     var audit_id=$(this).attr("audit_id");
-    $.post('/log/auditlog/',{'audit_id':audit_id},function(data){
+    $.post('/log/opslog/',{'audit_id':audit_id},function(data){
         $("#audit-log").empty();
         $("#audit-log").append(data);
         $("#auditModal").modal('show');
