@@ -8,7 +8,7 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from app_code import models as code_db
-from app_asset import models as asser_db
+from app_asset import models as asset_db
 from app_auth import models as auth_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
@@ -188,7 +188,7 @@ class Publist(View):
 
         role_id = request.session['role_id']
 
-        host_obj = asser_db.Host.objects.filter(role__id=role_id)
+        host_obj = asset_db.Host.objects.filter(role__id=role_id)
 
         gitcode_obj = code_db.GitCode.objects.filter(role__id=role_id)
 
@@ -223,7 +223,9 @@ class Publist(View):
                 publist_obj = code_db.Publist(gitcode_id=gitcode_name,host_ip_id=ip_id,publist_dir=publist_dir,publist_msg=publist_msg)
                 publist_obj.save()
 
+
                 host_obj = asser_db.Host.objects.get(id=ip_id)
+
                 host_ip = host_obj.host_ip
                 minions.append(host_ip)
                 gitcode_obj = code_db.GitCode.objects.get(id=gitcode_name)
@@ -441,9 +443,9 @@ def  RollBack(request):
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
         
-        cmd = "salt '%s' cmd.run 'cd %s/%s && git reset %s'   runas='www'"  % (ip,site_path,site_name,rollback_version)
+        cmd = "salt '%s' cmd.run 'cd %s/%s && git reset --hard %s'"  % (ip,site_path,site_name,rollback_version)
         result = salt.salt_run_arg(ip, "cmd.run",cmd)
-        
+        print(result)
 
         if result:
 

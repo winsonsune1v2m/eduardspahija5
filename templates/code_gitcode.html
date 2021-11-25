@@ -58,7 +58,7 @@
                   </thead>
                   <tbody>
                     {% for git in gitcode_obj %}
-                    <tr>
+                    <tr name="tbody">
                       <td>{{ git.git_name }}</td>
                       <td>{{ git.project.project_name }}</td>
                       <td>{{ git.git_msg }}</td>

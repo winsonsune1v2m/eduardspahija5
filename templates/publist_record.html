@@ -62,7 +62,7 @@
                   <tbody>
                 {% for i in record_list %}
                     {% if  i.version_status == '当前版本' %}
-                      <tr style="background-color:#c5f1c5;">
+                      <tr style="background-color:#c5f1c5;" name="tbody">
                           <td>{{ i.site_name }}</td>
                           <td>{{ i.post_ip }}</td>
                           <td>{{ i.current_version }}</td>
@@ -77,7 +77,7 @@
                           </td>
                         </tr>
                     {% else %}
-                        <tr>
+                        <tr name="tbody">
                           <td>{{ i.site_name }}</td>
                           <td>{{ i.post_ip }}</td>
                           <td>{{ i.current_version }}</td>

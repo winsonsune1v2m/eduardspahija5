@@ -44,41 +44,6 @@ $('td a[name="edit-role"]').click(function(){
     });
 });
 
-//修改用户密码
-$("td a[name='ch-passwd']").click(function(){
-    var user_id = $(this).attr('user_id');
-    $("#rbac-new-passwd").val("");
-    $("#rbac-rnew-passwd").val("");
-    $("#rbac-passwdModal").modal('show');
-
-    //修改密码
-    $("#rbac-sub-passwd").click(function(){
-
-       var new_passwd = $("#rbac-new-passwd").val();
-       var rnew_passwd = $("#rbac-rnew-passwd").val();
-
-        if(new_passwd==rnew_passwd){
-
-            $.post("/auth/chpasswd/",{"new_passwd":new_passwd,"user_id":user_id},function(data){
-                if(data=="perms_false"){
-                    $("#msg-alert").empty();
-                    $("#msg-alert").append("权限不足，请联系管理员");
-                    $("#alert").show();
-                }else {
-                    $("#msg-alert").empty();
-                    $("#msg-alert").append(data);
-                    $("#rbac-passwdModal").modal("hide");
-                    $("#alert").show();
-                }
-            });
-
-        }else{
-            alert("两次输入的密码不一致");
-        }
-
-    });
-
-});
 
 
 //修改角色信息
@@ -133,7 +98,7 @@ $("td a[name='del-role']").click(function(){
     }
 });
 
-////////////////////////角色管理////////////////////////////
+////////////////////////用户管理////////////////////////////
 //添加用户
 $("#add-user").click(function(){
     var user_name = $("#user-name").val();
@@ -253,6 +218,92 @@ $("td a[name='del-user']").click(function(){
         });
     }
 });
+
+
+
+
+
+//修改用户密码
+$("td a[name='ch-passwd']").click(function(){
+    var user_id = $(this).attr('user_id');
+    $("#rbac-new-passwd").val("");
+    $("#rbac-rnew-passwd").val("");
+    $("#rbac-passwdModal").modal('show');
+
+    //修改密码
+    $("#rbac-sub-passwd").click(function(){
+
+       var new_passwd = $("#rbac-new-passwd").val();
+       var rnew_passwd = $("#rbac-rnew-passwd").val();
+
+        if(new_passwd==rnew_passwd){
+
+            $.post("/auth/chpasswd/",{"new_passwd":new_passwd,"user_id":user_id},function(data){
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#rbac-passwdModal").modal("hide");
+                    $("#alert").show();
+                }
+            });
+
+        }else{
+            alert("两次输入的密码不一致");
+        }
+    });
+});
+
+
+
+//设置远程管理用户
+$("td a[name='add-remoteuser']").click(function(){
+    var user_id = $(this).attr('user_id');
+    $.post("/auth/addremote/",{"user_id":user_id,'action':'get'},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            var info = eval('(' + data + ')');
+            console.log(info.lg_user);
+            $("#lg-user").val(info.lg_user);
+            $("#lg-passwd").val(info.lg_passwd);
+            $("#lg-key").val(info.lg_key);
+            $("#sub-remote").attr('lg_id', info.lg_id);
+            $("#sub-remote").attr('user_id', user_id);
+            $("#rbac-remoteModal").modal('show');
+
+        }
+    });
+});
+
+
+//设置远程用户
+$("#sub-remote").click(function(){
+   var user_id = $(this).attr('user_id');
+   var lg_id = $(this).attr('lg_id');
+   var lg_user = $("#lg-user").val();
+   var lg_passwd = $("#lg-passwd").val();
+   var lg_key = $("#lg-key").val();
+    $.post("/auth/addremote/",{"lg_id":lg_id,'user_id':user_id,"lg_user":lg_user,"lg_passwd":lg_passwd,"lg_key":lg_key},function(data){
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#rbac-remoteModal").modal("hide");
+            $("#alert").show();
+        }
+    });
+
+});
+
 
 
 ////////////////////////菜单管理////////////////////////////

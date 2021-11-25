@@ -173,7 +173,7 @@
                               <span class="input-group-addon"  style="color:green">用户</span>
                                 <select  class="form-control"  id="remote-user">
                                     {% for user in remote_user_list %}
-                                    <option value="{{ user }}">{{ user }}</option>
+                                    <option value="{{ user.lg_user }}">{{ user.lg_user }}</option>
                                     {% endfor %}
                                 </select>
                             </div>

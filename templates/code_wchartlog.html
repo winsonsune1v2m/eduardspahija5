@@ -63,7 +63,7 @@
                   </thead>
                   <tbody id="uplog_table">
                     {% for i in wchartlog_obj %}
-                    <tr>
+                    <tr name="tbody">
                       <td>{{ i.site_name }}</td>
                       <td>{{ i.from_user }}</td>
                       <td ><div style="max-width:120px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" name="up-connect">{{ i.up_connect }}</div></td>

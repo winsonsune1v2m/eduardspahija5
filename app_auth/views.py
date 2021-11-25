@@ -1,7 +1,8 @@
 import datetime
 import json,re
+import redis
 from statics.scripts import encryption
-from mtrops_v2.settings import SECRET_KEY
+from mtrops_v2.settings import SECRET_KEY,DATABASES,REDIS_INFO
 from django.views import View
 from django.shortcuts import render,HttpResponse,redirect
 from app_auth import models as auth_db
@@ -99,6 +100,38 @@ class Login(View):
             request.session['role_id'] = role_id
             request.session['menu_all_list'] = menus_list(username)
             request.session['perms_all_list'] = perms_list(role_id)
+
+
+            remote_user_obj = user.remoteuser_set.all()
+            if remote_user_obj:
+                lg_obj = remote_user_obj.first()
+                remote_user = lg_obj.lg_user
+
+                remote_sshkey = lg_obj.lg_key
+
+                key = SECRET_KEY[2:18]
+                pc = encryption.prpcrypt(key)
+
+                passwd = lg_obj.lg_passwd.strip("b").strip("'").encode(encoding="utf-8")
+
+                de_passwd = pc.decrypt(passwd).decode()
+
+                remote_passwd = de_passwd
+
+            else:
+                remote_user = None
+                remote_passwd = None
+                remote_sshkey = None
+
+            request.session['remote_user'] = remote_user
+            request.session['remote_passwd'] = remote_passwd
+            request.session['remote_sshkey'] = remote_sshkey
+
+            database_info = DATABASES['default']
+
+            r = redis.Redis(host=REDIS_INFO["host"],port=REDIS_INFO['port'])
+
+            r.set("database_info",json.dumps(database_info))
 
             user.status = "在线"
             user.save()
@@ -383,7 +416,6 @@ def add_role_perms(request):
 def get_role_asset(request):
     """获取资产"""
     role_id = request.POST.get("role_id")
-
     role_obj = auth_db.Role.objects.get(id=role_id)
 
     # 获取用户拥有的权限
@@ -520,8 +552,6 @@ def add_role_project(request):
             code_id = i.split("#")[-1]
             code_obj = code_db.GitCode.objects.get(id=code_id)
             role_obj.project.add(code_obj)
-
-
 
     data = "授权已更新，重新登录即生效！"
     return HttpResponse(data)
@@ -663,7 +693,7 @@ class UserMG(View):
 
 @csrf_exempt
 @login_check
-#@perms_check
+@perms_check
 def change_passwd(request):
     """修改用户密码"""
     new_passwd = request.POST.get("new_passwd")
@@ -690,6 +720,53 @@ def change_passwd(request):
     data = "密码已修改,请重新登录！"
 
     return HttpResponse(data)
+
+@csrf_exempt
+@login_check
+@perms_check
+def add_remote_user(request):
+    user_id = request.POST.get("user_id")
+    action = request.POST.get("action")
+    if action == "get":
+        user_obj = auth_db.User.objects.get(id=user_id)
+        remote_user_obj = user_obj.remoteuser_set.all()
+        lg_obj = remote_user_obj.first()
+        if lg_obj:
+
+            # 密码解密
+            key = SECRET_KEY[2:18]
+            pc = encryption.prpcrypt(key)
+            passwd = lg_obj.lg_passwd.strip("b").strip("'").encode(encoding="utf-8")
+            de_passwd = pc.decrypt(passwd).decode()
+
+            lg_info = json.dumps({"lg_user":lg_obj.lg_user,"lg_passwd":de_passwd,"lg_key":lg_obj.lg_key,'lg_id':lg_obj.id})
+
+        else:
+            lg_info = json.dumps({"lg_user":None,"lg_passwd":None,"lg_key":None})
+
+        return HttpResponse(lg_info)
+    else:
+        lg_id = request.POST.get("lg_id")
+        lg_user = request.POST.get("lg_user")
+        lg_passwd = request.POST.get("lg_passwd")
+        lg_key = request.POST.get("lg_key")
+
+        # 加密密码
+        key = SECRET_KEY[2:18]
+        pc = encryption.prpcrypt(key)  # 初始化密钥
+        aes_passwd = pc.encrypt(lg_passwd)
+
+        if lg_id:
+            lg_obj = auth_db.RemoteUser.objects.get(id=lg_id)
+            lg_obj.lg_user = lg_user
+            lg_obj.lg_passwd = aes_passwd
+            lg_obj.lg_key = lg_key
+            lg_obj.save()
+        else:
+            lg_obj = auth_db.RemoteUser(lg_user=lg_user,lg_passwd = aes_passwd,lg_key = lg_key,user_id=user_id)
+            lg_obj.save()
+        return HttpResponse("远程管理用户已设置，重新登录生效！")
+
 
 
 class MenuMG(View):

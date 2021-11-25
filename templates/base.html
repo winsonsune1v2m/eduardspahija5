@@ -375,7 +375,7 @@
 
 
     //前端分页
-    var limit = 13; //每页显示数据条数
+    var limit = 14; //每页显示数据条数
     var total = $('table').find('tr').length;
     var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
 
@@ -423,11 +423,11 @@
             $('#pagination').html(prevPage+pageHtml+nextPage);
         }
 
-        $('table').find('tr').hide();
+        $('table').find('tr[name="tbody"]').hide();
         if(n===1){
-            $('table').find('tr:lt('+ limit +')').show();
+            $('table').find('tr[name="tbody"]:lt('+ limit +')').show();
         }else{
-            $('table').find('tr:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
+            $('table').find('tr[name="tbody"]:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
         }
 
     }
