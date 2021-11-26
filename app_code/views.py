@@ -312,7 +312,7 @@ class Publist(View):
             cmdform = '-1  --pretty=format:"%H-%an-%ad-%s"'
             cmd = "cd %s && git log %s" % (publist_dir+'/'+git_name,cmdform)
             result1 = salt.salt_run_arg(minions, "cmd.run", cmd)
-            
+            print(result[minions])
             if result:
                 #print(result[minions])
                 log_msg = result[minions]
@@ -347,8 +347,8 @@ class Publist(View):
                 data = "更新失败：salt执行出错"
 
         except Exception as e:
-            data = "更新失败：\n%s" % e
-
+            data = "更新失败：\n%s\n" % e
+            data = data + result[minions]
         return HttpResponse(data)
 
 
@@ -445,25 +445,27 @@ def  RollBack(request):
         
         cmd = "salt '%s' cmd.run 'cd %s/%s && git reset --hard %s'"  % (ip,site_path,site_name,rollback_version)
         result = salt.salt_run_arg(ip, "cmd.run",cmd)
-        print(result)
+        print(result[ip][0])
 
         if result:
+            if result[ip][0] != 'E':
+                current_version = record_obj.current_version
+                version_info = record_obj.version_info
+                author = record_obj.author
+                upcode_date = record_obj.publist_date
 
-            current_version = record_obj.current_version
-            version_info = record_obj.version_info
-            author = record_obj.author
-            upcode_date = record_obj.publist_date
 
+                #同步版本信息
+                post_obj.current_version = current_version
+                post_obj.version_info = version_info
+                post_obj.author = author
+                post_obj.publist_date = upcode_date
 
-            #同步版本信息
-            post_obj.current_version = current_version
-            post_obj.version_info = version_info
-            post_obj.author = author
-            post_obj.publist_date = upcode_date
+                post_obj.save()
 
-            post_obj.save()
-
-            msg = "代码回滚成功！"
+                msg = "代码回滚成功！"
+            else:
+                msg = "代码回滚失败：" + result[ip]
 
 
         else:
