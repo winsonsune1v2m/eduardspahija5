@@ -55,7 +55,7 @@ class SaltAPI(object):
         :return: dict, {'minion1': 'ret', 'minion2': 'ret'}
         """
         run_user = 'runas=%s' % runas
-        params = ([('client', 'local'), ('tgt', tgt), ('fun', fun),('expr_form', 'list'), ('arg', run_user)])
+        params = ([('client', 'local'), ('tgt', tgt), ('fun', fun),('expr_form', 'list'),])
         obj = urllib.parse.urlencode(params).encode('utf-8')
         self.token_id()
         content = self.postRequest(obj)

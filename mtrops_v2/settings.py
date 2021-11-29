@@ -178,7 +178,7 @@ WEBSSH_URL = "http://127.0.0.1:8000/"
 REDIS_INFO = {"host":"127.0.0.1", "port":6379}
 
 #代码运行用户
-CODE_RUNAS = "www"
+CODE_RUNAS = "root"
 
 PHPMYADMIN_URL = "http://192.168.1.126/phpmyadmin/"
 
