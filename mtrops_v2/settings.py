@@ -162,7 +162,7 @@ SERVER_TAG = ['php', 'nginx', 'redis', 'mysql', 'python', 'java','sshd']
 
 #salt api 接口及认证信息
 SALT_API={
-    "url":"http://127.0.0.1:8881",
+    "url":"https://192.168.1.126:8081",
     "user":"saltapi",
     "passwd":"saltapi",
 }
@@ -171,11 +171,11 @@ MTROPS_HOST = "192.168.1.126"
 
 
 #webssh 访问地址
-WEBSSH_URL = "http://127.0.0.1:8000/"
+WEBSSH_URL = "http://192.168.1.126:8000/"
 
 
 #redis 服务信息
-REDIS_INFO = {"host":"127.0.0.1", "port":6379}
+REDIS_INFO = {"host":"192.168.1.126", "port":6379}
 
 #代码运行用户
 CODE_RUNAS = "root"

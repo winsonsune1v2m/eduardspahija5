@@ -224,7 +224,7 @@ class Publist(View):
                 publist_obj.save()
 
 
-                host_obj = asser_db.Host.objects.get(id=ip_id)
+                host_obj = asset_db.Host.objects.get(id=ip_id)
 
                 host_ip = host_obj.host_ip
                 minions.append(host_ip)
@@ -261,7 +261,7 @@ class Publist(View):
             script_file = os.path.join(BASE_DIR,"statics/scripts/git_clone.py")
 
             result = salt.salt_run_script(hosts, "cmd.script",script_file,git_info)
-            print(result)
+
             #publist_obj = code_db.Publist()
             #添加发布记录
             #status = 'done'
@@ -284,14 +284,15 @@ class Publist(View):
         code_db.Publist.objects.get(id=publist_id).delete()
         data = "发布已删除，代码保留在服务器，如需彻底删除，请登陆服务器操作！"
         return HttpResponse(data)
-        
+
+
     def put(self,request):
         '''版本更新'''
         try:
             
             req_info = eval(request.body.decode())
             publist_id = req_info.get("publist_id")
-            #print(publist_id)
+
             publist_obj = code_db.Publist.objects.filter(id=publist_id)
             for i in publist_obj:
                 git_name = i.gitcode.git_name
@@ -305,16 +306,22 @@ class Publist(View):
             salt_user = SALT_API['user']
             salt_passwd = SALT_API['passwd']
             salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
             minions = host_ip
             
             cmd = "cd %s && git stash && git pull origin master" % (publist_dir+'/'+git_name)
+
             result = salt.salt_run_arg(minions, "cmd.run",cmd)
+
             cmdform = '-1  --pretty=format:"%H-%an-%ad-%s"'
+
             cmd = "cd %s && git log %s" % (publist_dir+'/'+git_name,cmdform)
+
             result1 = salt.salt_run_arg(minions, "cmd.run", cmd)
-            print(result[minions])
+
+
             if result:
-                #print(result[minions])
+
                 log_msg = result[minions]
                 log_msg1= result1[minions]
                 log_info = log_msg.split("\n")[3].strip()
@@ -324,20 +331,21 @@ class Publist(View):
                     data = '已经是最新版本,无需更新'
                 else:
                     current_version = log_info.strip()[-7:]
-                    #print(current_version)
+
                     version_info = log_info1[-1]
                     author = log_info1[1]
                     upcode_date = log_info1[2]
                     str_date = upcode_date.strip('+0800').strip()
                     array_date = time.strptime(str_date, "%a %b %d %H:%M:%S %Y")
                     upcode_date = time.strftime('%Y-%m-%d %H:%M:%S', array_date)
-                    #print(upcode_date)
+
                     publist_obj = code_db.Publist.objects.get(id=publist_id)
                     publist_obj.current_version = current_version
                     publist_obj.version_info = version_info
                     publist_obj.author = author
                     publist_obj.publist_date = upcode_date
                     publist_obj.save()
+
                     #添加更新记录
                     record_obj = code_db.PublistRecord(current_version=current_version,version_info=version_info,author=author,publist_date=upcode_date,publist_id=publist_id)
                     record_obj.save()
@@ -350,6 +358,7 @@ class Publist(View):
             data = "更新失败：\n%s\n" % e
             data = data + result[minions]
         return HttpResponse(data)
+
 
 
 
@@ -384,6 +393,9 @@ def search_publist(request):
 
     return render(request, "code_publist_search.html", locals())
 
+
+
+
 @csrf_exempt
 @login_check
 @perms_check
@@ -413,8 +425,8 @@ def git_log(request):
 
         record_list.append({'record_id':i.id,'site_name':site_name,'post_ip':post_ip,'current_version':i.current_version,'version_info':i.version_info,'author':i.author,'upcode_date':upcode_date,'version_status':version_status})
 
-       
     return render(request, "publist_record.html", locals())
+
 
     
 @csrf_exempt
@@ -466,7 +478,6 @@ def  RollBack(request):
                 msg = "代码回滚成功！"
             else:
                 msg = "代码回滚失败：" + result[ip]
-
 
         else:
             msg = "代码回滚失败,salt执行失败\n"

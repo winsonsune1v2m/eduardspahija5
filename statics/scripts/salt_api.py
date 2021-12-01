@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-# author : wangyongcun
 
 import urllib,json
 import urllib.request
@@ -46,7 +43,7 @@ class SaltAPI(object):
         return content
 
 
-    def salt_run(self, tgt, fun,runas='root'):
+    def salt_run(self, tgt, fun):
         """
         远程执行模块，无参数
         :param tgt: "host1,host2"
@@ -54,8 +51,7 @@ class SaltAPI(object):
         :param arg: 参数
         :return: dict, {'minion1': 'ret', 'minion2': 'ret'}
         """
-        run_user = 'runas=%s' % runas
-        params = ([('client', 'local'), ('tgt', tgt), ('fun', fun),('expr_form', 'list'),])
+        params = ([('client', 'local'), ('tgt', tgt), ('fun', fun),('expr_form', 'list')])
         obj = urllib.parse.urlencode(params).encode('utf-8')
         self.token_id()
         content = self.postRequest(obj)
