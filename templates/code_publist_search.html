@@ -38,9 +38,9 @@
           <td>{{ i.author }}</td>
           <td>{{ i.publist_date }}</td>
           <td style="padding-left:5px;">
-            <a href="#" name="publist" style="text-decoration:none;" post_id="{{ i.post_id }}"><span class="fa fa-cloud-download" data-toggle="tooltip" data-placement="top" title="版本更新"></span> </a>&nbsp
-            <a href="/code/recordlog/post_id={{ i.post_id }}" name="publist-log" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="更新记录"><span class="fa fa-list"></span></a>&nbsp
-            <a href="#" name="del-publist" style="text-decoration:none;" post_id="{{ i.post_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa  fa-trash"></span> </a>
+            <a href="javascript:;" name="publist" style="text-decoration:none;" publist_id="{{ i.id }}"><span class="fa fa-cloud-download" data-toggle="tooltip" data-placement="top" title="版本更新"></span> </a>&nbsp
+            <a href="javascript:;" name="publist-log" style="text-decoration:none;" publist_id="{{ i.id }}" data-toggle="tooltip" data-placement="top" title="更新记录"><span class="fa fa-list"></span></a>&nbsp
+            <a href="javascript:;" name="del-publist" style="text-decoration:none;" publist_id="{{ i.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa  fa-trash"></span> </a>
           </td>
         </tr>
         {% endfor %}
@@ -51,7 +51,6 @@
   <ul class="pagination" id="pagination">
   </ul>
 </div>
-
 
 <script>
 
@@ -109,76 +108,56 @@ $('#pagination').on('click', 'li a', function(event) {
 
 
 //更新代码
-$("a[name='upcode']").click(function(){
-
-    var post_id = $(this).attr("post_id");
-    $.post('/code/upcode/',{'post_id':post_id},function(data){
-    if (data == "权限不足"){
-        alert("权限不足，请联系管理员！");
-    }else{
-
-        alert(data);
-        //location.reload();
-        }
-    });
-});
-
-
-
-//删除已发布站点
-$("td a[name='delcode']").click(function(){
-   var post_id = $(this).attr('post_id');
-
-   var statu = confirm("是否确认删除！");
-
+$("td a[name='publist']").click(function(){
+   var publist_id = $(this).attr('publist_id');
+   var statu = confirm("是否确认更新！");
    if (statu==true)
     {
-    $.post("/code/delpost/",{'post_id':post_id},function(data){
-    if (data == "权限不足"){
-            alert("权限不足，请联系管理员！");
-        }else{
+        $.ajax({
+            url: "/code/publist/",
+            type: "PUT",
+            data: JSON.stringify({'publist_id':publist_id}),
+            success: function(data) {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
 
-        if (data == "已删除"){
-
-            location.reload();
-        }
-    }
-    })
-
+             }
+        });
     }
 });
 
 
-//指定更新
-$("a[name='upfile']").click(function(){
-    var post_id = $(this).attr("post_id");
-    $("#file-path").val("");
+//删除代码
+$("td a[name='del-publist']").click(function(){
+   var publist_id = $(this).attr('publist_id');
+   var statu = confirm("是否确认删除！");
+   if (statu==true)
+    {
+        $.ajax({
+            url: "/code/publist/",
+            type: "DELETE",
+            data: JSON.stringify({'publist_id':publist_id}),
+            success: function(data) {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
 
-    $("#sub-upfile").click(function(){
-
-        var file_path = $("#file-path").val();
-
-        if (post_id){
-            if (file_path){
-                $.post('/code/upfile/',{'post_id':post_id,"file_path":file_path},function(data){
-                    if (data == "权限不足"){
-                        alert("权限不足，请联系管理员！");
-                    }else{
-
-                        alert(data);
-                        post_id=undefined;
-                        $("#upfileModal").modal("hide");
-                        }
-                    });
-            }else{
-
-                alert("更新路径不能为空");
-            }
-        }
-
-    })
-
+             }
+        });
+    }
 });
-
 
 </script>

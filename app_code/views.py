@@ -293,14 +293,11 @@ class Publist(View):
             req_info = eval(request.body.decode())
             publist_id = req_info.get("publist_id")
 
-            publist_obj = code_db.Publist.objects.filter(id=publist_id)
-            for i in publist_obj:
-                git_name = i.gitcode.git_name
-                host_ip = i.host_ip.host_ip
-                publist_dir = i.publist_dir
-                
-            
-            git_info = {"git_dir": publist_dir+'/'+git_name,"gitcode_name": git_name,"code_runas": CODE_RUNAS}
+            publist_obj = code_db.Publist.objects.get(id=publist_id)
+
+            git_name = publist_obj.gitcode.git_name
+            host_ip = publist_obj.host_ip.host_ip
+            publist_dir = publist_obj.publist_dir
             
             salt_url = SALT_API['url']
             salt_user = SALT_API['user']
@@ -308,8 +305,11 @@ class Publist(View):
             salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
             minions = host_ip
+
+            code_dir = publist_dir+'/'+git_name
+
             
-            cmd = "cd %s && git stash && git pull origin master" % (publist_dir+'/'+git_name)
+            cmd = "cd %s && git stash && git pull origin master" % code_dir
 
             result = salt.salt_run_arg(minions, "cmd.run",cmd)
 
@@ -319,38 +319,42 @@ class Publist(View):
 
             result1 = salt.salt_run_arg(minions, "cmd.run", cmd)
 
-
             if result:
 
                 log_msg = result[minions]
                 log_msg1= result1[minions]
-                log_info = log_msg.split("\n")[3].strip()
+
                 log_info1 = log_msg1.split('-')
+
+
+
                 
-                if log_info[0] == "A":
+                if re.search("Already up-to-date",log_msg):
                     data = '已经是最新版本,无需更新'
+
                 else:
-                    current_version = log_info.strip()[-7:]
-
-                    version_info = log_info1[-1]
-                    author = log_info1[1]
-                    upcode_date = log_info1[2]
-                    str_date = upcode_date.strip('+0800').strip()
-                    array_date = time.strptime(str_date, "%a %b %d %H:%M:%S %Y")
-                    upcode_date = time.strftime('%Y-%m-%d %H:%M:%S', array_date)
-
-                    publist_obj = code_db.Publist.objects.get(id=publist_id)
-                    publist_obj.current_version = current_version
-                    publist_obj.version_info = version_info
-                    publist_obj.author = author
-                    publist_obj.publist_date = upcode_date
-                    publist_obj.save()
-
-                    #添加更新记录
-                    record_obj = code_db.PublistRecord(current_version=current_version,version_info=version_info,author=author,publist_date=upcode_date,publist_id=publist_id)
-                    record_obj.save()
-
                     data = "代码更新成功"
+
+                current_version = log_info1[0]
+
+                version_info = log_info1[-1]
+                author = log_info1[1]
+                upcode_date = log_info1[2]
+                str_date = upcode_date.strip('+0800').strip()
+                array_date = time.strptime(str_date, "%a %b %d %H:%M:%S %Y")
+                upcode_date = time.strftime('%Y-%m-%d %H:%M:%S', array_date)
+
+                publist_obj = code_db.Publist.objects.get(id=publist_id)
+                publist_obj.current_version = current_version
+                publist_obj.version_info = version_info
+                publist_obj.author = author
+                publist_obj.publist_date = upcode_date
+                publist_obj.save()
+
+                # 添加更新记录
+                record_obj = code_db.PublistRecord(current_version=current_version, version_info=version_info,
+                                                   author=author, publist_date=upcode_date, publist_id=publist_id)
+                record_obj.save()
             else:
                 data = "更新失败：salt执行出错"
 

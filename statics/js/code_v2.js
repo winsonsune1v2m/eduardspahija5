@@ -164,6 +164,7 @@ $('td a[name="edit-git"]').click(function(){
         });
 });
 
+
 //获取修改代码信息
 $('td a[name="edit-git-user"]').click(function(){
     var git_id = $(this).attr("git_id");
@@ -316,6 +317,7 @@ $("td a[name='del-publist']").click(function(){
         });
     }
 });
+
 
 //更新代码
 $("td a[name='publist']").click(function(){
