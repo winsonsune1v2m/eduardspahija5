@@ -35,7 +35,7 @@
           </div>
 
           <span class="group-btn pull-right" style="margin-right:30px;">
-            <a href="/code/postcode/page_id=1/" class="btn btn-success"  style="margin-left:5px" > 返回</a>
+            <a href="/code/publist/" class="btn btn-success"  style="margin-left:5px" > 返回</a>
           </span>
 
       </div>
@@ -93,18 +93,15 @@
                           </td>
                         </tr>
                     {% endif %}
-                
+
                   {% endfor %}
                   </tbody>
                 </table>
-
-                <div style="margin-top:-30px;padding-right:9%">
-                  <ul class="pagination pull-right">
-                    <li><a href="javascript:;">上一页</a></li>
-                    <li><a href="javascript:;">1</a></li>
-                    <li><a href="javascript:;">下一页</a></li>
-                  </ul>
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination"></ul>
                 </div>
+
+
             </div>
 
         </div>
@@ -117,7 +114,7 @@
 
 {% block js %}
 
-    <script type="text/javascript" src="/static/js/code.js"></script>
+    <script type="text/javascript" src="/static/js/code_v2.js"></script>
 
 
 {% endblock %}

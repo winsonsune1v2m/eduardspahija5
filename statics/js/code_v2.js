@@ -346,20 +346,13 @@ $("td a[name='publist']").click(function(){
 });
 
 
-//更新记录
-$("td a[name='publist-log']").click(function(){
-    var publist_id = $(this).attr('publist_id'); 
-	window.location.href = "/code/gitlog?publist_id=" + publist_id;  
-});
-
-
 //回滚代码
 $("td a[name='record_rollback']").click(function(){
    var record_id = $(this).attr('record_id');
    var statu = confirm("是否确认回滚代码！");
    if (statu==true)
     {
-        $.post('/code/RollBack/',{'record_id':record_id},function(data){
+        $.post('/code/rollback/',{'record_id':record_id},function(data){
            
                 if(data=="perms_false"){
                     $("#msg-alert").empty();
@@ -375,6 +368,7 @@ $("td a[name='record_rollback']").click(function(){
         });
     }
 });
+
 
 //通过站点名称查询
 $("#select-code").change(function(){

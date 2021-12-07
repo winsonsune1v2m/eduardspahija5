@@ -325,9 +325,6 @@ class Publist(View):
                 log_msg1= result1[minions]
 
                 log_info1 = log_msg1.split('-')
-
-
-
                 
                 if re.search("Already up-to-date",log_msg):
                     data = '已经是最新版本,无需更新'
@@ -352,9 +349,13 @@ class Publist(View):
                 publist_obj.save()
 
                 # 添加更新记录
-                record_obj = code_db.PublistRecord(current_version=current_version, version_info=version_info,
-                                                   author=author, publist_date=upcode_date, publist_id=publist_id)
-                record_obj.save()
+                try:
+                    record_obj = code_db.PublistRecord(current_version=current_version, version_info=version_info,
+                                                       author=author, publist_date=upcode_date, publist_id=publist_id)
+                    record_obj.save()
+                except Exception as e:
+                    print(e)
+
             else:
                 data = "更新失败：salt执行出错"
 
@@ -362,7 +363,6 @@ class Publist(View):
             data = "更新失败：\n%s\n" % e
             data = data + result[minions]
         return HttpResponse(data)
-
 
 
 
@@ -402,16 +402,13 @@ def search_publist(request):
 
 @csrf_exempt
 @login_check
-@perms_check
-def git_log(request):
+def git_log(request,id):
     '''git更新记录'''
     title = '代码发布'
-    
-    publist_id = request.GET['publist_id']
-    
-    record_info = code_db.PublistRecord.objects.filter(publist_id=publist_id).order_by('-publist_date')
 
-    post_obj = code_db.Publist.objects.get(id=publist_id)
+    record_info = code_db.PublistRecord.objects.filter(publist_id=id).order_by('-publist_date')
+
+    post_obj = code_db.Publist.objects.get(id=id)
 
     current_version = post_obj.current_version
 
@@ -429,7 +426,7 @@ def git_log(request):
 
         record_list.append({'record_id':i.id,'site_name':site_name,'post_ip':post_ip,'current_version':i.current_version,'version_info':i.version_info,'author':i.author,'upcode_date':upcode_date,'version_status':version_status})
 
-    return render(request, "publist_record.html", locals())
+    return render(request, "code_publist_record.html", locals())
 
 
     
@@ -437,59 +434,56 @@ def git_log(request):
 @login_check
 @perms_check
 def  RollBack(request):
-    if request.method == 'POST':
 
-        record_id = request.POST.get('record_id')
+    record_id = request.POST.get('record_id')
 
-        record_obj = code_db.PublistRecord.objects.get(id=record_id)
+    record_obj = code_db.PublistRecord.objects.get(id=record_id)
 
-        rollback_version = record_obj.current_version
+    rollback_version = record_obj.current_version
 
-        post_id = record_obj.publist_id
+    post_id = record_obj.publist_id
 
-        post_obj = code_db.Publist.objects.get(id=post_id)
+    post_obj = code_db.Publist.objects.get(id=post_id)
 
-        site_name = post_obj.gitcode.git_name
-        ip = post_obj.host_ip.host_ip
+    site_name = post_obj.gitcode.git_name
+    ip = post_obj.host_ip.host_ip
 
-        site_path = post_obj.publist_dir
-        
-        salt_url = SALT_API['url']
-        salt_user = SALT_API['user']
-        salt_passwd = SALT_API['passwd']
-        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-        
-        cmd = "salt '%s' cmd.run 'cd %s/%s && git reset --hard %s'"  % (ip,site_path,site_name,rollback_version)
-        result = salt.salt_run_arg(ip, "cmd.run",cmd)
-        print(result[ip][0])
+    site_path = post_obj.publist_dir
 
-        if result:
-            if result[ip][0] != 'E':
-                current_version = record_obj.current_version
-                version_info = record_obj.version_info
-                author = record_obj.author
-                upcode_date = record_obj.publist_date
+    salt_url = SALT_API['url']
+    salt_user = SALT_API['user']
+    salt_passwd = SALT_API['passwd']
+    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+    cmd = "salt '%s' cmd.run 'cd %s/%s && git reset --hard %s'"  % (ip,site_path,site_name,rollback_version)
+    result = salt.salt_run_arg(ip, "cmd.run",cmd)
+    print(result[ip][0])
+
+    if result:
+        if result[ip][0] != 'E':
+            current_version = record_obj.current_version
+            version_info = record_obj.version_info
+            author = record_obj.author
+            upcode_date = record_obj.publist_date
 
 
-                #同步版本信息
-                post_obj.current_version = current_version
-                post_obj.version_info = version_info
-                post_obj.author = author
-                post_obj.publist_date = upcode_date
+            #同步版本信息
+            post_obj.current_version = current_version
+            post_obj.version_info = version_info
+            post_obj.author = author
+            post_obj.publist_date = upcode_date
 
-                post_obj.save()
+            post_obj.save()
 
-                msg = "代码回滚成功！"
-            else:
-                msg = "代码回滚失败：" + result[ip]
-
+            msg = "代码回滚成功！"
         else:
-            msg = "代码回滚失败,salt执行失败\n"
-
-        return HttpResponse(msg)
+            msg = "代码回滚失败：" + result[ip]
 
     else:
-        return HttpResponse("未知请求")    
+        msg = "代码回滚失败,salt执行失败\n"
+
+    return HttpResponse(msg)
+
     
     
 class CodeLog(View):

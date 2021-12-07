@@ -24,7 +24,7 @@ urlpatterns = [
     path("publist/", views.Publist.as_view()),
     path("log/", views.CodeLog.as_view()),
     path("search/", views.search_publist),
-	path("gitlog/", views.git_log),
-	path("RollBack/", views.RollBack),
+	path("gitlog/<int:id>/", views.git_log),
+	path("rollback/", views.RollBack),
 
 ]
