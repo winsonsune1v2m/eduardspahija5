@@ -18,7 +18,7 @@ class OpsLog(View):
 
     def get(self,request):
         title = "操作日志"
-        audit_list = log_db.OpsLog.objects.all()
+        audit_list = log_db.OpsLog.objects.all().order_by("-start_time")
         return render(request,'log_opslog.html',locals())
     def post(self,request):
         audit_id = request.POST.get('audit_id')
