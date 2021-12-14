@@ -1,6 +1,7 @@
 *.pyc
-/.idea
+/.idea/
+/_windows/
 /statics/download/
 /statics/media/
 /statics/upload/
-settings.py
+/mtrops_v2/settings.py
