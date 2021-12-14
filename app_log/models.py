@@ -12,9 +12,9 @@ class OpsLog(models.Model):
         return self.host_ip
 
 class UserLog(models.Model):
-    username = models.CharField(max_length=32)
+    user_name = models.CharField(max_length=32)
+    ready_name = models.CharField(max_length=32)
     url_title = models.CharField(max_length=64)
-    active = models.CharField(max_length=32)
     status = models.CharField(max_length=32)
     create_time = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):

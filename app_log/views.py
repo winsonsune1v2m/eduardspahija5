@@ -38,6 +38,7 @@ class UserLog(View):
 
     def get(self,request):
         title = "用户日志"
+        userlog_list = log_db.UserLog.objects.all().order_by("-create_time")
 
         return render(request,'log_userlog.html',locals())
 

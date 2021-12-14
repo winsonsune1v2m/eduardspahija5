@@ -37,7 +37,7 @@ class User(models.Model):
 class Menus(models.Model):
     """菜单表"""
     menu_title = models.CharField(max_length=64)
-    menu_url = models.CharField(max_length=64,null=True)
+    menu_url = models.CharField(max_length=64,unique=True)
     menu_type = models.CharField(max_length=64)
     pmenu_id = models.CharField(max_length=64,null=True)
     menu_num = models.CharField(max_length=32,null=True)
@@ -51,7 +51,7 @@ class Perms(models.Model):
     """权限表"""
     perms_title = models.CharField(max_length=128)
     perms_req = models.CharField(max_length=64)
-    perms_url = models.CharField(max_length=64, null=True)
+    perms_url = models.CharField(max_length=64, null=True,unique=True)
     menus = models.ForeignKey(to="Menus",on_delete=models.CASCADE)
     def __unicode__(self):
         return  self.Perms

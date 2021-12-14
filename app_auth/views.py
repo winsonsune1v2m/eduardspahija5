@@ -8,6 +8,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from app_auth import models as auth_db
 from app_asset import models as asset_db
 from app_code import models as code_db
+from app_log import models as log_db
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate,login,logout
@@ -54,18 +55,40 @@ def perms_check(func):
     def wrapper(request,*args,**kwargs):
         req_url = request.get_full_path()
 
-        if re.search("\?",str(req_url)):
-            req_url = req_url.split(r"?")[0]
+        req_url = "/".join(req_url.split(r"/")[:3])+"/"
 
         req_method= request.method
+
+
+        try:
+            perms_obj = auth_db.Perms.objects.get(perms_url=req_url)
+            url_title = perms_obj.perms_title
+        except:
+            menu_obj = auth_db.Menus.objects.get(menu_url=req_url)
+            perms_obj = auth_db.Perms.objects.filter(Q(menus_id=menu_obj.id)& Q(perms_req=req_method)).first()
+            url_title = perms_obj.perms_title
+
+
         perms_all_list = request.session['perms_all_list']
+
+
         if req_url in perms_all_list.keys():
             if req_method in perms_all_list[req_url]:
+                log_obj = log_db.UserLog(user_name=request.session['user_name'], ready_name=request.session['username'],
+                                         url_title=url_title, status="成功")
+                log_obj.save()
                 return func(request, *args, **kwargs)
             else:
+                log_obj = log_db.UserLog(user_name=request.session['user_name'], ready_name=request.session['username'],
+                                         url_title=url_title, status="失败")
+                log_obj.save()
                 return HttpResponse("perms_false")
         else:
+            log_obj = log_db.UserLog(user_name=request.session['user_name'], ready_name=request.session['username'], url_title=url_title, status="失败")
+            log_obj.save()
             return HttpResponse("perms_false")
+
+
     return wrapper
 
 
@@ -137,10 +160,16 @@ class Login(View):
             user.save()
 
             next_url = request.GET.get("next")
+
+            log_obj = log_db.UserLog(user_name=user.user_name, ready_name=user.ready_name,url_title="登录", status="成功")
+            log_obj.save()
             if next_url:
                 return redirect(next_url)
             else:
                 return redirect('/')
+
+        log_obj = log_db.UserLog(user_name=user.user_name, ready_name=user.ready_name, url_title="登录",status="失败")
+        log_obj.save()
         return render(request, 'login.html')
 
 
