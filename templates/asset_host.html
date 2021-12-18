@@ -113,16 +113,10 @@
               <td><span class="fa fa-lg fa-times-circle" style="color: #cc1111" data-toggle="tooltip" data-placement="right" title="异常"></span></td>
                 {% endif %}
               <td style="padding-left:5px;">
-
-
                 <a href="javascript:;" name="edit-host" host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil" ></span> </a>&nbsp;&nbsp;&nbsp;
-
-                <a href="javascript:;" name="del-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="删除"><span class="fa fa-trash"></span> </a>&nbsp;&nbsp;&nbsp;
-
                 <a href="/asset/hostdetail/?host_id={{ host.id }}" name="info-host" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;
-
+                <a href="javascript:;" name="del-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="删除"><span class="fa fa-trash"></span> </a>&nbsp;&nbsp;&nbsp;
                 <a href="/tool/webssh/" target="_blank" name="connect-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
-
               </td>
             </tr>
           {% endfor %}
