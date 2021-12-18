@@ -170,8 +170,6 @@ class Login(View):
             else:
                 return redirect('/')
 
-        log_obj = log_db.UserLog(user_name=user.user_name, ready_name=user.ready_name, url_title="登录",status="失败")
-        log_obj.save()
         return render(request, 'login.html')
 
 
