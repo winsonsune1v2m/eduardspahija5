@@ -19,6 +19,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path("role/",views.RoleMG.as_view()),
+
     path("user/",views.UserMG.as_view()),
     path("chpasswd/",views.change_passwd),
     path("addremote/",views.add_remote_user),

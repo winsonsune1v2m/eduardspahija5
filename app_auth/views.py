@@ -50,12 +50,11 @@ def login_check(func):
     return wrapper
 
 
+
 def perms_check(func):
     """权限装饰器"""
     def wrapper(request,*args,**kwargs):
         req_url = request.get_full_path()
-
-        req_url = "/".join(req_url.split(r"/")[:3])+"/"
 
         req_method= request.method
 
@@ -65,9 +64,8 @@ def perms_check(func):
                 url_title = perms_obj.perms_title
             except:
                 menu_obj = auth_db.Menus.objects.get(menu_url=req_url)
-                perms_obj = auth_db.Perms.objects.filter(Q(menus_id=menu_obj.id)& Q(perms_req=req_method)).first()
+                perms_obj = auth_db.Perms.objects.filter(Q(menus_id=menu_obj.id) & Q(perms_req=req_method)).first()
                 url_title = perms_obj.perms_title
-
 
             perms_all_list = request.session['perms_all_list']
 
@@ -87,9 +85,8 @@ def perms_check(func):
                 log_obj = log_db.UserLog(user_name=request.session['user_name'], ready_name=request.session['username'], url_title=url_title, status="失败")
                 log_obj.save()
                 return HttpResponse("perms_false")
-        except:
-            return HttpResponse("权限未添加")
-
+        except Exception as e:
+            return HttpResponse(e)
 
     return wrapper
 

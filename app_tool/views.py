@@ -37,13 +37,15 @@ class WebSSH(View):
             hostgroup_name = i.host_group_name
             hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
 
-            tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
 
-            for j in hostinfo_obj:
-                host_id = j.id
-                host_ip = j.host_ip
-                id = hostgroup_id * 10 + host_id
-                tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
+            if hostinfo_obj:
+                tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
+
+                for j in hostinfo_obj:
+                    host_id = j.id
+                    host_ip = j.host_ip
+                    id = hostgroup_id * 10 + host_id
+                    tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
 
 
         znodes_data = json.dumps(tree_info, ensure_ascii=False)

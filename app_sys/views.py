@@ -24,9 +24,9 @@ class EnvSofeware(View):
     def dispatch(self, request, *args, **kwargs):
         return super(EnvSofeware,self).dispatch(request,*args, **kwargs)
 
+
     def get(self,request):
         title = "环境部署"
-
         role_id = request.session["role_id"]
         hostgroup_obj = asset_db.HostGroup.objects.all()
         tree_info = []
@@ -36,13 +36,14 @@ class EnvSofeware(View):
             hostgroup_name = i.host_group_name
             hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id)&Q(role__id=role_id))
 
-            tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
+            if hostinfo_obj:
+                tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
 
-            for j in hostinfo_obj:
-                host_id = j.id
-                host_ip = j.host_ip
-                id = hostgroup_id * 10 + host_id
-                tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
+                for j in hostinfo_obj:
+                    host_id = j.id
+                    host_ip = j.host_ip
+                    id = hostgroup_id * 10 + host_id
+                    tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
 
 
         znodes_data = json.dumps(tree_info, ensure_ascii=False)
@@ -163,13 +164,15 @@ class Batch(View):
             hostgroup_name = i.host_group_name
             hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
 
-            tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
-            n += 1
-            for j in hostinfo_obj:
-                host_id = j.id
-                host_ip = j.host_ip
-                id = hostgroup_id * 10 + host_id
-                tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
+
+            if hostinfo_obj:
+                tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
+                n += 1
+                for j in hostinfo_obj:
+                    host_id = j.id
+                    host_ip = j.host_ip
+                    id = hostgroup_id * 10 + host_id
+                    tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
 
         znodes_data = json.dumps(tree_info, ensure_ascii=False)
 
@@ -267,8 +270,8 @@ def batch_upload_file(request):
     else:
         data_txt = "远程管理用户未设置，无法执行！"
 
-
     return HttpResponse(data_txt)
+
 
 
 @csrf_exempt
@@ -542,15 +545,15 @@ class FileMG(View):
             hostgroup_id = i.id
             hostgroup_name = i.host_group_name
             hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
+            if hostinfo_obj:
 
-
-            tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
-            n += 1
-            for j in hostinfo_obj:
-                host_id = j.id
-                host_ip = j.host_ip
-                id = hostgroup_id * 10 + host_id
-                tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
+                tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
+                n += 1
+                for j in hostinfo_obj:
+                    host_id = j.id
+                    host_ip = j.host_ip
+                    id = hostgroup_id * 10 + host_id
+                    tree_info.append({"id": id, "pId": hostgroup_id, "name": host_ip})
 
         znodes_data = json.dumps(tree_info, ensure_ascii=False)
 
@@ -831,9 +834,6 @@ def Downfile(request):
 
     return HttpResponse(msg)
 
-
-
-
 @csrf_exempt
 @login_check
 @perms_check
@@ -843,12 +843,10 @@ def Removefile(request):
         filename = request.POST.get("filename")
         path = request.session['cur_dir'] + filename
         ip = request.session['cur_host']
-
         salt_url = SALT_API['url']
         salt_user = SALT_API['user']
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
         runas = request.session['remote_user']
         result = salt.salt_run_arg(ip, "file.remove", path, runas)
         return HttpResponse(result)
