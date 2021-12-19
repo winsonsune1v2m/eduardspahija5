@@ -55,11 +55,9 @@ class WebSSH(View):
         redis_obj = redis.Redis(host=REDIS_INFO["host"],port=REDIS_INFO["port"])
 
         try:
-
             cur_host = json.loads(redis_obj.get('webssh_info'))['hostname']
         except:
             cur_host = "远程管理用户未配置，无法认证！"
-
 
         return render(request,'tool_webssh.html',locals())
 

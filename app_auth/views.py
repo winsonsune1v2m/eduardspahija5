@@ -59,18 +59,24 @@ def perms_check(func):
         req_method= request.method
 
         try:
+
             try:
                 perms_obj = auth_db.Perms.objects.get(perms_url=req_url)
                 url_title = perms_obj.perms_title
             except:
                 menu_obj = auth_db.Menus.objects.get(menu_url=req_url)
-                perms_obj = auth_db.Perms.objects.filter(Q(menus_id=menu_obj.id) & Q(perms_req=req_method)).first()
+
+                req_type = req_method.lower()
+
+                perms_obj = auth_db.Perms.objects.filter(Q(menus_id=menu_obj.id) & Q(perms_req=req_type)).first()
+
                 url_title = perms_obj.perms_title
 
             perms_all_list = request.session['perms_all_list']
 
 
             if req_url in perms_all_list.keys():
+
                 if req_method in perms_all_list[req_url]:
                     log_obj = log_db.UserLog(user_name=request.session['user_name'], ready_name=request.session['username'],
                                              url_title=url_title, status="成功")
@@ -87,6 +93,7 @@ def perms_check(func):
                 return HttpResponse("perms_false")
         except Exception as e:
             return HttpResponse(e)
+
 
     return wrapper
 
