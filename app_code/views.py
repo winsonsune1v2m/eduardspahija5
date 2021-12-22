@@ -212,9 +212,7 @@ class Publist(View):
         publist_ip = request.POST.get("publist_ip")
         publist_dir = request.POST.get("publist_dir")
         publist_msg = request.POST.get("publist_msg")
-        from_user = request.session.get('username')
-       
-      
+
         host_ip_ids = json.loads(publist_ip)
         minions=[]
         try:
@@ -222,10 +220,7 @@ class Publist(View):
                 
                 publist_obj = code_db.Publist(gitcode_id=gitcode_name,host_ip_id=ip_id,publist_dir=publist_dir,publist_msg=publist_msg)
                 publist_obj.save()
-
-
                 host_obj = asset_db.Host.objects.get(id=ip_id)
-
                 host_ip = host_obj.host_ip
                 minions.append(host_ip)
                 gitcode_obj = code_db.GitCode.objects.get(id=gitcode_name)
@@ -255,26 +250,18 @@ class Publist(View):
             salt_user = SALT_API['user']
             salt_passwd = SALT_API['passwd']
             salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
             hosts = ",".join(minions)
 
             script_file = os.path.join(BASE_DIR,"statics/scripts/git_clone.py")
 
-            result = salt.salt_run_script(hosts, "cmd.script",script_file,git_info)
+            salt.salt_run_script(hosts, "cmd.script",script_file,git_info)
 
-            #publist_obj = code_db.Publist()
-            #添加发布记录
-            #status = 'done'
-            #record_obj = code_db.Wchartlog(site_name=gitcode_obj.git_name,from_user=from_user,up_connect=publist_obj.version_info,up_id=publist_ip,status=status,add_time=publist_obj.publist_date)
-            #record_obj.save()
+
+
             data = "添加成功，请刷新查看"
 
         except Exception as e:
             data = "添加失败：\n%s" % e
-            #更新发布记录
-            #status = 'Error'
-            #record_obj = code_db.Wchartlog(site_name=gitcode_obj.git_name,from_user=from_user,up_connect=publist_obj.version_info,up_id=publist_ip,status=status,add_time=publist_obj.publist_date)
-            #record_obj.save()
         return HttpResponse(data)
 
 

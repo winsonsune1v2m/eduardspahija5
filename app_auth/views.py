@@ -211,10 +211,32 @@ class Index(View):
         user_num = 5
 
         # 主机数量
-        host_count = 3
-        host_num = 3
-        site_count = 3
-        site_num = 3
+
+        role_id = request.session['role_id']
+
+        role_obj = auth_db.Role.objects.get(id=role_id)
+
+        host_obj = role_obj.host.all().count()
+        host_count = host_obj
+
+        host_obj = asset_db.Host.objects.filter(role__id=role_id)
+
+        gitcode_obj = code_db.GitCode.objects.filter(role__id=role_id)
+
+        project_obj = code_db.Project.objects.all()
+
+        publist_all_obj = None
+
+        for i in gitcode_obj:
+            publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id)
+            try:
+                publist_all_obj = publist_all_obj | publist_obj
+            except:
+                publist_all_obj = publist_obj
+
+        site_num = publist_all_obj.count()
+
+        user_num = auth_db.User.objects.all().count()
         return  render(request,'base.html',locals())
 
 
