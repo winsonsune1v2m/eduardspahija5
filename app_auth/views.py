@@ -206,36 +206,39 @@ class Index(View):
         d = now.strftime('%d')
         H_M = now.strftime('%H:%M')
 
-        # 用户数量
-        user_count = ""
-        user_num = 5
-
         # 主机数量
 
         role_id = request.session['role_id']
 
+
         role_obj = auth_db.Role.objects.get(id=role_id)
 
-        host_obj = role_obj.host.all().count()
-        host_count = host_obj
 
-        host_obj = asset_db.Host.objects.filter(role__id=role_id)
+        try:
+            host_obj = role_obj.host.all().count()
+            host_count = host_obj
+        except:
+            host_count = 0
 
-        gitcode_obj = code_db.GitCode.objects.filter(role__id=role_id)
+        try:
+            host_obj = asset_db.Host.objects.filter(role__id=role_id)
 
-        project_obj = code_db.Project.objects.all()
+            gitcode_obj = code_db.GitCode.objects.filter(role__id=role_id)
 
-        publist_all_obj = None
+            project_obj = code_db.Project.objects.all()
 
-        for i in gitcode_obj:
-            publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id)
-            try:
-                publist_all_obj = publist_all_obj | publist_obj
-            except:
-                publist_all_obj = publist_obj
+            publist_all_obj = None
 
-        site_num = publist_all_obj.count()
+            for i in gitcode_obj:
+                publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id)
+                try:
+                    publist_all_obj = publist_all_obj | publist_obj
+                except:
+                    publist_all_obj = publist_obj
 
+            site_num = publist_all_obj.count()
+        except:
+            site_num = 0
         user_num = auth_db.User.objects.all().count()
         return  render(request,'base.html',locals())
 
