@@ -313,6 +313,7 @@ INSERT INTO `app_auth_perms` VALUES (85, 'other', 18, '计划任务', '/sys/cron
 INSERT INTO `app_auth_perms` VALUES (86, 'post', 21, '连接phpmyadmin', '');
 INSERT INTO `app_auth_perms` VALUES (87, 'post', 22, '查看审计记录', NULL);
 INSERT INTO `app_auth_perms` VALUES (89, 'put', 15, '更新代码', NULL);
+INSERT INTO `app_auth_perms` VALUES (90, 'other', 8, '导入服务器', '/asset/importhost/');
 
 -- ----------------------------
 -- Table structure for app_auth_remoteuser
