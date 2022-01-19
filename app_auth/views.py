@@ -94,6 +94,11 @@ def perms_check(func):
                 log_obj.save()
                 return HttpResponse("perms_false")
         except Exception as e:
+            s = str(e)
+            s = s.split()[0]
+            if s == "Menus":
+                print(s)
+                e = 'Error: 请求URL权限未添加！'
             return HttpResponse(e)
 
 

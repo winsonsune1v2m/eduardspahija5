@@ -389,10 +389,11 @@ def search_publist(request):
 
 @csrf_exempt
 @login_check
-def git_log(request,id):
+def git_log(request):
     '''git更新记录'''
     title = '代码发布'
-
+    id = request.GET.get('publist_id')
+    
     record_info = code_db.PublistRecord.objects.filter(publist_id=id).order_by('-publist_date')
 
     post_obj = code_db.Publist.objects.get(id=id)
@@ -444,7 +445,7 @@ def  RollBack(request):
 
     cmd = "salt '%s' cmd.run 'cd %s/%s && git reset --hard %s'"  % (ip,site_path,site_name,rollback_version)
     result = salt.salt_run_arg(ip, "cmd.run",cmd)
-    print(result[ip][0])
+    
 
     if result:
         if result[ip][0] != 'E':
