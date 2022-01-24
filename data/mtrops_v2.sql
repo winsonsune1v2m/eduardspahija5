@@ -314,6 +314,7 @@ INSERT INTO `app_auth_perms` VALUES (86, 'post', 21, '连接phpmyadmin', '');
 INSERT INTO `app_auth_perms` VALUES (87, 'post', 22, '查看审计记录', NULL);
 INSERT INTO `app_auth_perms` VALUES (89, 'put', 15, '更新代码', NULL);
 INSERT INTO `app_auth_perms` VALUES (90, 'other', 8, '导入服务器', '/asset/importhost/');
+INSERT INTO `app_auth_perms` VALUES (91, 'other', 15, '代码回滚', '/code/rollback/');
 
 -- ----------------------------
 -- Table structure for app_auth_remoteuser
