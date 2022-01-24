@@ -420,7 +420,7 @@ class CronView(View):
         if Week == '':
             Week = '*'
 
-        cmd = 'echo "%s %s %s %s %s %s" >> /var/spool/cron/%s' % (Minute, Hour, Day, Month, Week, cron_cmd, remote_user)
+        cmd = 'echo "%s %s %s %s %s %s" >> /var/spool/cron/%s && echo "成功"' % (Minute, Hour, Day, Month, Week, cron_cmd, remote_user)
 
         salt_url = SALT_API['url']
         salt_user = SALT_API['user']
@@ -434,6 +434,7 @@ class CronView(View):
 
 
             data = salt.salt_run_arg(hosts, "cmd.run", cmd,runas)
+            
 
             data_txt = ''
 
@@ -441,6 +442,7 @@ class CronView(View):
                 head_txt = '=================== %s ===================\n' % ip
                 result_info = "%sOutput：\n%s\n\r" % (head_txt, data[ip])
                 data_txt += result_info
+        
         else:
             data_txt = "远程管理用户未设置，无法执行！"
 
@@ -498,7 +500,7 @@ class CronView(View):
 
             D = re.sub("&", "\&", C)
 
-            cmd = '''sed -i "s/%s/%s/"  /var/spool/cron/%s''' % (d, D, remote_user)
+            cmd = '''sed -i "s/%s/%s/"  /var/spool/cron/%s && echo "成功"''' % (d, D, remote_user)
 
         f_sed = os.path.join(BASE_DIR, 'statics', 'scripts', 'sed.sh')
         f = open(f_sed, 'w')
@@ -518,8 +520,16 @@ class CronView(View):
 
             data = salt.salt_run_arg(hosts, "cmd.script", script_src,runas)
             result = data[ip]
-
-            data_txt = "执行错误：%s\n\r执行结果：%s" % (result['stderr'], result['stdout'])
+            if result['stderr']:
+                data_txt = "执行失败：%s" % (result['stderr'])
+            else:
+                if result['stdout']:
+                    data_txt = "执行结果：%s" % (result['stdout'])
+                else:
+                    result['stdout'] = "执行成功，但没有反回数据"
+                    data_txt = "执行结果：%s" % (result['stdout'])
+        
+                
         else:
             data_txt = "远程管理用户未设置，无法执行！"
 
