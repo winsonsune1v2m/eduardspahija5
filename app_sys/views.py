@@ -500,7 +500,7 @@ class CronView(View):
 
             D = re.sub("&", "\&", C)
 
-            cmd = '''sed -i "s/%s/%s/"  /var/spool/cron/%s && echo "成功"''' % (d, D, remote_user)
+            cmd = '''sed -i "s/%s/%s/"  /var/spool/cron/%s''' % (d, D, remote_user)
 
         f_sed = os.path.join(BASE_DIR, 'statics', 'scripts', 'sed.sh')
         f = open(f_sed, 'w')
