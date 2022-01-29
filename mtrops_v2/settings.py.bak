@@ -162,12 +162,12 @@ SERVER_TAG = ['php', 'nginx', 'redis', 'mysql', 'python', 'java','sshd']
 
 #salt api 接口及认证信息
 SALT_API={
-    "url":"http://127.0.0.1:8881",
+    "url":"https://127.0.0.1:8881",
     "user":"saltapi",
     "passwd":"saltapi",
 }
 
-MTROPS_HOST = "192.168.1.126"
+MTROPS_HOST = "127.0.0.1"
 
 
 #webssh 访问地址
