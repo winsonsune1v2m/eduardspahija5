@@ -204,6 +204,7 @@ INSERT INTO `app_auth_menus` VALUES (16, '发布记录', '/code/log/', '二级�
 INSERT INTO `app_auth_menus` VALUES (17, '环境部署', '/sys/sofeware/', '二级菜单', '4', '4017', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (18, '批量管理', '/sys/batch/', '二级菜单', '4', '4018', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (19, '文件管理', '/sys/filemg/', '二级菜单', '4', '4019', NULL, NULL);
+INSERT INTO `app_auth_menus` VALUES (20, 'webssh', '/tool/webssh/', '二级菜单', '5', '5020', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (21, 'phpMyadmin', '/tool/phpmyadmin/', '二级菜单', '5', '5021', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (22, '操作日志', '/log/opslog/', '二级菜单', '6', '6022', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (23, '用户日志', '/log/userlog/', '二级菜单', '6', '6023', NULL, NULL);
