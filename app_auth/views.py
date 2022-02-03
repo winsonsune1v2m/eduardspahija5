@@ -55,9 +55,11 @@ def perms_check(func):
     """权限装饰器"""
     def wrapper(request,*args,**kwargs):
         req_url = request.get_full_path()
+        req_url = req_url.split('?')
+        req_url = req_url[0]
 
         req_method= request.method
-
+        
         try:
 
             try:
@@ -92,6 +94,11 @@ def perms_check(func):
                 log_obj.save()
                 return HttpResponse("perms_false")
         except Exception as e:
+            s = str(e)
+            s = s.split()[0]
+            if s == "Menus":
+                print(s)
+                e = 'Error: 请求URL权限未添加！'
             return HttpResponse(e)
 
 

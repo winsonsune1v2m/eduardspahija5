@@ -204,6 +204,7 @@ INSERT INTO `app_auth_menus` VALUES (16, '发布记录', '/code/log/', '二级�
 INSERT INTO `app_auth_menus` VALUES (17, '环境部署', '/sys/sofeware/', '二级菜单', '4', '4017', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (18, '批量管理', '/sys/batch/', '二级菜单', '4', '4018', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (19, '文件管理', '/sys/filemg/', '二级菜单', '4', '4019', NULL, NULL);
+INSERT INTO `app_auth_menus` VALUES (20, 'webssh', '/tool/webssh/', '二级菜单', '5', '5020', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (21, 'phpMyadmin', '/tool/phpmyadmin/', '二级菜单', '5', '5021', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (22, '操作日志', '/log/opslog/', '二级菜单', '6', '6022', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (23, '用户日志', '/log/userlog/', '二级菜单', '6', '6023', NULL, NULL);
@@ -313,6 +314,8 @@ INSERT INTO `app_auth_perms` VALUES (85, 'other', 18, '计划任务', '/sys/cron
 INSERT INTO `app_auth_perms` VALUES (86, 'post', 21, '连接phpmyadmin', '');
 INSERT INTO `app_auth_perms` VALUES (87, 'post', 22, '查看审计记录', NULL);
 INSERT INTO `app_auth_perms` VALUES (89, 'put', 15, '更新代码', NULL);
+INSERT INTO `app_auth_perms` VALUES (90, 'other', 8, '导入服务器', '/asset/importhost/');
+INSERT INTO `app_auth_perms` VALUES (91, 'other', 15, '代码回滚', '/code/rollback/');
 
 -- ----------------------------
 -- Table structure for app_auth_remoteuser
