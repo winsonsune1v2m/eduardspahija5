@@ -105,7 +105,7 @@
                       <td>{{ i.publist_date }}</td>
                       <td style="padding-left:5px;">
                         <a href="javascript:;" name="publist" style="text-decoration:none;" publist_id="{{ i.id }}"><span class="fa fa-cloud-download" data-toggle="tooltip" data-placement="top" title="版本更新"></span> </a>&nbsp
-                        <a href="/code/gitlog/?publist_id={{ i.id }}" name="publist-log" style="text-decoration:none;" publist_id="{{ i.id }}" data-toggle="tooltip" data-placement="top" title="更新记录"><span class="fa fa-list"></span></a>&nbsp
+                        <a href="/code/gitlog/{{ i.id }}/" name="publist-log" style="text-decoration:none;" publist_id="{{ i.id }}" data-toggle="tooltip" data-placement="top" title="更新记录"><span class="fa fa-list"></span></a>&nbsp
                         <a href="javascript:;" name="del-publist" style="text-decoration:none;" publist_id="{{ i.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa  fa-trash"></span> </a>
                       </td>
                     </tr>

@@ -55,8 +55,16 @@ def perms_check(func):
     """权限装饰器"""
     def wrapper(request,*args,**kwargs):
         req_url = request.get_full_path()
-        req_url = req_url.split('?')
-        req_url = req_url[0]
+
+        req_id =re.search("\d+", req_url)
+        if req_id:
+            req_id = req_id.group()
+
+            req_url = req_url.split(req_id)
+
+            req_url = req_url[0]
+        else:
+            req_url = req_url
 
         req_method= request.method
         

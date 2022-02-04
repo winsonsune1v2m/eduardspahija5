@@ -24,7 +24,7 @@ urlpatterns = [
     path("host/", views.Host.as_view()),
     path("netwk/", views.Netwk.as_view()),
     path("supplier/", views.Supplier.as_view()),
-    path("hostdetail/", views.host_detail),
+    path("hostdetail/<int:id>/", views.host_detail),
     path("synchost/", views.sync_host_info),
     path("searchhost/", views.search_host),
     path("delhost/",views.del_host),

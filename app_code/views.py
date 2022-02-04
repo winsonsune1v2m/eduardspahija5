@@ -389,10 +389,10 @@ def search_publist(request):
 
 @csrf_exempt
 @login_check
-def git_log(request):
+@perms_check
+def git_log(request,id):
     '''git更新记录'''
     title = '代码发布'
-    id = request.GET.get('publist_id')
     
     record_info = code_db.PublistRecord.objects.filter(publist_id=id).order_by('-publist_date')
 

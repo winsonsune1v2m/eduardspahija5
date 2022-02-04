@@ -348,18 +348,17 @@ class Host(View):
 
 @login_check
 @perms_check
-def host_detail(request):
+def host_detail(request,id):
     """查看服务器详细信息"""
     title = "服务器"
-    host_id = request.GET.get("host_id")
-    host_obj = asset_db.Host.objects.get(id=host_id)
+    host_obj = asset_db.Host.objects.get(id=id)
     try:
-        host_detail = asset_db.HostDetail.objects.get(host_id=host_id)
+        host_detail = asset_db.HostDetail.objects.get(host_id=id)
 
         disk_info = json.loads(host_detail.disk_info)
         interface = json.loads(host_detail.interface)
 
-        software_obj = asset_db.software.objects.filter(host_id=host_id)
+        software_obj = asset_db.software.objects.filter(host_id=id)
 
         software_list = []
         for i in software_obj:
