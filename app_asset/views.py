@@ -627,15 +627,35 @@ def export_host(request):
     pc = encryption.prpcrypt(key)
  
     for i in host_obj:
-        host_info = [i.host_ip,i.idc.idc_name,i.host_type,i.group.host_group_name,i.host_user,
-                     pc.decrypt(i.host_passwd.strip("b").strip("'").encode(encoding="utf-8")).decode(),i.host_msg,
-                     i.host_remove_port,i.serial_num,i.purchase_date,i.overdue_date,i.supplier.supplier,i.supplier.supplier_head,
-                     i.supplier.supplier_head_phone,i.supplier.supplier_head_email,role_obj1.ready_name,role_obj.role_msg,role_obj1.phone,role_obj1.email]
+
+        if i.group:
+            group_name = i.group.host_group_name
+        else:
+            group_name = ""
+        if i.idc:
+            idc_name = i.idc.idc_name
+        else:
+            idc_name = ""
+        if i.supplier:
+            supplier_head_email = i.supplier.supplier_head_email
+            supplier_head_phone = i.supplier.supplier_head_phone
+            supplier_head = i.supplier.supplier_head
+            supplier = i.supplier.supplier
+        else:
+            supplier_head_email = ""
+            supplier_head_phone = ""
+            supplier_head = ""
+            supplier = ""
+
+        passwd = pc.decrypt(i.host_passwd.strip("b").strip("'").encode(encoding="utf-8")).decode()
+
+        host_info = [i.host_ip,idc_name,i.host_type,group_name,i.host_user,
+                     passwd,i.host_msg,i.host_remove_port,i.serial_num,i.purchase_date,i.overdue_date,supplier,supplier_head,
+                     supplier_head_phone,supplier_head_email,role_obj1.ready_name,role_obj.role_msg,role_obj1.phone,role_obj1.email]
         
         data_list.append(host_info)
   
        
-
 
     def headStyle():
         ft = Font(size=14,name='SimSun')  # color="0F0F0F"字体颜色,italic=False,是否斜体,字体样式,大小,bold=False是否粗体
