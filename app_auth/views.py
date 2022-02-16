@@ -56,20 +56,11 @@ def perms_check(func):
     def wrapper(request,*args,**kwargs):
         req_url = request.get_full_path()
 
-        req_id =re.search("\d+", req_url)
-        if req_id:
-            req_id = req_id.group()
-
-            req_url = req_url.split(req_id)
-
-            req_url = req_url[0]
-        else:
-            req_url = req_url
+        req_url = "/".join(req_url.split("/")[:3]) + "/"
 
         req_method= request.method
         
         try:
-
             try:
                 perms_obj = auth_db.Perms.objects.get(perms_url=req_url)
                 url_title = perms_obj.perms_title
@@ -103,7 +94,9 @@ def perms_check(func):
                 return HttpResponse("perms_false")
         except Exception as e:
             s = str(e)
+            print(s)
             s = s.split()[0]
+
             if s == "Menus":
                 print(s)
                 e = 'Error: 请求URL权限未添加！'

@@ -612,7 +612,6 @@ class FileMG(View):
         return render(request,'sys_file.html',locals())
 
 
-
 @login_check
 def ch_dir(request,ip,ch_dir):
     """点击文件夹加进行跳转"""

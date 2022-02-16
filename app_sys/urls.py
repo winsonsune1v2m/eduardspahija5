@@ -21,7 +21,6 @@ from django.urls import path,include
 urlpatterns = [
     path("sofeware/",views.EnvSofeware.as_view()),
     path("install/", views.sofeware_install),
-
     path("batch/",views.Batch.as_view()),
     path("runcmd/",views.batch_run_cmd),
     path('upfile/',views.batch_upload_file),
@@ -30,7 +29,6 @@ urlpatterns = [
     path("filemg/", views.FileMG.as_view()),
     path("chdir/<str:ip>/<str:ch_dir>/", views.ch_dir),
     path("cddir/", views.cd_dir),
-
     path('pushfile/', views.Upfile),
     path('downfile/', views.Downfile),
     path('removefile/',views.Removefile),
