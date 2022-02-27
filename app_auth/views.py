@@ -100,8 +100,6 @@ def perms_check(func):
                 print(s)
                 e = 'Error: 请求URL权限未添加！'
             return HttpResponse(e)
-
-
     return wrapper
 
 
