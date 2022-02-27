@@ -94,7 +94,6 @@ def perms_check(func):
                 return HttpResponse("perms_false")
         except Exception as e:
             s = str(e)
-            print(s)
             s = s.split()[0]
 
             if s == "Menus":
