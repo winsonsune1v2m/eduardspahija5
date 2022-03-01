@@ -207,7 +207,6 @@ class Publist(View):
 
     def post(self,request):
         '''添加发布'''
-        
         gitcode_name = request.POST.get("gitcode_name")
         publist_ip = request.POST.get("publist_ip")
         publist_dir = request.POST.get("publist_dir")
@@ -239,7 +238,6 @@ class Publist(View):
                     passwd = gitcode_obj.git_passwd.strip("b").strip("'").encode(encoding="utf-8")
                     de_passwd = pc.decrypt(passwd).decode()
                     git_passwd = de_passwd
-
                 else:
                     git_user =None
                     git_passwd = None
@@ -255,8 +253,6 @@ class Publist(View):
             script_file = os.path.join(BASE_DIR,"statics/scripts/git_clone.py")
 
             salt.salt_run_script(hosts, "cmd.script",script_file,git_info)
-
-
 
             data = "添加成功，请刷新查看"
 
@@ -298,13 +294,14 @@ class Publist(View):
             
             cmd = "cd %s && git stash && git pull origin master" % code_dir
 
-            result = salt.salt_run_arg(minions, "cmd.run",cmd)
+
+            result = salt.salt_run_arg(minions, "cmd.run",cmd,CODE_RUNAS)
 
             cmdform = '-1  --pretty=format:"%H-%an-%ad-%s"'
 
             cmd = "cd %s && git log %s" % (publist_dir+'/'+git_name,cmdform)
 
-            result1 = salt.salt_run_arg(minions, "cmd.run", cmd)
+            result1 = salt.salt_run_arg(minions, "cmd.run", cmd,CODE_RUNAS)
 
             if result:
 
@@ -352,7 +349,6 @@ class Publist(View):
         return HttpResponse(data)
 
 
-
 @csrf_exempt
 @login_check
 @perms_check
@@ -383,7 +379,6 @@ def search_publist(request):
         publist_all_obj = code_db.Publist.objects.filter(host_ip_id=host_id)
 
     return render(request, "code_publist_search.html", locals())
-
 
 
 

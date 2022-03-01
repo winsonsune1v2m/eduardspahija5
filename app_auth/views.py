@@ -103,6 +103,7 @@ def perms_check(func):
     return wrapper
 
 
+
 class Login(View):
     """登录认证视图"""
     @method_decorator(csrf_exempt)
@@ -146,20 +147,36 @@ class Login(View):
                 key = SECRET_KEY[2:18]
                 pc = encryption.prpcrypt(key)
 
-                passwd = lg_obj.lg_passwd.strip("b").strip("'").encode(encoding="utf-8")
+                try:
 
-                de_passwd = pc.decrypt(passwd).decode()
+                    passwd = lg_obj.lg_passwd.strip("b").strip("'").encode(encoding="utf-8")
 
-                remote_passwd = de_passwd
+                    de_passwd = pc.decrypt(passwd).decode()
+
+                    remote_passwd = de_passwd
+                except:
+                    remote_passwd = None
+
+                try:
+                    key_passwd = lg_obj.lg_key_pass.strip("b").strip("'").encode(encoding="utf-8")
+
+                    key_de_passwd = pc.decrypt(key_passwd).decode()
+                except:
+                    key_de_passwd = None
+
+                remote_sshkey_pass = key_de_passwd
+
 
             else:
                 remote_user = None
                 remote_passwd = None
                 remote_sshkey = None
+                remote_sshkey_pass = None
 
             request.session['remote_user'] = remote_user
             request.session['remote_passwd'] = remote_passwd
             request.session['remote_sshkey'] = remote_sshkey
+            request.session['remote_sshkey_pass'] = remote_sshkey_pass
 
             database_info = DATABASES['default']
 
@@ -215,9 +232,7 @@ class Index(View):
 
         role_id = request.session['role_id']
 
-
         role_obj = auth_db.Role.objects.get(id=role_id)
-
 
         try:
             host_obj = role_obj.host.all().count()
@@ -788,6 +803,7 @@ def change_passwd(request):
 @login_check
 @perms_check
 def add_remote_user(request):
+    """添加远程管理用户"""
     user_id = request.POST.get("user_id")
     action = request.POST.get("action")
     if action == "get":
@@ -795,17 +811,26 @@ def add_remote_user(request):
         remote_user_obj = user_obj.remoteuser_set.all()
         lg_obj = remote_user_obj.first()
         if lg_obj:
-
             # 密码解密
             key = SECRET_KEY[2:18]
             pc = encryption.prpcrypt(key)
-            passwd = lg_obj.lg_passwd.strip("b").strip("'").encode(encoding="utf-8")
-            de_passwd = pc.decrypt(passwd).decode()
 
-            lg_info = json.dumps({"lg_user":lg_obj.lg_user,"lg_passwd":de_passwd,"lg_key":lg_obj.lg_key,'lg_id':lg_obj.id})
+            try:
+                passwd = lg_obj.lg_passwd.strip("b").strip("'").encode(encoding="utf-8")
+                de_passwd = pc.decrypt(passwd).decode()
+            except:
+                de_passwd = None
+
+            try:
+                key_passwd = lg_obj.lg_key_pass.strip("b").strip("'").encode(encoding="utf-8")
+                key_pass = pc.decrypt(key_passwd).decode()
+            except:
+                key_pass = None
+
+            lg_info = json.dumps({"lg_user":lg_obj.lg_user,"lg_passwd":de_passwd,"lg_key":lg_obj.lg_key,"lg_key_pass":key_pass,'lg_id':lg_obj.id})
 
         else:
-            lg_info = json.dumps({"lg_user":None,"lg_passwd":None,"lg_key":None})
+            lg_info = json.dumps({"lg_user":None,"lg_passwd":None,"lg_key":None,"lg_key_pass":None})
 
         return HttpResponse(lg_info)
     else:
@@ -813,20 +838,23 @@ def add_remote_user(request):
         lg_user = request.POST.get("lg_user")
         lg_passwd = request.POST.get("lg_passwd")
         lg_key = request.POST.get("lg_key")
+        lg_key_pass = request.POST.get("lg_key_pass")
 
         # 加密密码
         key = SECRET_KEY[2:18]
         pc = encryption.prpcrypt(key)  # 初始化密钥
         aes_passwd = pc.encrypt(lg_passwd)
+        key_pass = pc.encrypt(lg_key_pass)
 
         if lg_id:
             lg_obj = auth_db.RemoteUser.objects.get(id=lg_id)
             lg_obj.lg_user = lg_user
             lg_obj.lg_passwd = aes_passwd
             lg_obj.lg_key = lg_key
+            lg_obj.lg_key_pass = key_pass
             lg_obj.save()
         else:
-            lg_obj = auth_db.RemoteUser(lg_user=lg_user,lg_passwd = aes_passwd,lg_key = lg_key,user_id=user_id)
+            lg_obj = auth_db.RemoteUser(lg_user=lg_user,lg_passwd = aes_passwd,lg_key = lg_key,user_id=user_id,lg_key_pass = key_pass)
             lg_obj.save()
         return HttpResponse("远程管理用户已设置，重新登录生效！")
 

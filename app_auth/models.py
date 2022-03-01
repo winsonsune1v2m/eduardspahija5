@@ -61,6 +61,7 @@ class RemoteUser(models.Model):
     lg_user = models.CharField(max_length=64,unique=True)
     lg_passwd = models.CharField(max_length=256,null=True)
     lg_key = models.TextField(null=True)
+    lg_key_pass = models.TextField(null=True)
     user = models.ForeignKey(to="User",on_delete=models.CASCADE)
 
 

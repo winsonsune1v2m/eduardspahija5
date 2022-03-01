@@ -73,18 +73,23 @@ class WebSSH(View):
         remote_user = request.session['remote_user']
         remote_passwd = request.session['remote_passwd']
         remote_sshkey = request.session['remote_sshkey']
+        remote_sshkey_pass = request.session['remote_sshkey_pass']
+
         if remote_sshkey:
-            pass
+            if remote_sshkey_pass:
+                pass
+            else:
+                remote_sshkey_pass = "None"
         else:
             remote_sshkey = "None"
+            remote_sshkey_pass = "None"
 
         webssh_info = {"username": remote_user, "publickey": remote_sshkey, "password": remote_passwd,
-                       "hostname": host_obj.host_ip, "port": host_obj.host_remove_port}
+                       "hostname": host_obj.host_ip,"port": host_obj.host_remove_port, "key_pass": remote_sshkey_pass}
 
         redis_obj.set("webssh_info", json.dumps(webssh_info), ex=5, nx=True)
 
         return HttpResponse("已连接到服务器")
-
 
 #上传文件
 @csrf_exempt

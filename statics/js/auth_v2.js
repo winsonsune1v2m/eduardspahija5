@@ -99,6 +99,7 @@ $("td a[name='del-role']").click(function(){
 });
 
 ////////////////////////用户管理////////////////////////////
+
 //添加用户
 $("#add-user").click(function(){
     var user_name = $("#user-name").val();
@@ -273,6 +274,8 @@ $("td a[name='add-remoteuser']").click(function(){
             $("#lg-user").val(info.lg_user);
             $("#lg-passwd").val(info.lg_passwd);
             $("#lg-key").val(info.lg_key);
+            $("#lg-key-pass").val(info.lg_key_pass);
+
             $("#sub-remote").attr('lg_id', info.lg_id);
             $("#sub-remote").attr('user_id', user_id);
             $("#rbac-remoteModal").modal('show');
@@ -289,7 +292,8 @@ $("#sub-remote").click(function(){
    var lg_user = $("#lg-user").val();
    var lg_passwd = $("#lg-passwd").val();
    var lg_key = $("#lg-key").val();
-    $.post("/auth/addremote/",{"lg_id":lg_id,'user_id':user_id,"lg_user":lg_user,"lg_passwd":lg_passwd,"lg_key":lg_key},function(data){
+   var lg_key_pass = $("#lg-key-pass").val();
+    $.post("/auth/addremote/",{"lg_id":lg_id,'user_id':user_id,"lg_user":lg_user,"lg_passwd":lg_passwd,"lg_key":lg_key,"lg_key_pass":lg_key_pass},function(data){
         if(data=="perms_false"){
             $("#msg-alert").empty();
             $("#msg-alert").append("权限不足，请联系管理员");
