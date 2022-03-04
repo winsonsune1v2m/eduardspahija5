@@ -37,7 +37,7 @@ class Publist(models.Model):
 
 class PublistRecord(models.Model):
     publist = models.ForeignKey(to='Publist',on_delete=models.CASCADE)
-    current_version = models.CharField(max_length=64,unique=True)
+    current_version = models.CharField(max_length=64,null=True)
     version_info = models.CharField(max_length=1024, null=True)
     author = models.CharField(max_length=64, null=True)
     publist_date = models.CharField(max_length=64, null=True)
