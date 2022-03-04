@@ -316,29 +316,29 @@ class Publist(View):
                 else:
                     data = "代码更新成功"
 
-                current_version = log_info1[0]
+                    current_version = log_info1[0]
 
-                version_info = log_info1[-1]
-                author = log_info1[1]
-                upcode_date = log_info1[2]
-                str_date = upcode_date.strip('+0800').strip()
-                array_date = time.strptime(str_date, "%a %b %d %H:%M:%S %Y")
-                upcode_date = time.strftime('%Y-%m-%d %H:%M:%S', array_date)
+                    version_info = log_info1[-1]
+                    author = log_info1[1]
+                    upcode_date = log_info1[2]
+                    str_date = upcode_date.strip('+0800').strip()
+                    array_date = time.strptime(str_date, "%a %b %d %H:%M:%S %Y")
+                    upcode_date = time.strftime('%Y-%m-%d %H:%M:%S', array_date)
 
-                publist_obj = code_db.Publist.objects.get(id=publist_id)
-                publist_obj.current_version = current_version
-                publist_obj.version_info = version_info
-                publist_obj.author = author
-                publist_obj.publist_date = upcode_date
-                publist_obj.save()
+                    publist_obj = code_db.Publist.objects.get(id=publist_id)
+                    publist_obj.current_version = current_version
+                    publist_obj.version_info = version_info
+                    publist_obj.author = author
+                    publist_obj.publist_date = upcode_date
+                    publist_obj.save()
 
-                # 添加更新记录
-                try:
-                    record_obj = code_db.PublistRecord(current_version=current_version, version_info=version_info,
-                                                       author=author, publist_date=upcode_date, publist_id=publist_id)
-                    record_obj.save()
-                except Exception as e:
-                    print(e)
+                    # 添加更新记录
+                    try:
+                        record_obj = code_db.PublistRecord(current_version=current_version, version_info=version_info,
+                                                           author=author, publist_date=upcode_date, publist_id=publist_id)
+                        record_obj.save()
+                    except Exception as e:
+                        print(e)
 
             else:
                 data = "更新失败：salt执行出错"

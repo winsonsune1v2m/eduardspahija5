@@ -27,7 +27,7 @@ class Publist(models.Model):
     host_ip = models.ForeignKey(to=Host,on_delete=models.CASCADE)
     publist_dir = models.CharField(max_length=128)
     publist_msg = models.CharField(max_length=128,null=True)
-    current_version = models.CharField(max_length=64,unique=True,null=True)
+    current_version = models.CharField(max_length=64,null=True)
     version_info = models.CharField(max_length=512,null=True)
     author = models.CharField(max_length=64,null=True)
     publist_date = models.CharField(max_length=64,null=True)
