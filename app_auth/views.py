@@ -103,7 +103,6 @@ def perms_check(func):
     return wrapper
 
 
-
 class Login(View):
     """登录认证视图"""
     @method_decorator(csrf_exempt)
@@ -165,7 +164,6 @@ class Login(View):
                     key_de_passwd = None
 
                 remote_sshkey_pass = key_de_passwd
-
 
             else:
                 remote_user = None
@@ -332,7 +330,6 @@ def get_role_menu(request):
     role_id = request.POST.get("role_id")
     role_obj = auth_db.Role.objects.get(id=role_id)
 
-    # 获取用户拥有的权限
     menu_list = role_obj.menu.all()
     menu_num_list = []
 
@@ -353,7 +350,6 @@ def get_role_menu(request):
     menu_data = json.dumps(nodes)
 
     return HttpResponse(menu_data)
-
 
 
 @csrf_exempt
@@ -379,7 +375,6 @@ def add_role_menu(request):
 
 
 
-
 @csrf_exempt
 @login_check
 @perms_check
@@ -389,7 +384,7 @@ def get_role_perms(request):
 
     role_obj = auth_db.Role.objects.get(id=role_id)
 
-    # 获取用户拥有的权限
+    #获取用户拥有的权限
     perms_list = role_obj.perms.all()
 
     perms_num_list = []
@@ -487,7 +482,6 @@ def add_role_perms(request):
     return HttpResponse(data)
 
 
-
 @csrf_exempt
 @login_check
 @perms_check
@@ -503,7 +497,8 @@ def get_role_asset(request):
     asset_num_list = []
 
     for i in host_list:
-        host_num = "1" + "#" + str(role_id) + "#" + str(i.id)
+
+        host_num = "1" + "#" +str(i.group.id) + "#" + str(role_id) + "#" + str(i.id)
         asset_num_list.append(host_num)
 
     for i in nwtwk_list:
@@ -511,7 +506,6 @@ def get_role_asset(request):
         asset_num_list.append(netwk_num)
 
 
-    host_obj = asset_db.Host.objects.all()
     netwk_obj = asset_db.Netwk.objects.all()
 
     nodes = []
@@ -519,21 +513,35 @@ def get_role_asset(request):
     nodes.append({"id": 1, "pId": 0, "name": "服务器", 'open': True, 'checked': True})
     nodes.append({"id": 2, "pId": 0, "name": "网络设备", 'open': True, 'checked': True})
 
-    for i in host_obj:
-        host_num = "1"+"#"+str(role_id)+"#"+str(i.id)
-        if host_num in asset_num_list:
-            nodes.append({"id": host_num, "pId": 1, "name": i.host_ip, 'open': True, 'checked': True})
-        else:
-            nodes.append({"id": host_num, "pId": 1, "name": i.host_ip, 'open': True})
+    hostgroup_obj = asset_db.HostGroup.objects.all()
+
+
+    for i in hostgroup_obj:
+        hostgroup_id = i.id
+        hostgroup_name = i.host_group_name
+        host_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id))
+
+        if host_obj:
+            nodes.append({"id": hostgroup_id, "pId": 1, "name": hostgroup_name, "open": "True",'checked': True})
+
+            for j in host_obj:
+                host_num = "1" + "#" + str(hostgroup_id) + "#" + str(role_id) + "#" + str(j.id)
+                if host_num in asset_num_list:
+                    nodes.append({"id": host_num, "pId": hostgroup_id, "name": j.host_ip, 'open': True, 'checked': True})
+                else:
+                    nodes.append({"id": host_num, "pId": hostgroup_id, "name": j.host_ip, 'open': True})
 
     for j in netwk_obj:
-        netwk_num = "2"+"#" + str(role_id) +"#"+ str(j.id)
+        netwk_num = "2" + "#" + str(role_id) + "#" + str(j.id)
         if netwk_num in asset_num_list:
             nodes.append({"id": netwk_num, "pId": 2, "name": j.netwk_ip, 'open': True, 'checked': True})
         else:
             nodes.append({"id": netwk_num, "pId": 2, "name": j.netwk_ip, 'open': True})
 
+
     asset_data = json.dumps(nodes)
+
+    print(asset_data)
 
     return HttpResponse(asset_data)
 
@@ -798,6 +806,7 @@ def change_passwd(request):
     data = "密码已修改,请重新登录！"
 
     return HttpResponse(data)
+
 
 @csrf_exempt
 @login_check

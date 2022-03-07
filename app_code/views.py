@@ -339,7 +339,6 @@ class Publist(View):
                         record_obj.save()
                     except Exception as e:
                         print(e)
-
             else:
                 data = "更新失败：salt执行出错"
 

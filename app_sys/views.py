@@ -158,16 +158,15 @@ class Batch(View):
         role_id = request.session["role_id"]
         hostgroup_obj = asset_db.HostGroup.objects.all()
         tree_info = []
-        n = 1
+
         for i in hostgroup_obj:
             hostgroup_id = i.id
             hostgroup_name = i.host_group_name
             hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
 
-
             if hostinfo_obj:
                 tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
-                n += 1
+
                 for j in hostinfo_obj:
                     host_id = j.id
                     host_ip = j.host_ip
