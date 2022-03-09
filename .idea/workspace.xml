@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change afterPath="$PROJECT_DIR$/app_asset/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app_asset/get_cellery.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/log_taskrecord.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_asset/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_asset/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mtrops_v2/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_asset/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_asset/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_log/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_log/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_log/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_log/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_log/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_log/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mtrops_v2/celery.py" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/celery.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mtrops_v2/settings.py.bak" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/scripts/get_host_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/get_host_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/scripts/get_software_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/get_software_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/log_userlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/log_userlog.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,12 +28,13 @@
     <SUITE FILE_PATH="coverage/mtrops_v2$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1540609398438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mtrops_v2" />
     <SUITE FILE_PATH="coverage/mtrops_v2$encryption.coverage" NAME="encryption Coverage Results" MODIFIED="1539091706251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
     <SUITE FILE_PATH="coverage/mtrops_v2$git_clone.coverage" NAME="git_clone Coverage Results" MODIFIED="1539846895648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$manage.coverage" NAME="manage Coverage Results" MODIFIED="1540610267949" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$test.coverage" NAME="test Coverage Results" MODIFIED="1540611601321" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$manage.coverage" NAME="manage Coverage Results" MODIFIED="1540800049517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$test.coverage" NAME="test Coverage Results" MODIFIED="1540784262026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
     <SUITE FILE_PATH="coverage/mtrops_v2$task.coverage" NAME="task Coverage Results" MODIFIED="1540537150816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mtrops_v2$get_host_info.coverage" NAME="get_host_info Coverage Results" MODIFIED="1539762803141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
     <SUITE FILE_PATH="coverage/mtrops_v2$task__1_.coverage" NAME="task (1) Coverage Results" MODIFIED="1540541180102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mtrops_v2$get_software_info.coverage" NAME="get_software_info Coverage Results" MODIFIED="1539747751771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$get_cellery.coverage" NAME="get_cellery Coverage Results" MODIFIED="1540798165106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
     <SUITE FILE_PATH="coverage/mtrops_v2$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1540538855394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mtrops_v2$celery.coverage" NAME="celery Coverage Results" MODIFIED="1540609385366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mtrops_v2" />
     <SUITE FILE_PATH="coverage/mtrops_v2$tests.coverage" NAME="tests Coverage Results" MODIFIED="1540541661852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_code" />
@@ -40,9 +48,9 @@
     <session id="361001133">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="31" />
-          <entry key="project.open.time.0" value="3" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.closed" value="32" />
+          <entry key="project.open.time.0" value="4" />
+          <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.14" value="1" />
@@ -61,7 +69,7 @@
           <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="37" />
+          <entry key="project.opened" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -69,41 +77,41 @@
           <entry key="css" value="17" />
           <entry key="dummy" value="16" />
           <entry key="gitignore" value="12" />
-          <entry key="html" value="4834" />
+          <entry key="html" value="5005" />
           <entry key="js" value="2828" />
           <entry key="md" value="5" />
-          <entry key="py" value="22392" />
+          <entry key="py" value="23362" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="18" />
-          <entry key="HTML" value="4834" />
+          <entry key="HTML" value="5005" />
           <entry key="JavaScript" value="2827" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="39" />
-          <entry key="Python" value="22392" />
+          <entry key="Python" value="23362" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="2" />
-          <entry key="html" value="163" />
+          <entry key="html" value="166" />
           <entry key="js" value="44" />
           <entry key="md" value="1" />
-          <entry key="py" value="280" />
+          <entry key="py" value="296" />
           <entry key="sql" value="1" />
           <entry key="txt" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="163" />
+          <entry key="HTML" value="166" />
           <entry key="JavaScript" value="44" />
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="6" />
-          <entry key="Python" value="280" />
+          <entry key="Python" value="296" />
           <entry key="SQL" value="1" />
         </counts>
       </usages-collector>
@@ -151,78 +159,36 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_asset/views.py">
+        <entry file="file://$PROJECT_DIR$/app_asset/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6840">
-              <caret line="377" column="28" selection-start-line="377" selection-start-column="28" selection-end-line="377" selection-end-column="28" />
+            <state relative-caret-position="175">
+              <caret line="69" column="64" selection-start-line="69" selection-start-column="64" selection-end-line="69" selection-end-column="64" />
+              <folding>
+                <element signature="e#0#56#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_asset/tests.py">
+        <entry file="file://$PROJECT_DIR$/app_asset/get_cellery.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="71" selection-end-column="16" />
+            <state relative-caret-position="72">
+              <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app_asset/test.py">
+        <entry file="file://$PROJECT_DIR$/app_log/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+            <state relative-caret-position="386">
+              <caret line="68" column="38" selection-start-line="68" selection-start-column="38" selection-end-line="68" selection-end-column="38" />
               <folding>
-                <element signature="e#0#61#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_asset/tasks.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="28">
-              <caret line="9" column="18" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#56#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mtrops_v2/celery.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="19" column="55" lean-forward="true" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
-              <folding>
-                <element signature="e#0#56#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mtrops_v2/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="38" selection-start-column="38" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="53" column="15" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
-              <folding>
-                <element signature="e#310#319#0" expanded="true" />
+                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -241,9 +207,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>depend</find>
-      <find>AUTHENTICATION_BACKENDS</find>
-      <find>perms</find>
       <find>clear</find>
       <find>class=&quot;{{ i.menu_icon }}&quot;</find>
       <find>menu</find>
@@ -255,7 +218,6 @@
       <find>re.</find>
       <find>request.POST.get(</find>
       <find>remote_noarg_execution_sigle</find>
-      <find>salt_run</find>
       <find>open</find>
       <find>chunks</find>
       <find>print</find>
@@ -271,6 +233,10 @@
       <find>conn</find>
       <find>lg_passwd</find>
       <find>code</find>
+      <find>salt_run</find>
+      <find>audit</find>
+      <find>taskModal</find>
+      <find>start_time</find>
     </findStrings>
     <replaceStrings>
       <replace>req_info</replace>
@@ -292,6 +258,7 @@
       <replace>info</replace>
       <replace>i[</replace>
       <replace>salt_run_arg</replace>
+      <replace>task</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -308,11 +275,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/asset_supplier.html" />
-        <option value="$PROJECT_DIR$/templates/code_gitcode.html" />
-        <option value="$PROJECT_DIR$/templates/code_project.html" />
-        <option value="$PROJECT_DIR$/templates/code_wchartlog.html" />
-        <option value="$PROJECT_DIR$/templates/publist_record.html" />
         <option value="$PROJECT_DIR$/templates/rbac_menu.html" />
         <option value="$PROJECT_DIR$/templates/rbac_perms.html" />
         <option value="$PROJECT_DIR$/templates/rbac_role.html" />
@@ -322,9 +284,6 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/templates/code_publist_record.html" />
         <option value="$PROJECT_DIR$/statics/js/code_v2.js" />
-        <option value="$PROJECT_DIR$/app_log/models.py" />
-        <option value="$PROJECT_DIR$/app_log/views.py" />
-        <option value="$PROJECT_DIR$/templates/log_userlog.html" />
         <option value="$PROJECT_DIR$/app_auth/urls.py" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/code_publist_search.html" />
@@ -342,8 +301,6 @@
         <option value="$PROJECT_DIR$/app_code/models.py" />
         <option value="$PROJECT_DIR$/app_code/views.py" />
         <option value="$PROJECT_DIR$/app_sys/views.py" />
-        <option value="$PROJECT_DIR$/app_auth/views.py" />
-        <option value="$PROJECT_DIR$/app_asset/views.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/templates/asset_host_search.html" />
         <option value="$PROJECT_DIR$/mtrops_v2/task.py" />
@@ -353,12 +310,22 @@
         <option value="$PROJECT_DIR$/mtrops_v2/tasks.py" />
         <option value="$PROJECT_DIR$/app_code/__init__.py" />
         <option value="$PROJECT_DIR$/app_code/tests.py" />
-        <option value="$PROJECT_DIR$/app_asset/__init__.py" />
-        <option value="$PROJECT_DIR$/mtrops_v2/celery.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/__init__.py" />
+        <option value="$PROJECT_DIR$/app_auth/views.py" />
+        <option value="$PROJECT_DIR$/app_asset/__init__.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
+        <option value="$PROJECT_DIR$/mtrops_v2/celery.py" />
+        <option value="$PROJECT_DIR$/statics/scripts/get_software_info.py" />
         <option value="$PROJECT_DIR$/app_asset/tasks.py" />
         <option value="$PROJECT_DIR$/app_asset/test.py" />
+        <option value="$PROJECT_DIR$/app_asset/views.py" />
+        <option value="$PROJECT_DIR$/app_log/urls.py" />
+        <option value="$PROJECT_DIR$/app_asset/get_cellery.py" />
+        <option value="$PROJECT_DIR$/app_log/models.py" />
+        <option value="$PROJECT_DIR$/templates/log_userlog.html" />
+        <option value="$PROJECT_DIR$/statics/scripts/get_host_info.py" />
+        <option value="$PROJECT_DIR$/templates/log_taskrecord.html" />
+        <option value="$PROJECT_DIR$/app_log/views.py" />
       </list>
     </option>
   </component>
@@ -400,12 +367,12 @@
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="app_asset" type="462c0819:PsiDirectoryNode" />
+              <item name="statics" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
@@ -426,16 +393,16 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Dev\mtrops_v2\templates" />
+      <recent name="E:\Dev\mtrops_v2\mtrops_v2" />
+      <recent name="E:\Dev\mtrops_v2\app_asset" />
+      <recent name="E:\Dev\mtrops_v2\statics\js" />
+      <recent name="E:\Dev\mtrops_v2\statics" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Dev\mtrops_v2\mtrops_v2" />
       <recent name="E:\Dev\mtrops_v2" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Dev\mtrops_v2\app_asset" />
-      <recent name="E:\Dev\mtrops_v2\templates" />
-      <recent name="E:\Dev\mtrops_v2\statics\js" />
-      <recent name="E:\Dev\mtrops_v2\statics" />
-      <recent name="E:\Dev\mtrops_v2\statics\scripts" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -450,7 +417,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.get_cellery">
     <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mtrops_v2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -473,7 +440,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="celery" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="get_cellery" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mtrops_v2" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -481,12 +448,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mtrops_v2" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app_asset" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mtrops_v2/celery.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app_asset/get_cellery.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -565,16 +532,16 @@
       <item itemvalue="Python.manage" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.tasks" />
-      <item itemvalue="Python.celery" />
       <item itemvalue="Python.__init__" />
+      <item itemvalue="Python.get_cellery" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.manage" />
+        <item itemvalue="Python.get_cellery" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.tasks" />
-        <item itemvalue="Python.manage" />
         <item itemvalue="Python.__init__" />
-        <item itemvalue="Python.celery" />
       </list>
     </recent_temporary>
   </component>
@@ -626,7 +593,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15298508" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15618336" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -634,13 +601,13 @@
       <window_info anchor="bottom" id="Debug" order="2" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.9029851" weight="0.45119306" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.9029851" weight="0.29501083" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" sideWeight="0.23987207" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.15085287" side_tool="true" weight="0.38828632" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.84914714" visible="true" weight="0.3383948" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.84914714" visible="true" weight="0.2462039" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.90724945" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -694,70 +661,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="132" column="16" lean-forward="true" selection-start-line="132" selection-start-column="16" selection-end-line="132" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/statics/js/code_v2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="354" column="30" selection-start-line="354" selection-start-column="30" selection-end-line="354" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_log/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python36/Lib/importlib/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/app_log/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="40" column="20" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/log_userlog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1458">
-          <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_auth/perms_control.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="72" column="49" selection-start-line="72" selection-start-column="49" selection-end-line="72" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/code_publist_record.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="75" column="72" selection-start-line="75" selection-start-column="72" selection-end-line="75" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2826">
-          <caret line="157" column="54" selection-start-line="157" selection-start-column="54" selection-end-line="157" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/code_publist_search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="658">
@@ -876,24 +779,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_asset/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="9" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_auth/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="63" column="15" selection-start-line="63" selection-start-column="15" selection-end-line="63" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_auth/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="352" selection-start-line="352" selection-end-line="352" />
         </state>
       </provider>
     </entry>
@@ -936,31 +825,11 @@
     <entry file="file://$PROJECT_DIR$/app_code/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://C:/python3.6/Lib/importlib/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="125" selection-start-line="125" selection-end-line="125" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6840">
-          <caret line="377" column="28" selection-start-line="377" selection-start-column="28" selection-end-line="377" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/python3.6/Lib/importlib/__init__.py" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_asset/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="56" selection-start-column="56" selection-end-column="56" />
         </state>
       </provider>
     </entry>
@@ -971,52 +840,173 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mtrops_v2/celery.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="55" lean-forward="true" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_asset/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="71" selection-end-column="16" />
+        <state relative-caret-position="198">
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app_asset/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="56" selection-start-column="56" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mtrops_v2/celery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="56" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
+          <folding>
+            <element signature="e#1#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/statics/scripts/salt_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-702" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/statics/scripts/get_software_info.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="77" column="55" selection-start-line="77" selection-start-column="55" selection-end-line="77" selection-end-column="55" />
+          <folding>
+            <element signature="e#39#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_asset/test.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="53" column="15" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
+        <state relative-caret-position="2098">
+          <caret line="177" column="70" selection-start-line="177" selection-start-column="70" selection-end-line="177" selection-end-column="70" />
           <folding>
             <element signature="e#310#319#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app_asset/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18">
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_asset/get_cellery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/log_opslog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="61" column="49" lean-forward="true" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app_asset/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="18" />
+        <state relative-caret-position="175">
+          <caret line="69" column="64" selection-start-line="69" selection-start-column="64" selection-end-line="69" selection-end-column="64" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_asset/test.py">
+    <entry file="file://$PROJECT_DIR$/app_auth/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        <state relative-caret-position="170">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/log_taskrecord.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="97" column="51" selection-start-line="97" selection-start-column="51" selection-end-line="97" selection-end-column="51" />
           <folding>
-            <element signature="e#0#61#0" expanded="true" />
+            <element signature="n#style#0;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#5;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#td#5;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#2221#2227#0" expanded="true" />
+            <element signature="e#2227#2233#0" expanded="true" />
+            <element signature="e#2233#2239#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#3039#3046#1" expanded="true" />
+            <element signature="n#style#0;n#pre#0;n#div#1;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/log_userlog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="58" column="61" selection-start-line="58" selection-start-column="47" selection-end-line="58" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="402" selection-start-line="402" selection-end-line="402" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#1015#3492#0" />
+            <element signature="e#3522#5414#0" />
+            <element signature="e#5444#8031#0" />
+            <element signature="e#8057#13291#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_log/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="26" column="45" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_log/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="24" column="17" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="17" />
+          <folding>
+            <element signature="e#634#659#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/statics/scripts/get_host_info.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-161">
+          <caret line="43" column="52" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_log/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="68" column="38" selection-start-line="68" selection-start-column="38" selection-end-line="68" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>

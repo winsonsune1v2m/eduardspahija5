@@ -43,6 +43,7 @@ def get_os_info(salt_url, salt_user, salt_passwd,tgt):
 
 def get_disk_info(salt_url,salt_user,salt_passwd,tgt):
     argv = "fdisk -l | grep -E 'sda:|sdb:|sdc:|vda:|vdb:|vdc:' |awk -F ',' '{print $1}'"
+
     disk_module = 'cmd.run'
 
     salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
@@ -59,9 +60,8 @@ def get_disk_info(salt_url,salt_user,salt_passwd,tgt):
             disk_infos = result[i].split("\n")
         else:
             disk_module = 'disk.usage'
-            result_w = salt.salt_run(i, disk_module, argv)
+            result_w = salt.salt_run(i, disk_module)
             for j in result_w.keys():
-
                 for k in result_w[j].keys():
                     disk_size = result_w[j][k]["1K-blocks"]
 

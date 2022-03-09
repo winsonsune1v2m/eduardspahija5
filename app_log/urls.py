@@ -18,7 +18,9 @@ from app_log import views
 from django.urls import path,include
 
 
+
 urlpatterns = [
     path("opslog/",views.OpsLog.as_view()),
     path("userlog/",views.UserLog.as_view()),
+    path("tasklog/",views.TaskRecord.as_view()),
 ]

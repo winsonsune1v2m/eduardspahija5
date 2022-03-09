@@ -63,10 +63,10 @@
                         {% if i.status == "成功" %}
                       <td style="color:green">{{ i.status }}</td>
                         {% else %}
-                        <td style="color:red">{{ i.status }}</td>
+                      <td style="color:red">{{ i.status }}</td>
                         {% endif %}
 
-                      </td>
+
                     </tr>
                   {% endfor %}
                   </tbody>
@@ -101,78 +101,7 @@
 {% block js %}
 <script type="text/javascript">
 
-//前端分页
-var limit = 13; //每页显示数据条数
-var total = $('#audit_table').find('tr').length;
-var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
-
-function doPage(n){
-    if(allPage>1){
-        var prevPage='',nextPage='',pageHtml='';
-
-        if (n===1) {
-            prevPage = '<li class="disabled"><a href="javascript:;">上一页</a></li>';
-            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
-        } else if(n===allPage){
-            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
-            nextPage = '<li class="disabled"><a href="javascript:;">下一页</a></li>';
-        } else {
-            prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
-            nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
-        }
-        if (n<=5){
-            for(var i=1;i<=5;i++){
-                if (n===i) {
-                    pageHtml += '<li class="active"><a href="javascript:;">'+ i +'</a></li>';
-                }else{
-                    if(i<=allPage) {
-                        pageHtml += '<li data-page="' + i + '"><a href="javascript:;">' + i + '</a></li>';
-                    }
-                }
-
-            }
-        }else{
-            for(var i=1;i<=5;i++){
-
-                cur_page = parseInt(parseInt((n-1)/5)*5);
-
-                if (n===(cur_page+i)){
-                    pageHtml += '<li class="active"><a href="javascript:;">'+ (cur_page+i) +'</a></li>';
-                }else{
-                    if((i+cur_page)<=allPage){
-                        pageHtml += '<li data-page="'+ (i+cur_page) +'"><a href="javascript:;">'+ (i+cur_page) +'</a></li>';
-                    }
-                }
-
-            }
-
-        }
-
-
-        $('#pagination').html(prevPage+pageHtml+nextPage);
-    }
-
-    $('#audit_table').find('tr').hide();
-    if(n===1){
-        $('#audit_table').find('tr:lt('+ limit +')').show();
-    }else{
-        $('#audit_table').find('tr:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
-    }
-
-}
-
-doPage(1);
-
-$('#pagination').on('click', 'li a', function(event) {
-    event.preventDefault();
-    var curr = parseInt($(this).parent().data('page'));
-
-    if (!isNaN(curr)) {
-        doPage(curr);
-    }
-});
-
-    </script>
+</script>
 
 {% endblock %}
 

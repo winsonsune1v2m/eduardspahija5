@@ -64,17 +64,18 @@ def get_sofeware(salt_url,salt_user,salt_passwd,tgt, tag):
             result = salt.salt_run_arg(i, module, argv)
 
             version_infos = result[i]
-            if re.search("\d+.\d+.\d+", version_infos):
-                info[k]["version"] = re.search("\d+.\d+.\d+", version_infos).group()
+            if re.search("\d+.\d+", version_infos):
+                info[k]["version"] = re.search("\d+.\d+", version_infos).group()
             else:
                 info[k]["version"] = "Unkonwn"
 
         argv = "php --version"
         result = salt.salt_run_arg(i, module, argv)
         version_infos = result[i]
-        if re.search("\d+.\d+.\d+", version_infos):
+
+        if re.search("\d+.\d+", version_infos):
             info["php"] = {}
-            info["php"]["version"] = re.search("\d+.\d+.\d+", version_infos).group()
+            info["php"]["version"] = re.search("\d+.\d+", version_infos).group()
             info["php"]["name"] = "php"
             info["php"]["port"] = "None"
 
@@ -87,7 +88,7 @@ if __name__ == "__main__":
     salt_url = "https://192.168.1.126:8081"
     salt_user = "saltapi"
     salt_passwd = "saltapi"
-    tgt = ['192.168.1.126', '192.168.1.191']
-    tag = ['php', 'nginx', 'redis', 'mysql', 'python', 'java']
+    tgt = ['192.168.1.126']
+    tag = ['php', 'nginx', 'redis', 'mysql', 'python', 'java',"sshd"]
     result = get_sofeware(salt_url,salt_user,salt_passwd,tgt, tag)
     print (result)

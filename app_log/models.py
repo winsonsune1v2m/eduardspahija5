@@ -19,3 +19,13 @@ class UserLog(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return self.username
+
+
+class TaskRecord(models.Model):
+    task_name = models.CharField(max_length=32)
+    task_id = models.CharField(max_length=64)
+    task_result = models.TextField(null=True)
+    status = models.CharField(max_length=32)
+    create_time = models.DateTimeField(auto_now_add=True)
+    def __unicode__(self):
+        return self.username
