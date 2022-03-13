@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change afterPath="$PROJECT_DIR$/app_asset/get_cellery.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/log_taskrecord.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_log/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_log/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_log/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mtrops_v2/celery.py" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/celery.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/scripts/get_host_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/get_host_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/scripts/get_software_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/get_software_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/log_userlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/log_userlog.html" afterDir="false" />
-    </list>
+    <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,8 +170,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_log/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="68" column="38" selection-start-line="68" selection-start-column="38" selection-end-line="68" selection-end-column="38" />
+            <state relative-caret-position="243">
+              <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -591,7 +576,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15618336" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -607,7 +591,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" sideWeight="0.23987207" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.15085287" side_tool="true" weight="0.38828632" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.84914714" visible="true" weight="0.2462039" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.84914714" visible="true" weight="0.3449024" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.90724945" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1003,8 +987,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_log/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="68" column="38" selection-start-line="68" selection-start-column="38" selection-end-line="68" selection-end-column="38" />
+        <state relative-caret-position="243">
+          <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
