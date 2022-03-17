@@ -17,7 +17,6 @@ class Host(models.Model):
     purchase_date = models.CharField(max_length=128,null=True)
     overdue_date = models.CharField(max_length=128,null=True)
     creat_time = models.DateTimeField(auto_now_add=True)
-    host_status = models.CharField(max_length=32, null=True)
     def __unicode__(self):
         return self.host_ip
 
@@ -35,6 +34,7 @@ class HostDetail(models.Model):
     kernel_version =models.CharField(max_length=128,null=True)
     os_version = models.CharField(max_length=128,null=True)
     product_name = models.CharField(max_length=128,null=True)
+    host_status = models.CharField(max_length=32, null=True)
     def __unicode__(self):
         return self.host_ip
 

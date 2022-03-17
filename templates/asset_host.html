@@ -98,15 +98,15 @@
           </thead>
           <tbody id="host_table">
 
-            {% for host in host_obj %}
+            {% for host in host_list %}
             <tr name="tbody">
               <td><input id="{{ host.id  }}" type="checkbox" name="ckb"/></td>
               <td>{{ host.host_ip }}</td>
-              <td>{{ host.group.host_group_name }}</td>
+              <td>{{ host.group_name }}</td>
               <td>{{ host.host_msg }}</td>
               <td>{{ host.host_type }}</td>
-              <td>{{ host.supplier.supplier }}</td>
-              <td>{{ host.idc.idc_name }}</td>
+              <td>{{ host.supplier }}</td>
+              <td>{{ host.idc_name }}</td>
                 {% if host.host_status == "up" %}
               <td><span class="fa fa-lg fa-check-circle" style="color: #00B83F" data-toggle="tooltip" data-placement="right" title="运行中"></span></td>
                 {% else %}

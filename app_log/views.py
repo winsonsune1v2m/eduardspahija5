@@ -61,20 +61,24 @@ class TaskRecord(View):
         task_obj = log_db.TaskRecord.objects.all().order_by("-create_time")
         task_list = []
         for i in  task_obj:
-
-            async = AsyncResult(id=i.task_id, app=app)
-            status = async.state
-            if status == 'SUCCESS':
-                result = async.get()
-                i.task_result = result
-            elif  status == 'FAILURE':
-                result = async.traceback
-                i.task_result = result
+            if i.status == "SUCCESS" or i.status == 'FAILURE':
+                status = i.status
+                result = i.task_result
             else:
-                result = None
+                async = AsyncResult(id=i.task_id, app=app)
+                status = async.state
+                if status == 'SUCCESS':
+                    result = async.get()
+                    i.task_result = result
+                elif  status == 'FAILURE':
+                    result = async.traceback
+                    i.task_result = result
+                else:
+                    result = None
 
-            i.status = status
-            i.save()
+                i.status = status
+                i.save()
+
             task_list.append({'id':i.id,'task_name':i.task_name,'task_id':i.task_id,'status':status,'create_time':i.create_time,'task_result':result})
         return render(request,'log_taskrecord.html',locals())
 

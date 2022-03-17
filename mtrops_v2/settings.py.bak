@@ -12,6 +12,23 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+import djcelery
+djcelery.setup_loader()
+
+
+BROKER_URL = 'redis://192.168.1.126:6379/0'
+CELERY_RESULT_BACKEND = 'redis://192.168.1.126:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Shanghai'
+CELERY_ENABLE_UTC = True
+#每个worker执行了多少任务就会死掉
+CELERYD_MAX_TASKS_PER_CHILD = 50
+
+#celery 结果有效期
+CELERY_TASK_RESULT_EXPIRES  = 3600
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -36,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcelery',
     'app_auth',
     'app_asset',
     'app_code',
@@ -162,12 +180,12 @@ SERVER_TAG = ['php', 'nginx', 'redis', 'mysql', 'python', 'java','sshd']
 
 #salt api 接口及认证信息
 SALT_API={
-    "url":"https://127.0.0.1:8881",
+    "url":"https://192.168.1.126:8081",
     "user":"saltapi",
     "passwd":"saltapi",
 }
 
-MTROPS_HOST = "127.0.0.1"
+MTROPS_HOST = "192.168.1.126"
 
 
 #webssh 访问地址
@@ -175,11 +193,9 @@ WEBSSH_URL = "http://192.168.1.126:8000/"
 
 
 #redis 服务信息
-REDIS_INFO = {"host":"127.0.0.1", "port":6379}
+REDIS_INFO = {"host":"192.168.1.126", "port":6379}
 
 #代码运行用户
-CODE_RUNAS = "root"
+CODE_RUNAS = "www"
 
 PHPMYADMIN_URL = "http://192.168.1.126/phpmyadmin/"
-
-

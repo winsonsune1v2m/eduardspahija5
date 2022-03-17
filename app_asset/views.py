@@ -216,7 +216,7 @@ class Host(View):
     """服务器管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
-    @method_decorator(perms_check)
+    #@method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Host,self).dispatch(request, *args, **kwargs)
 
@@ -231,7 +231,15 @@ class Host(View):
         role_obj = auth_db.Role.objects.get(id=role_id)
 
         host_obj = role_obj.host.all()
-       
+        host_list = []
+
+        for i in host_obj:
+            try:
+                host_status = asset_db.HostDetail.objects.get(host_id=i.id).host_status
+            except:
+                host_status = "Unknown"
+            host_list.append({"id":i.id,"host_ip":i.host_ip,"host_type":i.host_type,"group_name":i.group.host_group_name,"host_msg":i.host_msg,
+                              "supplier":i.supplier.supplier,"idc_name":i.idc.idc_name,"host_status":host_status})
 
         webssh_url = WEBSSH_URL
 

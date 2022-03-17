@@ -30,7 +30,6 @@ def sync_host(ips,SALT_API,SERVER_TAG):
         info = data[ip]
         try:
             host_detail_obj = asset_db.HostDetail.objects.get(host_id=host_id)
-
             host_detail_obj.host_name = info['localhost']
             host_detail_obj.os_type = info['kernel']
             host_detail_obj.product_name = info['productname']
@@ -42,6 +41,7 @@ def sync_host(ips,SALT_API,SERVER_TAG):
             host_detail_obj.disk_info = json.dumps(info['disk_info'])
             host_detail_obj.interface = json.dumps(info['interface'])
             host_detail_obj.kernel_version = info['kernel'] + ' ' + info['kernelrelease']
+            host_detail_obj.host_status = 'up'
             host_detail_obj.save()
         except:
             kernel_version = "%s %s" % (info['kernel'], info['kernelrelease'])
@@ -53,12 +53,10 @@ def sync_host(ips,SALT_API,SERVER_TAG):
                                                   cpu_model=info['cpu_model'], cpu_nums=info['num_cpus'],
                                                   disk_info=json.dumps(info['disk_info']),
                                                   interface=json.dumps(info['interface']),
-                                                  kernel_version=kernel_version)
+                                                  kernel_version=kernel_version,host_status='up')
 
             host_detail_obj.save()
 
-        host_obj.host_status = 'up'
-        host_obj.save()
 
     for ip in software_data.keys():
 
