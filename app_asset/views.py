@@ -216,7 +216,7 @@ class Host(View):
     """服务器管理"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
-    #@method_decorator(perms_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Host,self).dispatch(request, *args, **kwargs)
 
@@ -399,6 +399,7 @@ def sync_host_info(request):
         for i in ids:
             host_obj = asset_db.Host.objects.get(id=i)
             ips.append(host_obj.host_ip)
+
 
     tk = sync_host.delay(json.dumps(ips),json.dumps(SALT_API),json.dumps(SERVER_TAG))
 

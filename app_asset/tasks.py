@@ -78,7 +78,7 @@ def sync_host(ips,SALT_API,SERVER_TAG):
                                                  server_port=software_info[i]['port'])
                 software_obj.save()
 
-    return True
+    return json.dumps({'sys_info':data,'sofeware_info':software_data},ensure_ascii=False,indent=True)
 
 
 @shared_task

@@ -10,10 +10,12 @@ from django.views.decorators.csrf import csrf_exempt
 from app_code import models as code_db
 from app_asset import models as asset_db
 from app_auth import models as auth_db
+from app_log import models as log_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
 from statics.scripts import salt_api
 from mtrops_v2.settings import SECRET_KEY,CODE_RUNAS,SALT_API,BASE_DIR
+from app_code.tasks import code_clone
 
 # Create your views here.
 
@@ -179,7 +181,7 @@ class Publist(View):
     '''代码发布'''
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
-    @method_decorator(perms_check)
+    #@method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Publist, self).dispatch(request, *args, **kwargs)
 
@@ -212,6 +214,15 @@ class Publist(View):
         publist_dir = request.POST.get("publist_dir")
         publist_msg = request.POST.get("publist_msg")
 
+        tk = code_clone.delay(publist_ip,gitcode_name,publist_dir,publist_msg,json.dumps(SALT_API),SECRET_KEY,CODE_RUNAS,BASE_DIR)
+
+        data = "发布创建中,任务ID:{}".format(tk.id)
+
+        task_obj = log_db.TaskRecord(task_name="新建发布", task_id=tk.id, status=tk.state)
+
+        task_obj.save()
+
+        """
         host_ip_ids = json.loads(publist_ip)
         minions=[]
         try:
@@ -258,6 +269,7 @@ class Publist(View):
 
         except Exception as e:
             data = "添加失败：\n%s" % e
+        """
         return HttpResponse(data)
 
 
