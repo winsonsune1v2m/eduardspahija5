@@ -10,10 +10,12 @@ from django.utils.decorators import method_decorator
 from app_sys import models as sys_db
 from app_asset import models as asset_db
 from app_auth import models as auth_db
+from app_log import models as log_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
 from mtrops_v2.settings import BASE_DIR,SALT_API,MTROPS_HOST
 from statics.scripts import salt_api
+from app_sys.tasks import install_server
 # Create your views here.
 
 class EnvSofeware(View):
@@ -110,6 +112,7 @@ def sofeware_install(request):
     for i in json.loads(host_info):
         if re.search("\d+.\d+.\d+.\d", i):
             ip_list.append(i)
+
     sofeware_obj = sys_db.EnvSofeware.objects.get(id=sofeware_id)
 
     install_script = sofeware_obj.install_script
@@ -126,19 +129,13 @@ def sofeware_install(request):
 
     f.close()
 
+    tk = install_server.delay(json.dumps(ip_list),script_file,json.dumps(SALT_API))
 
-    salt_url = SALT_API['url']
-    salt_user = SALT_API['user']
-    salt_passwd = SALT_API['passwd']
-    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+    data = "服务安装中,任务ID:{}".format(tk.id)
 
-    hosts = ",".join(ip_list)
+    task_obj = log_db.TaskRecord(task_name="安装软件服务", task_id=tk.id, status=tk.state)
 
-    script_file = "salt://%s" % script_file
-
-    salt.salt_run_arg(hosts, "cmd.script", script_file)
-
-    data = "服务已部署，请检查！"
+    task_obj.save()
 
     return HttpResponse(data)
 

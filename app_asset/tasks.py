@@ -79,8 +79,3 @@ def sync_host(ips,SALT_API,SERVER_TAG):
                 software_obj.save()
 
     return json.dumps({'sys_info':data,'sofeware_info':software_data},ensure_ascii=False,indent=True)
-
-
-@shared_task
-def add(x,y):
-    return x+y

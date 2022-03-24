@@ -51,12 +51,6 @@ def code_clone(publist_ip,gitcode_name,publist_dir,publist_msg,SALT_API,SECRET_K
 
     script_file = os.path.join(BASE_DIR, "statics/scripts/git_clone.py")
 
-    data = salt.salt_run_script(hosts, "cmd.script", script_file, git_info)
+    data = salt.salt_run_script(hosts, "cmd.script", "salt://"+script_file, git_info)
 
     return json.dumps({"result":data},ensure_ascii=False,indent=True)
-
-
-
-@shared_task
-def add(x,y):
-    return x+y

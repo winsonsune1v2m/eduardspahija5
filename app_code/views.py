@@ -181,7 +181,7 @@ class Publist(View):
     '''代码发布'''
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
-    #@method_decorator(perms_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(Publist, self).dispatch(request, *args, **kwargs)
 
@@ -222,54 +222,6 @@ class Publist(View):
 
         task_obj.save()
 
-        """
-        host_ip_ids = json.loads(publist_ip)
-        minions=[]
-        try:
-            for ip_id in host_ip_ids:
-                
-                publist_obj = code_db.Publist(gitcode_id=gitcode_name,host_ip_id=ip_id,publist_dir=publist_dir,publist_msg=publist_msg)
-                publist_obj.save()
-                host_obj = asset_db.Host.objects.get(id=ip_id)
-                host_ip = host_obj.host_ip
-                minions.append(host_ip)
-                gitcode_obj = code_db.GitCode.objects.get(id=gitcode_name)
-                git_url = gitcode_obj.git_url
-                
-                if gitcode_obj.git_sshkey:
-                    git_sshkey = gitcode_obj.git_sshkey
-                else:
-                    git_sshkey = None
-
-                if gitcode_obj.git_user and gitcode_obj.git_passwd:
-                    git_user = gitcode_obj.git_user
-
-                    key = SECRET_KEY[2:18]
-                    pc = encryption.prpcrypt(key)
-                    passwd = gitcode_obj.git_passwd.strip("b").strip("'").encode(encoding="utf-8")
-                    de_passwd = pc.decrypt(passwd).decode()
-                    git_passwd = de_passwd
-                else:
-                    git_user =None
-                    git_passwd = None
-
-                git_info = {"git_dir": publist_dir, "git_url": git_url, "git_user": git_user, "git_passwd": git_passwd, "git_sshkey": git_sshkey,"code_runas": CODE_RUNAS}
-
-            salt_url = SALT_API['url']
-            salt_user = SALT_API['user']
-            salt_passwd = SALT_API['passwd']
-            salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-            hosts = ",".join(minions)
-
-            script_file = os.path.join(BASE_DIR,"statics/scripts/git_clone.py")
-
-            salt.salt_run_script(hosts, "cmd.script",script_file,git_info)
-
-            data = "添加成功，请刷新查看"
-
-        except Exception as e:
-            data = "添加失败：\n%s" % e
-        """
         return HttpResponse(data)
 
 
