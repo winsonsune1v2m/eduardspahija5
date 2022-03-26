@@ -187,8 +187,15 @@ CODE_RUNAS = "www"
 PHPMYADMIN_URL = "http://192.168.1.126/phpmyadmin/"
 
 
-
-BROKER_URL = 'redis://192.168.1.126:6379/0'
+#使用redis作为消息队列代理
+#BROKER_URL = 'redis://192.168.1.126:6379/0'
+#使用rabbitmq作为消息队列代理（推荐）
+BROKER_HOST = "192.168.1.192"
+BROKER_PORT = 5672
+BROKER_USER = "onepeople"
+BROKER_PASSWORD = "123456"
+BROKER_VHOST = "/"
+#使用resit作为数据存储
 CELERY_RESULT_BACKEND = 'redis://192.168.1.126:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
