@@ -1,4 +1,5 @@
 from django.db import models
+from app_auth.models import User
 
 # Create your models here.
 
@@ -25,6 +26,7 @@ class TaskRecord(models.Model):
     task_name = models.CharField(max_length=32)
     task_id = models.CharField(max_length=64)
     task_result = models.TextField(null=True)
+    task_user = models.ForeignKey(to=User,on_delete=models.CASCADE)
     status = models.CharField(max_length=32)
     create_time = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):

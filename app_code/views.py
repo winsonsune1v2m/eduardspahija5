@@ -199,7 +199,7 @@ class Publist(View):
         publist_all_obj=None
 
         for i in gitcode_obj:
-            publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id)
+            publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id).order_by("-publist_date")
             try:
                 publist_all_obj = publist_all_obj | publist_obj
             except:
@@ -218,7 +218,11 @@ class Publist(View):
 
         data = "发布创建中,任务ID:{}".format(tk.id)
 
-        task_obj = log_db.TaskRecord(task_name="新建发布", task_id=tk.id, status=tk.state)
+        user_name = request.session['user_name']
+
+        user_obj = auth_db.User.objects.get(user_name=user_name)
+
+        task_obj = log_db.TaskRecord(task_name="新建代码发布", task_id=tk.id, status=tk.state,task_user_id=user_obj.id)
 
         task_obj.save()
 

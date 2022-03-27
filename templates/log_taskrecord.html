@@ -48,6 +48,7 @@
 
                       <th>任务</th>
                       <th>任务ID</th>
+                      <th>用户</th>
                       <th>开始时间</th>
                       <th>状态</th>
                       <th>日志</th>
@@ -58,6 +59,7 @@
                     <tr name="tbody">
                       <td>{{ i.task_name }}</td>
                       <td>{{ i.task_id }}</td>
+                      <td>{{ i.task_user }}</td>
                       <td>{{ i.create_time|date:"Y-m-d H:i:s" }}</td>
                         {% if i.status == "SUCCESS" %}
                       <td style="color:green">{{ i.status }}</td>

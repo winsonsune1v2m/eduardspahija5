@@ -248,7 +248,7 @@ class Index(View):
             publist_all_obj = None
 
             for i in gitcode_obj:
-                publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id)
+                publist_obj = code_db.Publist.objects.filter(gitcode_id=i.id).order_by("-publist_date")
                 try:
                     publist_all_obj = publist_all_obj | publist_obj
                 except:
@@ -257,7 +257,22 @@ class Index(View):
             site_num = publist_all_obj.count()
         except:
             site_num = 0
+
+        #用户数两
         user_num = auth_db.User.objects.all().count()
+
+        role_id = request.session["role_id"]
+        role_type = auth_db.Role.objects.get(id=role_id).role_title
+
+        if role_type == "administrator":
+            task_obj = log_db.TaskRecord.objects.all().order_by("-create_time")
+        else:
+            user_obj = auth_db.User.objects.get(user_name=request.session['user_name'])
+            task_obj = log_db.TaskRecord.objects.filter(task_user_id=user_obj.id).order_by("-create_time")
+
+        task_num = task_obj.count()
+
+
         return  render(request,'base.html',locals())
 
 
@@ -272,9 +287,7 @@ class RoleMG(View):
 
     def get(self,request):
         title = "角色管理"
-
         role_obj = auth_db.Role.objects.all()
-
         return render(request,'rbac_role.html',locals())
 
 

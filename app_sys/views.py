@@ -133,7 +133,11 @@ def sofeware_install(request):
 
     data = "服务安装中,任务ID:{}".format(tk.id)
 
-    task_obj = log_db.TaskRecord(task_name="安装软件服务", task_id=tk.id, status=tk.state)
+    user_name = request.session['user_name']
+
+    user_obj = auth_db.User.objects.get(user_name=user_name)
+
+    task_obj = log_db.TaskRecord(task_name="安装软件服务", task_id=tk.id, status=tk.state,task_user_id=user_obj.id)
 
     task_obj.save()
 

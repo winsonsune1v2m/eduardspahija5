@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from app_auth.views import login_check,perms_check
 from app_log import models as log_db
+from app_auth import  models as auth_db
 from mtrops_v2 import celery_app as app
 from celery.result import AsyncResult
 
@@ -58,7 +59,15 @@ class TaskRecord(View):
 
     def get(self,request):
         title = "任务中心"
-        task_obj = log_db.TaskRecord.objects.all().order_by("-create_time")
+
+        role_id = request.session["role_id"]
+        role_type = auth_db.Role.objects.get(id=role_id).role_title
+
+        if role_type == "administrator":
+            task_obj = log_db.TaskRecord.objects.all().order_by("-create_time")
+        else:
+            user_obj = auth_db.User.objects.get(user_name=request.session['user_name'])
+            task_obj = log_db.TaskRecord.objects.filter(task_user_id=user_obj.id).order_by("-create_time")
         task_list = []
         for i in  task_obj:
             if i.status == "SUCCESS" or i.status == 'FAILURE':
@@ -79,7 +88,8 @@ class TaskRecord(View):
                 i.status = status
                 i.save()
 
-            task_list.append({'id':i.id,'task_name':i.task_name,'task_id':i.task_id,'status':status,'create_time':i.create_time,'task_result':result})
+            task_list.append({'id':i.id,'task_name':i.task_name,'task_id':i.task_id,'status':status,'create_time':i.create_time,'task_result':result,"task_user":i.task_user.user_name})
+
         return render(request,'log_taskrecord.html',locals())
 
 
