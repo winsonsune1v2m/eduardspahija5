@@ -1024,7 +1024,30 @@ class PermsMG(View):
         title = "权限管理"
         menu_list = auth_db.Menus.objects.all()
 
-        perms_obj = auth_db.Perms.objects.all()
+        one_menu = []
+        for i in menu_list:
+            if i.menu_type == "一级菜单":
+                one_menu.append({"one_perms":{"perms_title":i.menu_title,"perms_url":i.menu_url,"perms_type":i.menu_type,"perms_id":i.id}})
+
+        all_menu_perms = []
+        for j in one_menu:
+            one_two_men = []
+            for k in menu_list:
+                if int(k.pmenu_id) == int(j['one_perms']['perms_id']):
+                    perms_list = auth_db.Perms.objects.filter(menus_id=k.id)
+                    menu_perms = []
+                    for h in perms_list:
+                        if h.perms_req =="other":
+                            menu_perms.append({"perms_title":h.perms_title,"perms_url":h.perms_url,"perms_type":h.perms_req,"perms_id":h.id})
+                        else:
+                            menu_perms.append(
+                                {"perms_title": h.perms_title, "perms_url": h.menus.menu_url, "perms_type": h.perms_req,"perms_id": h.id})
+                    one_two_men.append({"perms_title":k.menu_title,"perms_url":k.menu_url,"perms_type":k.menu_type,"perms_id":k.id,"perms_info":menu_perms})
+
+
+            one_menu = j["one_perms"]
+            one_menu["two_menu"] = one_two_men
+            all_menu_perms.append(one_menu)
 
         return  render(request,'rbac_perms.html',locals())
 

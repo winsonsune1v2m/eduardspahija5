@@ -10,7 +10,6 @@ from mtrops_v2 import celery_app as app
 from celery.result import AsyncResult
 
 
-
 # Create your views here.
 
 class OpsLog(View):

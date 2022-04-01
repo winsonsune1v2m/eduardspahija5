@@ -46,13 +46,56 @@
 
                         <th>菜单</th>
                         <th>地址</th>
-                        <th>操作类型</th>
-                        <th>权限标题</th>
+                        <th>类型</th>
                         <th>操作</th>
                     </tr>
                   </thead>
                   <tbody>
+                  {% for one in all_menu_perms %}
+                    <tr name="tbody" style="background-color: #1cbba7;">
+                      <td><i class="fa fa-list" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{{ one.perms_title }}</td>
 
+                      <td>{{ one.perms_url }}</td>
+
+                      <td>{{ one.perms_type }}</td>
+
+                      <td style="padding-left:5px;">
+
+                      </td>
+                    </tr>
+                    {% for two in  one.two_menu %}
+                    <tr name="tbody" style="background-color: rgb(178, 245, 208);">
+                      <td style="padding-left: 30px;"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{{ two.perms_title }}</td>
+
+                      <td>{{ two.perms_url }}</td>
+
+                      <td>{{ two.perms_type }}</td>
+
+                      <td style="padding-left:5px;">
+
+                      </td>
+                    </tr>
+
+                      {% for i in  two.perms_info %}
+                        <tr name="tbody">
+                          <td style="padding-left: 60px;">{{ i.perms_title }}</td>
+
+                          <td>{{ i.perms_url }}</td>
+
+                          <td>{{ i.perms_type }}</td>
+
+                          <td style="padding-left:5px;">
+                            <a href="javascript:;" style="text-decoration:none;" name="edit-perms" perms_id="{{ i.perms_id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
+                            <a href="javascript:;" style="text-decoration:none;" name="del-perms" perms_id="{{ i.perms_id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+
+                          </td>
+                        </tr>
+                        {%endfor %}
+                    {%endfor %}
+
+
+                  {% endfor %}
+                  <!--
                   {% for perms in perms_obj %}
                     <tr name="tbody">
                       <td>{{ perms.menus.menu_title }}</td>
@@ -70,6 +113,7 @@
                       </td>
                     </tr>
                   {% endfor %}
+                  -->
                   </tbody>
                 </table>
 
