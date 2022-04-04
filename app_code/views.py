@@ -240,7 +240,6 @@ class Publist(View):
     def put(self,request):
         '''版本更新'''
         try:
-            
             req_info = eval(request.body.decode())
             publist_id = req_info.get("publist_id")
 
@@ -281,6 +280,11 @@ class Publist(View):
                 if re.search("Already up-to-date",log_msg):
                     data = '已经是最新版本,无需更新'
 
+                elif re.search("Permission denied",log_msg):
+                    data = log_msg
+
+                elif re.search("git config --global", log_msg):
+                    data = log_msg
                 else:
                     data = "代码更新成功"
 

@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_log/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rbac_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rbac_perms.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_perms.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_code/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_code/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +69,7 @@
           <entry key="html" value="5299" />
           <entry key="js" value="2828" />
           <entry key="md" value="5" />
-          <entry key="py" value="24969" />
+          <entry key="py" value="24972" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -84,7 +80,7 @@
           <entry key="JavaScript" value="2827" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="86" />
-          <entry key="Python" value="24969" />
+          <entry key="Python" value="24972" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -95,7 +91,7 @@
           <entry key="jpg" value="1" />
           <entry key="js" value="44" />
           <entry key="md" value="1" />
-          <entry key="py" value="332" />
+          <entry key="py" value="333" />
           <entry key="sql" value="1" />
           <entry key="txt" value="6" />
         </counts>
@@ -107,7 +103,7 @@
           <entry key="JavaScript" value="44" />
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="10" />
-          <entry key="Python" value="332" />
+          <entry key="Python" value="333" />
           <entry key="SQL" value="1" />
         </counts>
       </usages-collector>
@@ -154,11 +150,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_auth/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
+            <state relative-caret-position="-100">
               <caret line="1024" column="47" selection-start-line="1024" selection-start-column="47" selection-end-line="1024" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app_code/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="447">
+              <caret line="280" column="41" lean-forward="true" selection-start-line="280" selection-start-column="41" selection-end-line="280" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -331,7 +339,6 @@
         <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/app_log/models.py" />
-        <option value="$PROJECT_DIR$/app_code/views.py" />
         <option value="$PROJECT_DIR$/app_sys/views.py" />
         <option value="$PROJECT_DIR$/app_asset/views.py" />
         <option value="$PROJECT_DIR$/templates/log_taskrecord.html" />
@@ -339,6 +346,7 @@
         <option value="$PROJECT_DIR$/templates/rbac_perms.html" />
         <option value="$PROJECT_DIR$/templates/rbac_menu.html" />
         <option value="$PROJECT_DIR$/app_auth/views.py" />
+        <option value="$PROJECT_DIR$/app_code/views.py" />
       </list>
     </option>
   </component>
@@ -355,7 +363,7 @@
       <path value="$PROJECT_DIR$/statics/select2/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="517" />
     <option name="y" value="28" />
     <option name="width" value="1504" />
@@ -385,6 +393,11 @@
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
               <item name="app_auth" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="app_code" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
@@ -611,7 +624,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1609808" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1609808" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -619,7 +632,7 @@
       <window_info anchor="bottom" id="Debug" order="2" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.9029851" visible="true" weight="0.123644255" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.9029851" visible="true" weight="0.0" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" sideWeight="0.23987207" weight="0.329718" />
@@ -830,6 +843,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="470">
           <caret line="55" column="69" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -906,16 +922,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="135" column="4" selection-start-line="135" selection-start-column="4" selection-end-line="137" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_code/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="226" column="23" lean-forward="true" selection-start-line="226" selection-start-column="23" selection-end-line="226" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1005,8 +1011,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_auth/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
+        <state relative-caret-position="-100">
           <caret line="1024" column="47" selection-start-line="1024" selection-start-column="47" selection-end-line="1024" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_code/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="280" column="41" lean-forward="true" selection-start-line="280" selection-start-column="41" selection-end-line="280" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
