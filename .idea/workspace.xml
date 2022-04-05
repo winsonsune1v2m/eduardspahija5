@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/app_code/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_code/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/scripts/git_clone.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/git_clone.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +35,7 @@
     <session id="361001133">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="35" />
+          <entry key="project.closed" value="36" />
           <entry key="project.open.time.0" value="4" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="2" />
@@ -69,7 +69,7 @@
           <entry key="html" value="5299" />
           <entry key="js" value="2828" />
           <entry key="md" value="5" />
-          <entry key="py" value="24972" />
+          <entry key="py" value="25022" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -80,7 +80,7 @@
           <entry key="JavaScript" value="2827" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="86" />
-          <entry key="Python" value="24972" />
+          <entry key="Python" value="25022" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -91,7 +91,7 @@
           <entry key="jpg" value="1" />
           <entry key="js" value="44" />
           <entry key="md" value="1" />
-          <entry key="py" value="333" />
+          <entry key="py" value="334" />
           <entry key="sql" value="1" />
           <entry key="txt" value="6" />
         </counts>
@@ -103,7 +103,7 @@
           <entry key="JavaScript" value="44" />
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="10" />
-          <entry key="Python" value="333" />
+          <entry key="Python" value="334" />
           <entry key="SQL" value="1" />
         </counts>
       </usages-collector>
@@ -150,23 +150,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_auth/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-100">
-              <caret line="1024" column="47" selection-start-line="1024" selection-start-column="47" selection-end-line="1024" selection-end-column="47" />
+            <state relative-caret-position="11">
+              <caret line="1059" column="32" lean-forward="true" selection-start-line="1059" selection-start-column="32" selection-end-line="1059" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_code/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="447">
-              <caret line="280" column="41" lean-forward="true" selection-start-line="280" selection-start-column="41" selection-end-line="280" selection-end-column="41" />
+            <state relative-caret-position="-489">
+              <caret line="285" column="51" selection-start-line="285" selection-start-column="51" selection-end-line="285" selection-end-column="51" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="846">
+              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
             </state>
           </provider>
         </entry>
@@ -296,7 +305,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/templates/code_publist_record.html" />
         <option value="$PROJECT_DIR$/statics/js/code_v2.js" />
         <option value="$PROJECT_DIR$/app_auth/urls.py" />
@@ -347,6 +355,7 @@
         <option value="$PROJECT_DIR$/templates/rbac_menu.html" />
         <option value="$PROJECT_DIR$/app_auth/views.py" />
         <option value="$PROJECT_DIR$/app_code/views.py" />
+        <option value="$PROJECT_DIR$/statics/scripts/git_clone.py" />
       </list>
     </option>
   </component>
@@ -363,7 +372,7 @@
       <path value="$PROJECT_DIR$/statics/select2/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="517" />
     <option name="y" value="28" />
     <option name="width" value="1504" />
@@ -398,6 +407,17 @@
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
               <item name="app_code" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="statics" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="statics" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
@@ -624,7 +644,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1609808" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1609808" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -632,7 +652,7 @@
       <window_info anchor="bottom" id="Debug" order="2" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.9029851" visible="true" weight="0.0" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.9029851" weight="0.0" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" sideWeight="0.23987207" weight="0.329718" />
@@ -692,13 +712,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app_tool/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="91" column="38" selection-start-line="91" selection-start-column="38" selection-end-line="91" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/mtrops_v2.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-12686">
@@ -1009,20 +1022,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_auth/views.py">
+    <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-100">
-          <caret line="1024" column="47" selection-start-line="1024" selection-start-column="47" selection-end-line="1024" selection-end-column="47" />
+        <state relative-caret-position="846">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app_code/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="280" column="41" lean-forward="true" selection-start-line="280" selection-start-column="41" selection-end-line="280" selection-end-column="41" />
+        <state relative-caret-position="-489">
+          <caret line="285" column="51" selection-start-line="285" selection-start-column="51" selection-end-line="285" selection-end-column="51" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_auth/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11">
+          <caret line="1059" column="32" lean-forward="true" selection-start-line="1059" selection-start-column="32" selection-end-line="1059" selection-end-column="32" />
         </state>
       </provider>
     </entry>

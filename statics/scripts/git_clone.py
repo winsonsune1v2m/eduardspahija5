@@ -38,7 +38,12 @@ def git_clone(argv):
         f.close()
 
         cmd_chmod = "chmod 600 %s" % ssh_key_file
+
+        install_git = "yum -y install git"
+
         os.system(cmd_chmod)
+
+        os.system(install_git)
 
         com_env = "kill -9 $SSH_AGENT_PID;eval `ssh-agent` && ssh-add %s" % ssh_key_file
 

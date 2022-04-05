@@ -441,6 +441,17 @@ def search_host(request):
     if host_type:
         host_obj = asset_db.Host.objects.filter(Q(host_type=host_type) & Q(role__id=role_id))
 
+    host_list = []
+
+    for i in host_obj:
+        try:
+            host_status = asset_db.HostDetail.objects.get(host_id=i.id).host_status
+        except:
+            host_status = "Unknown"
+        host_list.append({"id": i.id, "host_ip": i.host_ip, "host_type": i.host_type, "group_name": i.group.host_group_name,
+             "host_msg": i.host_msg,
+             "supplier": i.supplier.supplier, "idc_name": i.idc.idc_name, "host_status": host_status})
+
 
     return render(request, "asset_host_search.html", locals())
 

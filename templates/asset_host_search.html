@@ -15,7 +15,7 @@
   </thead>
   <tbody id="host_table">
 
-    {% for host in host_obj %}
+    {% for host in host_list %}
     <tr name="tbody">
       <td><input id="{{ host.id  }}" type="checkbox" name="ckb"/></td>
       <td>{{ host.host_ip }}</td>
