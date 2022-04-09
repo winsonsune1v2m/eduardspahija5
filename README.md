@@ -42,6 +42,7 @@ six==1.11.0
 
 
 #### 部分功能展示
+![首页](https://images.gitee.com/uploads/images/2018/1031/112915_405e7bda_578265.png "屏幕截图.png")
 ![资产](https://images.gitee.com/uploads/images/2018/1024/151715_ce095ddc_578265.png "屏幕截图.png")
 ![代码发布](https://images.gitee.com/uploads/images/2018/1024/151741_87974a28_578265.png "屏幕截图.png")
 ![批量管理](https://images.gitee.com/uploads/images/2018/1024/151823_291149ed_578265.png "屏幕截图.png")
