@@ -451,7 +451,7 @@ class CodeLog(View):
 
     def get(self, request):
         title = '发布记录'
-        wchartlog_obj = code_db.Wchartlog.objects.all()
+        wchartlog_obj = code_db.Wchartlog.objects.all().order_by("-add_time")
         return render(request, "code_wchartlog.html", locals())
 
 
