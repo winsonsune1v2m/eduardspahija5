@@ -448,6 +448,7 @@ def search_host(request):
             host_status = asset_db.HostDetail.objects.get(host_id=i.id).host_status
         except:
             host_status = "Unknown"
+
         host_list.append({"id": i.id, "host_ip": i.host_ip, "host_type": i.host_type, "group_name": i.group.host_group_name,
              "host_msg": i.host_msg,
              "supplier": i.supplier.supplier, "idc_name": i.idc.idc_name, "host_status": host_status})
