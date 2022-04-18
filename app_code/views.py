@@ -286,7 +286,7 @@ class Publist(View):
                 elif re.search("git config --global", log_msg):
                     data = log_msg
                 else:
-                    data = "代码更新成功"
+                    data = "++++++++++++++代码更新成功++++++++++++++\n%s" % log_msg
 
                     current_version = log_info1[0]
 
