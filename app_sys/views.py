@@ -857,7 +857,7 @@ def Removefile(request):
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
         runas = request.session['remote_user']
-        result = salt.salt_run_arg(ip, "file.remove", path, runas)
+        result = salt.salt_run_downfile(ip, "file.remove", path)
         return HttpResponse(result)
     else:
         return HttpResponse("未知请求")
