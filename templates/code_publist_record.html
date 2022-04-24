@@ -60,10 +60,10 @@
                       <th>操作</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody >
                 {% for i in record_list %}
                     {% if  i.version_status == '当前版本' %}
-                      <tr style="background-color:#c5f1c5;">
+                      <tr style="background-color:#c5f1c5;" name="tbody">
                           <td>{{ i.site_name }}</td>
                           <td>{{ i.post_ip }}</td>
                           <td>{{ i.current_version }}</td>
@@ -78,7 +78,7 @@
                           </td>
                         </tr>
                     {% else %}
-                        <tr>
+                        <tr name="tbody">
                           <td>{{ i.site_name }}</td>
                           <td>{{ i.post_ip }}</td>
                           <td>{{ i.current_version }}</td>
@@ -97,11 +97,10 @@
                   {% endfor %}
                   </tbody>
                 </table>
+
                 <div class="text-right" style="margin-top:-30px;padding-right:9%">
                   <ul class="pagination" id="pagination"></ul>
                 </div>
-
-
             </div>
 
         </div>
