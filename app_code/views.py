@@ -369,7 +369,7 @@ def git_log(request,id):
     record_list = []
 
     for  i in  record_info:
-        upcode_date = i.publist_date
+        upcode_date = i.update_time
         site_name = i.publist.gitcode.git_name
         post_ip = i.publist.host_ip.host_ip
 

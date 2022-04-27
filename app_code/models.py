@@ -31,6 +31,7 @@ class Publist(models.Model):
     version_info = models.CharField(max_length=512,null=True)
     author = models.CharField(max_length=64,null=True)
     publist_date = models.CharField(max_length=64,null=True)
+    update_time = models.DateTimeField(auto_now=True,null=True)
     def __unicode__(self):
         return self.gitcode
 
@@ -41,6 +42,7 @@ class PublistRecord(models.Model):
     version_info = models.CharField(max_length=1024, null=True)
     author = models.CharField(max_length=64, null=True)
     publist_date = models.CharField(max_length=64, null=True)
+    update_time = models.DateTimeField(auto_now_add=True,null=True)
     def __unicode__(self):
         return self.publist
 
@@ -51,7 +53,7 @@ class Wchartlog(models.Model):
     up_connect= models.CharField(max_length=2048, null=True)
     up_id = models.CharField(max_length=64, null=True)
     status = models.CharField(max_length=64, default="waiting")
-    add_time = models.DateTimeField(auto_now_add=True)
+    add_time = models.DateTimeField(auto_now_add=True,null=True)
     def __unicode__(self):
         return self.Site_name
 
