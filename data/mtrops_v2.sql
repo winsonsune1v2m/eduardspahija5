@@ -11,7 +11,7 @@
  Target Server Version : 50640
  File Encoding         : 65001
 
- Date: 24/10/2018 16:29:53
+ Date: 28/11/2018 15:51:07
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,6 @@ CREATE TABLE `app_asset_host`  (
   `group_id` int(11) NULL DEFAULT NULL,
   `idc_id` int(11) NULL DEFAULT NULL,
   `supplier_id` int(11) NULL DEFAULT NULL,
-  `host_status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `host_ip`(`host_ip`) USING BTREE,
   INDEX `app_asset_host_group_id_c2f5df06_fk_app_asset_hostgroup_id`(`group_id`) USING BTREE,
@@ -65,10 +64,11 @@ CREATE TABLE `app_asset_hostdetail`  (
   `os_version` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `product_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `host_id` int(11) NOT NULL,
+  `host_status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_asset_hostdetail_host_id_7ccadf7f_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_asset_hostdetail_host_id_7ccadf7f_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_asset_hostgroup
@@ -85,7 +85,7 @@ CREATE TABLE `app_asset_hostgroup`  (
 -- ----------------------------
 -- Records of app_asset_hostgroup
 -- ----------------------------
-INSERT INTO `app_asset_hostgroup` VALUES (10, '运维', '运维');
+INSERT INTO `app_asset_hostgroup` VALUES (9, '测试组', '测试');
 
 -- ----------------------------
 -- Table structure for app_asset_idc
@@ -144,7 +144,7 @@ CREATE TABLE `app_asset_software`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_asset_software_host_id_1c4f4ada_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_asset_software_host_id_1c4f4ada_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 125 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_asset_supplier
@@ -161,18 +161,13 @@ CREATE TABLE `app_asset_supplier`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of app_asset_supplier
--- ----------------------------
-INSERT INTO `app_asset_supplier` VALUES (1, '维盟', 'lzx', '10086', '10086@139.com');
-
--- ----------------------------
 -- Table structure for app_auth_menus
 -- ----------------------------
 DROP TABLE IF EXISTS `app_auth_menus`;
 CREATE TABLE `app_auth_menus`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu_title` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `menu_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `menu_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `menu_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `pmenu_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `menu_num` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -180,7 +175,7 @@ CREATE TABLE `app_auth_menus`  (
   `menu_order` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `app_auth_menus_menu_url_d695085b_uniq`(`menu_url`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_menus
@@ -204,7 +199,6 @@ INSERT INTO `app_auth_menus` VALUES (16, '发布记录', '/code/log/', '二级�
 INSERT INTO `app_auth_menus` VALUES (17, '环境部署', '/sys/sofeware/', '二级菜单', '4', '4017', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (18, '批量管理', '/sys/batch/', '二级菜单', '4', '4018', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (19, '文件管理', '/sys/filemg/', '二级菜单', '4', '4019', NULL, NULL);
-INSERT INTO `app_auth_menus` VALUES (20, 'webssh', '/tool/webssh/', '二级菜单', '5', '5020', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (21, 'phpMyadmin', '/tool/phpmyadmin/', '二级菜单', '5', '5021', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (22, '操作日志', '/log/opslog/', '二级菜单', '6', '6022', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (23, '用户日志', '/log/userlog/', '二级菜单', '6', '6023', NULL, NULL);
@@ -212,6 +206,7 @@ INSERT INTO `app_auth_menus` VALUES (24, '角色管理', '/auth/role/', '二级�
 INSERT INTO `app_auth_menus` VALUES (25, '用户管理', '/auth/user/', '二级菜单', '7', '7025', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (26, '菜单管理', '/auth/menu/', '二级菜单', '7', '7026', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (27, '权限管理', '/auth/perms/', '二级菜单', '7', '7027', NULL, NULL);
+INSERT INTO `app_auth_menus` VALUES (28, '任务中心', '/log/tasklog/', '二级菜单', '6', '6028', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for app_auth_perms
@@ -227,7 +222,7 @@ CREATE TABLE `app_auth_perms`  (
   UNIQUE INDEX `app_auth_perms_perms_url_989fe779_uniq`(`perms_url`) USING BTREE,
   INDEX `app_auth_perms_menus_id_57ecaabb_fk_app_auth_menus_id`(`menus_id`) USING BTREE,
   CONSTRAINT `app_auth_perms_menus_id_57ecaabb_fk_app_auth_menus_id` FOREIGN KEY (`menus_id`) REFERENCES `app_auth_menus` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 93 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_perms
@@ -311,11 +306,12 @@ INSERT INTO `app_auth_perms` VALUES (82, 'other', 18, '上传文件', '/sys/upfi
 INSERT INTO `app_auth_perms` VALUES (83, 'other', 18, '执行命令', '/sys/runcmd/');
 INSERT INTO `app_auth_perms` VALUES (84, 'other', 18, '执行脚本', '/sys/script/');
 INSERT INTO `app_auth_perms` VALUES (85, 'other', 18, '计划任务', '/sys/cron/');
-INSERT INTO `app_auth_perms` VALUES (86, 'post', 21, '连接phpmyadmin', '');
+INSERT INTO `app_auth_perms` VALUES (86, 'post', 21, '连接phpmyadmin', NULL);
 INSERT INTO `app_auth_perms` VALUES (87, 'post', 22, '查看审计记录', NULL);
-INSERT INTO `app_auth_perms` VALUES (89, 'put', 15, '更新代码', NULL);
-INSERT INTO `app_auth_perms` VALUES (90, 'other', 8, '导入服务器', '/asset/importhost/');
-INSERT INTO `app_auth_perms` VALUES (91, 'other', 15, '代码回滚', '/code/rollback/');
+INSERT INTO `app_auth_perms` VALUES (88, 'put', 15, '更新代码', NULL);
+INSERT INTO `app_auth_perms` VALUES (89, 'other', 15, '查看更新记录', '/code/gitlog/');
+INSERT INTO `app_auth_perms` VALUES (91, 'get', 28, '查看任务', NULL);
+INSERT INTO `app_auth_perms` VALUES (92, 'post', 28, '任务日志', NULL);
 
 -- ----------------------------
 -- Table structure for app_auth_remoteuser
@@ -327,6 +323,7 @@ CREATE TABLE `app_auth_remoteuser`  (
   `lg_passwd` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `lg_key` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `user_id` int(11) NOT NULL,
+  `lg_key_pass` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `lg_user`(`lg_user`) USING BTREE,
   INDEX `app_auth_remoteuser_user_id_ea3232d8_fk_app_auth_user_id`(`user_id`) USING BTREE,
@@ -336,7 +333,7 @@ CREATE TABLE `app_auth_remoteuser`  (
 -- ----------------------------
 -- Records of app_auth_remoteuser
 -- ----------------------------
-INSERT INTO `app_auth_remoteuser` VALUES (2, 'root', 'b\'98c4ce2f2a0cf6b90fafd83bfecee875\'', '', 1);
+INSERT INTO `app_auth_remoteuser` VALUES (2, '', 'b\'\'', '', 1, 'b\'\'');
 
 -- ----------------------------
 -- Table structure for app_auth_role
@@ -354,7 +351,6 @@ CREATE TABLE `app_auth_role`  (
 -- Records of app_auth_role
 -- ----------------------------
 INSERT INTO `app_auth_role` VALUES (1, 'administrator', '超级管理员');
-INSERT INTO `app_auth_role` VALUES (2, 'admin', '管理员');
 
 -- ----------------------------
 -- Table structure for app_auth_role_host
@@ -369,7 +365,7 @@ CREATE TABLE `app_auth_role_host`  (
   INDEX `app_auth_role_host_host_id_8f5ad2a4_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_auth_role_host_host_id_8f5ad2a4_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_host_role_id_9eb7afaf_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_auth_role_menu
@@ -384,60 +380,38 @@ CREATE TABLE `app_auth_role_menu`  (
   INDEX `app_auth_role_menu_menus_id_7ef9f003_fk_app_auth_menus_id`(`menus_id`) USING BTREE,
   CONSTRAINT `app_auth_role_menu_menus_id_7ef9f003_fk_app_auth_menus_id` FOREIGN KEY (`menus_id`) REFERENCES `app_auth_menus` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_menu_role_id_16d6bb84_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 304 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 331 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_role_menu
 -- ----------------------------
-INSERT INTO `app_auth_role_menu` VALUES (52, 1, 1);
-INSERT INTO `app_auth_role_menu` VALUES (53, 1, 2);
-INSERT INTO `app_auth_role_menu` VALUES (59, 1, 3);
-INSERT INTO `app_auth_role_menu` VALUES (64, 1, 4);
-INSERT INTO `app_auth_role_menu` VALUES (68, 1, 5);
-INSERT INTO `app_auth_role_menu` VALUES (71, 1, 6);
-INSERT INTO `app_auth_role_menu` VALUES (74, 1, 7);
-INSERT INTO `app_auth_role_menu` VALUES (54, 1, 8);
-INSERT INTO `app_auth_role_menu` VALUES (55, 1, 9);
-INSERT INTO `app_auth_role_menu` VALUES (56, 1, 10);
-INSERT INTO `app_auth_role_menu` VALUES (57, 1, 11);
-INSERT INTO `app_auth_role_menu` VALUES (58, 1, 12);
-INSERT INTO `app_auth_role_menu` VALUES (60, 1, 13);
-INSERT INTO `app_auth_role_menu` VALUES (61, 1, 14);
-INSERT INTO `app_auth_role_menu` VALUES (62, 1, 15);
-INSERT INTO `app_auth_role_menu` VALUES (63, 1, 16);
-INSERT INTO `app_auth_role_menu` VALUES (65, 1, 17);
-INSERT INTO `app_auth_role_menu` VALUES (66, 1, 18);
-INSERT INTO `app_auth_role_menu` VALUES (67, 1, 19);
-INSERT INTO `app_auth_role_menu` VALUES (70, 1, 21);
-INSERT INTO `app_auth_role_menu` VALUES (72, 1, 22);
-INSERT INTO `app_auth_role_menu` VALUES (73, 1, 23);
-INSERT INTO `app_auth_role_menu` VALUES (75, 1, 24);
-INSERT INTO `app_auth_role_menu` VALUES (76, 1, 25);
-INSERT INTO `app_auth_role_menu` VALUES (77, 1, 26);
-INSERT INTO `app_auth_role_menu` VALUES (78, 1, 27);
-INSERT INTO `app_auth_role_menu` VALUES (280, 2, 1);
-INSERT INTO `app_auth_role_menu` VALUES (281, 2, 2);
-INSERT INTO `app_auth_role_menu` VALUES (287, 2, 3);
-INSERT INTO `app_auth_role_menu` VALUES (292, 2, 4);
-INSERT INTO `app_auth_role_menu` VALUES (296, 2, 5);
-INSERT INTO `app_auth_role_menu` VALUES (299, 2, 6);
-INSERT INTO `app_auth_role_menu` VALUES (302, 2, 7);
-INSERT INTO `app_auth_role_menu` VALUES (282, 2, 8);
-INSERT INTO `app_auth_role_menu` VALUES (283, 2, 9);
-INSERT INTO `app_auth_role_menu` VALUES (284, 2, 10);
-INSERT INTO `app_auth_role_menu` VALUES (285, 2, 11);
-INSERT INTO `app_auth_role_menu` VALUES (286, 2, 12);
-INSERT INTO `app_auth_role_menu` VALUES (288, 2, 13);
-INSERT INTO `app_auth_role_menu` VALUES (289, 2, 14);
-INSERT INTO `app_auth_role_menu` VALUES (290, 2, 15);
-INSERT INTO `app_auth_role_menu` VALUES (291, 2, 16);
-INSERT INTO `app_auth_role_menu` VALUES (293, 2, 17);
-INSERT INTO `app_auth_role_menu` VALUES (294, 2, 18);
-INSERT INTO `app_auth_role_menu` VALUES (295, 2, 19);
-INSERT INTO `app_auth_role_menu` VALUES (298, 2, 21);
-INSERT INTO `app_auth_role_menu` VALUES (300, 2, 22);
-INSERT INTO `app_auth_role_menu` VALUES (301, 2, 23);
-INSERT INTO `app_auth_role_menu` VALUES (303, 2, 25);
+INSERT INTO `app_auth_role_menu` VALUES (304, 1, 1);
+INSERT INTO `app_auth_role_menu` VALUES (305, 1, 2);
+INSERT INTO `app_auth_role_menu` VALUES (311, 1, 3);
+INSERT INTO `app_auth_role_menu` VALUES (316, 1, 4);
+INSERT INTO `app_auth_role_menu` VALUES (320, 1, 5);
+INSERT INTO `app_auth_role_menu` VALUES (322, 1, 6);
+INSERT INTO `app_auth_role_menu` VALUES (326, 1, 7);
+INSERT INTO `app_auth_role_menu` VALUES (306, 1, 8);
+INSERT INTO `app_auth_role_menu` VALUES (307, 1, 9);
+INSERT INTO `app_auth_role_menu` VALUES (308, 1, 10);
+INSERT INTO `app_auth_role_menu` VALUES (309, 1, 11);
+INSERT INTO `app_auth_role_menu` VALUES (310, 1, 12);
+INSERT INTO `app_auth_role_menu` VALUES (312, 1, 13);
+INSERT INTO `app_auth_role_menu` VALUES (313, 1, 14);
+INSERT INTO `app_auth_role_menu` VALUES (314, 1, 15);
+INSERT INTO `app_auth_role_menu` VALUES (315, 1, 16);
+INSERT INTO `app_auth_role_menu` VALUES (317, 1, 17);
+INSERT INTO `app_auth_role_menu` VALUES (318, 1, 18);
+INSERT INTO `app_auth_role_menu` VALUES (319, 1, 19);
+INSERT INTO `app_auth_role_menu` VALUES (321, 1, 21);
+INSERT INTO `app_auth_role_menu` VALUES (323, 1, 22);
+INSERT INTO `app_auth_role_menu` VALUES (324, 1, 23);
+INSERT INTO `app_auth_role_menu` VALUES (327, 1, 24);
+INSERT INTO `app_auth_role_menu` VALUES (328, 1, 25);
+INSERT INTO `app_auth_role_menu` VALUES (329, 1, 26);
+INSERT INTO `app_auth_role_menu` VALUES (330, 1, 27);
+INSERT INTO `app_auth_role_menu` VALUES (325, 1, 28);
 
 -- ----------------------------
 -- Table structure for app_auth_role_netwk
@@ -452,7 +426,7 @@ CREATE TABLE `app_auth_role_netwk`  (
   INDEX `app_auth_role_netwk_netwk_id_65b51976_fk_app_asset_netwk_id`(`netwk_id`) USING BTREE,
   CONSTRAINT `app_auth_role_netwk_netwk_id_65b51976_fk_app_asset_netwk_id` FOREIGN KEY (`netwk_id`) REFERENCES `app_asset_netwk` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_netwk_role_id_c2eec4e1_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_auth_role_perms
@@ -467,126 +441,96 @@ CREATE TABLE `app_auth_role_perms`  (
   INDEX `app_auth_role_perms_perms_id_05bc8fc8_fk_app_auth_perms_id`(`perms_id`) USING BTREE,
   CONSTRAINT `app_auth_role_perms_perms_id_05bc8fc8_fk_app_auth_perms_id` FOREIGN KEY (`perms_id`) REFERENCES `app_auth_perms` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_perms_role_id_d1dbe279_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1955 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1878 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_role_perms
 -- ----------------------------
-INSERT INTO `app_auth_role_perms` VALUES (1873, 1, 4);
-INSERT INTO `app_auth_role_perms` VALUES (1874, 1, 5);
-INSERT INTO `app_auth_role_perms` VALUES (1875, 1, 6);
-INSERT INTO `app_auth_role_perms` VALUES (1876, 1, 7);
-INSERT INTO `app_auth_role_perms` VALUES (1883, 1, 8);
-INSERT INTO `app_auth_role_perms` VALUES (1884, 1, 9);
-INSERT INTO `app_auth_role_perms` VALUES (1885, 1, 10);
-INSERT INTO `app_auth_role_perms` VALUES (1886, 1, 11);
-INSERT INTO `app_auth_role_perms` VALUES (1887, 1, 12);
-INSERT INTO `app_auth_role_perms` VALUES (1888, 1, 13);
-INSERT INTO `app_auth_role_perms` VALUES (1889, 1, 14);
-INSERT INTO `app_auth_role_perms` VALUES (1890, 1, 15);
-INSERT INTO `app_auth_role_perms` VALUES (1891, 1, 16);
-INSERT INTO `app_auth_role_perms` VALUES (1892, 1, 17);
-INSERT INTO `app_auth_role_perms` VALUES (1893, 1, 18);
-INSERT INTO `app_auth_role_perms` VALUES (1894, 1, 19);
-INSERT INTO `app_auth_role_perms` VALUES (1895, 1, 20);
-INSERT INTO `app_auth_role_perms` VALUES (1896, 1, 21);
-INSERT INTO `app_auth_role_perms` VALUES (1897, 1, 22);
-INSERT INTO `app_auth_role_perms` VALUES (1898, 1, 23);
-INSERT INTO `app_auth_role_perms` VALUES (1899, 1, 24);
-INSERT INTO `app_auth_role_perms` VALUES (1900, 1, 25);
-INSERT INTO `app_auth_role_perms` VALUES (1901, 1, 26);
-INSERT INTO `app_auth_role_perms` VALUES (1902, 1, 27);
-INSERT INTO `app_auth_role_perms` VALUES (1903, 1, 28);
-INSERT INTO `app_auth_role_perms` VALUES (1904, 1, 29);
-INSERT INTO `app_auth_role_perms` VALUES (1905, 1, 30);
-INSERT INTO `app_auth_role_perms` VALUES (1906, 1, 31);
-INSERT INTO `app_auth_role_perms` VALUES (1907, 1, 32);
-INSERT INTO `app_auth_role_perms` VALUES (1908, 1, 33);
-INSERT INTO `app_auth_role_perms` VALUES (1912, 1, 34);
-INSERT INTO `app_auth_role_perms` VALUES (1914, 1, 36);
-INSERT INTO `app_auth_role_perms` VALUES (1915, 1, 37);
-INSERT INTO `app_auth_role_perms` VALUES (1916, 1, 38);
-INSERT INTO `app_auth_role_perms` VALUES (1917, 1, 39);
-INSERT INTO `app_auth_role_perms` VALUES (1918, 1, 40);
-INSERT INTO `app_auth_role_perms` VALUES (1923, 1, 41);
-INSERT INTO `app_auth_role_perms` VALUES (1924, 1, 43);
-INSERT INTO `app_auth_role_perms` VALUES (1926, 1, 44);
-INSERT INTO `app_auth_role_perms` VALUES (1928, 1, 45);
-INSERT INTO `app_auth_role_perms` VALUES (1929, 1, 46);
-INSERT INTO `app_auth_role_perms` VALUES (1930, 1, 47);
-INSERT INTO `app_auth_role_perms` VALUES (1931, 1, 48);
-INSERT INTO `app_auth_role_perms` VALUES (1932, 1, 49);
-INSERT INTO `app_auth_role_perms` VALUES (1933, 1, 50);
-INSERT INTO `app_auth_role_perms` VALUES (1934, 1, 51);
-INSERT INTO `app_auth_role_perms` VALUES (1935, 1, 53);
-INSERT INTO `app_auth_role_perms` VALUES (1936, 1, 54);
-INSERT INTO `app_auth_role_perms` VALUES (1937, 1, 55);
-INSERT INTO `app_auth_role_perms` VALUES (1938, 1, 56);
-INSERT INTO `app_auth_role_perms` VALUES (1939, 1, 57);
-INSERT INTO `app_auth_role_perms` VALUES (1940, 1, 58);
-INSERT INTO `app_auth_role_perms` VALUES (1941, 1, 59);
-INSERT INTO `app_auth_role_perms` VALUES (1942, 1, 60);
-INSERT INTO `app_auth_role_perms` VALUES (1943, 1, 61);
-INSERT INTO `app_auth_role_perms` VALUES (1944, 1, 62);
-INSERT INTO `app_auth_role_perms` VALUES (1947, 1, 63);
-INSERT INTO `app_auth_role_perms` VALUES (1948, 1, 64);
-INSERT INTO `app_auth_role_perms` VALUES (1949, 1, 65);
-INSERT INTO `app_auth_role_perms` VALUES (1950, 1, 66);
-INSERT INTO `app_auth_role_perms` VALUES (1951, 1, 67);
-INSERT INTO `app_auth_role_perms` VALUES (1952, 1, 68);
-INSERT INTO `app_auth_role_perms` VALUES (1953, 1, 69);
-INSERT INTO `app_auth_role_perms` VALUES (1954, 1, 70);
-INSERT INTO `app_auth_role_perms` VALUES (1909, 1, 71);
-INSERT INTO `app_auth_role_perms` VALUES (1913, 1, 72);
-INSERT INTO `app_auth_role_perms` VALUES (1877, 1, 73);
-INSERT INTO `app_auth_role_perms` VALUES (1878, 1, 74);
-INSERT INTO `app_auth_role_perms` VALUES (1879, 1, 75);
-INSERT INTO `app_auth_role_perms` VALUES (1880, 1, 76);
-INSERT INTO `app_auth_role_perms` VALUES (1881, 1, 77);
-INSERT INTO `app_auth_role_perms` VALUES (1910, 1, 78);
-INSERT INTO `app_auth_role_perms` VALUES (1882, 1, 79);
-INSERT INTO `app_auth_role_perms` VALUES (1945, 1, 80);
-INSERT INTO `app_auth_role_perms` VALUES (1946, 1, 81);
-INSERT INTO `app_auth_role_perms` VALUES (1919, 1, 82);
-INSERT INTO `app_auth_role_perms` VALUES (1920, 1, 83);
-INSERT INTO `app_auth_role_perms` VALUES (1921, 1, 84);
-INSERT INTO `app_auth_role_perms` VALUES (1922, 1, 85);
-INSERT INTO `app_auth_role_perms` VALUES (1925, 1, 86);
-INSERT INTO `app_auth_role_perms` VALUES (1927, 1, 87);
-INSERT INTO `app_auth_role_perms` VALUES (1911, 1, 89);
-INSERT INTO `app_auth_role_perms` VALUES (1595, 2, 7);
-INSERT INTO `app_auth_role_perms` VALUES (1599, 2, 11);
-INSERT INTO `app_auth_role_perms` VALUES (1600, 2, 15);
-INSERT INTO `app_auth_role_perms` VALUES (1601, 2, 19);
-INSERT INTO `app_auth_role_perms` VALUES (1602, 2, 23);
-INSERT INTO `app_auth_role_perms` VALUES (1603, 2, 27);
-INSERT INTO `app_auth_role_perms` VALUES (1604, 2, 31);
-INSERT INTO `app_auth_role_perms` VALUES (1608, 2, 36);
-INSERT INTO `app_auth_role_perms` VALUES (1609, 2, 37);
-INSERT INTO `app_auth_role_perms` VALUES (1610, 2, 38);
-INSERT INTO `app_auth_role_perms` VALUES (1611, 2, 39);
-INSERT INTO `app_auth_role_perms` VALUES (1612, 2, 40);
-INSERT INTO `app_auth_role_perms` VALUES (1617, 2, 41);
-INSERT INTO `app_auth_role_perms` VALUES (1618, 2, 43);
-INSERT INTO `app_auth_role_perms` VALUES (1619, 2, 44);
-INSERT INTO `app_auth_role_perms` VALUES (1621, 2, 45);
-INSERT INTO `app_auth_role_perms` VALUES (1622, 2, 59);
-INSERT INTO `app_auth_role_perms` VALUES (1623, 2, 60);
-INSERT INTO `app_auth_role_perms` VALUES (1624, 2, 61);
-INSERT INTO `app_auth_role_perms` VALUES (1625, 2, 62);
-INSERT INTO `app_auth_role_perms` VALUES (1605, 2, 71);
-INSERT INTO `app_auth_role_perms` VALUES (1607, 2, 72);
-INSERT INTO `app_auth_role_perms` VALUES (1596, 2, 73);
-INSERT INTO `app_auth_role_perms` VALUES (1597, 2, 75);
-INSERT INTO `app_auth_role_perms` VALUES (1598, 2, 77);
-INSERT INTO `app_auth_role_perms` VALUES (1606, 2, 78);
-INSERT INTO `app_auth_role_perms` VALUES (1626, 2, 80);
-INSERT INTO `app_auth_role_perms` VALUES (1627, 2, 81);
-INSERT INTO `app_auth_role_perms` VALUES (1613, 2, 82);
-INSERT INTO `app_auth_role_perms` VALUES (1614, 2, 83);
-INSERT INTO `app_auth_role_perms` VALUES (1615, 2, 84);
-INSERT INTO `app_auth_role_perms` VALUES (1616, 2, 85);
-INSERT INTO `app_auth_role_perms` VALUES (1620, 2, 87);
+INSERT INTO `app_auth_role_perms` VALUES (1793, 1, 4);
+INSERT INTO `app_auth_role_perms` VALUES (1794, 1, 5);
+INSERT INTO `app_auth_role_perms` VALUES (1795, 1, 6);
+INSERT INTO `app_auth_role_perms` VALUES (1796, 1, 7);
+INSERT INTO `app_auth_role_perms` VALUES (1803, 1, 8);
+INSERT INTO `app_auth_role_perms` VALUES (1804, 1, 9);
+INSERT INTO `app_auth_role_perms` VALUES (1805, 1, 10);
+INSERT INTO `app_auth_role_perms` VALUES (1806, 1, 11);
+INSERT INTO `app_auth_role_perms` VALUES (1807, 1, 12);
+INSERT INTO `app_auth_role_perms` VALUES (1808, 1, 13);
+INSERT INTO `app_auth_role_perms` VALUES (1809, 1, 14);
+INSERT INTO `app_auth_role_perms` VALUES (1810, 1, 15);
+INSERT INTO `app_auth_role_perms` VALUES (1811, 1, 16);
+INSERT INTO `app_auth_role_perms` VALUES (1812, 1, 17);
+INSERT INTO `app_auth_role_perms` VALUES (1813, 1, 18);
+INSERT INTO `app_auth_role_perms` VALUES (1814, 1, 19);
+INSERT INTO `app_auth_role_perms` VALUES (1815, 1, 20);
+INSERT INTO `app_auth_role_perms` VALUES (1816, 1, 21);
+INSERT INTO `app_auth_role_perms` VALUES (1817, 1, 22);
+INSERT INTO `app_auth_role_perms` VALUES (1818, 1, 23);
+INSERT INTO `app_auth_role_perms` VALUES (1819, 1, 24);
+INSERT INTO `app_auth_role_perms` VALUES (1820, 1, 25);
+INSERT INTO `app_auth_role_perms` VALUES (1821, 1, 26);
+INSERT INTO `app_auth_role_perms` VALUES (1822, 1, 27);
+INSERT INTO `app_auth_role_perms` VALUES (1823, 1, 28);
+INSERT INTO `app_auth_role_perms` VALUES (1824, 1, 29);
+INSERT INTO `app_auth_role_perms` VALUES (1825, 1, 30);
+INSERT INTO `app_auth_role_perms` VALUES (1826, 1, 31);
+INSERT INTO `app_auth_role_perms` VALUES (1827, 1, 32);
+INSERT INTO `app_auth_role_perms` VALUES (1828, 1, 33);
+INSERT INTO `app_auth_role_perms` VALUES (1833, 1, 34);
+INSERT INTO `app_auth_role_perms` VALUES (1835, 1, 36);
+INSERT INTO `app_auth_role_perms` VALUES (1836, 1, 37);
+INSERT INTO `app_auth_role_perms` VALUES (1837, 1, 38);
+INSERT INTO `app_auth_role_perms` VALUES (1838, 1, 39);
+INSERT INTO `app_auth_role_perms` VALUES (1839, 1, 40);
+INSERT INTO `app_auth_role_perms` VALUES (1844, 1, 41);
+INSERT INTO `app_auth_role_perms` VALUES (1845, 1, 43);
+INSERT INTO `app_auth_role_perms` VALUES (1847, 1, 44);
+INSERT INTO `app_auth_role_perms` VALUES (1849, 1, 45);
+INSERT INTO `app_auth_role_perms` VALUES (1852, 1, 46);
+INSERT INTO `app_auth_role_perms` VALUES (1853, 1, 47);
+INSERT INTO `app_auth_role_perms` VALUES (1854, 1, 48);
+INSERT INTO `app_auth_role_perms` VALUES (1855, 1, 49);
+INSERT INTO `app_auth_role_perms` VALUES (1856, 1, 50);
+INSERT INTO `app_auth_role_perms` VALUES (1857, 1, 51);
+INSERT INTO `app_auth_role_perms` VALUES (1858, 1, 53);
+INSERT INTO `app_auth_role_perms` VALUES (1859, 1, 54);
+INSERT INTO `app_auth_role_perms` VALUES (1860, 1, 55);
+INSERT INTO `app_auth_role_perms` VALUES (1861, 1, 56);
+INSERT INTO `app_auth_role_perms` VALUES (1862, 1, 57);
+INSERT INTO `app_auth_role_perms` VALUES (1863, 1, 58);
+INSERT INTO `app_auth_role_perms` VALUES (1864, 1, 59);
+INSERT INTO `app_auth_role_perms` VALUES (1865, 1, 60);
+INSERT INTO `app_auth_role_perms` VALUES (1866, 1, 61);
+INSERT INTO `app_auth_role_perms` VALUES (1867, 1, 62);
+INSERT INTO `app_auth_role_perms` VALUES (1870, 1, 63);
+INSERT INTO `app_auth_role_perms` VALUES (1871, 1, 64);
+INSERT INTO `app_auth_role_perms` VALUES (1872, 1, 65);
+INSERT INTO `app_auth_role_perms` VALUES (1873, 1, 66);
+INSERT INTO `app_auth_role_perms` VALUES (1874, 1, 67);
+INSERT INTO `app_auth_role_perms` VALUES (1875, 1, 68);
+INSERT INTO `app_auth_role_perms` VALUES (1876, 1, 69);
+INSERT INTO `app_auth_role_perms` VALUES (1877, 1, 70);
+INSERT INTO `app_auth_role_perms` VALUES (1829, 1, 71);
+INSERT INTO `app_auth_role_perms` VALUES (1834, 1, 72);
+INSERT INTO `app_auth_role_perms` VALUES (1797, 1, 73);
+INSERT INTO `app_auth_role_perms` VALUES (1798, 1, 74);
+INSERT INTO `app_auth_role_perms` VALUES (1799, 1, 75);
+INSERT INTO `app_auth_role_perms` VALUES (1800, 1, 76);
+INSERT INTO `app_auth_role_perms` VALUES (1801, 1, 77);
+INSERT INTO `app_auth_role_perms` VALUES (1830, 1, 78);
+INSERT INTO `app_auth_role_perms` VALUES (1802, 1, 79);
+INSERT INTO `app_auth_role_perms` VALUES (1868, 1, 80);
+INSERT INTO `app_auth_role_perms` VALUES (1869, 1, 81);
+INSERT INTO `app_auth_role_perms` VALUES (1840, 1, 82);
+INSERT INTO `app_auth_role_perms` VALUES (1841, 1, 83);
+INSERT INTO `app_auth_role_perms` VALUES (1842, 1, 84);
+INSERT INTO `app_auth_role_perms` VALUES (1843, 1, 85);
+INSERT INTO `app_auth_role_perms` VALUES (1846, 1, 86);
+INSERT INTO `app_auth_role_perms` VALUES (1848, 1, 87);
+INSERT INTO `app_auth_role_perms` VALUES (1831, 1, 88);
+INSERT INTO `app_auth_role_perms` VALUES (1832, 1, 89);
+INSERT INTO `app_auth_role_perms` VALUES (1850, 1, 91);
+INSERT INTO `app_auth_role_perms` VALUES (1851, 1, 92);
 
 -- ----------------------------
 -- Table structure for app_auth_role_project
@@ -601,7 +545,12 @@ CREATE TABLE `app_auth_role_project`  (
   INDEX `app_auth_role_project_gitcode_id_d1f3c5bb_fk_app_code_gitcode_id`(`gitcode_id`) USING BTREE,
   CONSTRAINT `app_auth_role_project_gitcode_id_d1f3c5bb_fk_app_code_gitcode_id` FOREIGN KEY (`gitcode_id`) REFERENCES `app_code_gitcode` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_project_role_id_8f081530_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_auth_role_project
+-- ----------------------------
+INSERT INTO `app_auth_role_project` VALUES (13, 1, 2);
 
 -- ----------------------------
 -- Table structure for app_auth_user
@@ -625,7 +574,7 @@ CREATE TABLE `app_auth_user`  (
 -- ----------------------------
 -- Records of app_auth_user
 -- ----------------------------
-INSERT INTO `app_auth_user` VALUES (1, 'admin', '小贰', 'b\'d4721440af5b9f9f9a9915f5b2358ffb\'', '10086@139.com', '10086', '', '在线', '2018-10-11 06:13:37.757161', '2018-10-24 08:28:53.874372');
+INSERT INTO `app_auth_user` VALUES (1, 'admin', 'admin', 'b\'d4721440af5b9f9f9a9915f5b2358ffb\'', '10086@139.com', '10086', '', '在线', '2018-10-11 06:13:37.757161', '2018-11-28 07:47:21.926929');
 
 -- ----------------------------
 -- Table structure for app_auth_user_role
@@ -668,6 +617,11 @@ CREATE TABLE `app_code_gitcode`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Records of app_code_gitcode
+-- ----------------------------
+INSERT INTO `app_code_gitcode` VALUES (2, 'mtrops_v2', '运维管理平台 第二版', 'https://gitee.com/12x/mtrops_v2.git', 2, 'b\'\'', '', '');
+
+-- ----------------------------
 -- Table structure for app_code_project
 -- ----------------------------
 DROP TABLE IF EXISTS `app_code_project`;
@@ -698,6 +652,7 @@ CREATE TABLE `app_code_publist`  (
   `publist_date` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `gitcode_id` int(11) NOT NULL,
   `host_ip_id` int(11) NOT NULL,
+  `update_time` datetime(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_code_publist_gitcode_id_08f6579e_fk_app_code_gitcode_id`(`gitcode_id`) USING BTREE,
   INDEX `app_code_publist_host_ip_id_55ba2063_fk_app_asset_host_id`(`host_ip_id`) USING BTREE,
@@ -711,16 +666,16 @@ CREATE TABLE `app_code_publist`  (
 DROP TABLE IF EXISTS `app_code_publistrecord`;
 CREATE TABLE `app_code_publistrecord`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `current_version` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `current_version` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `version_info` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `author` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `publist_date` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `publist_id` int(11) NOT NULL,
+  `update_time` datetime(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `app_code_publistrecord_current_version_af51c124_uniq`(`current_version`) USING BTREE,
   INDEX `app_code_publistreco_publist_id_3e2d949d_fk_app_code_`(`publist_id`) USING BTREE,
   CONSTRAINT `app_code_publistreco_publist_id_3e2d949d_fk_app_code_` FOREIGN KEY (`publist_id`) REFERENCES `app_code_publist` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_code_wchartlog
@@ -733,14 +688,9 @@ CREATE TABLE `app_code_wchartlog`  (
   `up_connect` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `up_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `status` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `add_time` datetime(6) NOT NULL,
+  `add_time` datetime(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of app_code_wchartlog
--- ----------------------------
-INSERT INTO `app_code_wchartlog` VALUES (1, 'mtrops_v2', 'lzx', 'test', '10086', 'done', '2018-10-11 08:23:11.000000');
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_log_opslog
@@ -754,12 +704,29 @@ CREATE TABLE `app_log_opslog`  (
   `start_time` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `audit_log` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of app_log_opslog
+-- Table structure for app_log_taskrecord
 -- ----------------------------
-INSERT INTO `app_log_opslog` VALUES (1, '192.168.1.190', 'gogs 服务器', 'root', '2018-10-23 17:34:54', 'Last login: Tue Oct 23 17:35:13 2018 from 192.168.1.126\n[root@localhost ~]# ls\nanaconda-ks.cfg          max_user_watches~  max_user_watchez~\njdk-8u161-linux-x64.rpm  max_user_watchex~\nlogstash.tar.gz          max_user_watchey~\n[root@localhost ~]#');
+DROP TABLE IF EXISTS `app_log_taskrecord`;
+CREATE TABLE `app_log_taskrecord`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `task_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `create_time` datetime(6) NOT NULL,
+  `task_result` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `task_user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `app_log_taskrecord_task_user_id_db7792d0_fk_app_auth_user_id`(`task_user_id`) USING BTREE,
+  CONSTRAINT `app_log_taskrecord_task_user_id_db7792d0_fk_app_auth_user_id` FOREIGN KEY (`task_user_id`) REFERENCES `app_auth_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_log_taskrecord
+-- ----------------------------
+INSERT INTO `app_log_taskrecord` VALUES (43, '同步服务器信息', 'e5925d0e-e4c8-4e19-b19e-f77a2084b013', 'SUCCESS', '2018-10-30 09:17:04.716267', '{\n \"sys_info\": {\n  \"39.108.15.95\": {\n   \"localhost\": \"iZwz94rq1zzte7clamirpkZ\",\n   \"kernel\": \"Linux\",\n   \"kernelrelease\": \"2.6.32-696.3.2.el6.x86_64\",\n   \"cpu_model\": \"Intel(R) Xeon(R) Platinum 8163 CPU @ 2.50GHz\",\n   \"num_cpus\": 8,\n   \"productname\": \"Alibaba Cloud ECS\",\n   \"os\": \"CentOS\",\n   \"osrelease\": \"6.9\",\n   \"mem_total\": 16080,\n   \"interface\": [\n    {\n     \"hwaddr\": \"00:00:00:00:00:00\",\n     \"ipaddr\": \"127.0.0.1\",\n     \"label\": \"lo\",\n     \"netmask\": \"255.0.0.0\"\n    },\n    {\n     \"hwaddr\": \"00:16:3e:06:25:c7\",\n     \"ipaddr\": \"172.18.218.12\",\n     \"label\": \"eth0\",\n     \"netmask\": \"255.255.240.0\"\n    }\n   ],\n   \"disk_info\": [\n    \"Disk /dev/vda: 42.9 GB\",\n    \"Disk /dev/vdb: 21.5 GB\"\n   ],\n   \"SwapTotal\": 0.0\n  }\n },\n \"sofeware_info\": {\n  \"39.108.15.95\": {\n   \"sshd\": {\n    \"port\": [\n     \"25840\"\n    ],\n    \"pid\": \"27807\",\n    \"name\": \"sshd\",\n    \"version\": \"Unkonwn\"\n   },\n   \"nginx\": {\n    \"port\": [\n     \"80\"\n    ],\n    \"pid\": \"15867\",\n    \"name\": \"nginx\",\n    \"version\": \"1.5\"\n   },\n   \"java\": {\n    \"port\": [\n     \"8081\"\n    ],\n    \"pid\": \"11398\",\n    \"name\": \"java\",\n    \"version\": \"1.8\"\n   },\n   \"php\": {\n    \"version\": \"5.4\",\n    \"name\": \"php\",\n    \"port\": \"None\"\n   }\n  }\n }\n}', 1);
 
 -- ----------------------------
 -- Table structure for app_log_userlog
@@ -773,268 +740,50 @@ CREATE TABLE `app_log_userlog`  (
   `status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 258 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1040 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_log_userlog
 -- ----------------------------
-INSERT INTO `app_log_userlog` VALUES (1, 'admin', '查询发布记录', '小贰', '成功', '2018-10-24 03:51:16.535627');
-INSERT INTO `app_log_userlog` VALUES (2, 'admin', '查看用户日志', '小贰', '成功', '2018-10-24 03:51:27.622261');
-INSERT INTO `app_log_userlog` VALUES (3, 'admin', '查看用户日志', '小贰', '成功', '2018-10-24 03:54:18.243020');
-INSERT INTO `app_log_userlog` VALUES (4, 'admin', '查看用户日志', '小贰', '成功', '2018-10-24 03:54:48.882772');
-INSERT INTO `app_log_userlog` VALUES (5, 'admin', '查询项目', '小贰', '成功', '2018-10-24 04:40:13.039585');
-INSERT INTO `app_log_userlog` VALUES (6, 'admin', '查询发布', '小贰', '成功', '2018-10-24 04:40:14.609675');
-INSERT INTO `app_log_userlog` VALUES (7, 'admin', '版本更新', '小贰', '成功', '2018-10-24 04:40:18.244883');
-INSERT INTO `app_log_userlog` VALUES (8, 'admin', '查询权限', '小贰', '成功', '2018-10-24 04:40:44.392378');
-INSERT INTO `app_log_userlog` VALUES (9, 'admin', '删除权限', '小贰', '成功', '2018-10-24 04:40:52.362834');
-INSERT INTO `app_log_userlog` VALUES (10, 'admin', '查询权限', '小贰', '成功', '2018-10-24 04:40:54.816975');
-INSERT INTO `app_log_userlog` VALUES (11, 'admin', '查询发布', '小贰', '成功', '2018-10-24 04:40:58.463183');
-INSERT INTO `app_log_userlog` VALUES (12, 'admin', '查询发布', '小贰', '成功', '2018-10-24 04:43:18.078169');
-INSERT INTO `app_log_userlog` VALUES (13, 'admin', '查询发布', '小贰', '成功', '2018-10-24 04:43:23.019451');
-INSERT INTO `app_log_userlog` VALUES (14, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 04:56:06.994148');
-INSERT INTO `app_log_userlog` VALUES (15, 'admin', '服务器同步系统信息', '小贰', '成功', '2018-10-24 04:56:14.238563');
-INSERT INTO `app_log_userlog` VALUES (16, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 04:56:34.564725');
-INSERT INTO `app_log_userlog` VALUES (17, 'admin', '查询服务器详细信息', '小贰', '成功', '2018-10-24 04:56:40.271052');
-INSERT INTO `app_log_userlog` VALUES (18, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 04:56:44.879315');
-INSERT INTO `app_log_userlog` VALUES (19, 'admin', '过滤服务器', '小贰', '成功', '2018-10-24 04:56:55.123901');
-INSERT INTO `app_log_userlog` VALUES (20, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 04:57:39.091416');
-INSERT INTO `app_log_userlog` VALUES (21, 'admin', '查询服务器详细信息', '小贰', '成功', '2018-10-24 04:57:48.156934');
-INSERT INTO `app_log_userlog` VALUES (22, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 04:57:51.405120');
-INSERT INTO `app_log_userlog` VALUES (23, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 04:58:05.638934');
-INSERT INTO `app_log_userlog` VALUES (24, 'admin', '查询服务器详细信息', '小贰', '成功', '2018-10-24 04:58:09.774171');
-INSERT INTO `app_log_userlog` VALUES (25, 'admin', '服务器同步系统信息', '小贰', '成功', '2018-10-24 04:58:17.794630');
-INSERT INTO `app_log_userlog` VALUES (26, 'admin', '查询服务器详细信息', '小贰', '成功', '2018-10-24 04:58:33.008500');
-INSERT INTO `app_log_userlog` VALUES (27, 'test', '登录', '测试', '成功', '2018-10-24 06:08:10.183421');
-INSERT INTO `app_log_userlog` VALUES (28, 'test', '查询服务器', '测试', '成功', '2018-10-24 06:08:13.101587');
-INSERT INTO `app_log_userlog` VALUES (29, 'test', '查询发布', '测试', '成功', '2018-10-24 06:08:17.932864');
-INSERT INTO `app_log_userlog` VALUES (30, 'test', '查询用户', '测试', '成功', '2018-10-24 06:08:32.136676');
-INSERT INTO `app_log_userlog` VALUES (31, 'admin', '登录', '小贰', '成功', '2018-10-24 06:09:06.439638');
-INSERT INTO `app_log_userlog` VALUES (32, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:09:09.494813');
-INSERT INTO `app_log_userlog` VALUES (33, 'admin', '查询菜单', '小贰', '成功', '2018-10-24 06:09:16.875235');
-INSERT INTO `app_log_userlog` VALUES (34, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:09:28.961926');
-INSERT INTO `app_log_userlog` VALUES (35, 'admin', '查看角色', '小贰', '成功', '2018-10-24 06:09:32.386122');
-INSERT INTO `app_log_userlog` VALUES (36, 'admin', '获取角色权限', '小贰', '成功', '2018-10-24 06:09:34.144223');
-INSERT INTO `app_log_userlog` VALUES (37, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:10:24.946129');
-INSERT INTO `app_log_userlog` VALUES (38, 'admin', '查看角色', '小贰', '成功', '2018-10-24 06:10:28.260318');
-INSERT INTO `app_log_userlog` VALUES (39, 'admin', '查询权限', '小贰', '成功', '2018-10-24 06:10:29.645397');
-INSERT INTO `app_log_userlog` VALUES (40, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:10:49.150513');
-INSERT INTO `app_log_userlog` VALUES (41, 'admin', '查询权限', '小贰', '成功', '2018-10-24 06:10:52.242690');
-INSERT INTO `app_log_userlog` VALUES (42, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:10:53.298750');
-INSERT INTO `app_log_userlog` VALUES (43, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:10:58.876069');
-INSERT INTO `app_log_userlog` VALUES (44, 'admin', '查询权限', '小贰', '成功', '2018-10-24 06:11:06.339496');
-INSERT INTO `app_log_userlog` VALUES (45, 'admin', '查询菜单', '小贰', '成功', '2018-10-24 06:11:07.784579');
-INSERT INTO `app_log_userlog` VALUES (46, 'admin', '修改菜单', '小贰', '成功', '2018-10-24 06:11:13.055880');
-INSERT INTO `app_log_userlog` VALUES (47, 'admin', '查看角色', '小贰', '成功', '2018-10-24 06:11:15.418015');
-INSERT INTO `app_log_userlog` VALUES (48, 'admin', '删除修改', '小贰', '成功', '2018-10-24 06:11:17.048109');
-INSERT INTO `app_log_userlog` VALUES (49, 'admin', '删除修改', '小贰', '成功', '2018-10-24 06:11:19.232234');
-INSERT INTO `app_log_userlog` VALUES (50, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:11:21.683374');
-INSERT INTO `app_log_userlog` VALUES (51, 'admin', '查看角色', '小贰', '成功', '2018-10-24 06:11:23.041451');
-INSERT INTO `app_log_userlog` VALUES (52, 'admin', '查询权限', '小贰', '成功', '2018-10-24 06:11:24.742549');
-INSERT INTO `app_log_userlog` VALUES (53, 'admin', '查询菜单', '小贰', '成功', '2018-10-24 06:11:27.955732');
-INSERT INTO `app_log_userlog` VALUES (54, 'admin', '修改菜单', '小贰', '成功', '2018-10-24 06:11:33.374042');
-INSERT INTO `app_log_userlog` VALUES (55, 'admin', '修改菜单', '小贰', '成功', '2018-10-24 06:11:57.328413');
-INSERT INTO `app_log_userlog` VALUES (56, 'admin', '查看角色', '小贰', '成功', '2018-10-24 06:11:59.468535');
-INSERT INTO `app_log_userlog` VALUES (57, 'admin', '获取角色权限', '小贰', '成功', '2018-10-24 06:12:00.769609');
-INSERT INTO `app_log_userlog` VALUES (58, 'admin', '角色权限授权', '小贰', '成功', '2018-10-24 06:12:04.538825');
-INSERT INTO `app_log_userlog` VALUES (59, 'admin', '登录', '小贰', '成功', '2018-10-24 06:12:15.789468');
-INSERT INTO `app_log_userlog` VALUES (60, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:12:18.280611');
-INSERT INTO `app_log_userlog` VALUES (61, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:12:43.178035');
-INSERT INTO `app_log_userlog` VALUES (62, 'admin', '登录', '小贰', '成功', '2018-10-24 06:13:51.317932');
-INSERT INTO `app_log_userlog` VALUES (63, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:13:53.986085');
-INSERT INTO `app_log_userlog` VALUES (64, 'test', '登录', '测试', '成功', '2018-10-24 06:16:52.906319');
-INSERT INTO `app_log_userlog` VALUES (65, 'test', '查询用户', '测试', '成功', '2018-10-24 06:16:54.741424');
-INSERT INTO `app_log_userlog` VALUES (66, 'test', '查询环境', '测试', '成功', '2018-10-24 06:17:00.937778');
-INSERT INTO `app_log_userlog` VALUES (67, 'test', '访问文件管理', '测试', '成功', '2018-10-24 06:17:03.761939');
-INSERT INTO `app_log_userlog` VALUES (68, 'test', '查询环境', '测试', '成功', '2018-10-24 06:17:19.792856');
-INSERT INTO `app_log_userlog` VALUES (69, 'test', '查询环境', '测试', '成功', '2018-10-24 06:18:44.093678');
-INSERT INTO `app_log_userlog` VALUES (70, 'test', '查询环境', '测试', '成功', '2018-10-24 06:19:03.127767');
-INSERT INTO `app_log_userlog` VALUES (71, 'test', '访问批量管理', '测试', '成功', '2018-10-24 06:20:44.352557');
-INSERT INTO `app_log_userlog` VALUES (72, 'test', '访问文件管理', '测试', '成功', '2018-10-24 06:20:47.916760');
-INSERT INTO `app_log_userlog` VALUES (73, 'test', '查询服务器', '测试', '成功', '2018-10-24 06:21:25.380903');
-INSERT INTO `app_log_userlog` VALUES (74, 'test', '连接服务器', '测试', '成功', '2018-10-24 06:21:34.453422');
-INSERT INTO `app_log_userlog` VALUES (75, 'test', '查看操作日志', '测试', '成功', '2018-10-24 06:21:45.321044');
-INSERT INTO `app_log_userlog` VALUES (76, 'test', '查看操作日志', '测试', '成功', '2018-10-24 06:21:50.616347');
-INSERT INTO `app_log_userlog` VALUES (77, 'test', '查询发布', '测试', '成功', '2018-10-24 06:22:59.804304');
-INSERT INTO `app_log_userlog` VALUES (78, 'admin', '登录', '小贰', '成功', '2018-10-24 06:23:11.029946');
-INSERT INTO `app_log_userlog` VALUES (79, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:23:14.742158');
-INSERT INTO `app_log_userlog` VALUES (80, 'admin', '代码发布过滤', '小贰', '成功', '2018-10-24 06:23:16.721272');
-INSERT INTO `app_log_userlog` VALUES (81, 'admin', '查询权限', '小贰', '成功', '2018-10-24 06:23:31.563120');
-INSERT INTO `app_log_userlog` VALUES (82, 'admin', '添加权限', '小贰', '成功', '2018-10-24 06:23:51.364253');
-INSERT INTO `app_log_userlog` VALUES (83, 'admin', '查看角色', '小贰', '成功', '2018-10-24 06:23:55.727503');
-INSERT INTO `app_log_userlog` VALUES (84, 'admin', '获取角色权限', '小贰', '成功', '2018-10-24 06:23:56.695558');
-INSERT INTO `app_log_userlog` VALUES (85, 'admin', '角色权限授权', '小贰', '成功', '2018-10-24 06:24:04.623011');
-INSERT INTO `app_log_userlog` VALUES (86, 'admin', '登录', '小贰', '成功', '2018-10-24 06:24:13.658528');
-INSERT INTO `app_log_userlog` VALUES (87, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:24:18.826824');
-INSERT INTO `app_log_userlog` VALUES (88, 'admin', '代码发布过滤', '小贰', '成功', '2018-10-24 06:24:20.935944');
-INSERT INTO `app_log_userlog` VALUES (89, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:24:25.912229');
-INSERT INTO `app_log_userlog` VALUES (90, 'admin', '代码发布过滤', '小贰', '成功', '2018-10-24 06:24:27.367312');
-INSERT INTO `app_log_userlog` VALUES (91, 'admin', '查看角色', '小贰', '成功', '2018-10-24 06:24:45.872371');
-INSERT INTO `app_log_userlog` VALUES (92, 'admin', '获取角色权限', '小贰', '成功', '2018-10-24 06:24:47.136443');
-INSERT INTO `app_log_userlog` VALUES (93, 'admin', '登录', '小贰', '成功', '2018-10-24 06:24:58.022066');
-INSERT INTO `app_log_userlog` VALUES (94, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:25:00.777223');
-INSERT INTO `app_log_userlog` VALUES (95, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:25:04.869457');
-INSERT INTO `app_log_userlog` VALUES (96, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:26:27.110161');
-INSERT INTO `app_log_userlog` VALUES (97, 'admin', '查询发布', '小贰', '失败', '2018-10-24 06:31:22.776072');
-INSERT INTO `app_log_userlog` VALUES (98, 'admin', '查询项目', '小贰', '失败', '2018-10-24 06:31:26.649294');
-INSERT INTO `app_log_userlog` VALUES (99, 'admin', '查询项目', '小贰', '成功', '2018-10-24 06:31:57.630066');
-INSERT INTO `app_log_userlog` VALUES (100, 'admin', '查询代码', '小贰', '成功', '2018-10-24 06:31:58.599121');
-INSERT INTO `app_log_userlog` VALUES (101, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:31:59.410168');
-INSERT INTO `app_log_userlog` VALUES (102, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:33:59.231021');
-INSERT INTO `app_log_userlog` VALUES (103, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:34:26.046555');
-INSERT INTO `app_log_userlog` VALUES (104, 'admin', '查询权限', '小贰', '成功', '2018-10-24 06:41:30.726845');
-INSERT INTO `app_log_userlog` VALUES (105, 'admin', '修改权限', '小贰', '成功', '2018-10-24 06:41:36.937200');
-INSERT INTO `app_log_userlog` VALUES (106, 'admin', '查询权限', '小贰', '成功', '2018-10-24 06:42:40.881858');
-INSERT INTO `app_log_userlog` VALUES (107, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:43:08.307426');
-INSERT INTO `app_log_userlog` VALUES (108, 'admin', '更新代码', '小贰', '失败', '2018-10-24 06:43:11.125588');
-INSERT INTO `app_log_userlog` VALUES (109, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:43:15.964864');
-INSERT INTO `app_log_userlog` VALUES (110, 'admin', '查看角色', '小贰', '成功', '2018-10-24 06:43:16.838914');
-INSERT INTO `app_log_userlog` VALUES (111, 'admin', '获取角色权限', '小贰', '成功', '2018-10-24 06:43:18.200992');
-INSERT INTO `app_log_userlog` VALUES (112, 'admin', '角色权限授权', '小贰', '成功', '2018-10-24 06:43:24.068328');
-INSERT INTO `app_log_userlog` VALUES (113, 'admin', '登录', '小贰', '成功', '2018-10-24 06:43:33.959894');
-INSERT INTO `app_log_userlog` VALUES (114, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:43:36.814057');
-INSERT INTO `app_log_userlog` VALUES (115, 'admin', '更新代码', '小贰', '成功', '2018-10-24 06:43:39.689221');
-INSERT INTO `app_log_userlog` VALUES (116, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 06:58:17.808447');
-INSERT INTO `app_log_userlog` VALUES (117, 'admin', '查询发布', '小贰', '成功', '2018-10-24 06:58:20.799618');
-INSERT INTO `app_log_userlog` VALUES (118, 'admin', '查询用户', '小贰', '成功', '2018-10-24 06:58:24.153810');
-INSERT INTO `app_log_userlog` VALUES (119, 'admin', '查询发布记录', '小贰', '成功', '2018-10-24 06:59:08.683357');
-INSERT INTO `app_log_userlog` VALUES (120, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 07:16:46.909884');
-INSERT INTO `app_log_userlog` VALUES (121, 'admin', '过滤服务器', '小贰', '成功', '2018-10-24 07:16:49.478031');
-INSERT INTO `app_log_userlog` VALUES (122, 'admin', '查询项目', '小贰', '成功', '2018-10-24 07:17:14.617469');
-INSERT INTO `app_log_userlog` VALUES (123, 'admin', '查询发布', '小贰', '成功', '2018-10-24 07:17:16.273563');
-INSERT INTO `app_log_userlog` VALUES (124, 'admin', '代码发布过滤', '小贰', '成功', '2018-10-24 07:17:18.538693');
-INSERT INTO `app_log_userlog` VALUES (125, 'admin', '访问批量管理', '小贰', '成功', '2018-10-24 07:17:42.689074');
-INSERT INTO `app_log_userlog` VALUES (126, 'admin', '执行命令', '小贰', '成功', '2018-10-24 07:18:00.058068');
-INSERT INTO `app_log_userlog` VALUES (127, 'admin', '查看操作日志', '小贰', '成功', '2018-10-24 07:18:23.680419');
-INSERT INTO `app_log_userlog` VALUES (128, 'admin', '查看审计记录', '小贰', '成功', '2018-10-24 07:18:25.691534');
-INSERT INTO `app_log_userlog` VALUES (129, 'admin', '查看角色', '小贰', '成功', '2018-10-24 07:18:50.736966');
-INSERT INTO `app_log_userlog` VALUES (130, 'admin', '获取角色权限', '小贰', '成功', '2018-10-24 07:18:53.923149');
-INSERT INTO `app_log_userlog` VALUES (131, 'admin', '登录', '小贰', '成功', '2018-10-24 08:24:07.487992');
-INSERT INTO `app_log_userlog` VALUES (132, 'admin', '查询用户', '小贰', '成功', '2018-10-24 08:24:10.690175');
-INSERT INTO `app_log_userlog` VALUES (133, 'admin', '修改用户', '小贰', '成功', '2018-10-24 08:24:15.261436');
-INSERT INTO `app_log_userlog` VALUES (134, 'admin', '修改用户', '小贰', '成功', '2018-10-24 08:24:25.065997');
-INSERT INTO `app_log_userlog` VALUES (135, 'admin', '删除用户', '小贰', '成功', '2018-10-24 08:24:27.793153');
-INSERT INTO `app_log_userlog` VALUES (136, 'admin', '查询用户', '小贰', '成功', '2018-10-24 08:24:29.484250');
-INSERT INTO `app_log_userlog` VALUES (137, 'admin', '查看角色', '小贰', '成功', '2018-10-24 08:24:31.178347');
-INSERT INTO `app_log_userlog` VALUES (138, 'admin', '查看操作日志', '小贰', '成功', '2018-10-24 08:24:34.613543');
-INSERT INTO `app_log_userlog` VALUES (139, 'admin', '查看用户日志', '小贰', '成功', '2018-10-24 08:24:37.105686');
-INSERT INTO `app_log_userlog` VALUES (140, 'admin', '查询环境', '小贰', '成功', '2018-10-24 08:24:42.763009');
-INSERT INTO `app_log_userlog` VALUES (141, 'admin', '访问批量管理', '小贰', '成功', '2018-10-24 08:24:44.037082');
-INSERT INTO `app_log_userlog` VALUES (142, 'admin', '访问文件管理', '小贰', '成功', '2018-10-24 08:24:46.817241');
-INSERT INTO `app_log_userlog` VALUES (143, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:24:51.674519');
-INSERT INTO `app_log_userlog` VALUES (144, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:24:54.885703');
-INSERT INTO `app_log_userlog` VALUES (145, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:24:57.363844');
-INSERT INTO `app_log_userlog` VALUES (146, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:25:16.840958');
-INSERT INTO `app_log_userlog` VALUES (147, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:25:17.777012');
-INSERT INTO `app_log_userlog` VALUES (148, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:25:45.831617');
-INSERT INTO `app_log_userlog` VALUES (149, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:25:48.170750');
-INSERT INTO `app_log_userlog` VALUES (150, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:25:49.995855');
-INSERT INTO `app_log_userlog` VALUES (151, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:25:51.622948');
-INSERT INTO `app_log_userlog` VALUES (152, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:25:53.771071');
-INSERT INTO `app_log_userlog` VALUES (153, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:25:56.092203');
-INSERT INTO `app_log_userlog` VALUES (154, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:25:56.506227');
-INSERT INTO `app_log_userlog` VALUES (155, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:25:58.980369');
-INSERT INTO `app_log_userlog` VALUES (156, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:00.736469');
-INSERT INTO `app_log_userlog` VALUES (157, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:02.530572');
-INSERT INTO `app_log_userlog` VALUES (158, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:04.201667');
-INSERT INTO `app_log_userlog` VALUES (159, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:04.560688');
-INSERT INTO `app_log_userlog` VALUES (160, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:06.455796');
-INSERT INTO `app_log_userlog` VALUES (161, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:06.748813');
-INSERT INTO `app_log_userlog` VALUES (162, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:08.243899');
-INSERT INTO `app_log_userlog` VALUES (163, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:08.514914');
-INSERT INTO `app_log_userlog` VALUES (164, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:10.143007');
-INSERT INTO `app_log_userlog` VALUES (165, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:11.104062');
-INSERT INTO `app_log_userlog` VALUES (166, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:12.963168');
-INSERT INTO `app_log_userlog` VALUES (167, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:13.111177');
-INSERT INTO `app_log_userlog` VALUES (168, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:14.654265');
-INSERT INTO `app_log_userlog` VALUES (169, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:15.043287');
-INSERT INTO `app_log_userlog` VALUES (170, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:17.182410');
-INSERT INTO `app_log_userlog` VALUES (171, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:17.317418');
-INSERT INTO `app_log_userlog` VALUES (172, 'admin', '删除发布', '小贰', '成功', '2018-10-24 08:26:18.966512');
-INSERT INTO `app_log_userlog` VALUES (173, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:19.506543');
-INSERT INTO `app_log_userlog` VALUES (174, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:26:21.302645');
-INSERT INTO `app_log_userlog` VALUES (175, 'admin', '查询发布记录', '小贰', '成功', '2018-10-24 08:26:22.168695');
-INSERT INTO `app_log_userlog` VALUES (176, 'admin', '查询代码', '小贰', '成功', '2018-10-24 08:26:23.037745');
-INSERT INTO `app_log_userlog` VALUES (177, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:26.317932');
-INSERT INTO `app_log_userlog` VALUES (178, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:29.589119');
-INSERT INTO `app_log_userlog` VALUES (179, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:31.992257');
-INSERT INTO `app_log_userlog` VALUES (180, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:33.818361');
-INSERT INTO `app_log_userlog` VALUES (181, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:35.574462');
-INSERT INTO `app_log_userlog` VALUES (182, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:37.342563');
-INSERT INTO `app_log_userlog` VALUES (183, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:39.426682');
-INSERT INTO `app_log_userlog` VALUES (184, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:41.063776');
-INSERT INTO `app_log_userlog` VALUES (185, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:43.237900');
-INSERT INTO `app_log_userlog` VALUES (186, 'admin', '查询代码', '小贰', '成功', '2018-10-24 08:26:43.968942');
-INSERT INTO `app_log_userlog` VALUES (187, 'admin', '删除代码', '小贰', '成功', '2018-10-24 08:26:45.879051');
-INSERT INTO `app_log_userlog` VALUES (188, 'admin', '查询代码', '小贰', '成功', '2018-10-24 08:26:46.397081');
-INSERT INTO `app_log_userlog` VALUES (189, 'admin', '查询代码', '小贰', '成功', '2018-10-24 08:26:47.762159');
-INSERT INTO `app_log_userlog` VALUES (190, 'admin', '查询项目', '小贰', '成功', '2018-10-24 08:26:49.119236');
-INSERT INTO `app_log_userlog` VALUES (191, 'admin', '删除项目', '小贰', '成功', '2018-10-24 08:26:51.948398');
-INSERT INTO `app_log_userlog` VALUES (192, 'admin', '删除项目', '小贰', '成功', '2018-10-24 08:26:53.547490');
-INSERT INTO `app_log_userlog` VALUES (193, 'admin', '删除项目', '小贰', '成功', '2018-10-24 08:26:55.514602');
-INSERT INTO `app_log_userlog` VALUES (194, 'admin', '查询项目', '小贰', '成功', '2018-10-24 08:26:55.819620');
-INSERT INTO `app_log_userlog` VALUES (195, 'admin', '删除项目', '小贰', '成功', '2018-10-24 08:26:57.821734');
-INSERT INTO `app_log_userlog` VALUES (196, 'admin', '查询项目', '小贰', '成功', '2018-10-24 08:26:58.041747');
-INSERT INTO `app_log_userlog` VALUES (197, 'admin', '查询项目', '小贰', '成功', '2018-10-24 08:26:59.515831');
-INSERT INTO `app_log_userlog` VALUES (198, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 08:27:01.377938');
-INSERT INTO `app_log_userlog` VALUES (199, 'admin', '批量删除服务器', '小贰', '成功', '2018-10-24 08:27:08.481344');
-INSERT INTO `app_log_userlog` VALUES (200, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 08:27:09.427398');
-INSERT INTO `app_log_userlog` VALUES (201, 'admin', '批量删除服务器', '小贰', '成功', '2018-10-24 08:27:15.180727');
-INSERT INTO `app_log_userlog` VALUES (202, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 08:27:15.471744');
-INSERT INTO `app_log_userlog` VALUES (203, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 08:27:17.116838');
-INSERT INTO `app_log_userlog` VALUES (204, 'admin', '查询网络设备', '小贰', '成功', '2018-10-24 08:27:17.841879');
-INSERT INTO `app_log_userlog` VALUES (205, 'admin', '查询机房', '小贰', '成功', '2018-10-24 08:27:18.531919');
-INSERT INTO `app_log_userlog` VALUES (206, 'admin', '查询分组', '小贰', '成功', '2018-10-24 08:27:19.102951');
-INSERT INTO `app_log_userlog` VALUES (207, 'admin', '查询厂商', '小贰', '成功', '2018-10-24 08:27:19.600980');
-INSERT INTO `app_log_userlog` VALUES (208, 'admin', '查询项目', '小贰', '成功', '2018-10-24 08:27:21.407083');
-INSERT INTO `app_log_userlog` VALUES (209, 'admin', '查询服务器', '小贰', '成功', '2018-10-24 08:27:24.009232');
-INSERT INTO `app_log_userlog` VALUES (210, 'admin', '查询网络设备', '小贰', '成功', '2018-10-24 08:27:24.669270');
-INSERT INTO `app_log_userlog` VALUES (211, 'admin', '删除网络设备', '小贰', '成功', '2018-10-24 08:27:27.715444');
-INSERT INTO `app_log_userlog` VALUES (212, 'admin', '查询网络设备', '小贰', '成功', '2018-10-24 08:27:28.120467');
-INSERT INTO `app_log_userlog` VALUES (213, 'admin', '查询机房', '小贰', '成功', '2018-10-24 08:27:29.271533');
-INSERT INTO `app_log_userlog` VALUES (214, 'admin', '删除机房', '小贰', '成功', '2018-10-24 08:27:31.816679');
-INSERT INTO `app_log_userlog` VALUES (215, 'admin', '查询机房', '小贰', '成功', '2018-10-24 08:27:31.989689');
-INSERT INTO `app_log_userlog` VALUES (216, 'admin', '删除机房', '小贰', '成功', '2018-10-24 08:27:33.655784');
-INSERT INTO `app_log_userlog` VALUES (217, 'admin', '查询机房', '小贰', '成功', '2018-10-24 08:27:33.843795');
-INSERT INTO `app_log_userlog` VALUES (218, 'admin', '删除机房', '小贰', '成功', '2018-10-24 08:27:36.503947');
-INSERT INTO `app_log_userlog` VALUES (219, 'admin', '查询机房', '小贰', '成功', '2018-10-24 08:27:36.714959');
-INSERT INTO `app_log_userlog` VALUES (220, 'admin', '查询分组', '小贰', '成功', '2018-10-24 08:27:37.698015');
-INSERT INTO `app_log_userlog` VALUES (221, 'admin', '删除分组', '小贰', '成功', '2018-10-24 08:27:40.427171');
-INSERT INTO `app_log_userlog` VALUES (222, 'admin', '查询分组', '小贰', '成功', '2018-10-24 08:27:40.919199');
-INSERT INTO `app_log_userlog` VALUES (223, 'admin', '删除分组', '小贰', '成功', '2018-10-24 08:27:43.886369');
-INSERT INTO `app_log_userlog` VALUES (224, 'admin', '查询分组', '小贰', '成功', '2018-10-24 08:27:44.143384');
-INSERT INTO `app_log_userlog` VALUES (225, 'admin', '删除分组', '小贰', '成功', '2018-10-24 08:27:47.777592');
-INSERT INTO `app_log_userlog` VALUES (226, 'admin', '查询分组', '小贰', '成功', '2018-10-24 08:27:48.060608');
-INSERT INTO `app_log_userlog` VALUES (227, 'admin', '删除分组', '小贰', '成功', '2018-10-24 08:27:49.907713');
-INSERT INTO `app_log_userlog` VALUES (228, 'admin', '查询分组', '小贰', '成功', '2018-10-24 08:27:50.160728');
-INSERT INTO `app_log_userlog` VALUES (229, 'admin', '删除分组', '小贰', '成功', '2018-10-24 08:27:51.879826');
-INSERT INTO `app_log_userlog` VALUES (230, 'admin', '查询分组', '小贰', '成功', '2018-10-24 08:27:52.122840');
-INSERT INTO `app_log_userlog` VALUES (231, 'admin', '查询厂商', '小贰', '成功', '2018-10-24 08:27:56.006062');
-INSERT INTO `app_log_userlog` VALUES (232, 'admin', '删除厂商', '小贰', '成功', '2018-10-24 08:27:58.681215');
-INSERT INTO `app_log_userlog` VALUES (233, 'admin', '查询厂商', '小贰', '成功', '2018-10-24 08:27:58.845225');
-INSERT INTO `app_log_userlog` VALUES (234, 'admin', '删除厂商', '小贰', '成功', '2018-10-24 08:28:00.451316');
-INSERT INTO `app_log_userlog` VALUES (235, 'admin', '查询厂商', '小贰', '成功', '2018-10-24 08:28:00.683330');
-INSERT INTO `app_log_userlog` VALUES (236, 'admin', '删除厂商', '小贰', '成功', '2018-10-24 08:28:02.188416');
-INSERT INTO `app_log_userlog` VALUES (237, 'admin', '查询厂商', '小贰', '成功', '2018-10-24 08:28:02.317423');
-INSERT INTO `app_log_userlog` VALUES (238, 'admin', '查询厂商', '小贰', '成功', '2018-10-24 08:28:06.531664');
-INSERT INTO `app_log_userlog` VALUES (239, 'admin', '查询项目', '小贰', '成功', '2018-10-24 08:28:09.682844');
-INSERT INTO `app_log_userlog` VALUES (240, 'admin', '查询代码', '小贰', '成功', '2018-10-24 08:28:10.300880');
-INSERT INTO `app_log_userlog` VALUES (241, 'admin', '查询代码', '小贰', '成功', '2018-10-24 08:28:11.051923');
-INSERT INTO `app_log_userlog` VALUES (242, 'admin', '查询发布', '小贰', '成功', '2018-10-24 08:28:11.490948');
-INSERT INTO `app_log_userlog` VALUES (243, 'admin', '查询发布记录', '小贰', '成功', '2018-10-24 08:28:12.307995');
-INSERT INTO `app_log_userlog` VALUES (244, 'admin', '查询环境', '小贰', '成功', '2018-10-24 08:28:14.142099');
-INSERT INTO `app_log_userlog` VALUES (245, 'admin', '修改环境', '小贰', '成功', '2018-10-24 08:28:19.102383');
-INSERT INTO `app_log_userlog` VALUES (246, 'admin', '访问批量管理', '小贰', '成功', '2018-10-24 08:28:23.503635');
-INSERT INTO `app_log_userlog` VALUES (247, 'admin', '访问文件管理', '小贰', '成功', '2018-10-24 08:28:24.247677');
-INSERT INTO `app_log_userlog` VALUES (248, 'admin', '访问文件管理', '小贰', '成功', '2018-10-24 08:28:31.190075');
-INSERT INTO `app_log_userlog` VALUES (249, 'admin', '访问文件管理', '小贰', '成功', '2018-10-24 08:28:33.354198');
-INSERT INTO `app_log_userlog` VALUES (250, 'admin', '访问批量管理', '小贰', '成功', '2018-10-24 08:28:34.263250');
-INSERT INTO `app_log_userlog` VALUES (251, 'admin', '访问phpmyadmin', '小贰', '成功', '2018-10-24 08:28:38.524494');
-INSERT INTO `app_log_userlog` VALUES (252, 'admin', '查看操作日志', '小贰', '成功', '2018-10-24 08:28:40.717620');
-INSERT INTO `app_log_userlog` VALUES (253, 'admin', '查看用户日志', '小贰', '成功', '2018-10-24 08:28:41.948690');
-INSERT INTO `app_log_userlog` VALUES (254, 'admin', '查看角色', '小贰', '成功', '2018-10-24 08:28:52.690304');
-INSERT INTO `app_log_userlog` VALUES (255, 'admin', '查询用户', '小贰', '成功', '2018-10-24 08:28:53.800368');
-INSERT INTO `app_log_userlog` VALUES (256, 'admin', '查询菜单', '小贰', '成功', '2018-10-24 08:28:56.061497');
-INSERT INTO `app_log_userlog` VALUES (257, 'admin', '查询权限', '小贰', '成功', '2018-10-24 08:28:58.055611');
+INSERT INTO `app_log_userlog` VALUES (1001, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:33.498728');
+INSERT INTO `app_log_userlog` VALUES (1002, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:35.662852');
+INSERT INTO `app_log_userlog` VALUES (1003, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:38.100991');
+INSERT INTO `app_log_userlog` VALUES (1004, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:42.319232');
+INSERT INTO `app_log_userlog` VALUES (1005, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:45.984442');
+INSERT INTO `app_log_userlog` VALUES (1006, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:46.764487');
+INSERT INTO `app_log_userlog` VALUES (1007, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:47.551532');
+INSERT INTO `app_log_userlog` VALUES (1008, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:48.101563');
+INSERT INTO `app_log_userlog` VALUES (1009, 'admin', '查询代码', '小贰', '成功', '2018-11-28 07:45:49.031616');
+INSERT INTO `app_log_userlog` VALUES (1010, 'admin', '修改代码', '小贰', '成功', '2018-11-28 07:45:53.099849');
+INSERT INTO `app_log_userlog` VALUES (1011, 'admin', '修改代码', '小贰', '成功', '2018-11-28 07:45:56.869064');
+INSERT INTO `app_log_userlog` VALUES (1012, 'admin', '查询代码', '小贰', '成功', '2018-11-28 07:45:57.836120');
+INSERT INTO `app_log_userlog` VALUES (1013, 'admin', '查询代码', '小贰', '成功', '2018-11-28 07:46:03.699455');
+INSERT INTO `app_log_userlog` VALUES (1014, 'admin', '查询发布', '小贰', '成功', '2018-11-28 07:46:04.801518');
+INSERT INTO `app_log_userlog` VALUES (1015, 'admin', '代码发布过滤', '小贰', '成功', '2018-11-28 07:46:07.274660');
+INSERT INTO `app_log_userlog` VALUES (1016, 'admin', '查询发布', '小贰', '成功', '2018-11-28 07:46:09.288775');
+INSERT INTO `app_log_userlog` VALUES (1017, 'admin', '查询发布记录', '小贰', '成功', '2018-11-28 07:46:10.418839');
+INSERT INTO `app_log_userlog` VALUES (1018, 'admin', '查询环境', '小贰', '成功', '2018-11-28 07:46:21.101450');
+INSERT INTO `app_log_userlog` VALUES (1019, 'admin', '访问批量管理', '小贰', '成功', '2018-11-28 07:46:23.225572');
+INSERT INTO `app_log_userlog` VALUES (1020, 'admin', '访问文件管理', '小贰', '成功', '2018-11-28 07:46:25.891724');
+INSERT INTO `app_log_userlog` VALUES (1021, 'admin', '查看操作日志', '小贰', '成功', '2018-11-28 07:46:31.728058');
+INSERT INTO `app_log_userlog` VALUES (1022, 'admin', '查看用户日志', '小贰', '成功', '2018-11-28 07:46:33.039133');
+INSERT INTO `app_log_userlog` VALUES (1023, 'admin', '查看任务', '小贰', '成功', '2018-11-28 07:46:35.496274');
+INSERT INTO `app_log_userlog` VALUES (1024, 'admin', '查看角色', '小贰', '成功', '2018-11-28 07:46:37.948414');
+INSERT INTO `app_log_userlog` VALUES (1025, 'admin', '删除角色', '小贰', '成功', '2018-11-28 07:46:42.913698');
+INSERT INTO `app_log_userlog` VALUES (1026, 'admin', '查看角色', '小贰', '成功', '2018-11-28 07:46:44.547792');
+INSERT INTO `app_log_userlog` VALUES (1027, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:46:46.367896');
+INSERT INTO `app_log_userlog` VALUES (1028, 'admin', '删除用户', '小贰', '成功', '2018-11-28 07:46:52.622253');
+INSERT INTO `app_log_userlog` VALUES (1029, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:46:53.091280');
+INSERT INTO `app_log_userlog` VALUES (1030, 'admin', '修改用户', '小贰', '成功', '2018-11-28 07:46:54.613367');
+INSERT INTO `app_log_userlog` VALUES (1031, 'admin', '修改用户', '小贰', '成功', '2018-11-28 07:47:07.498104');
+INSERT INTO `app_log_userlog` VALUES (1032, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:47:08.299150');
+INSERT INTO `app_log_userlog` VALUES (1033, 'admin', '添加远程管理用户', '小贰', '成功', '2018-11-28 07:47:12.454388');
+INSERT INTO `app_log_userlog` VALUES (1034, 'admin', '添加远程管理用户', '小贰', '成功', '2018-11-28 07:47:16.637627');
+INSERT INTO `app_log_userlog` VALUES (1035, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:47:17.661686');
+INSERT INTO `app_log_userlog` VALUES (1036, 'admin', '添加远程管理用户', '小贰', '成功', '2018-11-28 07:47:18.714746');
+INSERT INTO `app_log_userlog` VALUES (1037, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:47:21.889927');
+INSERT INTO `app_log_userlog` VALUES (1038, 'admin', '查询菜单', '小贰', '成功', '2018-11-28 07:47:22.873984');
+INSERT INTO `app_log_userlog` VALUES (1039, 'admin', '查询权限', '小贰', '成功', '2018-11-28 07:47:24.762092');
 
 -- ----------------------------
 -- Table structure for app_sys_envsofeware
@@ -1091,7 +840,7 @@ CREATE TABLE `auth_permission`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `auth_permission_content_type_id_codename_01ab375a_uniq`(`content_type_id`, `codename`) USING BTREE,
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 149 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of auth_permission
@@ -1208,6 +957,42 @@ INSERT INTO `auth_permission` VALUES (109, 'Can add remote user', 26, 'add_remot
 INSERT INTO `auth_permission` VALUES (110, 'Can change remote user', 26, 'change_remoteuser');
 INSERT INTO `auth_permission` VALUES (111, 'Can delete remote user', 26, 'delete_remoteuser');
 INSERT INTO `auth_permission` VALUES (112, 'Can view remote user', 26, 'view_remoteuser');
+INSERT INTO `auth_permission` VALUES (113, 'Can add crontab', 27, 'add_crontabschedule');
+INSERT INTO `auth_permission` VALUES (114, 'Can change crontab', 27, 'change_crontabschedule');
+INSERT INTO `auth_permission` VALUES (115, 'Can delete crontab', 27, 'delete_crontabschedule');
+INSERT INTO `auth_permission` VALUES (116, 'Can view crontab', 27, 'view_crontabschedule');
+INSERT INTO `auth_permission` VALUES (117, 'Can add periodic task', 28, 'add_periodictask');
+INSERT INTO `auth_permission` VALUES (118, 'Can change periodic task', 28, 'change_periodictask');
+INSERT INTO `auth_permission` VALUES (119, 'Can delete periodic task', 28, 'delete_periodictask');
+INSERT INTO `auth_permission` VALUES (120, 'Can view periodic task', 28, 'view_periodictask');
+INSERT INTO `auth_permission` VALUES (121, 'Can add interval', 29, 'add_intervalschedule');
+INSERT INTO `auth_permission` VALUES (122, 'Can change interval', 29, 'change_intervalschedule');
+INSERT INTO `auth_permission` VALUES (123, 'Can delete interval', 29, 'delete_intervalschedule');
+INSERT INTO `auth_permission` VALUES (124, 'Can view interval', 29, 'view_intervalschedule');
+INSERT INTO `auth_permission` VALUES (125, 'Can add periodic tasks', 30, 'add_periodictasks');
+INSERT INTO `auth_permission` VALUES (126, 'Can change periodic tasks', 30, 'change_periodictasks');
+INSERT INTO `auth_permission` VALUES (127, 'Can delete periodic tasks', 30, 'delete_periodictasks');
+INSERT INTO `auth_permission` VALUES (128, 'Can view periodic tasks', 30, 'view_periodictasks');
+INSERT INTO `auth_permission` VALUES (129, 'Can add task state', 31, 'add_taskmeta');
+INSERT INTO `auth_permission` VALUES (130, 'Can change task state', 31, 'change_taskmeta');
+INSERT INTO `auth_permission` VALUES (131, 'Can delete task state', 31, 'delete_taskmeta');
+INSERT INTO `auth_permission` VALUES (132, 'Can view task state', 31, 'view_taskmeta');
+INSERT INTO `auth_permission` VALUES (133, 'Can add saved group result', 32, 'add_tasksetmeta');
+INSERT INTO `auth_permission` VALUES (134, 'Can change saved group result', 32, 'change_tasksetmeta');
+INSERT INTO `auth_permission` VALUES (135, 'Can delete saved group result', 32, 'delete_tasksetmeta');
+INSERT INTO `auth_permission` VALUES (136, 'Can view saved group result', 32, 'view_tasksetmeta');
+INSERT INTO `auth_permission` VALUES (137, 'Can add task', 33, 'add_taskstate');
+INSERT INTO `auth_permission` VALUES (138, 'Can change task', 33, 'change_taskstate');
+INSERT INTO `auth_permission` VALUES (139, 'Can delete task', 33, 'delete_taskstate');
+INSERT INTO `auth_permission` VALUES (140, 'Can view task', 33, 'view_taskstate');
+INSERT INTO `auth_permission` VALUES (141, 'Can add worker', 34, 'add_workerstate');
+INSERT INTO `auth_permission` VALUES (142, 'Can change worker', 34, 'change_workerstate');
+INSERT INTO `auth_permission` VALUES (143, 'Can delete worker', 34, 'delete_workerstate');
+INSERT INTO `auth_permission` VALUES (144, 'Can view worker', 34, 'view_workerstate');
+INSERT INTO `auth_permission` VALUES (145, 'Can add task record', 35, 'add_taskrecord');
+INSERT INTO `auth_permission` VALUES (146, 'Can change task record', 35, 'change_taskrecord');
+INSERT INTO `auth_permission` VALUES (147, 'Can delete task record', 35, 'delete_taskrecord');
+INSERT INTO `auth_permission` VALUES (148, 'Can view task record', 35, 'view_taskrecord');
 
 -- ----------------------------
 -- Table structure for auth_user
@@ -1260,6 +1045,39 @@ CREATE TABLE `auth_user_user_permissions`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Table structure for celery_taskmeta
+-- ----------------------------
+DROP TABLE IF EXISTS `celery_taskmeta`;
+CREATE TABLE `celery_taskmeta`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `result` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `date_done` datetime(6) NOT NULL,
+  `traceback` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `hidden` tinyint(1) NOT NULL,
+  `meta` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `task_id`(`task_id`) USING BTREE,
+  INDEX `celery_taskmeta_hidden_23fd02dc`(`hidden`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for celery_tasksetmeta
+-- ----------------------------
+DROP TABLE IF EXISTS `celery_tasksetmeta`;
+CREATE TABLE `celery_tasksetmeta`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `taskset_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `result` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `date_done` datetime(6) NOT NULL,
+  `hidden` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `taskset_id`(`taskset_id`) USING BTREE,
+  INDEX `celery_tasksetmeta_hidden_593cfc24`(`hidden`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
 -- Table structure for django_content_type
 -- ----------------------------
 DROP TABLE IF EXISTS `django_content_type`;
@@ -1269,7 +1087,7 @@ CREATE TABLE `django_content_type`  (
   `model` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `django_content_type_app_label_model_76bd3d3b_uniq`(`app_label`, `model`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of django_content_type
@@ -1293,12 +1111,21 @@ INSERT INTO `django_content_type` VALUES (18, 'app_code', 'publist');
 INSERT INTO `django_content_type` VALUES (16, 'app_code', 'publistrecord');
 INSERT INTO `django_content_type` VALUES (15, 'app_code', 'wchartlog');
 INSERT INTO `django_content_type` VALUES (22, 'app_log', 'opslog');
+INSERT INTO `django_content_type` VALUES (35, 'app_log', 'taskrecord');
 INSERT INTO `django_content_type` VALUES (23, 'app_log', 'userlog');
 INSERT INTO `django_content_type` VALUES (21, 'app_sys', 'envsofeware');
 INSERT INTO `django_content_type` VALUES (2, 'auth', 'group');
 INSERT INTO `django_content_type` VALUES (1, 'auth', 'permission');
 INSERT INTO `django_content_type` VALUES (3, 'auth', 'user');
 INSERT INTO `django_content_type` VALUES (4, 'contenttypes', 'contenttype');
+INSERT INTO `django_content_type` VALUES (27, 'djcelery', 'crontabschedule');
+INSERT INTO `django_content_type` VALUES (29, 'djcelery', 'intervalschedule');
+INSERT INTO `django_content_type` VALUES (28, 'djcelery', 'periodictask');
+INSERT INTO `django_content_type` VALUES (30, 'djcelery', 'periodictasks');
+INSERT INTO `django_content_type` VALUES (31, 'djcelery', 'taskmeta');
+INSERT INTO `django_content_type` VALUES (32, 'djcelery', 'tasksetmeta');
+INSERT INTO `django_content_type` VALUES (33, 'djcelery', 'taskstate');
+INSERT INTO `django_content_type` VALUES (34, 'djcelery', 'workerstate');
 INSERT INTO `django_content_type` VALUES (5, 'sessions', 'session');
 
 -- ----------------------------
@@ -1311,7 +1138,7 @@ CREATE TABLE `django_migrations`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -1358,10 +1185,25 @@ INSERT INTO `django_migrations` VALUES (39, 'app_asset', '0008_auto_20181016_152
 INSERT INTO `django_migrations` VALUES (40, 'app_code', '0010_auto_20181018_1124', '2018-10-18 03:24:31.134935');
 INSERT INTO `django_migrations` VALUES (41, 'app_auth', '0008_remoteuser', '2018-10-22 01:13:43.115134');
 INSERT INTO `django_migrations` VALUES (42, 'app_code', '0010_auto_20181022_0913', '2018-10-22 01:13:43.236141');
-INSERT INTO `django_migrations` VALUES (43, 'app_code', '0011_auto_20181024_1048', '2018-10-24 02:48:37.647631');
-INSERT INTO `django_migrations` VALUES (44, 'app_log', '0002_auto_20181024_1118', '2018-10-24 03:19:27.355428');
-INSERT INTO `django_migrations` VALUES (45, 'app_auth', '0009_auto_20181024_1134', '2018-10-24 03:34:04.834617');
-INSERT INTO `django_migrations` VALUES (46, 'app_auth', '0010_auto_20181024_1138', '2018-10-24 03:41:36.517452');
+INSERT INTO `django_migrations` VALUES (43, 'app_code', '0011_auto_20181024_1048', '2018-10-24 03:05:27.896831');
+INSERT INTO `django_migrations` VALUES (44, 'app_auth', '0009_auto_20181024_1134', '2018-10-24 04:00:37.469887');
+INSERT INTO `django_migrations` VALUES (45, 'app_auth', '0010_auto_20181024_1138', '2018-10-24 04:02:01.537061');
+INSERT INTO `django_migrations` VALUES (46, 'app_log', '0002_auto_20181024_1118', '2018-10-24 04:02:01.548192');
+INSERT INTO `django_migrations` VALUES (47, 'app_auth', '0011_auto_20181026_1054', '2018-10-26 04:06:02.431221');
+INSERT INTO `django_migrations` VALUES (48, 'app_code', '0012_auto_20181026_1236', '2018-10-26 04:35:56.855941');
+INSERT INTO `django_migrations` VALUES (49, 'app_code', '0013_auto_20181026_1239', '2018-10-26 04:44:58.119192');
+INSERT INTO `django_migrations` VALUES (50, 'app_code', '0014_auto_20181026_1242', '2018-10-26 04:44:58.311308');
+INSERT INTO `django_migrations` VALUES (51, 'app_code', '0015_auto_20181026_1244', '2018-10-26 04:44:58.330343');
+INSERT INTO `django_migrations` VALUES (52, 'app_log', '0003_taskrecord', '2018-10-29 07:05:18.948799');
+INSERT INTO `django_migrations` VALUES (53, 'djcelery', '0001_initial', '2018-10-29 07:05:25.193156');
+INSERT INTO `django_migrations` VALUES (54, 'app_log', '0004_auto_20181029_1511', '2018-10-29 07:11:10.804924');
+INSERT INTO `django_migrations` VALUES (55, 'app_log', '0005_taskrecord_task_result', '2018-10-29 07:31:00.854991');
+INSERT INTO `django_migrations` VALUES (56, 'app_asset', '0009_auto_20181029_1652', '2018-10-29 08:52:39.959204');
+INSERT INTO `django_migrations` VALUES (57, 'app_log', '0006_taskrecord_task_user', '2018-10-30 09:02:12.085211');
+INSERT INTO `django_migrations` VALUES (58, 'app_code', '0016_auto_20181127_0951', '2018-11-27 01:51:51.023964');
+INSERT INTO `django_migrations` VALUES (59, 'app_code', '0017_auto_20181127_0957', '2018-11-27 02:00:52.503935');
+INSERT INTO `django_migrations` VALUES (60, 'app_code', '0018_auto_20181127_0959', '2018-11-27 02:00:53.793009');
+INSERT INTO `django_migrations` VALUES (61, 'app_code', '0019_auto_20181127_0959', '2018-11-27 02:00:54.305038');
 
 -- ----------------------------
 -- Table structure for django_session
@@ -1378,6 +1220,121 @@ CREATE TABLE `django_session`  (
 -- ----------------------------
 -- Records of django_session
 -- ----------------------------
+INSERT INTO `django_session` VALUES ('05akxgv0ujv1eb7fenm29p3ygynnykce', 'Y2NkNzVhYzQzZDg4MjM5OWNhMmM0OGMzNTAwY2UxMzRhM2I3NzRlOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifSx7Im1lbnVfdGl0bGUiOiJcdTRlZmJcdTUyYTFcdTRlMmRcdTVmYzMiLCJtZW51X3VybCI6Ii9sb2cvdGFza2xvZy8iLCJtZW51X251bSI6IjYwMjgiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNiJ9XX0seyJtZW51X3RpdGxlIjoiXHU1NDBlXHU1M2YwXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvYXV0aC8iLCJtZW51X251bSI6IjciLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1jb2ciLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1ODlkMlx1ODI3Mlx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcm9sZS8iLCJtZW51X251bSI6IjcwMjQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1NzUyOFx1NjIzN1x1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvdXNlci8iLCJtZW51X251bSI6IjcwMjUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1ODNkY1x1NTM1NVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvbWVudS8iLCJtZW51X251bSI6IjcwMjYiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1Njc0M1x1OTY1MFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcGVybXMvIiwibWVudV9udW0iOiI3MDI3IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifV19XSwicGVybXNfYWxsX2xpc3QiOnsiL2Fzc2V0L2hvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L25ldHdrLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9pZGMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3Rncm91cC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvc3VwcGxpZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2NvZGUvcHJvamVjdC8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9naXRjb2RlLyI6WyJQT1NUIiwiUFVUIiwiREVMRVRFIiwiR0VUIl0sIi9jb2RlL3B1Ymxpc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJHRVQiLCJQVVQiXSwiL2NvZGUvbG9nLyI6WyJERUxFVEUiLCJHRVQiXSwiL3N5cy9zb2Zld2FyZS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvc3lzL2JhdGNoLyI6WyJHRVQiXSwiL3N5cy9maWxlbWcvIjpbIkdFVCJdLCIvdG9vbC9waHBteWFkbWluLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvb3BzbG9nLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvdXNlcmxvZy8iOlsiR0VUIl0sIi9hdXRoL3JvbGUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvdXNlci8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9tZW51LyI6WyJHRVQiLCJQVVQiLCJERUxFVEUiLCJQT1NUIl0sIi9hdXRoL3Blcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9sb2cvdGFza2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbH0=', '2018-10-30 09:09:30.414999');
+INSERT INTO `django_session` VALUES ('0hsuy6aqasx1od6vkit0fif2i4sn1d4k', 'Y2NkNzVhYzQzZDg4MjM5OWNhMmM0OGMzNTAwY2UxMzRhM2I3NzRlOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifSx7Im1lbnVfdGl0bGUiOiJcdTRlZmJcdTUyYTFcdTRlMmRcdTVmYzMiLCJtZW51X3VybCI6Ii9sb2cvdGFza2xvZy8iLCJtZW51X251bSI6IjYwMjgiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNiJ9XX0seyJtZW51X3RpdGxlIjoiXHU1NDBlXHU1M2YwXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvYXV0aC8iLCJtZW51X251bSI6IjciLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1jb2ciLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1ODlkMlx1ODI3Mlx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcm9sZS8iLCJtZW51X251bSI6IjcwMjQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1NzUyOFx1NjIzN1x1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvdXNlci8iLCJtZW51X251bSI6IjcwMjUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1ODNkY1x1NTM1NVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvbWVudS8iLCJtZW51X251bSI6IjcwMjYiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1Njc0M1x1OTY1MFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcGVybXMvIiwibWVudV9udW0iOiI3MDI3IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifV19XSwicGVybXNfYWxsX2xpc3QiOnsiL2Fzc2V0L2hvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L25ldHdrLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9pZGMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3Rncm91cC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvc3VwcGxpZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2NvZGUvcHJvamVjdC8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9naXRjb2RlLyI6WyJQT1NUIiwiUFVUIiwiREVMRVRFIiwiR0VUIl0sIi9jb2RlL3B1Ymxpc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJHRVQiLCJQVVQiXSwiL2NvZGUvbG9nLyI6WyJERUxFVEUiLCJHRVQiXSwiL3N5cy9zb2Zld2FyZS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvc3lzL2JhdGNoLyI6WyJHRVQiXSwiL3N5cy9maWxlbWcvIjpbIkdFVCJdLCIvdG9vbC9waHBteWFkbWluLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvb3BzbG9nLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvdXNlcmxvZy8iOlsiR0VUIl0sIi9hdXRoL3JvbGUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvdXNlci8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9tZW51LyI6WyJHRVQiLCJQVVQiLCJERUxFVEUiLCJQT1NUIl0sIi9hdXRoL3Blcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9sb2cvdGFza2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbH0=', '2018-10-31 03:05:44.112889');
+INSERT INTO `django_session` VALUES ('1a5mj5ukmhkmjdctflfsezy008c3763w', 'Y2NkNzVhYzQzZDg4MjM5OWNhMmM0OGMzNTAwY2UxMzRhM2I3NzRlOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifSx7Im1lbnVfdGl0bGUiOiJcdTRlZmJcdTUyYTFcdTRlMmRcdTVmYzMiLCJtZW51X3VybCI6Ii9sb2cvdGFza2xvZy8iLCJtZW51X251bSI6IjYwMjgiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNiJ9XX0seyJtZW51X3RpdGxlIjoiXHU1NDBlXHU1M2YwXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvYXV0aC8iLCJtZW51X251bSI6IjciLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1jb2ciLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1ODlkMlx1ODI3Mlx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcm9sZS8iLCJtZW51X251bSI6IjcwMjQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1NzUyOFx1NjIzN1x1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvdXNlci8iLCJtZW51X251bSI6IjcwMjUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1ODNkY1x1NTM1NVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvbWVudS8iLCJtZW51X251bSI6IjcwMjYiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1Njc0M1x1OTY1MFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcGVybXMvIiwibWVudV9udW0iOiI3MDI3IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifV19XSwicGVybXNfYWxsX2xpc3QiOnsiL2Fzc2V0L2hvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L25ldHdrLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9pZGMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3Rncm91cC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvc3VwcGxpZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2NvZGUvcHJvamVjdC8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9naXRjb2RlLyI6WyJQT1NUIiwiUFVUIiwiREVMRVRFIiwiR0VUIl0sIi9jb2RlL3B1Ymxpc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJHRVQiLCJQVVQiXSwiL2NvZGUvbG9nLyI6WyJERUxFVEUiLCJHRVQiXSwiL3N5cy9zb2Zld2FyZS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvc3lzL2JhdGNoLyI6WyJHRVQiXSwiL3N5cy9maWxlbWcvIjpbIkdFVCJdLCIvdG9vbC9waHBteWFkbWluLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvb3BzbG9nLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvdXNlcmxvZy8iOlsiR0VUIl0sIi9hdXRoL3JvbGUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvdXNlci8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9tZW51LyI6WyJHRVQiLCJQVVQiLCJERUxFVEUiLCJQT1NUIl0sIi9hdXRoL3Blcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9sb2cvdGFza2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbH0=', '2018-10-31 09:35:06.215125');
+INSERT INTO `django_session` VALUES ('c78s0mp78c3v0zho5sw611o2wmff9qpq', 'N2Q0MjBiNTg2NWU3YzkyYmM0YmZhZTZhNjViNWQ2YTg1Njk3NzNhNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifV19LHsibWVudV90aXRsZSI6Ilx1NTQwZVx1NTNmMFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvIiwibWVudV9udW0iOiI3IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtY29nIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTg5ZDJcdTgyNzJcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hdXRoL3JvbGUvIiwibWVudV9udW0iOiI3MDI0IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifSx7Im1lbnVfdGl0bGUiOiJcdTc1MjhcdTYyMzdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hdXRoL3VzZXIvIiwibWVudV9udW0iOiI3MDI1IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifSx7Im1lbnVfdGl0bGUiOiJcdTgzZGNcdTUzNTVcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hdXRoL21lbnUvIiwibWVudV9udW0iOiI3MDI2IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifSx7Im1lbnVfdGl0bGUiOiJcdTY3NDNcdTk2NTBcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hdXRoL3Blcm1zLyIsIm1lbnVfbnVtIjoiNzAyNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI3In1dfV0sInBlcm1zX2FsbF9saXN0Ijp7Ii9hc3NldC9ob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9uZXR3ay8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvaWRjLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9ob3N0Z3JvdXAvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N1cHBsaWVyLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9jb2RlL3Byb2plY3QvIjpbIlBPU1QiLCJQVVQiLCJERUxFVEUiLCJHRVQiXSwiL2NvZGUvZ2l0Y29kZS8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9wdWJsaXN0LyI6WyJQT1NUIiwiREVMRVRFIiwiR0VUIiwiUFVUIl0sIi9jb2RlL2xvZy8iOlsiREVMRVRFIiwiR0VUIl0sIi9zeXMvc29mZXdhcmUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL3N5cy9iYXRjaC8iOlsiR0VUIl0sIi9zeXMvZmlsZW1nLyI6WyJHRVQiXSwiL3Rvb2wvcGhwbXlhZG1pbi8iOlsiR0VUIiwiUE9TVCJdLCIvbG9nL29wc2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvbG9nL3VzZXJsb2cvIjpbIkdFVCJdLCIvYXV0aC9yb2xlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3VzZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvbWVudS8iOlsiR0VUIiwiUFVUIiwiREVMRVRFIiwiUE9TVCJdLCIvYXV0aC9wZXJtcy8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbH0=', '2018-10-27 09:48:14.430390');
+INSERT INTO `django_session` VALUES ('elcrqpjk418lp90jt8y2qatqxppivija', 'Y2NkNzVhYzQzZDg4MjM5OWNhMmM0OGMzNTAwY2UxMzRhM2I3NzRlOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifSx7Im1lbnVfdGl0bGUiOiJcdTRlZmJcdTUyYTFcdTRlMmRcdTVmYzMiLCJtZW51X3VybCI6Ii9sb2cvdGFza2xvZy8iLCJtZW51X251bSI6IjYwMjgiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNiJ9XX0seyJtZW51X3RpdGxlIjoiXHU1NDBlXHU1M2YwXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvYXV0aC8iLCJtZW51X251bSI6IjciLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1jb2ciLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1ODlkMlx1ODI3Mlx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcm9sZS8iLCJtZW51X251bSI6IjcwMjQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1NzUyOFx1NjIzN1x1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvdXNlci8iLCJtZW51X251bSI6IjcwMjUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1ODNkY1x1NTM1NVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvbWVudS8iLCJtZW51X251bSI6IjcwMjYiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1Njc0M1x1OTY1MFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcGVybXMvIiwibWVudV9udW0iOiI3MDI3IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifV19XSwicGVybXNfYWxsX2xpc3QiOnsiL2Fzc2V0L2hvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L25ldHdrLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9pZGMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3Rncm91cC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvc3VwcGxpZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2NvZGUvcHJvamVjdC8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9naXRjb2RlLyI6WyJQT1NUIiwiUFVUIiwiREVMRVRFIiwiR0VUIl0sIi9jb2RlL3B1Ymxpc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJHRVQiLCJQVVQiXSwiL2NvZGUvbG9nLyI6WyJERUxFVEUiLCJHRVQiXSwiL3N5cy9zb2Zld2FyZS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvc3lzL2JhdGNoLyI6WyJHRVQiXSwiL3N5cy9maWxlbWcvIjpbIkdFVCJdLCIvdG9vbC9waHBteWFkbWluLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvb3BzbG9nLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvdXNlcmxvZy8iOlsiR0VUIl0sIi9hdXRoL3JvbGUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvdXNlci8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9tZW51LyI6WyJHRVQiLCJQVVQiLCJERUxFVEUiLCJQT1NUIl0sIi9hdXRoL3Blcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9sb2cvdGFza2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbH0=', '2018-11-28 02:22:16.596381');
+INSERT INTO `django_session` VALUES ('r40k99em0pwvamie5gjdf2jzmfk5lwbn', 'Y2NkNzVhYzQzZDg4MjM5OWNhMmM0OGMzNTAwY2UxMzRhM2I3NzRlOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifSx7Im1lbnVfdGl0bGUiOiJcdTRlZmJcdTUyYTFcdTRlMmRcdTVmYzMiLCJtZW51X3VybCI6Ii9sb2cvdGFza2xvZy8iLCJtZW51X251bSI6IjYwMjgiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNiJ9XX0seyJtZW51X3RpdGxlIjoiXHU1NDBlXHU1M2YwXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvYXV0aC8iLCJtZW51X251bSI6IjciLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1jb2ciLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1ODlkMlx1ODI3Mlx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcm9sZS8iLCJtZW51X251bSI6IjcwMjQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1NzUyOFx1NjIzN1x1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvdXNlci8iLCJtZW51X251bSI6IjcwMjUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1ODNkY1x1NTM1NVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvbWVudS8iLCJtZW51X251bSI6IjcwMjYiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1Njc0M1x1OTY1MFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcGVybXMvIiwibWVudV9udW0iOiI3MDI3IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifV19XSwicGVybXNfYWxsX2xpc3QiOnsiL2Fzc2V0L2hvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L25ldHdrLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9pZGMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3Rncm91cC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvc3VwcGxpZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2NvZGUvcHJvamVjdC8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9naXRjb2RlLyI6WyJQT1NUIiwiUFVUIiwiREVMRVRFIiwiR0VUIl0sIi9jb2RlL3B1Ymxpc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJHRVQiLCJQVVQiXSwiL2NvZGUvbG9nLyI6WyJERUxFVEUiLCJHRVQiXSwiL3N5cy9zb2Zld2FyZS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvc3lzL2JhdGNoLyI6WyJHRVQiXSwiL3N5cy9maWxlbWcvIjpbIkdFVCJdLCIvdG9vbC9waHBteWFkbWluLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvb3BzbG9nLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvdXNlcmxvZy8iOlsiR0VUIl0sIi9hdXRoL3JvbGUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvdXNlci8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9tZW51LyI6WyJHRVQiLCJQVVQiLCJERUxFVEUiLCJQT1NUIl0sIi9hdXRoL3Blcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9sb2cvdGFza2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbH0=', '2018-11-01 02:50:08.810071');
+INSERT INTO `django_session` VALUES ('spv7gidnl231hnvca7l3kwvzmntlxgxh', 'Y2NkNzVhYzQzZDg4MjM5OWNhMmM0OGMzNTAwY2UxMzRhM2I3NzRlOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifSx7Im1lbnVfdGl0bGUiOiJcdTRlZmJcdTUyYTFcdTRlMmRcdTVmYzMiLCJtZW51X3VybCI6Ii9sb2cvdGFza2xvZy8iLCJtZW51X251bSI6IjYwMjgiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNiJ9XX0seyJtZW51X3RpdGxlIjoiXHU1NDBlXHU1M2YwXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvYXV0aC8iLCJtZW51X251bSI6IjciLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1jb2ciLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1ODlkMlx1ODI3Mlx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcm9sZS8iLCJtZW51X251bSI6IjcwMjQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1NzUyOFx1NjIzN1x1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvdXNlci8iLCJtZW51X251bSI6IjcwMjUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1ODNkY1x1NTM1NVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvbWVudS8iLCJtZW51X251bSI6IjcwMjYiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1Njc0M1x1OTY1MFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcGVybXMvIiwibWVudV9udW0iOiI3MDI3IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifV19XSwicGVybXNfYWxsX2xpc3QiOnsiL2Fzc2V0L2hvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L25ldHdrLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9pZGMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3Rncm91cC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvc3VwcGxpZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2NvZGUvcHJvamVjdC8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9naXRjb2RlLyI6WyJQT1NUIiwiUFVUIiwiREVMRVRFIiwiR0VUIl0sIi9jb2RlL3B1Ymxpc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJHRVQiLCJQVVQiXSwiL2NvZGUvbG9nLyI6WyJERUxFVEUiLCJHRVQiXSwiL3N5cy9zb2Zld2FyZS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvc3lzL2JhdGNoLyI6WyJHRVQiXSwiL3N5cy9maWxlbWcvIjpbIkdFVCJdLCIvdG9vbC9waHBteWFkbWluLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvb3BzbG9nLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvdXNlcmxvZy8iOlsiR0VUIl0sIi9hdXRoL3JvbGUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvdXNlci8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9tZW51LyI6WyJHRVQiLCJQVVQiLCJERUxFVEUiLCJQT1NUIl0sIi9hdXRoL3Blcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9sb2cvdGFza2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbH0=', '2018-10-31 09:22:58.223486');
+INSERT INTO `django_session` VALUES ('tt3o8sm7t2g4ug3z8hyto4smiwxscgyp', 'Y2NkNzVhYzQzZDg4MjM5OWNhMmM0OGMzNTAwY2UxMzRhM2I3NzRlOTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifSx7Im1lbnVfdGl0bGUiOiJcdTRlZmJcdTUyYTFcdTRlMmRcdTVmYzMiLCJtZW51X3VybCI6Ii9sb2cvdGFza2xvZy8iLCJtZW51X251bSI6IjYwMjgiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNiJ9XX0seyJtZW51X3RpdGxlIjoiXHU1NDBlXHU1M2YwXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvYXV0aC8iLCJtZW51X251bSI6IjciLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1jb2ciLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1ODlkMlx1ODI3Mlx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcm9sZS8iLCJtZW51X251bSI6IjcwMjQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1NzUyOFx1NjIzN1x1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvdXNlci8iLCJtZW51X251bSI6IjcwMjUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1ODNkY1x1NTM1NVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvbWVudS8iLCJtZW51X251bSI6IjcwMjYiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1Njc0M1x1OTY1MFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcGVybXMvIiwibWVudV9udW0iOiI3MDI3IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifV19XSwicGVybXNfYWxsX2xpc3QiOnsiL2Fzc2V0L2hvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L25ldHdrLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9pZGMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3Rncm91cC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvc3VwcGxpZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2NvZGUvcHJvamVjdC8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9naXRjb2RlLyI6WyJQT1NUIiwiUFVUIiwiREVMRVRFIiwiR0VUIl0sIi9jb2RlL3B1Ymxpc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJHRVQiLCJQVVQiXSwiL2NvZGUvbG9nLyI6WyJERUxFVEUiLCJHRVQiXSwiL3N5cy9zb2Zld2FyZS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvc3lzL2JhdGNoLyI6WyJHRVQiXSwiL3N5cy9maWxlbWcvIjpbIkdFVCJdLCIvdG9vbC9waHBteWFkbWluLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvb3BzbG9nLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvdXNlcmxvZy8iOlsiR0VUIl0sIi9hdXRoL3JvbGUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvdXNlci8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9tZW51LyI6WyJHRVQiLCJQVVQiLCJERUxFVEUiLCJQT1NUIl0sIi9hdXRoL3Blcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9sb2cvdGFza2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbH0=', '2018-10-30 09:15:48.127603');
+INSERT INTO `django_session` VALUES ('wt8etnxb504bggitodr61jr3le23fhmo', 'YWM0YTZiNTFmMmFlMWIyMTg3MDE4MWQ2NTIwYTY4ZTA5N2M1ZTI2OTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYXBwX2F1dGgudmlld3MuQ3VzdG9tQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IiIsInVzZXJuYW1lIjoiXHU1YzBmXHU4ZDMwIiwidXNlcl9uYW1lIjoiYWRtaW4iLCJyb2xlX2lkIjoxLCJtZW51X2FsbF9saXN0IjpbeyJtZW51X3RpdGxlIjoiXHU5OTk2XHU5ODc1IiwibWVudV91cmwiOiIvIiwibWVudV9udW0iOiIxIiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGFzaGJvYXJkIiwibWVudV90d28iOltdfSx7Im1lbnVfdGl0bGUiOiJcdThkNDRcdTRlYTdcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9hc3NldC8iLCJtZW51X251bSI6IjIiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1iYXJzIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY3MGRcdTUyYTFcdTU2NjgiLCJtZW51X3VybCI6Ii9hc3NldC9ob3N0LyIsIm1lbnVfbnVtIjoiMjA4IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjIifSx7Im1lbnVfdGl0bGUiOiJcdTdmNTFcdTdlZGNcdThiYmVcdTU5MDciLCJtZW51X3VybCI6Ii9hc3NldC9uZXR3ay8iLCJtZW51X251bSI6IjIwOSIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn0seyJtZW51X3RpdGxlIjoiSURDIFx1NjczYVx1NjIzZiIsIm1lbnVfdXJsIjoiL2Fzc2V0L2lkYy8iLCJtZW51X251bSI6IjIwMTAiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1NGUzYlx1NjczYVx1NTIwNlx1N2VjNCIsIm1lbnVfdXJsIjoiL2Fzc2V0L2hvc3Rncm91cC8iLCJtZW51X251bSI6IjIwMTEiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMiJ9LHsibWVudV90aXRsZSI6Ilx1OGJiZVx1NTkwN1x1NTM4Mlx1NTU0NiIsIm1lbnVfdXJsIjoiL2Fzc2V0L3N1cHBsaWVyLyIsIm1lbnVfbnVtIjoiMjAxMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIyIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTRlZTNcdTc4MDFcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9jb2RlLyIsIm1lbnVfbnVtIjoiMyIsIm1lbnVfaWNvbiI6ImZhIGZhLWxnIGZhLWNvZGUiLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1OTg3OVx1NzZlZVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvcHJvamVjdC8iLCJtZW51X251bSI6IjMwMTMiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2NvZGUvZ2l0Y29kZS8iLCJtZW51X251bSI6IjMwMTQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NGVlM1x1NzgwMVx1NTNkMVx1NWUwMyIsIm1lbnVfdXJsIjoiL2NvZGUvcHVibGlzdC8iLCJtZW51X251bSI6IjMwMTUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiMyJ9LHsibWVudV90aXRsZSI6Ilx1NTNkMVx1NWUwM1x1OGJiMFx1NWY1NSIsIm1lbnVfdXJsIjoiL2NvZGUvbG9nLyIsIm1lbnVfbnVtIjoiMzAxNiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiIzIn1dfSx7Im1lbnVfdGl0bGUiOiJcdTdjZmJcdTdlZGZcdTdiYTFcdTc0MDYiLCJtZW51X3VybCI6Ii9zeXMvIiwibWVudV9udW0iOiI0IiwibWVudV9pY29uIjoiZmEgZmEtbGcgZmEtZGVza3RvcCIsIm1lbnVfdHdvIjpbeyJtZW51X3RpdGxlIjoiXHU3M2FmXHU1ODgzXHU5MGU4XHU3ZjcyIiwibWVudV91cmwiOiIvc3lzL3NvZmV3YXJlLyIsIm1lbnVfbnVtIjoiNDAxNyIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2Mjc5XHU5MWNmXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2JhdGNoLyIsIm1lbnVfbnVtIjoiNDAxOCIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI0In0seyJtZW51X3RpdGxlIjoiXHU2NTg3XHU0ZWY2XHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvc3lzL2ZpbGVtZy8iLCJtZW51X251bSI6IjQwMTkiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNCJ9XX0seyJtZW51X3RpdGxlIjoiXHU4ZmQwXHU3ZWY0XHU1ZGU1XHU1MTc3IiwibWVudV91cmwiOiIvdG9vbC8iLCJtZW51X251bSI6IjUiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS13cmVuY2giLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6InBocE15YWRtaW4iLCJtZW51X3VybCI6Ii90b29sL3BocG15YWRtaW4vIiwibWVudV9udW0iOiI1MDIxIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjUifV19LHsibWVudV90aXRsZSI6Ilx1NjVlNVx1NWZkN1x1NWJhMVx1OGJhMSIsIm1lbnVfdXJsIjoiL2xvZy8iLCJtZW51X251bSI6IjYiLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1ib29rIiwibWVudV90d28iOlt7Im1lbnVfdGl0bGUiOiJcdTY0Y2RcdTRmNWNcdTY1ZTVcdTVmZDciLCJtZW51X3VybCI6Ii9sb2cvb3BzbG9nLyIsIm1lbnVfbnVtIjoiNjAyMiIsIm1lbnVfaWNvbiI6bnVsbCwicG1lbnVfaWQiOiI2In0seyJtZW51X3RpdGxlIjoiXHU3NTI4XHU2MjM3XHU2NWU1XHU1ZmQ3IiwibWVudV91cmwiOiIvbG9nL3VzZXJsb2cvIiwibWVudV9udW0iOiI2MDIzIiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjYifSx7Im1lbnVfdGl0bGUiOiJcdTRlZmJcdTUyYTFcdTRlMmRcdTVmYzMiLCJtZW51X3VybCI6Ii9sb2cvdGFza2xvZy8iLCJtZW51X251bSI6IjYwMjgiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNiJ9XX0seyJtZW51X3RpdGxlIjoiXHU1NDBlXHU1M2YwXHU3YmExXHU3NDA2IiwibWVudV91cmwiOiIvYXV0aC8iLCJtZW51X251bSI6IjciLCJtZW51X2ljb24iOiJmYSBmYS1sZyBmYS1jb2ciLCJtZW51X3R3byI6W3sibWVudV90aXRsZSI6Ilx1ODlkMlx1ODI3Mlx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcm9sZS8iLCJtZW51X251bSI6IjcwMjQiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1NzUyOFx1NjIzN1x1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvdXNlci8iLCJtZW51X251bSI6IjcwMjUiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1ODNkY1x1NTM1NVx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvbWVudS8iLCJtZW51X251bSI6IjcwMjYiLCJtZW51X2ljb24iOm51bGwsInBtZW51X2lkIjoiNyJ9LHsibWVudV90aXRsZSI6Ilx1Njc0M1x1OTY1MFx1N2JhMVx1NzQwNiIsIm1lbnVfdXJsIjoiL2F1dGgvcGVybXMvIiwibWVudV9udW0iOiI3MDI3IiwibWVudV9pY29uIjpudWxsLCJwbWVudV9pZCI6IjcifV19XSwicGVybXNfYWxsX2xpc3QiOnsiL2Fzc2V0L2hvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L25ldHdrLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9pZGMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3Rncm91cC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXNzZXQvc3VwcGxpZXIvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2NvZGUvcHJvamVjdC8iOlsiUE9TVCIsIlBVVCIsIkRFTEVURSIsIkdFVCJdLCIvY29kZS9naXRjb2RlLyI6WyJQT1NUIiwiUFVUIiwiREVMRVRFIiwiR0VUIl0sIi9jb2RlL3B1Ymxpc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJHRVQiLCJQVVQiXSwiL2NvZGUvbG9nLyI6WyJERUxFVEUiLCJHRVQiXSwiL3N5cy9zb2Zld2FyZS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvc3lzL2JhdGNoLyI6WyJHRVQiXSwiL3N5cy9maWxlbWcvIjpbIkdFVCJdLCIvdG9vbC9waHBteWFkbWluLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvb3BzbG9nLyI6WyJHRVQiLCJQT1NUIl0sIi9sb2cvdXNlcmxvZy8iOlsiR0VUIl0sIi9hdXRoL3JvbGUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvdXNlci8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9tZW51LyI6WyJHRVQiLCJQVVQiLCJERUxFVEUiLCJQT1NUIl0sIi9hdXRoL3Blcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9sb2cvdGFza2xvZy8iOlsiR0VUIiwiUE9TVCJdLCIvYXV0aC9hZGRyb2xlbWVudS8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlcGVybXMvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZW1lbnUvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXBlcm1zLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hdXRoL3JvbGVhc3NldC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvYXV0aC9hZGRyb2xlYXNzZXQvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvcm9sZXByb2plY3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2hvc3RkZXRhaWwvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L3N5bmNob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9zZWFyY2hob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9kZWxob3N0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9hc3NldC9jb25uZWN0aG9zdC8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9zZWFyY2gvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2Fzc2V0L2V4cG9ydGhvc3QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvY2hwYXNzd2QvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXSwiL2F1dGgvYWRkcmVtb3RlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvdXBmaWxlLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvcnVuY21kLyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvc2NyaXB0LyI6WyJQT1NUIiwiREVMRVRFIiwiUFVUIiwiR0VUIl0sIi9zeXMvY3Jvbi8iOlsiUE9TVCIsIkRFTEVURSIsIlBVVCIsIkdFVCJdLCIvY29kZS9naXRsb2cvIjpbIlBPU1QiLCJERUxFVEUiLCJQVVQiLCJHRVQiXX0sInJlbW90ZV91c2VyIjoicm9vdCIsInJlbW90ZV9wYXNzd2QiOiJPbmVkYXkwMzEzIiwicmVtb3RlX3NzaGtleSI6IiIsInJlbW90ZV9zc2hrZXlfcGFzcyI6bnVsbCwiY3VyX2RpciI6In4iLCJjdXJfaG9zdCI6IjE5Mi4xNjguMS4xMjYifQ==', '2018-11-29 07:47:24.932101');
 
+-- ----------------------------
+-- Table structure for djcelery_crontabschedule
+-- ----------------------------
+DROP TABLE IF EXISTS `djcelery_crontabschedule`;
+CREATE TABLE `djcelery_crontabschedule`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `minute` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `hour` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `day_of_week` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `day_of_month` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `month_of_year` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for djcelery_intervalschedule
+-- ----------------------------
+DROP TABLE IF EXISTS `djcelery_intervalschedule`;
+CREATE TABLE `djcelery_intervalschedule`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `every` int(11) NOT NULL,
+  `period` varchar(24) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for djcelery_periodictask
+-- ----------------------------
+DROP TABLE IF EXISTS `djcelery_periodictask`;
+CREATE TABLE `djcelery_periodictask`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `task` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `args` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `kwargs` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `queue` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `exchange` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `routing_key` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `expires` datetime(6) NULL DEFAULT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  `last_run_at` datetime(6) NULL DEFAULT NULL,
+  `total_run_count` int(10) UNSIGNED NOT NULL,
+  `date_changed` datetime(6) NOT NULL,
+  `description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `crontab_id` int(11) NULL DEFAULT NULL,
+  `interval_id` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `name`(`name`) USING BTREE,
+  INDEX `djcelery_periodictas_crontab_id_75609bab_fk_djcelery_`(`crontab_id`) USING BTREE,
+  INDEX `djcelery_periodictas_interval_id_b426ab02_fk_djcelery_`(`interval_id`) USING BTREE,
+  CONSTRAINT `djcelery_periodictas_crontab_id_75609bab_fk_djcelery_` FOREIGN KEY (`crontab_id`) REFERENCES `djcelery_crontabschedule` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `djcelery_periodictas_interval_id_b426ab02_fk_djcelery_` FOREIGN KEY (`interval_id`) REFERENCES `djcelery_intervalschedule` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for djcelery_periodictasks
+-- ----------------------------
+DROP TABLE IF EXISTS `djcelery_periodictasks`;
+CREATE TABLE `djcelery_periodictasks`  (
+  `ident` smallint(6) NOT NULL,
+  `last_update` datetime(6) NOT NULL,
+  PRIMARY KEY (`ident`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for djcelery_taskstate
+-- ----------------------------
+DROP TABLE IF EXISTS `djcelery_taskstate`;
+CREATE TABLE `djcelery_taskstate`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `state` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `task_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `tstamp` datetime(6) NOT NULL,
+  `args` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `kwargs` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `eta` datetime(6) NULL DEFAULT NULL,
+  `expires` datetime(6) NULL DEFAULT NULL,
+  `result` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `traceback` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `runtime` double NULL DEFAULT NULL,
+  `retries` int(11) NOT NULL,
+  `hidden` tinyint(1) NOT NULL,
+  `worker_id` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `task_id`(`task_id`) USING BTREE,
+  INDEX `djcelery_taskstate_state_53543be4`(`state`) USING BTREE,
+  INDEX `djcelery_taskstate_name_8af9eded`(`name`) USING BTREE,
+  INDEX `djcelery_taskstate_tstamp_4c3f93a1`(`tstamp`) USING BTREE,
+  INDEX `djcelery_taskstate_hidden_c3905e57`(`hidden`) USING BTREE,
+  INDEX `djcelery_taskstate_worker_id_f7f57a05_fk_djcelery_workerstate_id`(`worker_id`) USING BTREE,
+  CONSTRAINT `djcelery_taskstate_worker_id_f7f57a05_fk_djcelery_workerstate_id` FOREIGN KEY (`worker_id`) REFERENCES `djcelery_workerstate` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for djcelery_workerstate
+-- ----------------------------
+DROP TABLE IF EXISTS `djcelery_workerstate`;
+CREATE TABLE `djcelery_workerstate`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hostname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `last_heartbeat` datetime(6) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `hostname`(`hostname`) USING BTREE,
+  INDEX `djcelery_workerstate_last_heartbeat_4539b544`(`last_heartbeat`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
