@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码" />
+    <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +23,7 @@
     <SUITE FILE_PATH="coverage/mtrops_v2$task__1_.coverage" NAME="task (1) Coverage Results" MODIFIED="1540541180102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mtrops_v2$get_software_info.coverage" NAME="get_software_info Coverage Results" MODIFIED="1539747751771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
     <SUITE FILE_PATH="coverage/mtrops_v2$get_cellery.coverage" NAME="get_cellery Coverage Results" MODIFIED="1540798165106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1540538855394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1543398148102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mtrops_v2$celery.coverage" NAME="celery Coverage Results" MODIFIED="1540609385366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mtrops_v2" />
     <SUITE FILE_PATH="coverage/mtrops_v2$tests.coverage" NAME="tests Coverage Results" MODIFIED="1540541661852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_code" />
     <SUITE FILE_PATH="coverage/mtrops_v2$salt_api.coverage" NAME="salt_api Coverage Results" MODIFIED="1539767502012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
@@ -33,17 +36,18 @@
     <session id="361001133">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="52" />
+          <entry key="project.closed" value="57" />
           <entry key="project.open.time.0" value="4" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="8" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.14" value="1" />
+          <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.30" value="1" />
           <entry key="project.open.time.34" value="1" />
-          <entry key="project.open.time.37" value="2" />
+          <entry key="project.open.time.37" value="4" />
           <entry key="project.open.time.38" value="3" />
           <entry key="project.open.time.39" value="3" />
           <entry key="project.open.time.40" value="2" />
@@ -57,8 +61,8 @@
           <entry key="project.open.time.6" value="7" />
           <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="59" />
+          <entry key="project.open.time.9" value="5" />
+          <entry key="project.opened" value="63" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -70,7 +74,7 @@
           <entry key="html" value="5363" />
           <entry key="js" value="2828" />
           <entry key="md" value="5" />
-          <entry key="py" value="25146" />
+          <entry key="py" value="25731" />
           <entry key="txt" value="11" />
           <entry key="yaml" value="15" />
         </counts>
@@ -82,7 +86,7 @@
           <entry key="JavaScript" value="2827" />
           <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="86" />
-          <entry key="Python" value="25146" />
+          <entry key="Python" value="25731" />
           <entry key="YAML" value="15" />
         </counts>
       </usages-collector>
@@ -94,9 +98,9 @@
           <entry key="jpg" value="1" />
           <entry key="js" value="47" />
           <entry key="md" value="1" />
-          <entry key="py" value="349" />
+          <entry key="py" value="350" />
           <entry key="sql" value="1" />
-          <entry key="txt" value="6" />
+          <entry key="txt" value="7" />
           <entry key="yaml" value="1" />
         </counts>
       </usages-collector>
@@ -106,8 +110,8 @@
           <entry key="Image" value="1" />
           <entry key="JavaScript" value="47" />
           <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="10" />
-          <entry key="Python" value="349" />
+          <entry key="PLAIN_TEXT" value="11" />
+          <entry key="Python" value="350" />
           <entry key="SQL" value="1" />
           <entry key="YAML" value="1" />
         </counts>
@@ -155,20 +159,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_asset/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
+            <state relative-caret-position="198">
               <caret line="11" column="70" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="70" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_asset/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="218" column="4" selection-start-line="218" selection-start-column="4" selection-end-line="218" selection-end-column="4" />
+            <state relative-caret-position="18">
+              <caret line="436" column="10" selection-start-line="436" selection-start-column="4" selection-end-line="436" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -186,7 +199,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>request.POST.get(</find>
       <find>remote_noarg_execution_sigle</find>
       <find>open</find>
       <find>chunks</find>
@@ -216,6 +228,7 @@
       <find>date</find>
       <find>date:</find>
       <find>TIME_ZONE</find>
+      <find>search</find>
     </findStrings>
     <replaceStrings>
       <replace>req_info</replace>
@@ -263,7 +276,6 @@
         <option value="$PROJECT_DIR$/templates/rbac_user.html" />
         <option value="$PROJECT_DIR$/statics/js/auth_v2.js" />
         <option value="$PROJECT_DIR$/app_tool/views.py" />
-        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/task.py" />
         <option value="$PROJECT_DIR$/task.py" />
         <option value="$PROJECT_DIR$/tasks.py" />
@@ -305,6 +317,7 @@
         <option value="$PROJECT_DIR$/templates/code_publist_search.html" />
         <option value="$PROJECT_DIR$/templates/code_publist_record.html" />
         <option value="$PROJECT_DIR$/app_asset/views.py" />
+        <option value="$PROJECT_DIR$/test.py" />
       </list>
     </option>
   </component>
@@ -321,7 +334,7 @@
       <path value="$PROJECT_DIR$/statics/select2/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="517" />
     <option name="y" value="28" />
     <option name="width" value="1504" />
@@ -347,11 +360,6 @@
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
               <item name="app_asset" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
@@ -396,29 +404,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.manage">
-    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="mtrops_v2" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mtrops_v2" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mtrops_v2/__init__.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.test (1)">
     <configuration name="get_cellery" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mtrops_v2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -485,6 +471,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="mtrops_v2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mtrops_v2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -511,16 +519,16 @@
       <item itemvalue="Python.manage" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.tasks" />
-      <item itemvalue="Python.__init__" />
       <item itemvalue="Python.get_cellery" />
+      <item itemvalue="Python.test (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test (1)" />
         <item itemvalue="Python.manage" />
         <item itemvalue="Python.get_cellery" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.tasks" />
-        <item itemvalue="Python.__init__" />
       </list>
     </recent_temporary>
   </component>
@@ -569,9 +577,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14605543" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15245202" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -579,13 +587,13 @@
       <window_info anchor="bottom" id="Debug" order="2" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.9029851" visible="true" weight="0.2494577" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.9029851" weight="0.36984816" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" sideWeight="0.23987207" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.15085287" side_tool="true" weight="0.38828632" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.84914714" weight="0.29392624" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.84914714" visible="true" weight="0.29392624" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.90724945" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -639,9 +647,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app_auth/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_code/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -755,13 +760,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/statics/img/login.jpg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/log_taskrecord.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -941,17 +939,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="218" column="4" selection-start-line="218" selection-start-column="4" selection-end-line="218" selection-end-column="4" />
+        <state relative-caret-position="342">
+          <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app_asset/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
+        <state relative-caret-position="198">
           <caret line="11" column="70" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="436" column="10" selection-start-line="436" selection-start-column="4" selection-end-line="436" selection-end-column="10" />
         </state>
       </provider>
     </entry>
