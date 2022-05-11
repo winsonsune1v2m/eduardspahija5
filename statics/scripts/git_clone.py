@@ -61,7 +61,11 @@ def git_clone(argv):
     os.system(cmd)
 
     if code_runas:
+<<<<<<< HEAD
         cmd_chown = "chown -R %s.%s %s" % (code_runas, code_runas,git_dir)
+=======
+        cmd_chown = "chown -R %s:%s %s" % (code_runas, code_runas, git_dir)
+>>>>>>> ce041e095f988aaf7c995dea38702236ec28b9de
         os.system(cmd_chown)
 
 
