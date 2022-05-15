@@ -185,7 +185,6 @@
 <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.excheck.js"></script>
 <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.exedit.js"></script>
-<script type="text/javascript" src="/static/js/sys.js"></script>
 <script type="text/javascript" >
 
 
@@ -226,8 +225,6 @@ $(document).ready(function(){
 
 
 
-
-
 //切换目录
 $("#cd-dir").click(function () {
     var cd_dir=$("#cur-dir").val();
@@ -241,8 +238,6 @@ $("#cd-dir").click(function () {
     })
 
 });
-
-
 
 
 
@@ -303,7 +298,6 @@ $('#btn-remove').click(function(){
              data: formData,
              success: function(msg) {
                     alert(msg)
-
              }
         });
     }else{

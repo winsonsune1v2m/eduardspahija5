@@ -767,7 +767,9 @@ def Upfile(request):
 
 
         if os.path.exists(file_path):
+
             date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+
             os.rename(file_path, file_path+"_"+date_str)
         else:
             pass
@@ -803,7 +805,7 @@ def Downfile(request):
 
     filename = request.POST.get("filename")
 
-    path = request.session['cur_dir'] +'/'+ filename
+    path = os.path.join(request.session['cur_dir'], filename)
 
     ip = request.session['cur_host']
 
@@ -813,7 +815,6 @@ def Downfile(request):
     salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
     result = salt.salt_run_downfile(ip, "cp.push", path)
-
 
     if result[ip]:
 
@@ -848,19 +849,25 @@ def Downfile(request):
 @perms_check
 def Removefile(request):
     '''文件管理-删除文件'''
-    if request.method == "POST":
-        filename = request.POST.get("filename")
-        path = request.session['cur_dir'] + filename
-        ip = request.session['cur_host']
-        salt_url = SALT_API['url']
-        salt_user = SALT_API['user']
-        salt_passwd = SALT_API['passwd']
-        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-        runas = request.session['remote_user']
-        result = salt.salt_run_downfile(ip, "file.remove", path)
-        return HttpResponse(result)
-    else:
-        return HttpResponse("未知请求")
+
+    filename = request.POST.get("filename")
+
+    path = os.path.join(request.session['cur_dir'],filename)
+
+    ip = request.session['cur_host']
+
+    salt_url = SALT_API['url']
+
+    salt_user = SALT_API['user']
+
+    salt_passwd = SALT_API['passwd']
+
+    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+    result = salt.salt_run_downfile(ip, "file.remove", path)
+
+    return HttpResponse(result)
+
 
 
 
