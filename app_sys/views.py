@@ -573,7 +573,7 @@ class FileMG(View):
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
 
-        home_dir = "~"
+        home_dir = "/"
 
         runas = request.session['remote_user']
 
