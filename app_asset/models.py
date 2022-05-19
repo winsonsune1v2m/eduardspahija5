@@ -20,6 +20,7 @@ class Host(models.Model):
     def __unicode__(self):
         return self.host_ip
 
+
 class HostDetail(models.Model):
     """服务器基本信息"""
     host = models.ForeignKey(to="Host",on_delete=models.CASCADE)

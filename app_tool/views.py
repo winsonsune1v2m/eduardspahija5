@@ -35,12 +35,10 @@ class WebSSH(View):
         for i in hostgroup_obj:
             hostgroup_id = i.id
             hostgroup_name = i.host_group_name
-            hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
-
+            hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id) & Q(hostdetail__host_status="up"))
 
             if hostinfo_obj:
                 tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
-
                 for j in hostinfo_obj:
                     host_id = j.id
                     host_ip = j.host_ip

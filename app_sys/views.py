@@ -36,7 +36,7 @@ class EnvSofeware(View):
         for i in hostgroup_obj:
             hostgroup_id = i.id
             hostgroup_name = i.host_group_name
-            hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id)&Q(role__id=role_id))
+            hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id) & Q(hostdetail__host_status="up"))
 
             if hostinfo_obj:
                 tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
@@ -163,7 +163,7 @@ class Batch(View):
         for i in hostgroup_obj:
             hostgroup_id = i.id
             hostgroup_name = i.host_group_name
-            hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
+            hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id) & Q(hostdetail__host_status="up"))
 
             if hostinfo_obj:
                 tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
@@ -554,7 +554,7 @@ class FileMG(View):
         for i in hostgroup_obj:
             hostgroup_id = i.id
             hostgroup_name = i.host_group_name
-            hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id))
+            hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id) & Q(hostdetail__host_status="up"))
             if hostinfo_obj:
 
                 tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "true"})
@@ -571,7 +571,6 @@ class FileMG(View):
         salt_user = SALT_API['user']
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
 
         home_dir = "/"
 
