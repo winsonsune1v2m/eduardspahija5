@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : 192.168.1.159
  Source Server Type    : MySQL
- Source Server Version : 50640
- Source Host           : 127.0.0.1:3306
+ Source Server Version : 50724
+ Source Host           : 192.168.1.159:3306
  Source Schema         : mtrops_v2
 
  Target Server Type    : MySQL
- Target Server Version : 50640
+ Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 28/11/2018 16:32:00
+ Date: 04/12/2018 16:43:46
 */
 
 SET NAMES utf8mb4;
@@ -44,7 +44,12 @@ CREATE TABLE `app_asset_host`  (
   CONSTRAINT `app_asset_host_group_id_c2f5df06_fk_app_asset_hostgroup_id` FOREIGN KEY (`group_id`) REFERENCES `app_asset_hostgroup` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_asset_host_idc_id_82734ac0_fk_app_asset_idc_id` FOREIGN KEY (`idc_id`) REFERENCES `app_asset_idc` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_asset_host_supplier_id_77b2b553_fk_app_asset_supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `app_asset_supplier` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_asset_host
+-- ----------------------------
+INSERT INTO `app_asset_host` VALUES (33, '192.168.1.126', '22', 'root', 'b\'98c4ce2f2a0cf6b90fafd83bfecee875\'', '虚拟机', '', '', '', '', '2018-12-04 08:25:21.125615', 9, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for app_asset_hostdetail
@@ -68,7 +73,12 @@ CREATE TABLE `app_asset_hostdetail`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_asset_hostdetail_host_id_7ccadf7f_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_asset_hostdetail_host_id_7ccadf7f_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_asset_hostdetail
+-- ----------------------------
+INSERT INTO `app_asset_hostdetail` VALUES (114, 'localhost.localdomain', '3790', '2047.99609375', 'Intel(R) Xeon(R) CPU E3-1220 v6 @ 3.00GHz', '4', '[\"Disk /dev/sda: 549.8 GB\"]', '[{\"hwaddr\": \"00:00:00:00:00:00\", \"ipaddr\": \"127.0.0.1\", \"label\": \"lo\", \"netmask\": \"255.0.0.0\"}, {\"hwaddr\": \"00:50:56:ba:02:a2\", \"ipaddr\": \"192.168.1.126\", \"label\": \"ens192\", \"netmask\": \"255.255.255.0\"}]', 'Linux', 'Linux 3.10.0-862.3.3.el7.x86_64', 'CentOS 7.5.1804', 'VMware Virtual Platform', 33, 'up');
 
 -- ----------------------------
 -- Table structure for app_asset_hostgroup
@@ -144,7 +154,18 @@ CREATE TABLE `app_asset_software`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_asset_software_host_id_1c4f4ada_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_asset_software_host_id_1c4f4ada_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 125 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 132 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_asset_software
+-- ----------------------------
+INSERT INTO `app_asset_software` VALUES (125, 'python3.6', '3.6', '[\'8000\']', 33);
+INSERT INTO `app_asset_software` VALUES (126, 'redis-server', '3.2', '[\'6379\']', 33);
+INSERT INTO `app_asset_software` VALUES (127, 'python', '2.7', '[\'8080\', \'8081\', \'4505\', \'4506\']', 33);
+INSERT INTO `app_asset_software` VALUES (128, 'nginx', '1.14', '[\'80\']', 33);
+INSERT INTO `app_asset_software` VALUES (129, 'sshd', '7.4', '[\'22\']', 33);
+INSERT INTO `app_asset_software` VALUES (130, 'mysqld', '5.6', '[\'3306\']', 33);
+INSERT INTO `app_asset_software` VALUES (131, 'php', '7.2', 'None', 33);
 
 -- ----------------------------
 -- Table structure for app_asset_supplier
@@ -333,7 +354,7 @@ CREATE TABLE `app_auth_remoteuser`  (
 -- ----------------------------
 -- Records of app_auth_remoteuser
 -- ----------------------------
-INSERT INTO `app_auth_remoteuser` VALUES (2, '', 'b\'\'', '', 1, 'b\'\'');
+INSERT INTO `app_auth_remoteuser` VALUES (2, 'root', 'b\'98c4ce2f2a0cf6b90fafd83bfecee875\'', '', 1, 'b\'\'');
 
 -- ----------------------------
 -- Table structure for app_auth_role
@@ -365,7 +386,12 @@ CREATE TABLE `app_auth_role_host`  (
   INDEX `app_auth_role_host_host_id_8f5ad2a4_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_auth_role_host_host_id_8f5ad2a4_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_host_role_id_9eb7afaf_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_auth_role_host
+-- ----------------------------
+INSERT INTO `app_auth_role_host` VALUES (62, 1, 33);
 
 -- ----------------------------
 -- Table structure for app_auth_role_menu
@@ -574,7 +600,7 @@ CREATE TABLE `app_auth_user`  (
 -- ----------------------------
 -- Records of app_auth_user
 -- ----------------------------
-INSERT INTO `app_auth_user` VALUES (1, 'admin', 'admin', 'b\'d4721440af5b9f9f9a9915f5b2358ffb\'', '10086@139.com', '10086', '', '在线', '2018-10-11 06:13:37.757161', '2018-11-28 08:08:40.357052');
+INSERT INTO `app_auth_user` VALUES (1, 'admin', 'admin', 'b\'d4721440af5b9f9f9a9915f5b2358ffb\'', '10086@139.com', '10086', '', '在线', '2018-10-11 06:13:37.757161', '2018-12-04 08:29:09.136500');
 
 -- ----------------------------
 -- Table structure for app_auth_user_role
@@ -704,7 +730,12 @@ CREATE TABLE `app_log_opslog`  (
   `start_time` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `audit_log` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_log_opslog
+-- ----------------------------
+INSERT INTO `app_log_opslog` VALUES (40, '192.168.1.126', '', 'root', '2018-12-04 08:31:10', 'Last login: Tue Dec  4 16:24:37 2018\n[root@localhost ~]# \n[root@localhost ~]#');
 
 -- ----------------------------
 -- Table structure for app_log_taskrecord
@@ -721,12 +752,13 @@ CREATE TABLE `app_log_taskrecord`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_log_taskrecord_task_user_id_db7792d0_fk_app_auth_user_id`(`task_user_id`) USING BTREE,
   CONSTRAINT `app_log_taskrecord_task_user_id_db7792d0_fk_app_auth_user_id` FOREIGN KEY (`task_user_id`) REFERENCES `app_auth_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_log_taskrecord
 -- ----------------------------
 INSERT INTO `app_log_taskrecord` VALUES (43, '同步服务器信息', 'e5925d0e-e4c8-4e19-b19e-f77a2084b013', 'SUCCESS', '2018-10-30 09:17:04.716267', '{\n \"sys_info\": {\n  \"39.108.15.95\": {\n   \"localhost\": \"iZwz94rq1zzte7clamirpkZ\",\n   \"kernel\": \"Linux\",\n   \"kernelrelease\": \"2.6.32-696.3.2.el6.x86_64\",\n   \"cpu_model\": \"Intel(R) Xeon(R) Platinum 8163 CPU @ 2.50GHz\",\n   \"num_cpus\": 8,\n   \"productname\": \"Alibaba Cloud ECS\",\n   \"os\": \"CentOS\",\n   \"osrelease\": \"6.9\",\n   \"mem_total\": 16080,\n   \"interface\": [\n    {\n     \"hwaddr\": \"00:00:00:00:00:00\",\n     \"ipaddr\": \"127.0.0.1\",\n     \"label\": \"lo\",\n     \"netmask\": \"255.0.0.0\"\n    },\n    {\n     \"hwaddr\": \"00:16:3e:06:25:c7\",\n     \"ipaddr\": \"172.18.218.12\",\n     \"label\": \"eth0\",\n     \"netmask\": \"255.255.240.0\"\n    }\n   ],\n   \"disk_info\": [\n    \"Disk /dev/vda: 42.9 GB\",\n    \"Disk /dev/vdb: 21.5 GB\"\n   ],\n   \"SwapTotal\": 0.0\n  }\n },\n \"sofeware_info\": {\n  \"39.108.15.95\": {\n   \"sshd\": {\n    \"port\": [\n     \"25840\"\n    ],\n    \"pid\": \"27807\",\n    \"name\": \"sshd\",\n    \"version\": \"Unkonwn\"\n   },\n   \"nginx\": {\n    \"port\": [\n     \"80\"\n    ],\n    \"pid\": \"15867\",\n    \"name\": \"nginx\",\n    \"version\": \"1.5\"\n   },\n   \"java\": {\n    \"port\": [\n     \"8081\"\n    ],\n    \"pid\": \"11398\",\n    \"name\": \"java\",\n    \"version\": \"1.8\"\n   },\n   \"php\": {\n    \"version\": \"5.4\",\n    \"name\": \"php\",\n    \"port\": \"None\"\n   }\n  }\n }\n}', 1);
+INSERT INTO `app_log_taskrecord` VALUES (44, '同步服务器信息', 'cc0431ff-70b8-4afa-8c4b-92998b9b2d2f', 'SUCCESS', '2018-12-04 08:25:42.558385', '{\n \"sys_info\": {\n  \"192.168.1.126\": {\n   \"localhost\": \"localhost.localdomain\",\n   \"kernel\": \"Linux\",\n   \"kernelrelease\": \"3.10.0-862.3.3.el7.x86_64\",\n   \"cpu_model\": \"Intel(R) Xeon(R) CPU E3-1220 v6 @ 3.00GHz\",\n   \"num_cpus\": 4,\n   \"productname\": \"VMware Virtual Platform\",\n   \"os\": \"CentOS\",\n   \"osrelease\": \"7.5.1804\",\n   \"mem_total\": 3790,\n   \"interface\": [\n    {\n     \"hwaddr\": \"00:00:00:00:00:00\",\n     \"ipaddr\": \"127.0.0.1\",\n     \"label\": \"lo\",\n     \"netmask\": \"255.0.0.0\"\n    },\n    {\n     \"hwaddr\": \"00:50:56:ba:02:a2\",\n     \"ipaddr\": \"192.168.1.126\",\n     \"label\": \"ens192\",\n     \"netmask\": \"255.255.255.0\"\n    }\n   ],\n   \"disk_info\": [\n    \"Disk /dev/sda: 549.8 GB\"\n   ],\n   \"SwapTotal\": 2047.99609375\n  }\n },\n \"sofeware_info\": {\n  \"192.168.1.126\": {\n   \"python3.6\": {\n    \"port\": [\n     \"8000\"\n    ],\n    \"pid\": \"4847\",\n    \"name\": \"python3.6\",\n    \"version\": \"3.6\"\n   },\n   \"redis-server\": {\n    \"port\": [\n     \"6379\"\n    ],\n    \"pid\": \"1002\",\n    \"name\": \"redis-server\",\n    \"version\": \"3.2\"\n   },\n   \"python\": {\n    \"port\": [\n     \"8080\",\n     \"8081\",\n     \"4505\",\n     \"4506\"\n    ],\n    \"pid\": \"25630\",\n    \"name\": \"python\",\n    \"version\": \"2.7\"\n   },\n   \"nginx\": {\n    \"port\": [\n     \"80\"\n    ],\n    \"pid\": \"30059\",\n    \"name\": \"nginx\",\n    \"version\": \"1.14\"\n   },\n   \"sshd\": {\n    \"port\": [\n     \"22\"\n    ],\n    \"pid\": \"1004\",\n    \"name\": \"sshd\",\n    \"version\": \"7.4\"\n   },\n   \"mysqld\": {\n    \"port\": [\n     \"3306\"\n    ],\n    \"pid\": \"1752\",\n    \"name\": \"mysqld\",\n    \"version\": \"5.6\"\n   },\n   \"php\": {\n    \"version\": \"7.2\",\n    \"name\": \"php\",\n    \"port\": \"None\"\n   }\n  }\n }\n}', 1);
 
 -- ----------------------------
 -- Table structure for app_log_userlog
@@ -740,7 +772,7 @@ CREATE TABLE `app_log_userlog`  (
   `status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1073 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1107 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_log_userlog
@@ -817,6 +849,40 @@ INSERT INTO `app_log_userlog` VALUES (1069, 'admin', '查看角色', 'admin', '�
 INSERT INTO `app_log_userlog` VALUES (1070, 'admin', '查询用户', 'admin', '成功', '2018-11-28 08:05:03.205631');
 INSERT INTO `app_log_userlog` VALUES (1071, 'admin', '查询菜单', 'admin', '成功', '2018-11-28 08:05:04.309694');
 INSERT INTO `app_log_userlog` VALUES (1072, 'admin', '登录', 'admin', '成功', '2018-11-28 08:08:40.381053');
+INSERT INTO `app_log_userlog` VALUES (1073, 'admin', '登录', 'admin', '成功', '2018-12-04 08:24:23.580328');
+INSERT INTO `app_log_userlog` VALUES (1074, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:24:26.639999');
+INSERT INTO `app_log_userlog` VALUES (1075, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:24:48.485611');
+INSERT INTO `app_log_userlog` VALUES (1076, 'admin', '添加服务器', 'admin', '成功', '2018-12-04 08:25:21.119618');
+INSERT INTO `app_log_userlog` VALUES (1077, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:25:22.834507');
+INSERT INTO `app_log_userlog` VALUES (1078, 'admin', '查看角色', 'admin', '成功', '2018-12-04 08:25:25.827671');
+INSERT INTO `app_log_userlog` VALUES (1079, 'admin', '获取角色资产', 'admin', '成功', '2018-12-04 08:25:27.911172');
+INSERT INTO `app_log_userlog` VALUES (1080, 'admin', '角色资产授权', 'admin', '成功', '2018-12-04 08:25:30.167385');
+INSERT INTO `app_log_userlog` VALUES (1081, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:25:31.702316');
+INSERT INTO `app_log_userlog` VALUES (1082, 'admin', '连接服务器', 'admin', '成功', '2018-12-04 08:25:36.684974');
+INSERT INTO `app_log_userlog` VALUES (1083, 'admin', '服务器同步系统信息', 'admin', '成功', '2018-12-04 08:25:42.348541');
+INSERT INTO `app_log_userlog` VALUES (1084, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:25:45.664083');
+INSERT INTO `app_log_userlog` VALUES (1085, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:25:55.359845');
+INSERT INTO `app_log_userlog` VALUES (1086, 'admin', '查看任务', 'admin', '成功', '2018-12-04 08:25:58.059041');
+INSERT INTO `app_log_userlog` VALUES (1087, 'admin', '任务日志', 'admin', '成功', '2018-12-04 08:26:00.267014');
+INSERT INTO `app_log_userlog` VALUES (1088, 'admin', '查看任务', 'admin', '成功', '2018-12-04 08:26:26.514692');
+INSERT INTO `app_log_userlog` VALUES (1089, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:26:28.918073');
+INSERT INTO `app_log_userlog` VALUES (1090, 'admin', '连接服务器', 'admin', '成功', '2018-12-04 08:26:30.482224');
+INSERT INTO `app_log_userlog` VALUES (1091, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:26:40.784874');
+INSERT INTO `app_log_userlog` VALUES (1092, 'admin', '查询用户', 'admin', '成功', '2018-12-04 08:26:52.391283');
+INSERT INTO `app_log_userlog` VALUES (1093, 'admin', '查询用户', 'admin', '成功', '2018-12-04 08:27:34.687437');
+INSERT INTO `app_log_userlog` VALUES (1094, 'admin', '查询服务器详细信息', 'admin', '成功', '2018-12-04 08:27:43.559560');
+INSERT INTO `app_log_userlog` VALUES (1095, 'admin', '查询菜单', 'admin', '成功', '2018-12-04 08:27:49.201962');
+INSERT INTO `app_log_userlog` VALUES (1096, 'admin', '查询权限', 'admin', '成功', '2018-12-04 08:27:50.299598');
+INSERT INTO `app_log_userlog` VALUES (1097, 'admin', '查询菜单', 'admin', '成功', '2018-12-04 08:27:51.577566');
+INSERT INTO `app_log_userlog` VALUES (1098, 'admin', '登录', 'admin', '成功', '2018-12-04 08:28:53.816431');
+INSERT INTO `app_log_userlog` VALUES (1099, 'admin', '查询用户', 'admin', '成功', '2018-12-04 08:28:56.265042');
+INSERT INTO `app_log_userlog` VALUES (1100, 'admin', '添加远程管理用户', 'admin', '成功', '2018-12-04 08:28:58.086675');
+INSERT INTO `app_log_userlog` VALUES (1101, 'admin', '添加远程管理用户', 'admin', '成功', '2018-12-04 08:29:05.468802');
+INSERT INTO `app_log_userlog` VALUES (1102, 'admin', '登录', 'admin', '成功', '2018-12-04 08:29:09.141039');
+INSERT INTO `app_log_userlog` VALUES (1103, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:29:10.734145');
+INSERT INTO `app_log_userlog` VALUES (1104, 'admin', '连接服务器', 'admin', '成功', '2018-12-04 08:29:12.438069');
+INSERT INTO `app_log_userlog` VALUES (1105, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:31:08.484953');
+INSERT INTO `app_log_userlog` VALUES (1106, 'admin', '连接服务器', 'admin', '成功', '2018-12-04 08:31:09.970191');
 
 -- ----------------------------
 -- Table structure for app_sys_envsofeware
