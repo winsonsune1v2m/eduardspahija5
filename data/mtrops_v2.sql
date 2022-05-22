@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.1.159
+ Source Server         : 127.0.0.1
  Source Server Type    : MySQL
- Source Server Version : 50724
- Source Host           : 192.168.1.159:3306
+ Source Server Version : 50640
+ Source Host           : 127.0.0.1:3306
  Source Schema         : mtrops_v2
 
  Target Server Type    : MySQL
- Target Server Version : 50724
+ Target Server Version : 50640
  File Encoding         : 65001
 
- Date: 04/12/2018 16:43:46
+ Date: 05/12/2018 11:41:24
 */
 
 SET NAMES utf8mb4;
@@ -44,12 +44,7 @@ CREATE TABLE `app_asset_host`  (
   CONSTRAINT `app_asset_host_group_id_c2f5df06_fk_app_asset_hostgroup_id` FOREIGN KEY (`group_id`) REFERENCES `app_asset_hostgroup` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_asset_host_idc_id_82734ac0_fk_app_asset_idc_id` FOREIGN KEY (`idc_id`) REFERENCES `app_asset_idc` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_asset_host_supplier_id_77b2b553_fk_app_asset_supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `app_asset_supplier` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of app_asset_host
--- ----------------------------
-INSERT INTO `app_asset_host` VALUES (33, '192.168.1.126', '22', 'root', 'b\'98c4ce2f2a0cf6b90fafd83bfecee875\'', '虚拟机', '', '', '', '', '2018-12-04 08:25:21.125615', 9, NULL, NULL);
+) ENGINE = InnoDB AUTO_INCREMENT = 51 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_asset_hostdetail
@@ -73,12 +68,7 @@ CREATE TABLE `app_asset_hostdetail`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_asset_hostdetail_host_id_7ccadf7f_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_asset_hostdetail_host_id_7ccadf7f_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of app_asset_hostdetail
--- ----------------------------
-INSERT INTO `app_asset_hostdetail` VALUES (114, 'localhost.localdomain', '3790', '2047.99609375', 'Intel(R) Xeon(R) CPU E3-1220 v6 @ 3.00GHz', '4', '[\"Disk /dev/sda: 549.8 GB\"]', '[{\"hwaddr\": \"00:00:00:00:00:00\", \"ipaddr\": \"127.0.0.1\", \"label\": \"lo\", \"netmask\": \"255.0.0.0\"}, {\"hwaddr\": \"00:50:56:ba:02:a2\", \"ipaddr\": \"192.168.1.126\", \"label\": \"ens192\", \"netmask\": \"255.255.255.0\"}]', 'Linux', 'Linux 3.10.0-862.3.3.el7.x86_64', 'CentOS 7.5.1804', 'VMware Virtual Platform', 33, 'up');
+) ENGINE = InnoDB AUTO_INCREMENT = 171 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_asset_hostgroup
@@ -95,7 +85,12 @@ CREATE TABLE `app_asset_hostgroup`  (
 -- ----------------------------
 -- Records of app_asset_hostgroup
 -- ----------------------------
+INSERT INTO `app_asset_hostgroup` VALUES (6, '仓管系统', '仓管系统分组');
+INSERT INTO `app_asset_hostgroup` VALUES (7, '木头云', '木头云项目分组');
+INSERT INTO `app_asset_hostgroup` VALUES (8, '木头人', '木头人项目分组');
 INSERT INTO `app_asset_hostgroup` VALUES (9, '测试组', '测试');
+INSERT INTO `app_asset_hostgroup` VALUES (10, '运维', '运维');
+INSERT INTO `app_asset_hostgroup` VALUES (11, '木头云交易', '木头云交易分组');
 
 -- ----------------------------
 -- Table structure for app_asset_idc
@@ -111,6 +106,13 @@ CREATE TABLE `app_asset_idc`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `idc_name`(`idc_name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_asset_idc
+-- ----------------------------
+INSERT INTO `app_asset_idc` VALUES (1, '木头人', '木头人', 'lzx', '10086', '');
+INSERT INTO `app_asset_idc` VALUES (2, '华南1区', NULL, NULL, NULL, NULL);
+INSERT INTO `app_asset_idc` VALUES (3, '华东1区', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for app_asset_netwk
@@ -142,6 +144,11 @@ CREATE TABLE `app_asset_netwk`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Records of app_asset_netwk
+-- ----------------------------
+INSERT INTO `app_asset_netwk` VALUES (1, '172.16.1.1', '22', 'admin', 'b\'d4721440af5b9f9f9a9915f5b2358ffb\'', '路由器', '', '', '', '', '2018-10-12 06:28:47.383167', NULL, 1, 1);
+
+-- ----------------------------
 -- Table structure for app_asset_software
 -- ----------------------------
 DROP TABLE IF EXISTS `app_asset_software`;
@@ -154,18 +161,7 @@ CREATE TABLE `app_asset_software`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_asset_software_host_id_1c4f4ada_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_asset_software_host_id_1c4f4ada_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 132 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of app_asset_software
--- ----------------------------
-INSERT INTO `app_asset_software` VALUES (125, 'python3.6', '3.6', '[\'8000\']', 33);
-INSERT INTO `app_asset_software` VALUES (126, 'redis-server', '3.2', '[\'6379\']', 33);
-INSERT INTO `app_asset_software` VALUES (127, 'python', '2.7', '[\'8080\', \'8081\', \'4505\', \'4506\']', 33);
-INSERT INTO `app_asset_software` VALUES (128, 'nginx', '1.14', '[\'80\']', 33);
-INSERT INTO `app_asset_software` VALUES (129, 'sshd', '7.4', '[\'22\']', 33);
-INSERT INTO `app_asset_software` VALUES (130, 'mysqld', '5.6', '[\'3306\']', 33);
-INSERT INTO `app_asset_software` VALUES (131, 'php', '7.2', 'None', 33);
+) ENGINE = InnoDB AUTO_INCREMENT = 125 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_asset_supplier
@@ -182,6 +178,14 @@ CREATE TABLE `app_asset_supplier`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Records of app_asset_supplier
+-- ----------------------------
+INSERT INTO `app_asset_supplier` VALUES (1, '维盟', '李祖祥', '13432089040', '13432089040@139.com');
+INSERT INTO `app_asset_supplier` VALUES (2, '阿里云', '李祖祥', '13432089040', '13432089040@139.com');
+INSERT INTO `app_asset_supplier` VALUES (3, '木头人', '李祖祥', '13432089040', '13432089040@139.com');
+INSERT INTO `app_asset_supplier` VALUES (4, '戴尔', '李祖祥', '13432089040', '13432089040@139.com');
+
+-- ----------------------------
 -- Table structure for app_auth_menus
 -- ----------------------------
 DROP TABLE IF EXISTS `app_auth_menus`;
@@ -196,7 +200,7 @@ CREATE TABLE `app_auth_menus`  (
   `menu_order` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `app_auth_menus_menu_url_d695085b_uniq`(`menu_url`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_menus
@@ -228,6 +232,7 @@ INSERT INTO `app_auth_menus` VALUES (25, '用户管理', '/auth/user/', '二级�
 INSERT INTO `app_auth_menus` VALUES (26, '菜单管理', '/auth/menu/', '二级菜单', '7', '7026', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (27, '权限管理', '/auth/perms/', '二级菜单', '7', '7027', NULL, NULL);
 INSERT INTO `app_auth_menus` VALUES (28, '任务中心', '/log/tasklog/', '二级菜单', '6', '6028', NULL, NULL);
+INSERT INTO `app_auth_menus` VALUES (29, 'zabbix', 'http://192.168.1.218/zabbix/', '二级菜单', '5', '5029', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for app_auth_perms
@@ -243,7 +248,7 @@ CREATE TABLE `app_auth_perms`  (
   UNIQUE INDEX `app_auth_perms_perms_url_989fe779_uniq`(`perms_url`) USING BTREE,
   INDEX `app_auth_perms_menus_id_57ecaabb_fk_app_auth_menus_id`(`menus_id`) USING BTREE,
   CONSTRAINT `app_auth_perms_menus_id_57ecaabb_fk_app_auth_menus_id` FOREIGN KEY (`menus_id`) REFERENCES `app_auth_menus` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 93 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 95 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_perms
@@ -333,6 +338,8 @@ INSERT INTO `app_auth_perms` VALUES (88, 'put', 15, '更新代码', NULL);
 INSERT INTO `app_auth_perms` VALUES (89, 'other', 15, '查看更新记录', '/code/gitlog/');
 INSERT INTO `app_auth_perms` VALUES (91, 'get', 28, '查看任务', NULL);
 INSERT INTO `app_auth_perms` VALUES (92, 'post', 28, '任务日志', NULL);
+INSERT INTO `app_auth_perms` VALUES (93, 'other', 17, '安装软件服务', '/sys/install/');
+INSERT INTO `app_auth_perms` VALUES (94, 'other', 19, '删除文件', '/sys/removefile/');
 
 -- ----------------------------
 -- Table structure for app_auth_remoteuser
@@ -354,7 +361,7 @@ CREATE TABLE `app_auth_remoteuser`  (
 -- ----------------------------
 -- Records of app_auth_remoteuser
 -- ----------------------------
-INSERT INTO `app_auth_remoteuser` VALUES (2, 'root', 'b\'98c4ce2f2a0cf6b90fafd83bfecee875\'', '', 1, 'b\'\'');
+INSERT INTO `app_auth_remoteuser` VALUES (2, 'root', 'b\'d4721440af5b9f9f9a9915f5b2358ffb\'', '', 1, 'b\'\'');
 
 -- ----------------------------
 -- Table structure for app_auth_role
@@ -386,12 +393,7 @@ CREATE TABLE `app_auth_role_host`  (
   INDEX `app_auth_role_host_host_id_8f5ad2a4_fk_app_asset_host_id`(`host_id`) USING BTREE,
   CONSTRAINT `app_auth_role_host_host_id_8f5ad2a4_fk_app_asset_host_id` FOREIGN KEY (`host_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_host_role_id_9eb7afaf_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of app_auth_role_host
--- ----------------------------
-INSERT INTO `app_auth_role_host` VALUES (62, 1, 33);
+) ENGINE = InnoDB AUTO_INCREMENT = 290 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_auth_role_menu
@@ -406,38 +408,39 @@ CREATE TABLE `app_auth_role_menu`  (
   INDEX `app_auth_role_menu_menus_id_7ef9f003_fk_app_auth_menus_id`(`menus_id`) USING BTREE,
   CONSTRAINT `app_auth_role_menu_menus_id_7ef9f003_fk_app_auth_menus_id` FOREIGN KEY (`menus_id`) REFERENCES `app_auth_menus` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_menu_role_id_16d6bb84_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 331 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 383 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_role_menu
 -- ----------------------------
-INSERT INTO `app_auth_role_menu` VALUES (304, 1, 1);
-INSERT INTO `app_auth_role_menu` VALUES (305, 1, 2);
-INSERT INTO `app_auth_role_menu` VALUES (311, 1, 3);
-INSERT INTO `app_auth_role_menu` VALUES (316, 1, 4);
-INSERT INTO `app_auth_role_menu` VALUES (320, 1, 5);
-INSERT INTO `app_auth_role_menu` VALUES (322, 1, 6);
-INSERT INTO `app_auth_role_menu` VALUES (326, 1, 7);
-INSERT INTO `app_auth_role_menu` VALUES (306, 1, 8);
-INSERT INTO `app_auth_role_menu` VALUES (307, 1, 9);
-INSERT INTO `app_auth_role_menu` VALUES (308, 1, 10);
-INSERT INTO `app_auth_role_menu` VALUES (309, 1, 11);
-INSERT INTO `app_auth_role_menu` VALUES (310, 1, 12);
-INSERT INTO `app_auth_role_menu` VALUES (312, 1, 13);
-INSERT INTO `app_auth_role_menu` VALUES (313, 1, 14);
-INSERT INTO `app_auth_role_menu` VALUES (314, 1, 15);
-INSERT INTO `app_auth_role_menu` VALUES (315, 1, 16);
-INSERT INTO `app_auth_role_menu` VALUES (317, 1, 17);
-INSERT INTO `app_auth_role_menu` VALUES (318, 1, 18);
-INSERT INTO `app_auth_role_menu` VALUES (319, 1, 19);
-INSERT INTO `app_auth_role_menu` VALUES (321, 1, 21);
-INSERT INTO `app_auth_role_menu` VALUES (323, 1, 22);
-INSERT INTO `app_auth_role_menu` VALUES (324, 1, 23);
-INSERT INTO `app_auth_role_menu` VALUES (327, 1, 24);
-INSERT INTO `app_auth_role_menu` VALUES (328, 1, 25);
-INSERT INTO `app_auth_role_menu` VALUES (329, 1, 26);
-INSERT INTO `app_auth_role_menu` VALUES (330, 1, 27);
-INSERT INTO `app_auth_role_menu` VALUES (325, 1, 28);
+INSERT INTO `app_auth_role_menu` VALUES (355, 1, 1);
+INSERT INTO `app_auth_role_menu` VALUES (356, 1, 2);
+INSERT INTO `app_auth_role_menu` VALUES (362, 1, 3);
+INSERT INTO `app_auth_role_menu` VALUES (367, 1, 4);
+INSERT INTO `app_auth_role_menu` VALUES (371, 1, 5);
+INSERT INTO `app_auth_role_menu` VALUES (374, 1, 6);
+INSERT INTO `app_auth_role_menu` VALUES (378, 1, 7);
+INSERT INTO `app_auth_role_menu` VALUES (357, 1, 8);
+INSERT INTO `app_auth_role_menu` VALUES (358, 1, 9);
+INSERT INTO `app_auth_role_menu` VALUES (359, 1, 10);
+INSERT INTO `app_auth_role_menu` VALUES (360, 1, 11);
+INSERT INTO `app_auth_role_menu` VALUES (361, 1, 12);
+INSERT INTO `app_auth_role_menu` VALUES (363, 1, 13);
+INSERT INTO `app_auth_role_menu` VALUES (364, 1, 14);
+INSERT INTO `app_auth_role_menu` VALUES (365, 1, 15);
+INSERT INTO `app_auth_role_menu` VALUES (366, 1, 16);
+INSERT INTO `app_auth_role_menu` VALUES (368, 1, 17);
+INSERT INTO `app_auth_role_menu` VALUES (369, 1, 18);
+INSERT INTO `app_auth_role_menu` VALUES (370, 1, 19);
+INSERT INTO `app_auth_role_menu` VALUES (372, 1, 21);
+INSERT INTO `app_auth_role_menu` VALUES (375, 1, 22);
+INSERT INTO `app_auth_role_menu` VALUES (376, 1, 23);
+INSERT INTO `app_auth_role_menu` VALUES (379, 1, 24);
+INSERT INTO `app_auth_role_menu` VALUES (380, 1, 25);
+INSERT INTO `app_auth_role_menu` VALUES (381, 1, 26);
+INSERT INTO `app_auth_role_menu` VALUES (382, 1, 27);
+INSERT INTO `app_auth_role_menu` VALUES (377, 1, 28);
+INSERT INTO `app_auth_role_menu` VALUES (373, 1, 29);
 
 -- ----------------------------
 -- Table structure for app_auth_role_netwk
@@ -452,7 +455,12 @@ CREATE TABLE `app_auth_role_netwk`  (
   INDEX `app_auth_role_netwk_netwk_id_65b51976_fk_app_asset_netwk_id`(`netwk_id`) USING BTREE,
   CONSTRAINT `app_auth_role_netwk_netwk_id_65b51976_fk_app_asset_netwk_id` FOREIGN KEY (`netwk_id`) REFERENCES `app_asset_netwk` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_netwk_role_id_c2eec4e1_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of app_auth_role_netwk
+-- ----------------------------
+INSERT INTO `app_auth_role_netwk` VALUES (25, 1, 1);
 
 -- ----------------------------
 -- Table structure for app_auth_role_perms
@@ -467,96 +475,98 @@ CREATE TABLE `app_auth_role_perms`  (
   INDEX `app_auth_role_perms_perms_id_05bc8fc8_fk_app_auth_perms_id`(`perms_id`) USING BTREE,
   CONSTRAINT `app_auth_role_perms_perms_id_05bc8fc8_fk_app_auth_perms_id` FOREIGN KEY (`perms_id`) REFERENCES `app_auth_perms` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_perms_role_id_d1dbe279_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1878 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2181 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_role_perms
 -- ----------------------------
-INSERT INTO `app_auth_role_perms` VALUES (1793, 1, 4);
-INSERT INTO `app_auth_role_perms` VALUES (1794, 1, 5);
-INSERT INTO `app_auth_role_perms` VALUES (1795, 1, 6);
-INSERT INTO `app_auth_role_perms` VALUES (1796, 1, 7);
-INSERT INTO `app_auth_role_perms` VALUES (1803, 1, 8);
-INSERT INTO `app_auth_role_perms` VALUES (1804, 1, 9);
-INSERT INTO `app_auth_role_perms` VALUES (1805, 1, 10);
-INSERT INTO `app_auth_role_perms` VALUES (1806, 1, 11);
-INSERT INTO `app_auth_role_perms` VALUES (1807, 1, 12);
-INSERT INTO `app_auth_role_perms` VALUES (1808, 1, 13);
-INSERT INTO `app_auth_role_perms` VALUES (1809, 1, 14);
-INSERT INTO `app_auth_role_perms` VALUES (1810, 1, 15);
-INSERT INTO `app_auth_role_perms` VALUES (1811, 1, 16);
-INSERT INTO `app_auth_role_perms` VALUES (1812, 1, 17);
-INSERT INTO `app_auth_role_perms` VALUES (1813, 1, 18);
-INSERT INTO `app_auth_role_perms` VALUES (1814, 1, 19);
-INSERT INTO `app_auth_role_perms` VALUES (1815, 1, 20);
-INSERT INTO `app_auth_role_perms` VALUES (1816, 1, 21);
-INSERT INTO `app_auth_role_perms` VALUES (1817, 1, 22);
-INSERT INTO `app_auth_role_perms` VALUES (1818, 1, 23);
-INSERT INTO `app_auth_role_perms` VALUES (1819, 1, 24);
-INSERT INTO `app_auth_role_perms` VALUES (1820, 1, 25);
-INSERT INTO `app_auth_role_perms` VALUES (1821, 1, 26);
-INSERT INTO `app_auth_role_perms` VALUES (1822, 1, 27);
-INSERT INTO `app_auth_role_perms` VALUES (1823, 1, 28);
-INSERT INTO `app_auth_role_perms` VALUES (1824, 1, 29);
-INSERT INTO `app_auth_role_perms` VALUES (1825, 1, 30);
-INSERT INTO `app_auth_role_perms` VALUES (1826, 1, 31);
-INSERT INTO `app_auth_role_perms` VALUES (1827, 1, 32);
-INSERT INTO `app_auth_role_perms` VALUES (1828, 1, 33);
-INSERT INTO `app_auth_role_perms` VALUES (1833, 1, 34);
-INSERT INTO `app_auth_role_perms` VALUES (1835, 1, 36);
-INSERT INTO `app_auth_role_perms` VALUES (1836, 1, 37);
-INSERT INTO `app_auth_role_perms` VALUES (1837, 1, 38);
-INSERT INTO `app_auth_role_perms` VALUES (1838, 1, 39);
-INSERT INTO `app_auth_role_perms` VALUES (1839, 1, 40);
-INSERT INTO `app_auth_role_perms` VALUES (1844, 1, 41);
-INSERT INTO `app_auth_role_perms` VALUES (1845, 1, 43);
-INSERT INTO `app_auth_role_perms` VALUES (1847, 1, 44);
-INSERT INTO `app_auth_role_perms` VALUES (1849, 1, 45);
-INSERT INTO `app_auth_role_perms` VALUES (1852, 1, 46);
-INSERT INTO `app_auth_role_perms` VALUES (1853, 1, 47);
-INSERT INTO `app_auth_role_perms` VALUES (1854, 1, 48);
-INSERT INTO `app_auth_role_perms` VALUES (1855, 1, 49);
-INSERT INTO `app_auth_role_perms` VALUES (1856, 1, 50);
-INSERT INTO `app_auth_role_perms` VALUES (1857, 1, 51);
-INSERT INTO `app_auth_role_perms` VALUES (1858, 1, 53);
-INSERT INTO `app_auth_role_perms` VALUES (1859, 1, 54);
-INSERT INTO `app_auth_role_perms` VALUES (1860, 1, 55);
-INSERT INTO `app_auth_role_perms` VALUES (1861, 1, 56);
-INSERT INTO `app_auth_role_perms` VALUES (1862, 1, 57);
-INSERT INTO `app_auth_role_perms` VALUES (1863, 1, 58);
-INSERT INTO `app_auth_role_perms` VALUES (1864, 1, 59);
-INSERT INTO `app_auth_role_perms` VALUES (1865, 1, 60);
-INSERT INTO `app_auth_role_perms` VALUES (1866, 1, 61);
-INSERT INTO `app_auth_role_perms` VALUES (1867, 1, 62);
-INSERT INTO `app_auth_role_perms` VALUES (1870, 1, 63);
-INSERT INTO `app_auth_role_perms` VALUES (1871, 1, 64);
-INSERT INTO `app_auth_role_perms` VALUES (1872, 1, 65);
-INSERT INTO `app_auth_role_perms` VALUES (1873, 1, 66);
-INSERT INTO `app_auth_role_perms` VALUES (1874, 1, 67);
-INSERT INTO `app_auth_role_perms` VALUES (1875, 1, 68);
-INSERT INTO `app_auth_role_perms` VALUES (1876, 1, 69);
-INSERT INTO `app_auth_role_perms` VALUES (1877, 1, 70);
-INSERT INTO `app_auth_role_perms` VALUES (1829, 1, 71);
-INSERT INTO `app_auth_role_perms` VALUES (1834, 1, 72);
-INSERT INTO `app_auth_role_perms` VALUES (1797, 1, 73);
-INSERT INTO `app_auth_role_perms` VALUES (1798, 1, 74);
-INSERT INTO `app_auth_role_perms` VALUES (1799, 1, 75);
-INSERT INTO `app_auth_role_perms` VALUES (1800, 1, 76);
-INSERT INTO `app_auth_role_perms` VALUES (1801, 1, 77);
-INSERT INTO `app_auth_role_perms` VALUES (1830, 1, 78);
-INSERT INTO `app_auth_role_perms` VALUES (1802, 1, 79);
-INSERT INTO `app_auth_role_perms` VALUES (1868, 1, 80);
-INSERT INTO `app_auth_role_perms` VALUES (1869, 1, 81);
-INSERT INTO `app_auth_role_perms` VALUES (1840, 1, 82);
-INSERT INTO `app_auth_role_perms` VALUES (1841, 1, 83);
-INSERT INTO `app_auth_role_perms` VALUES (1842, 1, 84);
-INSERT INTO `app_auth_role_perms` VALUES (1843, 1, 85);
-INSERT INTO `app_auth_role_perms` VALUES (1846, 1, 86);
-INSERT INTO `app_auth_role_perms` VALUES (1848, 1, 87);
-INSERT INTO `app_auth_role_perms` VALUES (1831, 1, 88);
-INSERT INTO `app_auth_role_perms` VALUES (1832, 1, 89);
-INSERT INTO `app_auth_role_perms` VALUES (1850, 1, 91);
-INSERT INTO `app_auth_role_perms` VALUES (1851, 1, 92);
+INSERT INTO `app_auth_role_perms` VALUES (2094, 1, 4);
+INSERT INTO `app_auth_role_perms` VALUES (2095, 1, 5);
+INSERT INTO `app_auth_role_perms` VALUES (2096, 1, 6);
+INSERT INTO `app_auth_role_perms` VALUES (2097, 1, 7);
+INSERT INTO `app_auth_role_perms` VALUES (2104, 1, 8);
+INSERT INTO `app_auth_role_perms` VALUES (2105, 1, 9);
+INSERT INTO `app_auth_role_perms` VALUES (2106, 1, 10);
+INSERT INTO `app_auth_role_perms` VALUES (2107, 1, 11);
+INSERT INTO `app_auth_role_perms` VALUES (2108, 1, 12);
+INSERT INTO `app_auth_role_perms` VALUES (2109, 1, 13);
+INSERT INTO `app_auth_role_perms` VALUES (2110, 1, 14);
+INSERT INTO `app_auth_role_perms` VALUES (2111, 1, 15);
+INSERT INTO `app_auth_role_perms` VALUES (2112, 1, 16);
+INSERT INTO `app_auth_role_perms` VALUES (2113, 1, 17);
+INSERT INTO `app_auth_role_perms` VALUES (2114, 1, 18);
+INSERT INTO `app_auth_role_perms` VALUES (2115, 1, 19);
+INSERT INTO `app_auth_role_perms` VALUES (2116, 1, 20);
+INSERT INTO `app_auth_role_perms` VALUES (2117, 1, 21);
+INSERT INTO `app_auth_role_perms` VALUES (2118, 1, 22);
+INSERT INTO `app_auth_role_perms` VALUES (2119, 1, 23);
+INSERT INTO `app_auth_role_perms` VALUES (2120, 1, 24);
+INSERT INTO `app_auth_role_perms` VALUES (2121, 1, 25);
+INSERT INTO `app_auth_role_perms` VALUES (2122, 1, 26);
+INSERT INTO `app_auth_role_perms` VALUES (2123, 1, 27);
+INSERT INTO `app_auth_role_perms` VALUES (2124, 1, 28);
+INSERT INTO `app_auth_role_perms` VALUES (2125, 1, 29);
+INSERT INTO `app_auth_role_perms` VALUES (2126, 1, 30);
+INSERT INTO `app_auth_role_perms` VALUES (2127, 1, 31);
+INSERT INTO `app_auth_role_perms` VALUES (2128, 1, 32);
+INSERT INTO `app_auth_role_perms` VALUES (2129, 1, 33);
+INSERT INTO `app_auth_role_perms` VALUES (2134, 1, 34);
+INSERT INTO `app_auth_role_perms` VALUES (2136, 1, 36);
+INSERT INTO `app_auth_role_perms` VALUES (2137, 1, 37);
+INSERT INTO `app_auth_role_perms` VALUES (2138, 1, 38);
+INSERT INTO `app_auth_role_perms` VALUES (2139, 1, 39);
+INSERT INTO `app_auth_role_perms` VALUES (2141, 1, 40);
+INSERT INTO `app_auth_role_perms` VALUES (2146, 1, 41);
+INSERT INTO `app_auth_role_perms` VALUES (2148, 1, 43);
+INSERT INTO `app_auth_role_perms` VALUES (2150, 1, 44);
+INSERT INTO `app_auth_role_perms` VALUES (2152, 1, 45);
+INSERT INTO `app_auth_role_perms` VALUES (2155, 1, 46);
+INSERT INTO `app_auth_role_perms` VALUES (2156, 1, 47);
+INSERT INTO `app_auth_role_perms` VALUES (2157, 1, 48);
+INSERT INTO `app_auth_role_perms` VALUES (2158, 1, 49);
+INSERT INTO `app_auth_role_perms` VALUES (2159, 1, 50);
+INSERT INTO `app_auth_role_perms` VALUES (2160, 1, 51);
+INSERT INTO `app_auth_role_perms` VALUES (2161, 1, 53);
+INSERT INTO `app_auth_role_perms` VALUES (2162, 1, 54);
+INSERT INTO `app_auth_role_perms` VALUES (2163, 1, 55);
+INSERT INTO `app_auth_role_perms` VALUES (2164, 1, 56);
+INSERT INTO `app_auth_role_perms` VALUES (2165, 1, 57);
+INSERT INTO `app_auth_role_perms` VALUES (2166, 1, 58);
+INSERT INTO `app_auth_role_perms` VALUES (2167, 1, 59);
+INSERT INTO `app_auth_role_perms` VALUES (2168, 1, 60);
+INSERT INTO `app_auth_role_perms` VALUES (2169, 1, 61);
+INSERT INTO `app_auth_role_perms` VALUES (2170, 1, 62);
+INSERT INTO `app_auth_role_perms` VALUES (2173, 1, 63);
+INSERT INTO `app_auth_role_perms` VALUES (2174, 1, 64);
+INSERT INTO `app_auth_role_perms` VALUES (2175, 1, 65);
+INSERT INTO `app_auth_role_perms` VALUES (2176, 1, 66);
+INSERT INTO `app_auth_role_perms` VALUES (2177, 1, 67);
+INSERT INTO `app_auth_role_perms` VALUES (2178, 1, 68);
+INSERT INTO `app_auth_role_perms` VALUES (2179, 1, 69);
+INSERT INTO `app_auth_role_perms` VALUES (2180, 1, 70);
+INSERT INTO `app_auth_role_perms` VALUES (2130, 1, 71);
+INSERT INTO `app_auth_role_perms` VALUES (2135, 1, 72);
+INSERT INTO `app_auth_role_perms` VALUES (2098, 1, 73);
+INSERT INTO `app_auth_role_perms` VALUES (2099, 1, 74);
+INSERT INTO `app_auth_role_perms` VALUES (2100, 1, 75);
+INSERT INTO `app_auth_role_perms` VALUES (2101, 1, 76);
+INSERT INTO `app_auth_role_perms` VALUES (2102, 1, 77);
+INSERT INTO `app_auth_role_perms` VALUES (2131, 1, 78);
+INSERT INTO `app_auth_role_perms` VALUES (2103, 1, 79);
+INSERT INTO `app_auth_role_perms` VALUES (2171, 1, 80);
+INSERT INTO `app_auth_role_perms` VALUES (2172, 1, 81);
+INSERT INTO `app_auth_role_perms` VALUES (2142, 1, 82);
+INSERT INTO `app_auth_role_perms` VALUES (2143, 1, 83);
+INSERT INTO `app_auth_role_perms` VALUES (2144, 1, 84);
+INSERT INTO `app_auth_role_perms` VALUES (2145, 1, 85);
+INSERT INTO `app_auth_role_perms` VALUES (2149, 1, 86);
+INSERT INTO `app_auth_role_perms` VALUES (2151, 1, 87);
+INSERT INTO `app_auth_role_perms` VALUES (2132, 1, 88);
+INSERT INTO `app_auth_role_perms` VALUES (2133, 1, 89);
+INSERT INTO `app_auth_role_perms` VALUES (2153, 1, 91);
+INSERT INTO `app_auth_role_perms` VALUES (2154, 1, 92);
+INSERT INTO `app_auth_role_perms` VALUES (2140, 1, 93);
+INSERT INTO `app_auth_role_perms` VALUES (2147, 1, 94);
 
 -- ----------------------------
 -- Table structure for app_auth_role_project
@@ -571,12 +581,7 @@ CREATE TABLE `app_auth_role_project`  (
   INDEX `app_auth_role_project_gitcode_id_d1f3c5bb_fk_app_code_gitcode_id`(`gitcode_id`) USING BTREE,
   CONSTRAINT `app_auth_role_project_gitcode_id_d1f3c5bb_fk_app_code_gitcode_id` FOREIGN KEY (`gitcode_id`) REFERENCES `app_code_gitcode` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_role_project_role_id_8f081530_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of app_auth_role_project
--- ----------------------------
-INSERT INTO `app_auth_role_project` VALUES (13, 1, 2);
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_auth_user
@@ -600,7 +605,7 @@ CREATE TABLE `app_auth_user`  (
 -- ----------------------------
 -- Records of app_auth_user
 -- ----------------------------
-INSERT INTO `app_auth_user` VALUES (1, 'admin', 'admin', 'b\'d4721440af5b9f9f9a9915f5b2358ffb\'', '10086@139.com', '10086', '', '在线', '2018-10-11 06:13:37.757161', '2018-12-04 08:29:09.136500');
+INSERT INTO `app_auth_user` VALUES (1, 'admin', '小贰', 'b\'d4721440af5b9f9f9a9915f5b2358ffb\'', '1343208940@139.com', '1343208940', '', '在线', '2018-10-11 06:13:37.757161', '2018-12-05 03:36:16.508890');
 
 -- ----------------------------
 -- Table structure for app_auth_user_role
@@ -615,12 +620,12 @@ CREATE TABLE `app_auth_user_role`  (
   INDEX `app_auth_user_role_role_id_987f89e1_fk_app_auth_role_id`(`role_id`) USING BTREE,
   CONSTRAINT `app_auth_user_role_role_id_987f89e1_fk_app_auth_role_id` FOREIGN KEY (`role_id`) REFERENCES `app_auth_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_auth_user_role_user_id_2363d45d_fk_app_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `app_auth_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_auth_user_role
 -- ----------------------------
-INSERT INTO `app_auth_user_role` VALUES (4, 1, 1);
+INSERT INTO `app_auth_user_role` VALUES (2, 1, 1);
 
 -- ----------------------------
 -- Table structure for app_code_gitcode
@@ -643,11 +648,6 @@ CREATE TABLE `app_code_gitcode`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of app_code_gitcode
--- ----------------------------
-INSERT INTO `app_code_gitcode` VALUES (2, 'mtrops_v2', '运维管理平台 第二版', 'https://gitee.com/12x/mtrops_v2.git', 2, 'b\'\'', '', '');
-
--- ----------------------------
 -- Table structure for app_code_project
 -- ----------------------------
 DROP TABLE IF EXISTS `app_code_project`;
@@ -663,6 +663,10 @@ CREATE TABLE `app_code_project`  (
 -- Records of app_code_project
 -- ----------------------------
 INSERT INTO `app_code_project` VALUES (2, '运维平台', '运维管理平台');
+INSERT INTO `app_code_project` VALUES (4, '木头人', '木头人金融平台');
+INSERT INTO `app_code_project` VALUES (5, '木头云', '木头云平台');
+INSERT INTO `app_code_project` VALUES (6, '木头云交易', '木头云交易平台');
+INSERT INTO `app_code_project` VALUES (7, '仓管系统', '仓管系统');
 
 -- ----------------------------
 -- Table structure for app_code_publist
@@ -684,7 +688,7 @@ CREATE TABLE `app_code_publist`  (
   INDEX `app_code_publist_host_ip_id_55ba2063_fk_app_asset_host_id`(`host_ip_id`) USING BTREE,
   CONSTRAINT `app_code_publist_gitcode_id_08f6579e_fk_app_code_gitcode_id` FOREIGN KEY (`gitcode_id`) REFERENCES `app_code_gitcode` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_code_publist_host_ip_id_55ba2063_fk_app_asset_host_id` FOREIGN KEY (`host_ip_id`) REFERENCES `app_asset_host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_code_publistrecord
@@ -701,7 +705,7 @@ CREATE TABLE `app_code_publistrecord`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_code_publistreco_publist_id_3e2d949d_fk_app_code_`(`publist_id`) USING BTREE,
   CONSTRAINT `app_code_publistreco_publist_id_3e2d949d_fk_app_code_` FOREIGN KEY (`publist_id`) REFERENCES `app_code_publist` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_code_wchartlog
@@ -716,7 +720,7 @@ CREATE TABLE `app_code_wchartlog`  (
   `status` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `add_time` datetime(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 88 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_log_opslog
@@ -730,12 +734,7 @@ CREATE TABLE `app_log_opslog`  (
   `start_time` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `audit_log` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of app_log_opslog
--- ----------------------------
-INSERT INTO `app_log_opslog` VALUES (40, '192.168.1.126', '', 'root', '2018-12-04 08:31:10', 'Last login: Tue Dec  4 16:24:37 2018\n[root@localhost ~]# \n[root@localhost ~]#');
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_log_taskrecord
@@ -752,13 +751,7 @@ CREATE TABLE `app_log_taskrecord`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `app_log_taskrecord_task_user_id_db7792d0_fk_app_auth_user_id`(`task_user_id`) USING BTREE,
   CONSTRAINT `app_log_taskrecord_task_user_id_db7792d0_fk_app_auth_user_id` FOREIGN KEY (`task_user_id`) REFERENCES `app_auth_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of app_log_taskrecord
--- ----------------------------
-INSERT INTO `app_log_taskrecord` VALUES (43, '同步服务器信息', 'e5925d0e-e4c8-4e19-b19e-f77a2084b013', 'SUCCESS', '2018-10-30 09:17:04.716267', '{\n \"sys_info\": {\n  \"39.108.15.95\": {\n   \"localhost\": \"iZwz94rq1zzte7clamirpkZ\",\n   \"kernel\": \"Linux\",\n   \"kernelrelease\": \"2.6.32-696.3.2.el6.x86_64\",\n   \"cpu_model\": \"Intel(R) Xeon(R) Platinum 8163 CPU @ 2.50GHz\",\n   \"num_cpus\": 8,\n   \"productname\": \"Alibaba Cloud ECS\",\n   \"os\": \"CentOS\",\n   \"osrelease\": \"6.9\",\n   \"mem_total\": 16080,\n   \"interface\": [\n    {\n     \"hwaddr\": \"00:00:00:00:00:00\",\n     \"ipaddr\": \"127.0.0.1\",\n     \"label\": \"lo\",\n     \"netmask\": \"255.0.0.0\"\n    },\n    {\n     \"hwaddr\": \"00:16:3e:06:25:c7\",\n     \"ipaddr\": \"172.18.218.12\",\n     \"label\": \"eth0\",\n     \"netmask\": \"255.255.240.0\"\n    }\n   ],\n   \"disk_info\": [\n    \"Disk /dev/vda: 42.9 GB\",\n    \"Disk /dev/vdb: 21.5 GB\"\n   ],\n   \"SwapTotal\": 0.0\n  }\n },\n \"sofeware_info\": {\n  \"39.108.15.95\": {\n   \"sshd\": {\n    \"port\": [\n     \"25840\"\n    ],\n    \"pid\": \"27807\",\n    \"name\": \"sshd\",\n    \"version\": \"Unkonwn\"\n   },\n   \"nginx\": {\n    \"port\": [\n     \"80\"\n    ],\n    \"pid\": \"15867\",\n    \"name\": \"nginx\",\n    \"version\": \"1.5\"\n   },\n   \"java\": {\n    \"port\": [\n     \"8081\"\n    ],\n    \"pid\": \"11398\",\n    \"name\": \"java\",\n    \"version\": \"1.8\"\n   },\n   \"php\": {\n    \"version\": \"5.4\",\n    \"name\": \"php\",\n    \"port\": \"None\"\n   }\n  }\n }\n}', 1);
-INSERT INTO `app_log_taskrecord` VALUES (44, '同步服务器信息', 'cc0431ff-70b8-4afa-8c4b-92998b9b2d2f', 'SUCCESS', '2018-12-04 08:25:42.558385', '{\n \"sys_info\": {\n  \"192.168.1.126\": {\n   \"localhost\": \"localhost.localdomain\",\n   \"kernel\": \"Linux\",\n   \"kernelrelease\": \"3.10.0-862.3.3.el7.x86_64\",\n   \"cpu_model\": \"Intel(R) Xeon(R) CPU E3-1220 v6 @ 3.00GHz\",\n   \"num_cpus\": 4,\n   \"productname\": \"VMware Virtual Platform\",\n   \"os\": \"CentOS\",\n   \"osrelease\": \"7.5.1804\",\n   \"mem_total\": 3790,\n   \"interface\": [\n    {\n     \"hwaddr\": \"00:00:00:00:00:00\",\n     \"ipaddr\": \"127.0.0.1\",\n     \"label\": \"lo\",\n     \"netmask\": \"255.0.0.0\"\n    },\n    {\n     \"hwaddr\": \"00:50:56:ba:02:a2\",\n     \"ipaddr\": \"192.168.1.126\",\n     \"label\": \"ens192\",\n     \"netmask\": \"255.255.255.0\"\n    }\n   ],\n   \"disk_info\": [\n    \"Disk /dev/sda: 549.8 GB\"\n   ],\n   \"SwapTotal\": 2047.99609375\n  }\n },\n \"sofeware_info\": {\n  \"192.168.1.126\": {\n   \"python3.6\": {\n    \"port\": [\n     \"8000\"\n    ],\n    \"pid\": \"4847\",\n    \"name\": \"python3.6\",\n    \"version\": \"3.6\"\n   },\n   \"redis-server\": {\n    \"port\": [\n     \"6379\"\n    ],\n    \"pid\": \"1002\",\n    \"name\": \"redis-server\",\n    \"version\": \"3.2\"\n   },\n   \"python\": {\n    \"port\": [\n     \"8080\",\n     \"8081\",\n     \"4505\",\n     \"4506\"\n    ],\n    \"pid\": \"25630\",\n    \"name\": \"python\",\n    \"version\": \"2.7\"\n   },\n   \"nginx\": {\n    \"port\": [\n     \"80\"\n    ],\n    \"pid\": \"30059\",\n    \"name\": \"nginx\",\n    \"version\": \"1.14\"\n   },\n   \"sshd\": {\n    \"port\": [\n     \"22\"\n    ],\n    \"pid\": \"1004\",\n    \"name\": \"sshd\",\n    \"version\": \"7.4\"\n   },\n   \"mysqld\": {\n    \"port\": [\n     \"3306\"\n    ],\n    \"pid\": \"1752\",\n    \"name\": \"mysqld\",\n    \"version\": \"5.6\"\n   },\n   \"php\": {\n    \"version\": \"7.2\",\n    \"name\": \"php\",\n    \"port\": \"None\"\n   }\n  }\n }\n}', 1);
+) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for app_log_userlog
@@ -772,117 +765,27 @@ CREATE TABLE `app_log_userlog`  (
   `status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1107 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1556 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_log_userlog
 -- ----------------------------
-INSERT INTO `app_log_userlog` VALUES (1001, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:33.498728');
-INSERT INTO `app_log_userlog` VALUES (1002, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:35.662852');
-INSERT INTO `app_log_userlog` VALUES (1003, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:38.100991');
-INSERT INTO `app_log_userlog` VALUES (1004, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:42.319232');
-INSERT INTO `app_log_userlog` VALUES (1005, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:45.984442');
-INSERT INTO `app_log_userlog` VALUES (1006, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:46.764487');
-INSERT INTO `app_log_userlog` VALUES (1007, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:47.551532');
-INSERT INTO `app_log_userlog` VALUES (1008, 'admin', '删除代码', '小贰', '成功', '2018-11-28 07:45:48.101563');
-INSERT INTO `app_log_userlog` VALUES (1009, 'admin', '查询代码', '小贰', '成功', '2018-11-28 07:45:49.031616');
-INSERT INTO `app_log_userlog` VALUES (1010, 'admin', '修改代码', '小贰', '成功', '2018-11-28 07:45:53.099849');
-INSERT INTO `app_log_userlog` VALUES (1011, 'admin', '修改代码', '小贰', '成功', '2018-11-28 07:45:56.869064');
-INSERT INTO `app_log_userlog` VALUES (1012, 'admin', '查询代码', '小贰', '成功', '2018-11-28 07:45:57.836120');
-INSERT INTO `app_log_userlog` VALUES (1013, 'admin', '查询代码', '小贰', '成功', '2018-11-28 07:46:03.699455');
-INSERT INTO `app_log_userlog` VALUES (1014, 'admin', '查询发布', '小贰', '成功', '2018-11-28 07:46:04.801518');
-INSERT INTO `app_log_userlog` VALUES (1015, 'admin', '代码发布过滤', '小贰', '成功', '2018-11-28 07:46:07.274660');
-INSERT INTO `app_log_userlog` VALUES (1016, 'admin', '查询发布', '小贰', '成功', '2018-11-28 07:46:09.288775');
-INSERT INTO `app_log_userlog` VALUES (1017, 'admin', '查询发布记录', '小贰', '成功', '2018-11-28 07:46:10.418839');
-INSERT INTO `app_log_userlog` VALUES (1018, 'admin', '查询环境', '小贰', '成功', '2018-11-28 07:46:21.101450');
-INSERT INTO `app_log_userlog` VALUES (1019, 'admin', '访问批量管理', '小贰', '成功', '2018-11-28 07:46:23.225572');
-INSERT INTO `app_log_userlog` VALUES (1020, 'admin', '访问文件管理', '小贰', '成功', '2018-11-28 07:46:25.891724');
-INSERT INTO `app_log_userlog` VALUES (1021, 'admin', '查看操作日志', '小贰', '成功', '2018-11-28 07:46:31.728058');
-INSERT INTO `app_log_userlog` VALUES (1022, 'admin', '查看用户日志', '小贰', '成功', '2018-11-28 07:46:33.039133');
-INSERT INTO `app_log_userlog` VALUES (1023, 'admin', '查看任务', '小贰', '成功', '2018-11-28 07:46:35.496274');
-INSERT INTO `app_log_userlog` VALUES (1024, 'admin', '查看角色', '小贰', '成功', '2018-11-28 07:46:37.948414');
-INSERT INTO `app_log_userlog` VALUES (1025, 'admin', '删除角色', '小贰', '成功', '2018-11-28 07:46:42.913698');
-INSERT INTO `app_log_userlog` VALUES (1026, 'admin', '查看角色', '小贰', '成功', '2018-11-28 07:46:44.547792');
-INSERT INTO `app_log_userlog` VALUES (1027, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:46:46.367896');
-INSERT INTO `app_log_userlog` VALUES (1028, 'admin', '删除用户', '小贰', '成功', '2018-11-28 07:46:52.622253');
-INSERT INTO `app_log_userlog` VALUES (1029, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:46:53.091280');
-INSERT INTO `app_log_userlog` VALUES (1030, 'admin', '修改用户', '小贰', '成功', '2018-11-28 07:46:54.613367');
-INSERT INTO `app_log_userlog` VALUES (1031, 'admin', '修改用户', '小贰', '成功', '2018-11-28 07:47:07.498104');
-INSERT INTO `app_log_userlog` VALUES (1032, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:47:08.299150');
-INSERT INTO `app_log_userlog` VALUES (1033, 'admin', '添加远程管理用户', '小贰', '成功', '2018-11-28 07:47:12.454388');
-INSERT INTO `app_log_userlog` VALUES (1034, 'admin', '添加远程管理用户', '小贰', '成功', '2018-11-28 07:47:16.637627');
-INSERT INTO `app_log_userlog` VALUES (1035, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:47:17.661686');
-INSERT INTO `app_log_userlog` VALUES (1036, 'admin', '添加远程管理用户', '小贰', '成功', '2018-11-28 07:47:18.714746');
-INSERT INTO `app_log_userlog` VALUES (1037, 'admin', '查询用户', '小贰', '成功', '2018-11-28 07:47:21.889927');
-INSERT INTO `app_log_userlog` VALUES (1038, 'admin', '查询菜单', '小贰', '成功', '2018-11-28 07:47:22.873984');
-INSERT INTO `app_log_userlog` VALUES (1039, 'admin', '查询权限', '小贰', '成功', '2018-11-28 07:47:24.762092');
-INSERT INTO `app_log_userlog` VALUES (1040, 'admin', '查询权限', '小贰', '成功', '2018-11-28 08:02:29.170821');
-INSERT INTO `app_log_userlog` VALUES (1041, 'admin', '登录', 'admin', '成功', '2018-11-28 08:02:34.416121');
-INSERT INTO `app_log_userlog` VALUES (1042, 'admin', '查看角色', 'admin', '成功', '2018-11-28 08:02:43.895663');
-INSERT INTO `app_log_userlog` VALUES (1043, 'admin', '查询用户', 'admin', '成功', '2018-11-28 08:02:44.877719');
-INSERT INTO `app_log_userlog` VALUES (1044, 'admin', '查询菜单', 'admin', '成功', '2018-11-28 08:02:45.772770');
-INSERT INTO `app_log_userlog` VALUES (1045, 'admin', '查询权限', 'admin', '成功', '2018-11-28 08:02:47.028842');
-INSERT INTO `app_log_userlog` VALUES (1046, 'admin', '查询权限', 'admin', '成功', '2018-11-28 08:03:22.013843');
-INSERT INTO `app_log_userlog` VALUES (1047, 'admin', '查询服务器', 'admin', '成功', '2018-11-28 08:03:24.842005');
-INSERT INTO `app_log_userlog` VALUES (1048, 'admin', '查询网络设备', 'admin', '成功', '2018-11-28 08:03:25.614049');
-INSERT INTO `app_log_userlog` VALUES (1049, 'admin', '查询机房', 'admin', '成功', '2018-11-28 08:03:26.373093');
-INSERT INTO `app_log_userlog` VALUES (1050, 'admin', '查询分组', 'admin', '成功', '2018-11-28 08:03:27.161138');
-INSERT INTO `app_log_userlog` VALUES (1051, 'admin', '查询厂商', 'admin', '成功', '2018-11-28 08:03:27.957183');
-INSERT INTO `app_log_userlog` VALUES (1052, 'admin', '查询项目', 'admin', '成功', '2018-11-28 08:03:29.960298');
-INSERT INTO `app_log_userlog` VALUES (1053, 'admin', '查询代码', 'admin', '成功', '2018-11-28 08:03:30.838348');
-INSERT INTO `app_log_userlog` VALUES (1054, 'admin', '查询发布', 'admin', '成功', '2018-11-28 08:03:31.557389');
-INSERT INTO `app_log_userlog` VALUES (1055, 'admin', '查询发布记录', 'admin', '成功', '2018-11-28 08:03:32.396437');
-INSERT INTO `app_log_userlog` VALUES (1056, 'admin', '查询环境', 'admin', '成功', '2018-11-28 08:03:33.958527');
-INSERT INTO `app_log_userlog` VALUES (1057, 'admin', '访问批量管理', 'admin', '成功', '2018-11-28 08:03:34.779573');
-INSERT INTO `app_log_userlog` VALUES (1058, 'admin', '访问文件管理', 'admin', '成功', '2018-11-28 08:03:35.539617');
-INSERT INTO `app_log_userlog` VALUES (1059, 'admin', '访问phpmyadmin', 'admin', '成功', '2018-11-28 08:03:37.360721');
-INSERT INTO `app_log_userlog` VALUES (1060, 'admin', '查看用户日志', 'admin', '成功', '2018-11-28 08:03:39.406838');
-INSERT INTO `app_log_userlog` VALUES (1061, 'admin', '查看操作日志', 'admin', '成功', '2018-11-28 08:03:40.197883');
-INSERT INTO `app_log_userlog` VALUES (1062, 'admin', '查看任务', 'admin', '成功', '2018-11-28 08:03:40.920925');
-INSERT INTO `app_log_userlog` VALUES (1063, 'admin', '查看角色', 'admin', '成功', '2018-11-28 08:03:42.998044');
-INSERT INTO `app_log_userlog` VALUES (1064, 'admin', '查询用户', 'admin', '成功', '2018-11-28 08:03:43.759087');
-INSERT INTO `app_log_userlog` VALUES (1065, 'admin', '查询菜单', 'admin', '成功', '2018-11-28 08:03:44.605135');
-INSERT INTO `app_log_userlog` VALUES (1066, 'admin', '查询权限', 'admin', '成功', '2018-11-28 08:03:45.461184');
-INSERT INTO `app_log_userlog` VALUES (1067, 'admin', '登录', 'admin', '成功', '2018-11-28 08:03:52.835606');
-INSERT INTO `app_log_userlog` VALUES (1068, 'admin', '登录', 'admin', '成功', '2018-11-28 08:04:55.218174');
-INSERT INTO `app_log_userlog` VALUES (1069, 'admin', '查看角色', 'admin', '成功', '2018-11-28 08:05:01.979561');
-INSERT INTO `app_log_userlog` VALUES (1070, 'admin', '查询用户', 'admin', '成功', '2018-11-28 08:05:03.205631');
-INSERT INTO `app_log_userlog` VALUES (1071, 'admin', '查询菜单', 'admin', '成功', '2018-11-28 08:05:04.309694');
-INSERT INTO `app_log_userlog` VALUES (1072, 'admin', '登录', 'admin', '成功', '2018-11-28 08:08:40.381053');
-INSERT INTO `app_log_userlog` VALUES (1073, 'admin', '登录', 'admin', '成功', '2018-12-04 08:24:23.580328');
-INSERT INTO `app_log_userlog` VALUES (1074, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:24:26.639999');
-INSERT INTO `app_log_userlog` VALUES (1075, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:24:48.485611');
-INSERT INTO `app_log_userlog` VALUES (1076, 'admin', '添加服务器', 'admin', '成功', '2018-12-04 08:25:21.119618');
-INSERT INTO `app_log_userlog` VALUES (1077, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:25:22.834507');
-INSERT INTO `app_log_userlog` VALUES (1078, 'admin', '查看角色', 'admin', '成功', '2018-12-04 08:25:25.827671');
-INSERT INTO `app_log_userlog` VALUES (1079, 'admin', '获取角色资产', 'admin', '成功', '2018-12-04 08:25:27.911172');
-INSERT INTO `app_log_userlog` VALUES (1080, 'admin', '角色资产授权', 'admin', '成功', '2018-12-04 08:25:30.167385');
-INSERT INTO `app_log_userlog` VALUES (1081, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:25:31.702316');
-INSERT INTO `app_log_userlog` VALUES (1082, 'admin', '连接服务器', 'admin', '成功', '2018-12-04 08:25:36.684974');
-INSERT INTO `app_log_userlog` VALUES (1083, 'admin', '服务器同步系统信息', 'admin', '成功', '2018-12-04 08:25:42.348541');
-INSERT INTO `app_log_userlog` VALUES (1084, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:25:45.664083');
-INSERT INTO `app_log_userlog` VALUES (1085, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:25:55.359845');
-INSERT INTO `app_log_userlog` VALUES (1086, 'admin', '查看任务', 'admin', '成功', '2018-12-04 08:25:58.059041');
-INSERT INTO `app_log_userlog` VALUES (1087, 'admin', '任务日志', 'admin', '成功', '2018-12-04 08:26:00.267014');
-INSERT INTO `app_log_userlog` VALUES (1088, 'admin', '查看任务', 'admin', '成功', '2018-12-04 08:26:26.514692');
-INSERT INTO `app_log_userlog` VALUES (1089, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:26:28.918073');
-INSERT INTO `app_log_userlog` VALUES (1090, 'admin', '连接服务器', 'admin', '成功', '2018-12-04 08:26:30.482224');
-INSERT INTO `app_log_userlog` VALUES (1091, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:26:40.784874');
-INSERT INTO `app_log_userlog` VALUES (1092, 'admin', '查询用户', 'admin', '成功', '2018-12-04 08:26:52.391283');
-INSERT INTO `app_log_userlog` VALUES (1093, 'admin', '查询用户', 'admin', '成功', '2018-12-04 08:27:34.687437');
-INSERT INTO `app_log_userlog` VALUES (1094, 'admin', '查询服务器详细信息', 'admin', '成功', '2018-12-04 08:27:43.559560');
-INSERT INTO `app_log_userlog` VALUES (1095, 'admin', '查询菜单', 'admin', '成功', '2018-12-04 08:27:49.201962');
-INSERT INTO `app_log_userlog` VALUES (1096, 'admin', '查询权限', 'admin', '成功', '2018-12-04 08:27:50.299598');
-INSERT INTO `app_log_userlog` VALUES (1097, 'admin', '查询菜单', 'admin', '成功', '2018-12-04 08:27:51.577566');
-INSERT INTO `app_log_userlog` VALUES (1098, 'admin', '登录', 'admin', '成功', '2018-12-04 08:28:53.816431');
-INSERT INTO `app_log_userlog` VALUES (1099, 'admin', '查询用户', 'admin', '成功', '2018-12-04 08:28:56.265042');
-INSERT INTO `app_log_userlog` VALUES (1100, 'admin', '添加远程管理用户', 'admin', '成功', '2018-12-04 08:28:58.086675');
-INSERT INTO `app_log_userlog` VALUES (1101, 'admin', '添加远程管理用户', 'admin', '成功', '2018-12-04 08:29:05.468802');
-INSERT INTO `app_log_userlog` VALUES (1102, 'admin', '登录', 'admin', '成功', '2018-12-04 08:29:09.141039');
-INSERT INTO `app_log_userlog` VALUES (1103, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:29:10.734145');
-INSERT INTO `app_log_userlog` VALUES (1104, 'admin', '连接服务器', 'admin', '成功', '2018-12-04 08:29:12.438069');
-INSERT INTO `app_log_userlog` VALUES (1105, 'admin', '查询服务器', 'admin', '成功', '2018-12-04 08:31:08.484953');
-INSERT INTO `app_log_userlog` VALUES (1106, 'admin', '连接服务器', 'admin', '成功', '2018-12-04 08:31:09.970191');
+INSERT INTO `app_log_userlog` VALUES (1540, 'admin', '查看角色', '小贰', '成功', '2018-12-05 03:35:36.659610');
+INSERT INTO `app_log_userlog` VALUES (1541, 'admin', '删除角色', '小贰', '成功', '2018-12-05 03:35:39.864794');
+INSERT INTO `app_log_userlog` VALUES (1542, 'admin', '查看角色', '小贰', '成功', '2018-12-05 03:35:41.268874');
+INSERT INTO `app_log_userlog` VALUES (1543, 'admin', '获取角色资产', '小贰', '成功', '2018-12-05 03:35:45.897139');
+INSERT INTO `app_log_userlog` VALUES (1544, 'admin', '查询用户', '小贰', '成功', '2018-12-05 03:35:52.502517');
+INSERT INTO `app_log_userlog` VALUES (1545, 'admin', '删除用户', '小贰', '成功', '2018-12-05 03:35:55.918712');
+INSERT INTO `app_log_userlog` VALUES (1546, 'admin', '查询用户', '小贰', '成功', '2018-12-05 03:35:57.670812');
+INSERT INTO `app_log_userlog` VALUES (1547, 'admin', '添加远程管理用户', '小贰', '成功', '2018-12-05 03:35:59.752931');
+INSERT INTO `app_log_userlog` VALUES (1548, 'admin', '添加远程管理用户', '小贰', '成功', '2018-12-05 03:36:09.147469');
+INSERT INTO `app_log_userlog` VALUES (1549, 'admin', '查询用户', '小贰', '成功', '2018-12-05 03:36:09.880511');
+INSERT INTO `app_log_userlog` VALUES (1550, 'admin', '查询用户', '小贰', '成功', '2018-12-05 03:36:16.442886');
+INSERT INTO `app_log_userlog` VALUES (1551, 'admin', '查询菜单', '小贰', '成功', '2018-12-05 03:36:18.483003');
+INSERT INTO `app_log_userlog` VALUES (1552, 'admin', '查询权限', '小贰', '成功', '2018-12-05 03:36:19.690072');
+INSERT INTO `app_log_userlog` VALUES (1553, 'admin', '查询菜单', '小贰', '成功', '2018-12-05 03:36:21.040149');
+INSERT INTO `app_log_userlog` VALUES (1554, 'admin', '查询权限', '小贰', '成功', '2018-12-05 03:36:24.797364');
+INSERT INTO `app_log_userlog` VALUES (1555, 'admin', '查询服务器', '小贰', '成功', '2018-12-05 03:36:37.000062');
 
 -- ----------------------------
 -- Table structure for app_sys_envsofeware
@@ -894,12 +797,12 @@ CREATE TABLE `app_sys_envsofeware`  (
   `sofeware_version` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `install_script` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of app_sys_envsofeware
 -- ----------------------------
-INSERT INTO `app_sys_envsofeware` VALUES (1, 'php', '7.2.4', 'echo \"1232\" >/home/test.txt');
+INSERT INTO `app_sys_envsofeware` VALUES (2, 'rsync', '3.0.9', 'cd /usr/local/src/ \nwget http://rsync.samba.org/ftp/rsync/src/rsync-3.0.9.tar.gz \ntar zxvf rsync-3.0.9.tar.gz \ncd rsync-3.0.9\n./configure --prefix=/usr/local/rsync \nmake && make install\necho \"backup\" > /usr/local/rsync/rsync.passwd\nchmod 0600 /usr/local/rsync/rsync.passwd');
 
 -- ----------------------------
 -- Table structure for auth_group
@@ -1060,14 +963,14 @@ INSERT INTO `auth_permission` VALUES (113, 'Can add crontab', 27, 'add_crontabsc
 INSERT INTO `auth_permission` VALUES (114, 'Can change crontab', 27, 'change_crontabschedule');
 INSERT INTO `auth_permission` VALUES (115, 'Can delete crontab', 27, 'delete_crontabschedule');
 INSERT INTO `auth_permission` VALUES (116, 'Can view crontab', 27, 'view_crontabschedule');
-INSERT INTO `auth_permission` VALUES (117, 'Can add periodic task', 28, 'add_periodictask');
-INSERT INTO `auth_permission` VALUES (118, 'Can change periodic task', 28, 'change_periodictask');
-INSERT INTO `auth_permission` VALUES (119, 'Can delete periodic task', 28, 'delete_periodictask');
-INSERT INTO `auth_permission` VALUES (120, 'Can view periodic task', 28, 'view_periodictask');
-INSERT INTO `auth_permission` VALUES (121, 'Can add interval', 29, 'add_intervalschedule');
-INSERT INTO `auth_permission` VALUES (122, 'Can change interval', 29, 'change_intervalschedule');
-INSERT INTO `auth_permission` VALUES (123, 'Can delete interval', 29, 'delete_intervalschedule');
-INSERT INTO `auth_permission` VALUES (124, 'Can view interval', 29, 'view_intervalschedule');
+INSERT INTO `auth_permission` VALUES (117, 'Can add interval', 28, 'add_intervalschedule');
+INSERT INTO `auth_permission` VALUES (118, 'Can change interval', 28, 'change_intervalschedule');
+INSERT INTO `auth_permission` VALUES (119, 'Can delete interval', 28, 'delete_intervalschedule');
+INSERT INTO `auth_permission` VALUES (120, 'Can view interval', 28, 'view_intervalschedule');
+INSERT INTO `auth_permission` VALUES (121, 'Can add periodic task', 29, 'add_periodictask');
+INSERT INTO `auth_permission` VALUES (122, 'Can change periodic task', 29, 'change_periodictask');
+INSERT INTO `auth_permission` VALUES (123, 'Can delete periodic task', 29, 'delete_periodictask');
+INSERT INTO `auth_permission` VALUES (124, 'Can view periodic task', 29, 'view_periodictask');
 INSERT INTO `auth_permission` VALUES (125, 'Can add periodic tasks', 30, 'add_periodictasks');
 INSERT INTO `auth_permission` VALUES (126, 'Can change periodic tasks', 30, 'change_periodictasks');
 INSERT INTO `auth_permission` VALUES (127, 'Can delete periodic tasks', 30, 'delete_periodictasks');
@@ -1218,8 +1121,8 @@ INSERT INTO `django_content_type` VALUES (1, 'auth', 'permission');
 INSERT INTO `django_content_type` VALUES (3, 'auth', 'user');
 INSERT INTO `django_content_type` VALUES (4, 'contenttypes', 'contenttype');
 INSERT INTO `django_content_type` VALUES (27, 'djcelery', 'crontabschedule');
-INSERT INTO `django_content_type` VALUES (29, 'djcelery', 'intervalschedule');
-INSERT INTO `django_content_type` VALUES (28, 'djcelery', 'periodictask');
+INSERT INTO `django_content_type` VALUES (28, 'djcelery', 'intervalschedule');
+INSERT INTO `django_content_type` VALUES (29, 'djcelery', 'periodictask');
 INSERT INTO `django_content_type` VALUES (30, 'djcelery', 'periodictasks');
 INSERT INTO `django_content_type` VALUES (31, 'djcelery', 'taskmeta');
 INSERT INTO `django_content_type` VALUES (32, 'djcelery', 'tasksetmeta');
@@ -1237,72 +1140,29 @@ CREATE TABLE `django_migrations`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of django_migrations
 -- ----------------------------
-INSERT INTO `django_migrations` VALUES (1, 'app_asset', '0001_initial', '2018-10-09 08:26:24.472633');
-INSERT INTO `django_migrations` VALUES (2, 'app_auth', '0001_initial', '2018-10-09 08:26:31.314025');
-INSERT INTO `django_migrations` VALUES (3, 'app_auth', '0002_auto_20181009_0901', '2018-10-09 08:26:32.724105');
-INSERT INTO `django_migrations` VALUES (4, 'contenttypes', '0001_initial', '2018-10-09 08:26:33.150130');
-INSERT INTO `django_migrations` VALUES (5, 'contenttypes', '0002_remove_content_type_name', '2018-10-09 08:26:34.106184');
-INSERT INTO `django_migrations` VALUES (6, 'auth', '0001_initial', '2018-10-09 08:26:41.095584');
-INSERT INTO `django_migrations` VALUES (7, 'auth', '0002_alter_permission_name_max_length', '2018-10-09 08:26:41.856628');
-INSERT INTO `django_migrations` VALUES (8, 'auth', '0003_alter_user_email_max_length', '2018-10-09 08:26:42.540667');
-INSERT INTO `django_migrations` VALUES (9, 'auth', '0004_alter_user_username_opts', '2018-10-09 08:26:42.585669');
-INSERT INTO `django_migrations` VALUES (10, 'auth', '0005_alter_user_last_login_null', '2018-10-09 08:26:42.951690');
-INSERT INTO `django_migrations` VALUES (11, 'auth', '0006_require_contenttypes_0002', '2018-10-09 08:26:42.984692');
-INSERT INTO `django_migrations` VALUES (12, 'auth', '0007_alter_validators_add_error_messages', '2018-10-09 08:26:43.029695');
-INSERT INTO `django_migrations` VALUES (13, 'auth', '0008_alter_user_username_max_length', '2018-10-09 08:26:43.651730');
-INSERT INTO `django_migrations` VALUES (14, 'auth', '0009_alter_user_last_name_max_length', '2018-10-09 08:26:44.296767');
-INSERT INTO `django_migrations` VALUES (15, 'sessions', '0001_initial', '2018-10-09 08:26:44.820797');
-INSERT INTO `django_migrations` VALUES (16, 'app_code', '0001_initial', '2018-10-10 01:58:55.424677');
-INSERT INTO `django_migrations` VALUES (17, 'app_code', '0002_auto_20181010_1036', '2018-10-10 02:36:17.692448');
-INSERT INTO `django_migrations` VALUES (18, 'app_code', '0003_auto_20181010_1433', '2018-10-10 06:33:10.734388');
-INSERT INTO `django_migrations` VALUES (19, 'app_code', '0004_auto_20181010_1434', '2018-10-10 06:34:06.329568');
-INSERT INTO `django_migrations` VALUES (20, 'app_code', '0005_auto_20181010_1435', '2018-10-10 06:35:47.226339');
-INSERT INTO `django_migrations` VALUES (21, 'app_code', '0006_auto_20181010_1436', '2018-10-10 06:36:16.408008');
-INSERT INTO `django_migrations` VALUES (22, 'app_code', '0007_auto_20181010_1503', '2018-10-10 07:03:51.736687');
-INSERT INTO `django_migrations` VALUES (23, 'app_code', '0008_auto_20181010_1608', '2018-10-10 08:08:36.563886');
-INSERT INTO `django_migrations` VALUES (24, 'app_code', '0009_auto_20181010_2034', '2018-10-11 00:19:10.389463');
-INSERT INTO `django_migrations` VALUES (25, 'app_sys', '0001_initial', '2018-10-11 02:35:05.222167');
-INSERT INTO `django_migrations` VALUES (26, 'app_sys', '0002_auto_20181011_1114', '2018-10-11 03:14:55.137863');
-INSERT INTO `django_migrations` VALUES (27, 'app_auth', '0003_user_last_login', '2018-10-11 06:57:38.378196');
-INSERT INTO `django_migrations` VALUES (28, 'app_log', '0001_initial', '2018-10-11 06:57:39.116239');
-INSERT INTO `django_migrations` VALUES (29, 'app_auth', '0004_perms_perms_url', '2018-10-12 00:53:47.356511');
-INSERT INTO `django_migrations` VALUES (30, 'app_auth', '0005_auto_20181012_1455', '2018-10-12 06:55:56.476346');
-INSERT INTO `django_migrations` VALUES (31, 'app_auth', '0006_auto_20181012_1537', '2018-10-12 07:37:26.091744');
-INSERT INTO `django_migrations` VALUES (32, 'app_auth', '0007_auto_20181012_1643', '2018-10-12 08:43:55.769940');
-INSERT INTO `django_migrations` VALUES (33, 'app_asset', '0002_hostdetail', '2018-10-15 07:24:35.656774');
-INSERT INTO `django_migrations` VALUES (34, 'app_asset', '0003_auto_20181015_1525', '2018-10-15 07:25:15.682063');
-INSERT INTO `django_migrations` VALUES (35, 'app_asset', '0004_auto_20181015_1527', '2018-10-15 07:27:38.710244');
-INSERT INTO `django_migrations` VALUES (36, 'app_asset', '0005_auto_20181015_1602', '2018-10-15 08:02:21.195356');
-INSERT INTO `django_migrations` VALUES (37, 'app_asset', '0006_host_host_status', '2018-10-15 08:38:47.979432');
-INSERT INTO `django_migrations` VALUES (38, 'app_asset', '0007_software', '2018-10-15 09:50:03.860999');
-INSERT INTO `django_migrations` VALUES (39, 'app_asset', '0008_auto_20181016_1527', '2018-10-16 07:27:11.974410');
-INSERT INTO `django_migrations` VALUES (40, 'app_code', '0010_auto_20181018_1124', '2018-10-18 03:24:31.134935');
-INSERT INTO `django_migrations` VALUES (41, 'app_auth', '0008_remoteuser', '2018-10-22 01:13:43.115134');
-INSERT INTO `django_migrations` VALUES (42, 'app_code', '0010_auto_20181022_0913', '2018-10-22 01:13:43.236141');
-INSERT INTO `django_migrations` VALUES (43, 'app_code', '0011_auto_20181024_1048', '2018-10-24 03:05:27.896831');
-INSERT INTO `django_migrations` VALUES (44, 'app_auth', '0009_auto_20181024_1134', '2018-10-24 04:00:37.469887');
-INSERT INTO `django_migrations` VALUES (45, 'app_auth', '0010_auto_20181024_1138', '2018-10-24 04:02:01.537061');
-INSERT INTO `django_migrations` VALUES (46, 'app_log', '0002_auto_20181024_1118', '2018-10-24 04:02:01.548192');
-INSERT INTO `django_migrations` VALUES (47, 'app_auth', '0011_auto_20181026_1054', '2018-10-26 04:06:02.431221');
-INSERT INTO `django_migrations` VALUES (48, 'app_code', '0012_auto_20181026_1236', '2018-10-26 04:35:56.855941');
-INSERT INTO `django_migrations` VALUES (49, 'app_code', '0013_auto_20181026_1239', '2018-10-26 04:44:58.119192');
-INSERT INTO `django_migrations` VALUES (50, 'app_code', '0014_auto_20181026_1242', '2018-10-26 04:44:58.311308');
-INSERT INTO `django_migrations` VALUES (51, 'app_code', '0015_auto_20181026_1244', '2018-10-26 04:44:58.330343');
-INSERT INTO `django_migrations` VALUES (52, 'app_log', '0003_taskrecord', '2018-10-29 07:05:18.948799');
-INSERT INTO `django_migrations` VALUES (53, 'djcelery', '0001_initial', '2018-10-29 07:05:25.193156');
-INSERT INTO `django_migrations` VALUES (54, 'app_log', '0004_auto_20181029_1511', '2018-10-29 07:11:10.804924');
-INSERT INTO `django_migrations` VALUES (55, 'app_log', '0005_taskrecord_task_result', '2018-10-29 07:31:00.854991');
-INSERT INTO `django_migrations` VALUES (56, 'app_asset', '0009_auto_20181029_1652', '2018-10-29 08:52:39.959204');
-INSERT INTO `django_migrations` VALUES (57, 'app_log', '0006_taskrecord_task_user', '2018-10-30 09:02:12.085211');
-INSERT INTO `django_migrations` VALUES (58, 'app_code', '0016_auto_20181127_0951', '2018-11-27 01:51:51.023964');
-INSERT INTO `django_migrations` VALUES (59, 'app_code', '0017_auto_20181127_0957', '2018-11-27 02:00:52.503935');
-INSERT INTO `django_migrations` VALUES (60, 'app_code', '0018_auto_20181127_0959', '2018-11-27 02:00:53.793009');
-INSERT INTO `django_migrations` VALUES (61, 'app_code', '0019_auto_20181127_0959', '2018-11-27 02:00:54.305038');
+INSERT INTO `django_migrations` VALUES (1, 'app_asset', '0001_initial', '2018-12-05 03:14:27.696789');
+INSERT INTO `django_migrations` VALUES (2, 'app_code', '0001_initial', '2018-12-05 03:14:32.155044');
+INSERT INTO `django_migrations` VALUES (3, 'app_auth', '0001_initial', '2018-12-05 03:14:46.352856');
+INSERT INTO `django_migrations` VALUES (4, 'app_log', '0001_initial', '2018-12-05 03:14:48.370972');
+INSERT INTO `django_migrations` VALUES (5, 'app_sys', '0001_initial', '2018-12-05 03:14:49.110014');
+INSERT INTO `django_migrations` VALUES (6, 'contenttypes', '0001_initial', '2018-12-05 03:14:49.798053');
+INSERT INTO `django_migrations` VALUES (7, 'contenttypes', '0002_remove_content_type_name', '2018-12-05 03:14:50.574098');
+INSERT INTO `django_migrations` VALUES (8, 'auth', '0001_initial', '2018-12-05 03:14:58.434547');
+INSERT INTO `django_migrations` VALUES (9, 'auth', '0002_alter_permission_name_max_length', '2018-12-05 03:14:59.381601');
+INSERT INTO `django_migrations` VALUES (10, 'auth', '0003_alter_user_email_max_length', '2018-12-05 03:14:59.993636');
+INSERT INTO `django_migrations` VALUES (11, 'auth', '0004_alter_user_username_opts', '2018-12-05 03:15:00.061640');
+INSERT INTO `django_migrations` VALUES (12, 'auth', '0005_alter_user_last_login_null', '2018-12-05 03:15:00.457663');
+INSERT INTO `django_migrations` VALUES (13, 'auth', '0006_require_contenttypes_0002', '2018-12-05 03:15:00.511666');
+INSERT INTO `django_migrations` VALUES (14, 'auth', '0007_alter_validators_add_error_messages', '2018-12-05 03:15:00.558669');
+INSERT INTO `django_migrations` VALUES (15, 'auth', '0008_alter_user_username_max_length', '2018-12-05 03:15:01.131701');
+INSERT INTO `django_migrations` VALUES (16, 'auth', '0009_alter_user_last_name_max_length', '2018-12-05 03:15:01.861743');
+INSERT INTO `django_migrations` VALUES (17, 'djcelery', '0001_initial', '2018-12-05 03:15:08.473121');
+INSERT INTO `django_migrations` VALUES (18, 'sessions', '0001_initial', '2018-12-05 03:15:09.149160');
 
 -- ----------------------------
 -- Table structure for django_session

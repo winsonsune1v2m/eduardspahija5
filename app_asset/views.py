@@ -291,7 +291,15 @@ class Host(View):
                                  group_id=host_group,idc_id=host_idc,supplier_id=host_supplier,host_msg=host_msg,serial_num=serial_num,
                                  purchase_date=purchase_date,overdue_date=overdue_date)
         host_obj.save()
+
+        role_id = request.session['role_id']
+
+        role_obj = auth_db.Role.objects.get(id=role_id)
+
+        role_obj.host.add(host_obj)
+
         data = '服务器已添加，请刷新查看！'
+
         return HttpResponse(data)
 
     def put(self,request):
@@ -394,6 +402,7 @@ def host_detail(request,id):
         return render(request, "asset_host_detail.html", locals())
     except:
         return HttpResponse("信息未同步")
+
 
 
 @csrf_exempt
@@ -538,6 +547,11 @@ def import_host(request):
 
     data = read_excel.import_host(filename)
 
+    role_id = request.session['role_id']
+
+    role_obj = auth_db.Role.objects.get(id=role_id)
+
+
     for i in data:
         host_ip = i[0]
         host_idc = i[1]
@@ -592,11 +606,13 @@ def import_host(request):
 
         try:
             host_obj = asset_db.Host(host_ip=host_ip, host_remove_port=host_remove_port, host_user=host_user,
-                                     host_passwd=aes_passwd, host_type=host_type,
-                                     group_id=group_id, idc_id=idc_id, supplier_id=supplier_id, host_msg=host_msg,
-                                     serial_num=serial_num,
+                                     host_passwd=aes_passwd, host_type=host_type,group_id=group_id, idc_id=idc_id,
+                                     supplier_id=supplier_id, host_msg=host_msg,serial_num=serial_num,
                                      purchase_date=purchase_date, overdue_date=overdue_date)
             host_obj.save()
+
+            role_obj.host.add(host_obj)
+
         except Exception as e:
             print(e)
             continue
