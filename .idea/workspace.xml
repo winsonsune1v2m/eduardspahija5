@@ -1,54 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change afterPath="$PROJECT_DIR$/mtrops_v2/settings.py.docker" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0002_hostdetail.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0003_auto_20181015_1525.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0004_auto_20181015_1527.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0005_auto_20181015_1602.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0006_host_host_status.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0007_software.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0008_auto_20181016_1527.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0009_auto_20181029_1652.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0002_auto_20181009_0901.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0003_user_last_login.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0004_perms_perms_url.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0005_auto_20181012_1455.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0006_auto_20181012_1537.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0007_auto_20181012_1643.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0008_remoteuser.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0009_auto_20181024_1134.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0010_auto_20181024_1138.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0011_auto_20181026_1054.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0002_auto_20181010_1036.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0003_auto_20181010_1433.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0004_auto_20181010_1434.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0005_auto_20181010_1435.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0006_auto_20181010_1436.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0007_auto_20181010_1503.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0008_auto_20181010_1608.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0009_auto_20181010_2034.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0010_auto_20181022_0913.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0011_auto_20181024_1048.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0012_auto_20181026_1236.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0013_auto_20181026_1239.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0014_auto_20181026_1242.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0015_auto_20181026_1244.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/migrations/0002_auto_20181024_1118.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/migrations/0003_taskrecord.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/migrations/0004_auto_20181029_1511.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/migrations/0005_taskrecord_task_result.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/migrations/0006_taskrecord_task_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/migrations/0002_auto_20181011_1114.py" beforeDir="false" />
-    </list>
+    <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +71,7 @@
           <entry key="css" value="17" />
           <entry key="docker" value="1" />
           <entry key="dummy" value="16" />
-          <entry key="gitignore" value="12" />
+          <entry key="gitignore" value="32" />
           <entry key="html" value="5363" />
           <entry key="js" value="2828" />
           <entry key="md" value="5" />
@@ -133,7 +86,7 @@
           <entry key="HTML" value="5363" />
           <entry key="JavaScript" value="2827" />
           <entry key="Markdown" value="5" />
-          <entry key="PLAIN_TEXT" value="87" />
+          <entry key="PLAIN_TEXT" value="107" />
           <entry key="Python" value="25814" />
           <entry key="YAML" value="15" />
         </counts>
@@ -142,7 +95,7 @@
         <counts>
           <entry key="bak" value="2" />
           <entry key="docker" value="1" />
-          <entry key="gitignore" value="2" />
+          <entry key="gitignore" value="3" />
           <entry key="html" value="195" />
           <entry key="jpg" value="1" />
           <entry key="js" value="49" />
@@ -159,7 +112,7 @@
           <entry key="Image" value="1" />
           <entry key="JavaScript" value="49" />
           <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="12" />
+          <entry key="PLAIN_TEXT" value="13" />
           <entry key="Python" value="359" />
           <entry key="SQL" value="1" />
           <entry key="YAML" value="1" />
@@ -209,37 +162,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_asset/views.py">
+        <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py.docker">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2759">
-              <caret line="610" column="92" selection-start-line="610" selection-start-column="92" selection-end-line="610" selection-end-column="92" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_auth/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="569" column="4" selection-start-line="569" selection-start-column="4" selection-end-line="584" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="148" selection-start-line="148" selection-end-line="148" />
+            <state relative-caret-position="2091">
+              <caret line="191" lean-forward="true" selection-start-line="191" selection-end-line="191" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py.docker">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2091">
-              <caret line="191" lean-forward="true" selection-start-line="191" selection-end-line="191" />
+            <state relative-caret-position="144">
+              <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -325,7 +260,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app_sys/urls.py" />
         <option value="$PROJECT_DIR$/templates/sys_batch.html" />
         <option value="$PROJECT_DIR$/statics/js/sys_v2.js" />
         <option value="$PROJECT_DIR$/app_auth/models.py" />
@@ -376,6 +310,7 @@
         <option value="$PROJECT_DIR$/app_sys/views.py" />
         <option value="$PROJECT_DIR$/app_asset/views.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/settings.py.docker" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -411,21 +346,6 @@
           <expand>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="app_asset" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="app_auth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -716,13 +636,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/statics/scripts/get_software_info.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="77" column="55" selection-start-line="77" selection-start-column="55" selection-end-line="77" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_asset/test.py" />
     <entry file="file://$PROJECT_DIR$/templates/log_opslog.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -1007,6 +920,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="148" selection-start-line="148" selection-end-line="148" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app_auth/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -1021,17 +941,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="148" selection-start-line="148" selection-end-line="148" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py.docker">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2091">
           <caret line="191" lean-forward="true" selection-start-line="191" selection-end-line="191" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
         </state>
       </provider>
     </entry>
