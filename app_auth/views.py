@@ -31,7 +31,6 @@ class CustomBackend(ModelBackend):
                 pc = encryption.prpcrypt(key)  # 初始化密钥
                 aes_passwd = pc.encrypt(password)
                 user_passwd = user.passwd.strip("b").strip("'").encode(encoding="utf-8")
-
                 if aes_passwd == user_passwd:
                     return user
         except Exception as e:
@@ -183,6 +182,7 @@ class Login(View):
             r.set("database_info",json.dumps(database_info))
 
             user.status = "在线"
+
             user.save()
 
             next_url = request.GET.get("next")
@@ -193,6 +193,8 @@ class Login(View):
                 return redirect(next_url)
             else:
                 return redirect('/')
+        else:
+            return render(request, 'login.html',{"msg":"用户名或密码错误,请重新登录！"})
 
         return render(request, 'login.html')
 
