@@ -18,27 +18,27 @@ saltstack（salt-api），webssh
 
  **依赖模块：** 
 
-asn1crypto==0.24.0
-cffi==1.11.5
-cryptography==2.3.1
+amqp==1.4.9
+
+celery==3.1.26.post2
+
+celery-with-redis==3.0
+
+
 Django==2.1.1
-et-xmlfile==1.0.1
-get==1.0.3
-idna==2.7
-jdcal==1.4
+
+django-celery==3.2.2
+
 mysqlclient==1.3.13
+
 openpyxl==2.5.8
-Pillow==5.3.0
-post==1.0.2
-public==1.0.3
-pycparser==2.19
+
+
 pycrypto==2.6.1
+
 PyMySQL==0.9.2
-pytz==2018.5
-query-string==1.0.2
+
 redis==2.10.6
-request==1.0.2
-six==1.11.0
 
 
 #### 部分功能展示
