@@ -49,7 +49,6 @@ def login_check(func):
     return wrapper
 
 
-
 def perms_check(func):
     """权限装饰器"""
     def wrapper(request,*args,**kwargs):
@@ -273,7 +272,6 @@ class Index(View):
             task_obj = log_db.TaskRecord.objects.filter(task_user_id=user_obj.id).order_by("-create_time")
 
         task_num = task_obj.count()
-
 
         return  render(request,'base.html',locals())
 
