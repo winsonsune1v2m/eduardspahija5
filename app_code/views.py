@@ -409,7 +409,7 @@ def  RollBack(request):
     salt_passwd = SALT_API['passwd']
     salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
 
-    cmd = "salt '%s' cmd.run 'cd %s/%s && git reset --hard %s'"  % (ip,site_path,site_name,rollback_version)
+    cmd = "cd %s/%s && git reset --hard %s"  % (site_path,site_name,rollback_version)
     result = salt.salt_run_arg(ip, "cmd.run",cmd)
     
 
