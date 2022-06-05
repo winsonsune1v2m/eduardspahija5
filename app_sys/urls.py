@@ -32,5 +32,7 @@ urlpatterns = [
     path('pushfile/', views.Upfile),
     path('downfile/', views.Downfile),
     path('removefile/',views.Removefile),
+	path('editfile/',views.Editfile),
+    path('savefile/',views.Savefile),
 
 ]

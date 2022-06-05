@@ -867,6 +867,114 @@ def Removefile(request):
 
     return HttpResponse(result)
 
+@csrf_exempt
+@login_check
+@perms_check
+def Editfile(request):
+    #在线编辑-获取文件内容
+    try:
+        filename = request.GET.get("filename")
+        type = ['tgz','gz','tar','bz','rpm','zip','bz2','mp3','mp4','jpg','gif','png','amr','bmp','exe']
+        for i in type:
+            type = re.search(i,filename)
+            if type:
+                
+                return HttpResponse('指定文件不被支持，不能编辑!')
+
+        cd_dir = request.GET.get('cd_dir')
+        
+        path = cd_dir + '/' + filename
+       
+        ip = request.GET.get('ip')
+        
+        salt_url = SALT_API['url']
+        salt_user = SALT_API['user']
+        salt_passwd = SALT_API['passwd']
+        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+        result = salt.salt_run_arg(ip, "file.diskusage", path)
+        
+        if result[ip] > 2097152:
+        
+            return HttpResponse('不能在线编辑大于2MB的文件!')    
+        else:   
+            result = salt.salt_run_downfile(ip, "cp.push", path)
+
+
+        if result[ip]:
+
+            salt_file_path = "/var/cache/salt/master/minions/%s/files%s" % (ip,path)
+
+            downfile_path = os.path.join(BASE_DIR, 'statics', 'download', ip)
+
+            if os.path.exists(downfile_path):
+                pass
+            else:
+                os.makedirs(downfile_path)
+
+            save_file = downfile_path + "/" + filename
+
+            if os.path.exists(save_file):
+                date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+                os.rename(save_file, save_file + "_" + date_str)
+            else:
+                pass
+
+            shutil.move(salt_file_path,save_file)
+        else:
+            return HttpResponse('文件获取失败')
+        
+        
+        fp = open(save_file, 'r');
+        fileval = fp.read()
+        fp.close()
+            
+
+        
+    except Exception as e:
+        return HttpResponse(e)
+        
+    
+
+
+    return render(request, "edit.html",locals())
+
+@csrf_exempt
+@login_check
+@perms_check    
+def Savefile(request):
+    #在线编辑-保存文件
+    try:
+        filename = request.POST.get("filename")
+        
+        path = request.POST.get('cd_dir')
+        
+        ip = request.POST.get('ip')
+        save_file = request.POST.get('save_file')
+        fileval = request.POST.get("content")
+        src = 'salt://'+save_file
+        dest = path+'/'+filename
+        
+        fp = open(save_file, 'w+');
+        fp.write(fileval)
+        fp.close()
+        runas = request.session['remote_user']
+        
+        salt_url = SALT_API['url']
+        salt_user = SALT_API['user']
+        salt_passwd = SALT_API['passwd']
+        salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+
+        result = salt.salt_run_upfile(ip, "cp.get_file", src, dest,runas)
+
+        if result[ip]:
+            msg = json.dumps({'msg':'保存成功'})
+        else:
+            msg = json.dumps({'msg':'保存失败'})
+    except Exception as e:
+        return HttpResponse(e)
+    
+    return HttpResponse(msg)
 
 
 

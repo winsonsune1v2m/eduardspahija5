@@ -61,7 +61,7 @@
 
                   <div class="col-sm-6" >
                       <div class="input-group">
-                          <input type="text" class="form-control" placeholder="选择文件" id="down-file">
+                          <input type="text" class="form-control" placeholder="选择文件" style="" id="down-file">
 
                           <span class="input-group-btn">
                             <button class="btn btn-success" type="button" id="btn-downfile" style="border-radius: 0px;">下载</button>
@@ -69,6 +69,9 @@
 
                           <span class="input-group-btn">
                             <button class="btn btn-danger" type="button" id="btn-remove">删除</button>
+                          </span>
+						  <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" id="btn-edit">编辑</button>
                           </span>
                       </div>
 
@@ -185,6 +188,7 @@
 <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.excheck.js"></script>
 <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.exedit.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
 <script type="text/javascript" >
 
 
@@ -225,6 +229,8 @@ $(document).ready(function(){
 
 
 
+
+
 //切换目录
 $("#cd-dir").click(function () {
     var cd_dir=$("#cur-dir").val();
@@ -238,6 +244,8 @@ $("#cd-dir").click(function () {
     })
 
 });
+
+
 
 
 
@@ -277,6 +285,7 @@ $("a[name='file-name']").click(function () {
 
     $('#btn-remove').attr('filename',filename);
     $('#btn-downfile').attr('filename',filename);
+	$('#btn-edit').attr('filename',filename);
 
 });
 
@@ -298,6 +307,7 @@ $('#btn-remove').click(function(){
              data: formData,
              success: function(msg) {
                     alert(msg)
+
              }
         });
     }else{
@@ -334,6 +344,28 @@ $('#btn-downfile').click(function(){
 });
 
 
+
+$('#btn-edit').on('click', function(){
+	var filename=$(this).attr('filename');
+	var ip = $("#ip").attr("ip");
+	var cd_dir=$("#cur-dir").val();
+	if(!filename || filename.length == 0){
+		layer.msg('文件不能为空');
+		return;
+	}else{
+	
+	}
+	layer.open({
+		type: 2,
+		title: '在线编辑' + '【'+ip+'】'+ cd_dir +'/'+ filename,
+		maxmin: true,
+		shadeClose: false, //点击遮罩关闭层
+		area : ['800px' , '520px'],
+		scrollbar: false,
+		maxHeight:'520px',
+		content: '/sys/editfile/?ip=' + ip + '&cd_dir=' + cd_dir + '&filename='+filename
+	});
+});
 </script>
 
 {% endblock %}
