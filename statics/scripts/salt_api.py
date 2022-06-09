@@ -67,8 +67,8 @@ class SaltAPI(object):
         :return: dict, {'minion1': 'ret', 'minion2': 'ret'}
         """
         #添加同名参数
-        run_user = 'runas=%s' % runas
-        params = ([('client', 'local'), ('tgt', tgt),('fun', fun),('arg',arg),('expr_form','list'),('arg',run_user)])
+        #run_user = 'runas=%s' % runas
+        params = ([('client', 'local'), ('tgt', tgt),('fun', fun),('arg',arg),('expr_form','list'),('runas',runas)])
         obj = urllib.parse.urlencode(params).encode('utf-8')
 
         self.token_id()
