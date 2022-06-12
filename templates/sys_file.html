@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 
 
 
@@ -277,7 +277,7 @@ $('#up-file').click(function(){
 
 
 
-$("a[name='file-name']").click(function () {
+$("body").on('click', "a[name='file-name']", function () {
 
     var filename=$(this).attr('filename');
 
