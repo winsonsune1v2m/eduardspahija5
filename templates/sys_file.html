@@ -347,7 +347,7 @@ $('#btn-downfile').click(function(){
 
 $('#btn-edit').on('click', function(){
 	var filename=$(this).attr('filename');
-	var ip = $("#ip").attr("ip");
+	var ip = $("#ip").text();
 	var cd_dir=$("#cur-dir").val();
 	if(!filename || filename.length == 0){
 		layer.msg('文件不能为空');
