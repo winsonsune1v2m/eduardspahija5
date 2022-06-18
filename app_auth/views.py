@@ -675,6 +675,7 @@ class UserMG(View):
 
         #当前所有在线会话
         session_obj = Session.objects.all()
+
         online_user = []
         for i in session_obj:
             online_user.append(i.get_decoded()['user_name'])

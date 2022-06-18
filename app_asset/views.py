@@ -259,6 +259,7 @@ class Host(View):
 
         return render(request,'asset_host.html',locals())
 
+
     def post(self,request):
         host_ip = request.POST.get("host_ip")
         host_remove_port = request.POST.get("host_remove_port")
