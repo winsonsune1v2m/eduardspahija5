@@ -874,7 +874,7 @@ def Editfile(request):
     #在线编辑-获取文件内容
     try:
         filename = request.GET.get("filename")
-        type = ['tgz','gz','tar','bz','rpm','zip','bz2','mp3','mp4','jpg','gif','png','amr','bmp','exe']
+        type = ['\.tgz$','\.gz$','\.tar$','\.bz$','\.rpm$','\.zip$','\.bz2$','\.mp3$','\.mp4$','\.jpg$','\.gif$','\.png$','\.amr$','\.bmp$','\.exe$']
         for i in type:
             type = re.search(i,filename)
             if type:
@@ -923,19 +923,13 @@ def Editfile(request):
             shutil.move(salt_file_path,save_file)
         else:
             return HttpResponse('文件获取失败')
-        
-        
+  
         fp = open(save_file, 'r');
         fileval = fp.read()
         fp.close()
-            
 
-        
     except Exception as e:
         return HttpResponse(e)
-        
-    
-
 
     return render(request, "edit.html",locals())
 
