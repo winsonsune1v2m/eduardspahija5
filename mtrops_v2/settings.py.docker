@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'app_sys',
     'app_tool',
     'app_log',
+    'app_db',
+
 ]
 
 MIDDLEWARE = [
@@ -186,6 +188,8 @@ CODE_RUNAS = "root"
 
 PHPMYADMIN_URL = "http://192.168.1.159/phpmyadmin/"
 
+#inception备份服务器登录密码
+BACKDB_PASSWD="mysql"
 
 
 #BROKER_URL = 'redis://192.168.1.126:6379/0'

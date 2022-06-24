@@ -1,0 +1,337 @@
+﻿{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+<style>
+</style>
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;" >
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="#">数据库管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:3px;padding-left:10px;">
+          <div class="col-sm-3">
+              <a class="btn btn-sm btn-default" href="javascript:;">工单列表</a>
+          </div>
+      </div>
+
+  </div>
+  <div class="panel-body" id="dblist-info">
+
+        <div style="margin-bottom: 10px;">
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5; text-align:center">
+                      <th>提交时间</th>
+                      <th>发起人</th>
+                      <th>环境</th>
+                      <th>目标库</th>
+                      <th>SQL语句</th>
+                      <th>Inception状态</th>
+                      <th>备注</th>
+                      <th>工单状态</th>
+                      <th>核准人</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for log in log_list %}
+                    <tr name="tbody">
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">{{ log.create_time|date:'Y-m-d H:i:s' }}</td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">{{ log.from_user }}</td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">{{ log.db_env }}</td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">{{ log.host_ip }} | {{ log.db_name }}</td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">
+                          <div style="max-width: 80px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding-top: 5px;" class="pull-left">
+                              {{ log.sql }}
+                          </div>
+                          <div class="pull-right">
+                              <span class="btn btn-default btn-sm" data-toggle="modal" data-target="#sqlModal" name="detail-sql">详细</span>
+                          </div>
+                      </td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;" name="inc-td">
+                          <div class="pull-left" style="padding-top: 8px" id="inc-status-label">
+                              {% if log.error_count == 0 %}
+                              <span class="label label-success" >已通过</span>
+                              {% else %}
+                              <span class="label label-danger" >未通过</span>
+                              {% endif %}
+                          </div>
+                          <span style="display: none">
+                              {{ log.inc_status }}
+                          </span>
+                          <div class="pull-right">
+                              <span class="btn btn-default btn-sm" data-toggle="modal" data-target="#incModal" name="detail-inc-status">详细</span>
+                          </div>
+                      </td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">{{ log.msg }}</td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">
+                          {% if log.status == "待执行" %}
+                          <span class="label label-primary">{{ log.status }}</span>
+                          {% elif log.status == "已放弃" %}
+                          <span class="label label-warning">{{ log.status }}</span>
+                          {% elif log.status == "已回滚" %}
+                          <span class="label label-default">{{ log.status }}</span>
+                          {% else %}
+                          <span class="label label-success">{{ log.status }}</span>
+                          {% endif %}
+                      </td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">{{ log.ready_name }}</td>
+                      <td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">
+                          <div class="btn-group">
+                              <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                操作 <span class="caret"></span>
+                              </button>
+                              {% if log.status == "待执行" %}
+                              <ul class="dropdown-menu" style="min-width: 70px;">
+                                <li><a href="javascript:;" order_id="{{ log.id }}" name="exec">执行</a></li>
+                                <li><a href="javascript:;" order_id="{{ log.id }}" name="giveup">放弃</a></li>
+                              </ul>
+                              {% elif log.status == "已执行" %}
+                              <ul class="dropdown-menu" style="min-width: 70px;">
+                                <li><a href="javascript:;" order_id="{{ log.id }}" name="rollback">回滚</a></li>
+                              </ul>
+                              {% endif %}
+                          </div>
+                          <div class="btn-group pull-right">
+                              <a href="/db/orderdetail/{{ log.id }}/" class="btn btn-success btn-sm">详细</a>
+                          </div>
+                      </td>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination"></ul>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+<div class="modal fade" id="sqlModal" tabindex="-1" role="dialog" aria-labelledby="sqlModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="margin-top:100px;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="sqlModalLabel">SQL语句</h4>
+          </div>
+          <div class="modal-body" id="sql-detail">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="incModal" tabindex="-1" role="dialog" aria-labelledby="incModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="margin-top:100px;margin-left: -150px;width: 900px;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="incModalLabel">SQL语句</h4>
+          </div>
+          <div class="modal-body" id="inc-detail">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock  %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/db_v3.js"></script>
+
+<script type="text/javascript">
+$('span[name="detail-sql"]').click(function () {
+   var sql=$(this).parent().prev().html();
+   $("#sql-detail").empty();
+   $("#sql-detail").append('<textarea  class="form-control"  style="text-align: left;min-height: 300px;">'+$.trim(sql)+'</textarea>');
+
+});
+
+$('span[name="detail-inc-status"]').click(function () {
+   var sql=$(this).parent().prev().html();
+
+   var info = eval('('+$.trim(sql)+')');
+   if(typeof(info)=='object'){
+       var head_html = `
+        <table class="table table-hover table-bordered">
+            <thead id="table-head">
+                <tr style="background-color: #f5f5f5; text-align:center">
+                  <th>ID</th>
+                  <th>SQL</th>
+                  <th>ERRORLEVEL</th>
+                  <th>ERRORMSG</th>
+                </tr>
+            </thead>
+            <tbody>
+         `;
+        var body_html ="";
+        for(i=1;i<info.length;i++){
+            body_html += '<tr><td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">'+i+'</td><td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">'+info[i].SQL+'</td><td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">'+info[i].errlevel+'</td><td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">'+info[i].errormessage+'</td></tr>';
+            }
+        var table_html = head_html+body_html+'</tbody></table>'
+        $("#inc-detail").empty();
+        $("#inc-detail").append(table_html);
+    }else{
+        $("#inc-detail").empty();
+        $("#inc-detail").append(info);
+    }
+});
+
+
+$("a[name='exec']").click(function () {
+   var order_id=$(this).attr('order_id');
+   $.post("/db/orderlog/",{"order_id":order_id,'action':'exec'},function (data) {
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else{
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#alert").show();
+            setTimeout("location.reload()",2000);
+        }
+   })
+});
+
+$("a[name='giveup']").click(function () {
+   var order_id=$(this).attr('order_id');
+   $.post("/db/orderlog/",{"order_id":order_id,'action':'giveup'},function (data) {
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else{
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#alert").show();
+            setTimeout("location.reload()",2000);
+        }
+   })
+});
+
+
+$("a[name='rollback']").click(function () {
+   var order_id=$(this).attr('order_id');
+   $.post("/db/orderlog/",{"order_id":order_id,'action':'rollback'},function (data) {
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else{
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#alert").show();
+            setTimeout("location.reload()",2000);
+        }
+   })
+});
+
+
+
+    //前端分页
+    var limit = 11; //每页显示数据条数
+    var total = $('table').find('tr').length;
+    var allPage = total%limit>0?parseInt(total/limit)+1:parseInt(total/limit);
+
+    function doPage(n){
+        if(allPage>1){
+            var prevPage='',nextPage='',pageHtml='';
+
+            if (n===1) {
+                prevPage = '<li class="disabled"><a href="javascript:;">上一页</a></li>';
+                nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+            } else if(n===allPage){
+                prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+                nextPage = '<li class="disabled"><a href="javascript:;">下一页</a></li>';
+            } else {
+                prevPage = '<li data-page="'+ (n-1) +'"><a href="javascript:;">上一页</a></li>';
+                nextPage = '<li data-page="'+ (n+1) +'"><a href="javascript:;">下一页</a></li>';
+            }
+            if (n<=5){
+                for(var i=1;i<=5;i++){
+                    if (n===i) {
+                        pageHtml += '<li class="active"><a href="javascript:;">'+ i +'</a></li>';
+                    }else{
+                        if(i<=allPage) {
+                            pageHtml += '<li data-page="' + i + '"><a href="javascript:;">' + i + '</a></li>';
+                        }
+                    }
+                }
+            }else{
+                for(var i=1;i<=5;i++){
+
+                    cur_page = parseInt(parseInt((n-1)/5)*5);
+
+                    if (n===(cur_page+i)){
+                        pageHtml += '<li class="active"><a href="javascript:;">'+ (cur_page+i) +'</a></li>';
+                    }else{
+                        if((i+cur_page)<=allPage){
+                            pageHtml += '<li data-page="'+ (i+cur_page) +'"><a href="javascript:;">'+ (i+cur_page) +'</a></li>';
+                        }
+                    }
+
+                }
+
+            }
+
+            $('#pagination').html(prevPage+pageHtml+nextPage);
+        }
+
+        $('table').find('tr[name="tbody"]').hide();
+        if(n===1){
+            $('table').find('tr[name="tbody"]:lt('+ limit +')').show();
+        }else{
+            $('table').find('tr[name="tbody"]:gt('+ ((n-1)*limit-1) +'):lt('+ limit +')').show();
+        }
+
+    }
+
+    doPage(1);
+
+    $('#pagination').on('click', 'li a', function(event) {
+        event.preventDefault();
+        var curr = parseInt($(this).parent().data('page'));
+
+        if (!isNaN(curr)) {
+            doPage(curr);
+        }
+    });
+
+</script>
+{% endblock %}
+
+

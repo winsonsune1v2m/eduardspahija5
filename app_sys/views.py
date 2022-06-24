@@ -96,7 +96,7 @@ class EnvSofeware(View):
     def delete(self,request):
         req_info = eval(request.body.decode())
         sofeware_id = req_info.get("sofeware_id")
-        sys_db.EnvInstall.objects.get(id=sofeware_id).delete()
+        sys_db.EnvSofeware.objects.get(id=sofeware_id).delete()
         data = "软件部署已删除，请刷新查看"
         return HttpResponse(data)
 

@@ -37,11 +37,13 @@ def get_sofeware(salt_url,salt_user,salt_passwd,tgt, tag):
             info_ditc[i] = n_infos
         else:
             pass
+
     data = {}
     for i in info_ditc.keys():
         info = {}
         for j in info_ditc[i]:
             key = j['name']
+
             j['port'] = [j['port']]
 
             if key in info.keys():
@@ -56,18 +58,23 @@ def get_sofeware(salt_url,salt_user,salt_passwd,tgt, tag):
                 info[key] = j
 
         for k in info.keys():
-            argv = "find  /usr/ -name %s | grep -E '/sbin|/bin|/src'" % k
+            if re.search("redis",k):
+                K = "redis-cli"
+            else:
+                K=k
+            argv = "find  /usr/ -name %s | grep -E '/sbin|/bin|/src'" % K
             result = salt.salt_run_arg(i, module, argv)
             cmd = result[i].split("\n")[0]
             argv = "%s --version ||%s -version ||%s -v||%s -V||%s version" % (cmd, cmd, cmd, cmd, cmd)
 
             result = salt.salt_run_arg(i, module, argv)
-
             version_infos = result[i]
+
             if re.search("\d+.\d+", version_infos):
                 info[k]["version"] = re.search("\d+.\d+", version_infos).group()
             else:
                 info[k]["version"] = "Unkonwn"
+
 
         argv = "php --version"
         result = salt.salt_run_arg(i, module, argv)

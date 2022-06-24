@@ -36,4 +36,8 @@ urlpatterns = [
     path("addroleasset/",views.add_role_asset),
     path("roleproject/", views.get_role_project),
     path("addroleproject/", views.add_role_project),
+    path("key/", views.KeyMG.as_view()),
+    path("key/", views.KeyMG.as_view()),
+    path("checkey/", views.check_key),
+
 ]

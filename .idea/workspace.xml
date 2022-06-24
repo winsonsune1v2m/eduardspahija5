@@ -3,8 +3,32 @@
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_auth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_auth/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_code/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_log/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_sys/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/mtrops_v2.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mtrops_v2/settings.py.bak" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/settings.py.bak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mtrops_v2/settings.py.docker" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/settings.py.docker" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mtrops_v2/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/img/user/alexli.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/js/auth_v2.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/auth_v2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/scripts/get_software_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/get_software_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statics/scripts/salt_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/salt_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/code_publist.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_publist.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/code_wchartlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_wchartlog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/log_opslog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/log_opslog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/rbac_role.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_role.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/rbac_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_user.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,164 +37,34 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/mtrops_v2$tasks.coverage" NAME="tasks Coverage Results" MODIFIED="1540610781805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
     <SUITE FILE_PATH="coverage/mtrops_v2$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1540609398438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mtrops_v2" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$encryption.coverage" NAME="encryption Coverage Results" MODIFIED="1539091706251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$git_clone.coverage" NAME="git_clone Coverage Results" MODIFIED="1539846895648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$manage.coverage" NAME="manage Coverage Results" MODIFIED="1543990052506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$test.coverage" NAME="test Coverage Results" MODIFIED="1540784262026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$task.coverage" NAME="task Coverage Results" MODIFIED="1540537150816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mtrops_v2$get_host_info.coverage" NAME="get_host_info Coverage Results" MODIFIED="1539762803141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$task__1_.coverage" NAME="task (1) Coverage Results" MODIFIED="1540541180102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$git_clone.coverage" NAME="git_clone Coverage Results" MODIFIED="1539846895648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$test.coverage" NAME="test Coverage Results" MODIFIED="1540784262026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
     <SUITE FILE_PATH="coverage/mtrops_v2$get_software_info.coverage" NAME="get_software_info Coverage Results" MODIFIED="1539747751771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$get_cellery.coverage" NAME="get_cellery Coverage Results" MODIFIED="1540798165106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
     <SUITE FILE_PATH="coverage/mtrops_v2$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1543398148102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$celery.coverage" NAME="celery Coverage Results" MODIFIED="1540609385366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mtrops_v2" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$task__1_.coverage" NAME="task (1) Coverage Results" MODIFIED="1540541180102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mtrops_v2$tests.coverage" NAME="tests Coverage Results" MODIFIED="1540541661852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_code" />
     <SUITE FILE_PATH="coverage/mtrops_v2$salt_api.coverage" NAME="salt_api Coverage Results" MODIFIED="1539767502012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
     <SUITE FILE_PATH="coverage/mtrops_v2$read_excel.coverage" NAME="read_excel Coverage Results" MODIFIED="1539674044192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$get_cellery.coverage" NAME="get_cellery Coverage Results" MODIFIED="1540798165106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$celery.coverage" NAME="celery Coverage Results" MODIFIED="1540609385366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mtrops_v2" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$task.coverage" NAME="task Coverage Results" MODIFIED="1540537150816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$tasks.coverage" NAME="tasks Coverage Results" MODIFIED="1540610781805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$0001_initial.coverage" NAME="0001_initial Coverage Results" MODIFIED="1545896593108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_db/migrations" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$encryption.coverage" NAME="encryption Coverage Results" MODIFIED="1539091706251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$manage.coverage" NAME="manage Coverage Results" MODIFIED="1545896793130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
-  </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="361001133">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="63" />
-          <entry key="project.open.time.0" value="4" />
-          <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.10" value="8" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.14" value="1" />
-          <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.27" value="1" />
-          <entry key="project.open.time.28" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.30" value="1" />
-          <entry key="project.open.time.34" value="1" />
-          <entry key="project.open.time.35" value="1" />
-          <entry key="project.open.time.36" value="1" />
-          <entry key="project.open.time.37" value="6" />
-          <entry key="project.open.time.38" value="3" />
-          <entry key="project.open.time.39" value="4" />
-          <entry key="project.open.time.40" value="2" />
-          <entry key="project.open.time.41" value="2" />
-          <entry key="project.open.time.42" value="2" />
-          <entry key="project.open.time.45" value="2" />
-          <entry key="project.open.time.46" value="2" />
-          <entry key="project.open.time.48" value="1" />
-          <entry key="project.open.time.49" value="2" />
-          <entry key="project.open.time.5" value="3" />
-          <entry key="project.open.time.6" value="7" />
-          <entry key="project.open.time.7" value="2" />
-          <entry key="project.open.time.8" value="1" />
-          <entry key="project.open.time.9" value="5" />
-          <entry key="project.opened" value="70" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="bak" value="47" />
-          <entry key="css" value="17" />
-          <entry key="docker" value="1" />
-          <entry key="dummy" value="16" />
-          <entry key="gitignore" value="32" />
-          <entry key="html" value="5399" />
-          <entry key="js" value="2828" />
-          <entry key="md" value="5" />
-          <entry key="py" value="25970" />
-          <entry key="txt" value="11" />
-          <entry key="yaml" value="15" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="CSS" value="18" />
-          <entry key="HTML" value="5399" />
-          <entry key="JavaScript" value="2827" />
-          <entry key="Markdown" value="5" />
-          <entry key="PLAIN_TEXT" value="107" />
-          <entry key="Python" value="25970" />
-          <entry key="YAML" value="15" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="bak" value="3" />
-          <entry key="docker" value="1" />
-          <entry key="gitignore" value="3" />
-          <entry key="html" value="196" />
-          <entry key="jpg" value="1" />
-          <entry key="js" value="49" />
-          <entry key="md" value="1" />
-          <entry key="py" value="369" />
-          <entry key="sql" value="1" />
-          <entry key="txt" value="8" />
-          <entry key="yaml" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="HTML" value="196" />
-          <entry key="Image" value="1" />
-          <entry key="JavaScript" value="49" />
-          <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="15" />
-          <entry key="Python" value="369" />
-          <entry key="SQL" value="1" />
-          <entry key="YAML" value="1" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="-19724919">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="css" value="22" />
-          <entry key="html" value="193" />
-          <entry key="py" value="520" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="CSS" value="22" />
-          <entry key="HTML" value="193" />
-          <entry key="Python" value="520" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="css" value="1" />
-          <entry key="html" value="2" />
-          <entry key="js" value="1" />
-          <entry key="py" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CSS" value="1" />
-          <entry key="HTML" value="2" />
-          <entry key="JavaScript" value="1" />
-          <entry key="Python" value="2" />
-        </counts>
-      </usages-collector>
-    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_auth/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3474">
-              <caret line="210" selection-start-line="210" selection-end-line="210" />
+            <state relative-caret-position="445">
+              <caret line="706" column="61" selection-start-line="706" selection-start-column="61" selection-end-line="706" selection-end-column="61" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -179,19 +73,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app_asset/views.py">
+        <entry file="file://$PROJECT_DIR$/app_db/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="299" column="35" lean-forward="true" selection-start-line="299" selection-start-column="35" selection-end-line="299" selection-end-column="35" />
+            <state relative-caret-position="4986">
+              <caret line="531" column="19" lean-forward="true" selection-start-line="531" selection-start-column="19" selection-end-line="531" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_log/views.py">
+        <entry file="file://$PROJECT_DIR$/app_auth/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="44" column="79" selection-start-line="44" selection-start-column="79" selection-end-line="44" selection-end-column="79" />
+            <state relative-caret-position="260">
+              <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app_auth/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -199,8 +105,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2070">
-              <caret line="117" column="20" selection-start-line="117" selection-start-column="20" selection-end-line="117" selection-end-column="20" />
+            <state relative-caret-position="150">
+              <caret line="89" column="26" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/rbac_user.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1173" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
             </state>
           </provider>
         </entry>
@@ -286,10 +208,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/rbac_user.html" />
-        <option value="$PROJECT_DIR$/statics/js/auth_v2.js" />
-        <option value="$PROJECT_DIR$/mtrops_v2/task.py" />
-        <option value="$PROJECT_DIR$/task.py" />
         <option value="$PROJECT_DIR$/tasks.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/tasks.py" />
         <option value="$PROJECT_DIR$/app_code/__init__.py" />
@@ -307,7 +225,6 @@
         <option value="$PROJECT_DIR$/app_code/tasks.py" />
         <option value="$PROJECT_DIR$/app_asset/tasks.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/settings.py.bak" />
-        <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
         <option value="$PROJECT_DIR$/app_log/models.py" />
         <option value="$PROJECT_DIR$/templates/log_taskrecord.html" />
         <option value="$PROJECT_DIR$/templates/rbac_perms.html" />
@@ -328,30 +245,22 @@
         <option value="$PROJECT_DIR$/templates/sys_file.html" />
         <option value="$PROJECT_DIR$/app_asset/models.py" />
         <option value="$PROJECT_DIR$/app_tool/views.py" />
-        <option value="$PROJECT_DIR$/app_sys/views.py" />
         <option value="$PROJECT_DIR$/mtrops_v2/settings.py.docker" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/venv/Lib/site-packages/celery/backends/mongodb.py" />
         <option value="$PROJECT_DIR$/venv/Lib/site-packages/django/contrib/auth/__init__.py" />
         <option value="$PROJECT_DIR$/templates/login.html" />
         <option value="$PROJECT_DIR$/app_log/views.py" />
-        <option value="$PROJECT_DIR$/app_auth/views.py" />
         <option value="$PROJECT_DIR$/app_asset/views.py" />
+        <option value="$PROJECT_DIR$/mtrops_v2/urls.py" />
+        <option value="$PROJECT_DIR$/app_db/views.py" />
+        <option value="$PROJECT_DIR$/app_sys/views.py" />
+        <option value="$PROJECT_DIR$/app_auth/models.py" />
+        <option value="$PROJECT_DIR$/app_auth/urls.py" />
+        <option value="$PROJECT_DIR$/mtrops_v2/settings.py" />
+        <option value="$PROJECT_DIR$/app_auth/views.py" />
       </list>
     </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/statics/bootstrap-multiselect/package.json" />
-      <path value="$PROJECT_DIR$/statics/jquery-ui/package.json" />
-      <path value="$PROJECT_DIR$/statics/select2/package.json" />
-    </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="517" />
@@ -367,10 +276,51 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="app_auth" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="app_db" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="statics" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="statics" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="statics" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
@@ -379,12 +329,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="E:/DevOps/K8sDev" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -415,6 +366,28 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.manage">
+    <configuration name="0001_initial" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="mtrops_v2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app_db/migrations" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app_db/migrations/0001_initial.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="get_cellery" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mtrops_v2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -452,28 +425,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
       <option name="PARAMETERS" value="runserver 0.0.0.0:8080" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="tasks" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="mtrops_v2" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app_asset" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app_asset/tasks.py" />
-      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -525,20 +476,44 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="mtrops_v2" type="Python.DjangoServer" factoryName="Django server">
+      <module name="mtrops_v2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.manage" />
       <item itemvalue="Python.test" />
-      <item itemvalue="Python.tasks" />
       <item itemvalue="Python.get_cellery" />
       <item itemvalue="Python.test (1)" />
+      <item itemvalue="Django server.mtrops_v2" />
+      <item itemvalue="Python.0001_initial" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.manage" />
+        <item itemvalue="Python.0001_initial" />
         <item itemvalue="Python.test (1)" />
         <item itemvalue="Python.get_cellery" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.tasks" />
       </list>
     </recent_temporary>
   </component>
@@ -552,6 +527,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1538025289827</updated>
+      <workItem from="1545892466212" duration="6041000" />
     </task>
     <task id="LOCAL-00001" summary="更新代码">
       <created>1538025534295</created>
@@ -577,6 +553,9 @@
     <option name="localTasksCounter" value="4" />
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="6041000" />
+  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -588,22 +567,23 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12633263" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24840085" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="2" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.9029851" weight="0.27440348" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.9029851" visible="true" weight="0.28277355" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" sideWeight="0.23987207" weight="0.329718" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.23987207" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.15085287" side_tool="true" weight="0.38828632" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.84914714" weight="0.345987" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.84914714" weight="0.40953413" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.90724945" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -638,9 +618,6 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="12321" />
     <MESSAGE value="更新代码" />
@@ -661,68 +638,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app_asset/get_cellery.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/statics/scripts/get_host_info.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="61" column="27" selection-start-line="61" selection-start-column="27" selection-end-line="61" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_sys/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="19" column="43" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_code/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="55" column="69" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_log/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="32" column="28" lean-forward="true" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/statics/img/login.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/log_taskrecord.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-964">
-          <caret line="61" column="40" selection-start-line="61" selection-start-column="31" selection-end-line="61" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/rbac_user.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="248" column="83" lean-forward="true" selection-start-line="248" selection-start-column="83" selection-end-line="248" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/statics/scripts/git_clone.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="846">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/rbac_perms.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="972">
-          <caret line="54" column="69" selection-start-line="54" selection-start-column="62" selection-end-line="54" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_code/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="522">
@@ -754,13 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="21" column="17" selection-end-line="57" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_auth/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="52" column="13" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -857,16 +765,6 @@
     <entry file="file://$PROJECT_DIR$/templates/sys_file_list.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_tool/models.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_asset/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="666">
@@ -878,13 +776,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="37" column="12" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="137" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_sys/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9702">
-          <caret line="556" column="56" selection-start-line="556" selection-start-column="56" selection-end-line="556" selection-end-column="56" />
         </state>
       </provider>
     </entry>
@@ -909,13 +800,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/celery/backends/mongodb.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="226" column="45" selection-start-line="226" selection-start-column="45" selection-end-line="226" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/celery/backends/mongodb.py" />
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/utils/decorators.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -953,34 +838,120 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app_db/migrations/0001_initial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_tool/models.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_auth/migrations/0001_initial.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_db/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="536">
+          <caret line="25" column="16" selection-start-line="25" selection-start-column="10" selection-end-line="25" selection-end-column="21" />
+          <folding>
+            <element signature="e#634#658#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_sys/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_sys/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mtrops_v2/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="30" column="39" lean-forward="true" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_log/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="44" column="79" selection-start-line="44" selection-start-column="79" selection-end-line="44" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="282" column="32" lean-forward="true" selection-start-line="282" selection-start-column="32" selection-end-line="282" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_auth/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_auth/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/statics/img/user/11.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/statics/img/user/def.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="89" column="26" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/rbac_user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1173" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app_auth/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3474">
-          <caret line="210" selection-start-line="210" selection-end-line="210" />
+        <state relative-caret-position="445">
+          <caret line="706" column="61" selection-start-line="706" selection-start-column="61" selection-end-line="706" selection-end-column="61" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_log/views.py">
+    <entry file="file://$PROJECT_DIR$/app_db/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="44" column="79" selection-start-line="44" selection-start-column="79" selection-end-line="44" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2070">
-          <caret line="117" column="20" selection-start-line="117" selection-start-column="20" selection-end-line="117" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="299" column="35" lean-forward="true" selection-start-line="299" selection-start-column="35" selection-end-line="299" selection-end-column="35" />
+        <state relative-caret-position="4986">
+          <caret line="531" column="19" lean-forward="true" selection-start-line="531" selection-start-column="19" selection-end-line="531" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

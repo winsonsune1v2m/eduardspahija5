@@ -64,6 +64,15 @@ class RemoteUser(models.Model):
     lg_key_pass = models.TextField(null=True)
     user = models.ForeignKey(to="User",on_delete=models.CASCADE)
 
+class Key(models.Model):
+    """秘钥记录"""
+    key_isa = models.TextField(null=True)
+    key_isa_pub = models.TextField(null=True)
+    key_msg = models.CharField(max_length=64, null=True)
+    user = models.ForeignKey(to="User",on_delete=models.SET_NULL,null=True)
+    def __unicode__(self):
+        return  self.Perms
+
 
 
 

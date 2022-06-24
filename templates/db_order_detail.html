@@ -1,0 +1,130 @@
+﻿{% extends "base.html" %}
+
+{% block css %}
+<script src="/static/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/ace/language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/ace/theme-clouds.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/ace/theme-chrome.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/ace/mode-mysql.js" type="text/javascript" charset="utf-8"></script>
+
+<style>
+
+</style>
+
+{% endblock %}
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;margin-top:20px;" >
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="#">数据库管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading"></div>
+  <div class="panel-body" id="dblist-info">
+      <div class="col-sm-12">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#detail-info" role="tab" data-toggle="tab">基本信息</a></li>
+          <li role="presentation"><a href="#detail-sql" role="tab" data-toggle="tab">SQL 执行语句</a></li>
+            <li role="presentation"><a href="#detail-rollback" role="tab" data-toggle="tab">SQL 回滚语句</a></li>
+          <li role="presentation"><a href="#detail-inc" role="tab" data-toggle="tab">Inception审核结果</a></li>
+        </ul>
+        <!-- 面板区 -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="detail-info">
+                <ul class="list-group" style="width: 30%">
+                    <li class="list-group-item" style="text-indent:3em;">ID ： {{ order_obj.id }}</li>
+                    <li class="list-group-item">提交时间 ： {{ order_obj.create_time|date:"Y-m-d H:i:s" }}</li>
+                    <li class="list-group-item" style="text-indent:1em;">发起人 ： {{ order_obj.from_user }}</li>
+                    <li class="list-group-item" style="text-indent:2em;">环境 ： {{ order_obj.db.db_env }}</li>
+                    <li class="list-group-item" style="text-indent:2em;">备注 ： {{ order_obj.msg }}</li>
+                    <li class="list-group-item" style="text-indent:1em;">目标库 ： {{ order_obj.db.db_host.host_ip }} | {{ order_obj.db.db_name }}</li>
+                    <li class="list-group-item" style="text-indent:1em;">核准人 ： {{ order_obj.review_user.ready_name }}</li>
+                    <li class="list-group-item" >工单状态 ： {{ order_obj.status }}</li>
+                </ul>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="detail-sql">
+              <pre id="code" class="ace_editor" style="min-height:300px"><textarea class="ace_text-input"  >{{ order_obj.sql }}</textarea></pre>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="detail-rollback">
+              <pre id="code-rollback" class="ace_editor" style="min-height:300px"><textarea class="ace_text-input"  >{{ rollbacl_sql }}</textarea></pre>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="detail-inc">
+            {% for i in inc_status %}
+              <p>{{ i }}</p>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+{% endblock  %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/db_v3.js"></script>
+
+<script type="text/javascript">
+//初始化对象
+editor = ace.edit("code");
+editor_rollback = ace.edit("code-rollback");
+
+//设置风格和语言（更多风格和语言，请到github上相应目录查看）
+theme = "chrome";
+language = "mysql";
+editor.setTheme("ace/theme/" + theme);
+editor.session.setMode("ace/mode/" + language);
+
+editor_rollback.setTheme("ace/theme/" + theme);
+editor_rollback.session.setMode("ace/mode/" + language);
+
+//字体大小
+editor.setFontSize(18);
+editor_rollback.setFontSize(18);
+
+//设置只读（true时只读，用于展示代码）
+editor.setReadOnly(false);
+editor_rollback.setReadOnly(false);
+
+//自动换行,设置为off关闭
+editor.setOption("wrap", "free");
+editor_rollback.setOption("wrap", "free");
+
+//启用提示菜单
+ace.require("ace/ext/language_tools");
+editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+});
+
+editor_rollback.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+});
+
+
+</script>
+{% endblock %}
+
+

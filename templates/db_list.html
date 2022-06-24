@@ -1,0 +1,269 @@
+﻿{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;" >
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="#">数据库管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-3">
+              <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#dblistModal"> 添加</a>
+          </div>
+      </div>
+
+  </div>
+  <div class="panel-body" id="dblist-info">
+
+        <div style="margin-bottom: 10px;">
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5; text-align:center">
+                      <th>数据库名称</th>
+                      <th>数据库地址</th>
+                      <th>端口</th>
+                      <th>用户</th>
+                      <th>环境</th>
+                      <th>状态</th>
+                      <th>备注</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for db in db_obj %}
+                    <tr name="tbody">
+                      <td class="">{{ db.db_name }}</td>
+                      <td class="">{{ db.db_host.host_ip }}</td>
+                      <td class="">{{ db.db_port }}</td>
+                      <td class="">{{ db.db_user }}</td>
+                      <td class="">{{ db.db_env }}</td>
+                        {% if db.db_status == "up" %}
+                      <td><a class="fa fa-lg fa-check-circle btn" style="color: #00B83F;padding: 2px 11px;" data-toggle="tooltip" data-placement="right" title="正常连接" name="con-check" db_id="{{ db.id }}"></a></td>
+                        {% else %}
+                      <td><a class="fa fa-lg fa-times-circle btn" style="color: #cc1111;text-decoration:none;padding: 2px 11px;" data-toggle="tooltip" data-placement="right" title="连接测试" name="con-check" db_id="{{ db.id }}"></a></td>
+                        {% endif %}
+                      <td class="">{{ db.db_msg }}</td>
+                      <td style="padding-left:5px;">
+                        <a href="javascript:;" style="text-decoration:none;" name="edit-db" db_id="{{ db.id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
+
+                        <a href="javascript:;" style="text-decoration:none;" name="del-db" db_id="{{ db.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>&nbsp;&nbsp;&nbsp;
+
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination"></ul>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+<div class="modal fade" id="dblistModal" tabindex="-1" role="dialog" aria-labelledby="dblistModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:100px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="dblistModalLabel">添加数据库</h4>
+      </div>
+      <div class="modal-body">
+
+         <div class="form-group">
+            <label> <span style="color: red"> * </span> 数据库名称</label>
+            <input  class="form-control"  placeholder="数据库名称" id="db-name">
+          </div>
+          <div class="form-group" >
+            <label><span style="color: red"> * </span> 数据库地址</label>
+
+              <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple" id="db-host" style="width: 100%">
+                  {% for i in host_obj %}
+                  <option value="{{ i.id }}">{{ i.host_ip }}</option>
+                  {% endfor %}
+
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label > <span style="color: red"> * </span> 端口</label>
+            <input  class="form-control"  placeholder="端口" id="db-port" value="3306">
+          </div>
+
+          <div class="form-group">
+            <label> <span style="color: red"> * </span> 用户</label>
+            <input  class="form-control"  placeholder="用户" id="db-user">
+          </div>
+          <div class="form-group">
+            <label><span style="color: red"> * </span> 密码</label>
+            <input  class="form-control" type="password" placeholder="密码" id="db-passwd">
+          </div>
+
+          <div class="form-group">
+            <label > 备注</label>
+            <input  class="form-control"  placeholder="备注" id="db-msg" >
+          </div>
+
+          <div class="form-group">
+            <label >环境</label>
+              <select  class="form-control"  id="db-env">
+                  <option value="测试">测试</option>
+                  <option value="生产">生产</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label >管理用户</label>
+              <select  class="form-control"  id="user">
+                  {% for i in user_obj %}
+                  <option value="{{ i.id }}">{{ i.ready_name }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0px;">
+              <button type="button" class="btn btn-success" id="test-con">测试连接</button>
+              <span id="test-con-msg" style="color: orangered"></span>
+          </div>
+          
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+        <button type="button" class="btn btn-primary" id="sub-dblist">添加</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="edit-dblistModal" tabindex="-1" role="dialog" aria-labelledby="edit-dblistModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:100px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-dblistModalLabel">修改数据库</h4>
+      </div>
+      <div class="modal-body">
+
+         <div class="form-group">
+            <label> <span style="color: red"> * </span> 数据库名称</label>
+            <input  class="form-control"  placeholder="数据库名称" id="edit-db-name">
+          </div>
+          <div class="form-group" >
+            <label><span style="color: red"> * </span> 数据库地址</label>
+
+              <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple" id="edit-db-host" style="width: 100%">
+                  {% for i in host_obj %}
+                  <option value="{{ i.id }}">{{ i.host_ip }}</option>
+                  {% endfor %}
+
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label > <span style="color: red"> * </span> 端口</label>
+            <input  class="form-control"  placeholder="端口" id="edit-db-port" value="3306">
+          </div>
+
+          <div class="form-group">
+            <label> <span style="color: red"> * </span> 用户</label>
+            <input  class="form-control"  placeholder="用户" id="edit-db-user">
+          </div>
+          <div class="form-group">
+            <label><span style="color: red"> * </span> 密码</label>
+            <input  class="form-control" type="password" placeholder="密码" id="edit-db-passwd">
+          </div>
+
+          <div class="form-group">
+            <label > 备注</label>
+            <input  class="form-control"  placeholder="备注" id="edit-db-msg">
+          </div>
+
+          <div class="form-group">
+            <label >环境</label>
+              <select  class="form-control"  id="edit-db-env">
+                  <option value="测试">测试</option>
+                  <option value="生产">生产</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label >管理用户</label>
+              <select  class="form-control"  id="edit-user">
+                  {% for i in user_obj %}
+                  <option value="{{ i.id }}">{{ i.ready_name }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0px;">
+              <button type="button" class="btn btn-success" id="edit-test-con">测试连接</button>
+              <span id="edit-test-con-msg" style="color: orangered"></span>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+        <button type="button" class="btn btn-primary" id="sub-edit-dblist">提交</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock  %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/db_v3.js"></script>
+
+<script type="text/javascript">
+
+    $("#db-host").select2({
+        maximumSelectionSize: 1,
+        tags: true,
+        tokenSeparators: [',', ' ']
+    });
+
+    $("#edit-db-host").select2({
+        maximumSelectionSize: 1,
+        tags: true,
+        tokenSeparators: [',', ' ']
+    });
+
+</script>
+{% endblock %}
+
+

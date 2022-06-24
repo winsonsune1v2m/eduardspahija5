@@ -704,7 +704,7 @@ class UserMG(View):
 
             user_list.append({"ready_name": user.ready_name, "user_id": user.id, "user_name": user.user_name,
                               'phone': user.phone, 'email': user.email, 'role_title': ",".join(role_title),
-                              'status': status})
+                              'status': status,"img":user.img})
 
             user.status = status
             user.save()
@@ -1099,3 +1099,92 @@ class PermsMG(View):
         auth_db.Perms.objects.get(id=perms_id).delete()
         data = "权限已删除,请刷新查看！"
         return HttpResponse(data)
+
+class KeyMG(View):
+
+    """秘钥管理"""
+    @method_decorator(csrf_exempt)
+    @method_decorator(login_check)
+    @method_decorator(perms_check)
+    def dispatch(self, request, *args, **kwargs):
+        return super(KeyMG,self).dispatch(request, *args, **kwargs)
+
+
+    def get(self,request):
+        """查看秘钥"""
+        title = "秘钥管理"
+        user_name = request.session['user_name']
+        user = auth_db.User.objects.get(user_name=user_name)
+
+        if user.role.first().role_title =="administrator":
+            key_list = auth_db.Key.objects.all()
+            user_obj = auth_db.User.objects.all()
+        else:
+            key_list = auth_db.Key.objects.filter(user_id=user.id)
+            user_obj = auth_db.User.objects.filter(id=user.id)
+
+        return  render(request,'rbac_key.html',locals())
+
+    def post(self,request):
+        """添加秘钥"""
+        key_isa = request.POST.get("key_isa")
+        key_isa_pub = request.POST.get("key_isa_pub")
+        key_msg = request.POST.get("key_msg")
+        user_id = request.POST.get("user_id")
+
+        key_obj = auth_db.Key(key_isa=key_isa, key_isa_pub=key_isa_pub, key_msg=key_msg,user_id=user_id)
+        key_obj.save()
+        data = "秘钥添加成功，请刷新查看！"
+        return  HttpResponse(data)
+
+    def put(self,request):
+        """修改秘钥"""
+        req_info = eval(request.body.decode())
+        key_id = req_info.get("key_id")
+        key_isa = req_info.get("key_isa")
+        key_isa_pub = req_info.get("key_isa_pub")
+        key_msg = req_info.get("key_msg")
+        user_id = req_info.get("user_id")
+        action = req_info.get("action")
+        if action:
+            key_obj = auth_db.Key.objects.get(id=key_id)
+            key_obj.key_isa = key_isa
+            key_obj.key_isa_pub = key_isa_pub
+            key_obj.key_msg = key_msg
+            key_obj.user_id = user_id
+            key_obj.save()
+            data = "秘钥已修改,请刷新查看！"
+        else:
+            edit_key_obj = auth_db.Key.objects.get(id=key_id)
+
+            data= json.dumps({"key_id":edit_key_obj.id,"key_isa":edit_key_obj.key_isa,"key_isa_pub":edit_key_obj.key_isa_pub,
+                              "key_msg":edit_key_obj.key_msg,"user_id":edit_key_obj.user.id})
+
+        return HttpResponse(data)
+
+    def delete(self,request):
+        """删除秘钥"""
+        req_info = eval(request.body.decode())
+        key_id = req_info.get("key_id")
+        auth_db.Key.objects.get(id=key_id).delete()
+        data = "秘钥已删除,请刷新查看！"
+        return HttpResponse(data)
+
+
+@csrf_exempt
+@login_check
+@perms_check
+def check_key(request):
+    """查看key"""
+    key_id = request.POST.get("key_id")
+
+    key_type = request.POST.get("key_type")
+
+    key_obj = auth_db.Key.objects.get(id=key_id)
+
+    if key_type == "pub":
+        data = key_obj.key_isa_pub
+    else:
+        data = key_obj.key_isa
+
+    return HttpResponse(data)

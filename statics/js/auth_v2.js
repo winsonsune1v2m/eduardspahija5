@@ -647,3 +647,103 @@ $("td a[name='del-perms']").click(function(){
         });
     }
 });
+
+
+///添加秘钥
+$("#sub-key").click(function(){
+    var key_isa = $("#key-pri").val();
+    var key_isa_pub = $("#key-pub").val();
+    var key_msg = $("#key-msg").val();
+    var user_id = $("#key-user").val();
+    $.post("/auth/key/",{'key_isa':key_isa, 'key_isa_pub':key_isa_pub,"key_msg":key_msg,"user_id":user_id},function(data) {
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#msg-alert").empty();
+            $("#msg-alert").append(data);
+            $("#keyModal").modal("hide");
+            $("#alert").show();
+        }
+    })
+});
+
+
+//获取修改秘钥信息
+$('td a[name="edit-key"]').click(function() {
+    var key_id = $(this).attr("key_id");
+    $.ajax({
+        url: "/auth/key/",
+        type: "PUT",
+        data: JSON.stringify({'key_id': key_id}),
+        success: function (data) {
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                var info = eval('(' + data + ')');
+                $("#edit-key-msg").val(info.key_msg);
+                $("#edit-key-pub").val(info.key_isa_pub);
+                $("#edit-key-pri").val(info.key_isa);
+                $("#edit-key-user").val(info.user_id);
+                $("#sub-edit-key").attr('key_id', info.key_id);
+                $("#edit-keyModal").modal('show');
+            }
+
+        }
+    });
+});
+
+
+//修改权限信息
+$("#sub-edit-key").click(function() {
+    var key_id = $(this).attr("key_id");
+    var key_isa = $("#edit-key-pri").val();
+    var key_isa_pub = $("#edit-key-pub").val();
+    var key_msg = $("#edit-key-msg").val();
+    var user_id = $("#edit-key-user").val();
+    $.ajax({
+        url: "/auth/key/",
+        type: "PUT",
+        data: JSON.stringify({'action':'edit','key_id':key_id,'key_isa':key_isa,'key_isa_pub':key_isa_pub,'key_msg':key_msg,'user_id':user_id}),
+        success: function (data) {
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#edit-keyModal").modal("hide");
+                $("#alert").show();
+            }
+        }
+    });
+});
+
+//删除权限
+$("td a[name='del-key']").click(function(){
+    var key_id = $(this).attr('key_id');
+    var statu = confirm("是否确认删除！");
+    if (statu==true)
+    {
+        $.ajax({
+            url: "/auth/key/",
+            type: "DELETE",
+            data: JSON.stringify({'key_id':key_id}),
+            success: function(data) {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }else {
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append(data);
+                    $("#alert").show();
+                }
+             }
+        });
+    }
+});

@@ -1,0 +1,258 @@
+﻿{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="javascript:;">后台管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-6">
+
+              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#keyModal"> 添加秘钥 </a>
+
+          </div>
+      </div>
+
+  </div>
+  <div class="panel-body">
+
+
+        <div style="margin-bottom: 10px;">
+
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5;">
+                      <th>秘钥</th>
+                      <th>用户</th>
+                      <th>公钥</th>
+                      <th>私钥</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  {% for key in key_list %}
+                    <tr name="tbody">
+                      <td>{{ key.key_msg }}</td>
+                      <td>{{ key.user.ready_name }}</td>
+                      <td style="padding-left:15px;">
+                        <a href="javascript:;" name="check-pub-key" key_id="{{ key.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="查看"><span class="fa fa-file-text fa-lg"></span></a>&nbsp;&nbsp;&nbsp;
+                      </td>
+                      <td style="padding-left:15px;">
+                        <a href="javascript:;" name="check-pri-key" key_id="{{ key.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="查看"><span class="fa fa-file-text fa-lg"></span></a>&nbsp;&nbsp;&nbsp;
+                      </td>
+                      <td style="padding-left:5px;">
+                        <a href="javascript:;" style="text-decoration:none;" name="edit-key" key_id="{{ key.id }}" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil"></span> </a>&nbsp;&nbsp;&nbsp;
+                        <a href="javascript:;" style="text-decoration:none;" name="del-key" key_id="{{ key.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pagination"></ul>
+                </div>
+            </div>
+
+        </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+<div class="modal fade" id="keyModal" tabindex="-1"  aria-labelledby="keyModalLabel">
+  <div class="modal-dialog" key="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="keyModalLabel">添加秘钥</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label >秘钥</label>
+            <input  class="form-control"  placeholder="描述" id="key-msg">
+          </div>
+          <div class="form-group">
+            <label >公钥</label>
+              <textarea  class="form-control"  placeholder="公钥" id="key-pub"></textarea>
+          </div>
+          <div class="form-group">
+            <label >私钥</label>
+              <textarea  class="form-control"  placeholder="私钥" id="key-pri"></textarea>
+          </div>
+          <div class="form-group">
+            <label >用户</label>
+              <select  class="form-control"  id="key-user">
+                  {% for i in user_obj %}
+                  <option value="{{ i.id }}">{{ i.ready_name }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-key">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="edit-keyModal" tabindex="-1" aria-labelledby="edit-keyModalLabel">
+  <div class="modal-dialog" key="document">
+    <div class="modal-content" style="margin-top:135px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-keyModalLabel">修改秘钥</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label >秘钥</label>
+            <input  class="form-control"  placeholder="描述" id="edit-key-msg">
+          </div>
+          <div class="form-group">
+            <label >公钥</label>
+              <textarea  class="form-control"  placeholder="公钥" id="edit-key-pub"></textarea>
+          </div>
+          <div class="form-group">
+            <label >私钥</label>
+              <textarea  class="form-control"  placeholder="私钥" id="edit-key-pri"></textarea>
+          </div>
+          <div class="form-group">
+            <label >用户</label>
+              <select  class="form-control"  id="edit-key-user">
+                  {% for i in user_obj %}
+                  <option value="{{ i.id }}">{{ i.ready_name }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-key">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="chkeyModal" tabindex="-1" role="dialog" aria-labelledby="chkeyModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:100px;margin-left:-45%;min-width:680px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="chkeyModalLabel">查看秘钥</h4>
+      </div>
+      <div class="modal-body">
+        <pre id="check-key" style="background-color:black;color:green;font-size:16px;overflow:auto;max-height:600px;"></pre>
+
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" id="down-key">下载</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock  %}
+
+{% block js %}
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.excheck.js"></script>
+    <script type="text/javascript" src="/static/ztree3/js/jquery.ztree.exedit.js"></script>
+    <script type="text/javascript" src="/static/js/auth_v2.js"></script>
+
+    <script type="text/javascript" >
+
+        $("a[name='check-pub-key']").click(function(){
+            var key_id=$(this).attr("key_id");
+            var key_type="pub";
+            $.post('/auth/checkey/',{'key_id':key_id,"key_type":key_type},function(data){
+                $("#check-key").empty();
+                $("#check-key").append(data);
+                $("#chkeyModal").modal('show');
+            });
+
+            //下载key数据
+            $("#down-key").click(function () {
+                var key = $("#check-key").text();
+                funDownload(key,'isa_key_pub');
+
+            });
+        });
+
+        $("a[name='check-pri-key']").click(function(){
+            var key_id=$(this).attr("key_id");
+            var key_type="pri";
+            $.post('/auth/checkey/',{'key_id':key_id,"key_type":key_type},function(data){
+                $("#check-key").empty();
+                $("#check-key").append(data);
+                $("#chkeyModal").modal('show');
+
+            });
+
+            //下载key数据
+            $("#down-key").click(function () {
+                var key = $("#check-key").text();
+                funDownload(key,'isa_key');
+
+            });
+        });
+
+        //js 数据保存到本地文件
+        var funDownload = function (content, filename) {
+            // 创建隐藏的可下载链接
+            var eleLink = document.createElement('a');
+            eleLink.download = filename;
+            eleLink.style.display = 'none';
+            // 字符内容转变成blob地址
+            var blob = new Blob([content]);
+            eleLink.href = URL.createObjectURL(blob);
+            // 触发点击
+            document.body.appendChild(eleLink);
+            eleLink.click();
+            // 然后移除
+            document.body.removeChild(eleLink);
+        };
+
+
+    </script>
+
+{% endblock %}
+
+

@@ -28,5 +28,5 @@ urlpatterns = [
     path("sys/",include("app_sys.urls")),
     path("log/",include("app_log.urls")),
     path("tool/",include("app_tool.urls")),
-
+    path("db/",include("app_db.urls")),
 ]

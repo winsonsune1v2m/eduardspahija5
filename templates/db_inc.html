@@ -1,0 +1,180 @@
+﻿{% extends "base.html" %}
+
+{% block css %}
+
+<style>
+    .ivu-table-cell {
+        max-width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        word-break: break-all;
+        box-sizing: border-box;
+}
+td,th {
+    min-width: 0;
+    height: 48px;
+    box-sizing: border-box;
+    text-align: left;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    border-bottom: 1px solid #e9eaec;
+}
+</style>
+
+{% endblock %}
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;margin-top:20px;" >
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="#">数据库管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading"></div>
+  <div class="panel-body" id="dblist-info">
+      <div class="col-sm-3">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#inc" role="tab" data-toggle="tab">Inception配置</a></li>
+          <li role="presentation"><a href="#back-db" role="tab" data-toggle="tab">Inception备份库</a></li>
+        </ul>
+        <!-- 面板区 -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="inc">
+              <div class="form-group" style="margin-top: 15px;">
+                <label> <span style="color: red"> * </span> IP地址</label>
+                  <input  class="form-control"  placeholder="地址" id="inc-ip" value="{{ incdb_obj.inc_ip }}">
+              </div>
+              <div class="form-group">
+                <label> <span style="color: red"> * </span> 端口</label>
+                  <input  class="form-control"  placeholder="端口" id="inc-port" value="{{ incdb_obj.inc_port }}">
+              </div>
+              <div class="form-group">
+                  <button type="button" class="btn btn-warning btn-sm" id="check-inc">测试连接</button>
+                  <span id="check-inc-msg" style="color: orangered"></span>
+              </div>
+              <div class="form-group">
+                  <button type="button" class="btn btn-success form-control" id="save-inc">保存</button>
+              </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="back-db">
+              <div class="form-group" style="margin-top: 15px;">
+                  <label> <span style="color: red"> * </span> IP地址</label>
+                  <input  class="form-control"  placeholder="地址" disabled="disabled" value="{{ backdb_obj.back_db_ip }}">
+              </div>
+              <div class="form-group">
+                  <label> <span style="color: red"> * </span> 端口</label>
+                  <input  class="form-control"  placeholder="端口" disabled="disabled" value="{{ backdb_obj.back_db_port }}">
+              </div>
+              <div class="form-group">
+                  <label> <span style="color: red"> * </span> 用户名</label>
+                  <input  class="form-control"  placeholder="用户名" disabled="disabled" value="{{ backdb_obj.back_db_user }}">
+              </div>
+              <div class="form-group">
+                  <label> <span style="color: red"> * </span> 密码</label>
+                  <input  class="form-control" type="password" placeholder="密码" disabled="disabled" value="{{ backdb_obj.back_db_passwd }}">
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-sm-9" style="max-height: 680px;overflow: auto">
+        <div style="margin-bottom: 10px;">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5; text-align:center;font-size: 14px;">
+                      <th>参数名字</th>
+                      <th>可选参数</th>
+                      <th>默认值</th>
+                      <th>功能说明</th>
+                      <th>设置</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for inc in inc_obj %}
+                    <tr style="font-size: 12px;">
+                      <td style="vertical-align: middle;"><span class="label label-default">{{inc.inc_title }}</span></td>
+                      <td style="vertical-align: middle;">{{ inc.inc_option }}</td>
+                      <td style="vertical-align: middle;">{{ inc.inc_default }}</td>
+                      <td style="vertical-align: middle;">
+                          <div class="ivu-table-cell" name="up-connect">
+                          {{ inc.inc_msg }}
+                          </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                          {% if inc.inc_value == "ON" %}
+                          <input type="checkbox"  name="my-checkbox" checked  inc_id="{{ inc.id }}"/>
+                          {% else %}
+                          <input type="checkbox"  name="my-checkbox" inc_id="{{ inc.id }}"/>
+                          {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+{% endblock  %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/db_v3.js"></script>
+
+<script type="text/javascript">
+
+$('input[type="checkbox"]').bootstrapSwitch({
+    onText:"ON",
+    offText:"OFF",
+    onColor:"success",
+    offColor:"warning",
+    size:"mini",
+    onSwitchChange:function (event,state) {
+        if(state==true){
+            var status = "ON";
+        }else{
+            var status = "OFF";
+        }
+        var inc_id = $(this).attr("inc_id");
+        $.ajax({
+            url:'/db/inc/',
+            type:'PUT',
+            data:JSON.stringify({"inc_id":inc_id,"status":status}),
+            success:function (data) {
+                if(data=="perms_false"){
+                    $("#msg-alert").empty();
+                    $("#msg-alert").append("权限不足，请联系管理员");
+                    $("#alert").show();
+                }
+             }
+        })
+    }
+});
+
+
+
+
+
+</script>
+{% endblock %}
+
+
