@@ -3,32 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_code/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_log/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/mtrops_v2.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mtrops_v2/settings.py.bak" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/settings.py.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mtrops_v2/settings.py.docker" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/settings.py.docker" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mtrops_v2/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mtrops_v2/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/img/user/alexli.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/js/auth_v2.js" beforeDir="false" afterPath="$PROJECT_DIR$/statics/js/auth_v2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/scripts/get_software_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/get_software_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statics/scripts/salt_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/statics/scripts/salt_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/code_publist.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_publist.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/code_wchartlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/code_wchartlog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/log_opslog.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/log_opslog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rbac_role.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_role.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rbac_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rbac_user.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +46,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_db/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4986">
@@ -105,8 +79,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="89" column="26" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="26" />
+            <state relative-caret-position="219">
+              <caret line="92" column="27" lean-forward="true" selection-end-line="208" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
@@ -527,7 +510,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1538025289827</updated>
-      <workItem from="1545892466212" duration="6041000" />
+      <workItem from="1545892466212" duration="7076000" />
     </task>
     <task id="LOCAL-00001" summary="更新代码">
       <created>1538025534295</created>
@@ -554,7 +537,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6041000" />
+    <option name="totallyTimeSpent" value="7076000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -786,13 +769,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py.docker">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2091">
@@ -923,13 +899,6 @@
     <entry file="file://$PROJECT_DIR$/statics/img/user/def.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="89" column="26" selection-start-line="89" selection-start-column="26" selection-end-line="89" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac_user.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1173" />
@@ -952,6 +921,20 @@
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="92" column="27" lean-forward="true" selection-end-line="208" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
