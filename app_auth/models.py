@@ -26,7 +26,7 @@ class User(models.Model):
     email = models.CharField(max_length=64,null=True)
     phone = models.CharField(max_length=128,null=True)
     role = models.ManyToManyField(to="Role")
-    img = models.ImageField(upload_to='img',null=True)
+    img = models.ImageField(upload_to='img',default="/static/img/user/11.jpg")
     status = models.CharField(max_length=64,default="离线")
     creat_time = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
