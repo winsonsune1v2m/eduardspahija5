@@ -49,5 +49,7 @@ redis==2.10.6
 ![操作审计](https://images.gitee.com/uploads/images/2018/1024/151849_9a76790a_578265.png "屏幕截图.png")
 ![任务中心](https://images.gitee.com/uploads/images/2018/1029/172124_e1ab2a5c_578265.png "屏幕截图.png")
 ![授权管理](https://images.gitee.com/uploads/images/2018/1024/151935_5bfdc353_578265.png "屏幕截图.png")
+![SQL工单申请](https://images.gitee.com/uploads/images/2018/1227/172024_65df4a7f_578265.png "屏幕截图.png")
+![工单处理](https://images.gitee.com/uploads/images/2018/1227/172135_4a8a9004_578265.png "屏幕截图.png")
 
 
