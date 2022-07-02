@@ -48,6 +48,7 @@ class WorkOrderLog(models.Model):
     inc_status = models.TextField(null=True)
     status = models.CharField(max_length=128, null=False)
     exec_result = models.TextField(null=True)
+    rollback_status = models.TextField(null=True)
     create_time = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return self.db.db_name

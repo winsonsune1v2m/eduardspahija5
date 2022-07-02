@@ -305,7 +305,7 @@ class OrderLog(View):
     """inception设置"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
-    @method_decorator(perms_check)
+    #@method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(OrderLog,self).dispatch(request,*args,**kwargs)
 
@@ -438,20 +438,37 @@ class OrderLog(View):
                 con.close()
                 #执行回滚sql语句
 
-                for sql in rollbacl_sql_list:
+                sql = ";\n".join(rollbacl_sql_list)+";"
 
-                    con2 = pymysql.connect(host=order_obj.db.db_host.host_ip, port=int(order_obj.db.db_port),
-                                           user=order_obj.db.db_user, passwd=de_passwd,
-                                           db=order_obj.db.db_name, charset='utf8')
-                    cur2 = con2.cursor()
+                incdb_obj = db.IncDB.objects.first()
+                # inc执行参数，执行SQL语句并且备份
+                operation = '--enable-execute;--enable-ignore-warnings;--enable-remote-backup'
+                # 目标服务器
+                connstr_target = {'host': order_obj.db.db_host.host_ip, 'port': int(order_obj.db.db_port), 'user': order_obj.db.db_user, 'password': de_passwd,
+                                  'db': order_obj.db.db_name, 'charset': 'utf8'}
+                # inception 服务器信息
+                connstr_inception = {'host': incdb_obj.inc_ip, 'port': int(incdb_obj.inc_port), 'user': '',
+                                     'password': '',
+                                     'db': '', 'charset': 'utf8'}
+                # inception 执行的语句
+                use_sql = "use %s;\n" % order_obj.db.db_name
+                exec_sql = use_sql + sql
+                # 执行检查
 
-                    cur2.execute(sql)
-                    con2.commit()
-                cur2.close()
-                con2.close()
-                order_obj.status = "已回滚"
-                order_obj.save()
-                data = "该工单已回滚，请检查！"
+                result = inception.inception(connstr_target, operation, connstr_inception, exec_sql)
+
+                try:
+                    rollback_status = json.dumps(result)
+                    order_obj.status = "已回滚"
+                    order_obj.rollback_status = rollback_status
+                    order_obj.save()
+                    data = "该工单已回滚，请检查！"
+                except:
+                    rollback_status = result
+                    order_obj.status = "回滚失败"
+                    order_obj.rollback_status = rollback_status
+                    order_obj.save()
+                    data = "该工单回滚失败，请检查！"
             else:
                 data = '工单状态异常，无法执行！'
         return HttpResponse(data)
