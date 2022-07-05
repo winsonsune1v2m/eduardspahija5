@@ -159,12 +159,10 @@ class Batch(View):
         role_id = request.session["role_id"]
         hostgroup_obj = asset_db.HostGroup.objects.all()
         tree_info = []
-
         for i in hostgroup_obj:
             hostgroup_id = i.id
             hostgroup_name = i.host_group_name
             hostinfo_obj = asset_db.Host.objects.filter(Q(group_id=hostgroup_id) & Q(role__id=role_id) & Q(hostdetail__host_status="up"))
-
             if hostinfo_obj:
                 tree_info.append({"id": hostgroup_id, "pId": 0, "name": hostgroup_name, "open": "false"})
 
@@ -178,7 +176,9 @@ class Batch(View):
 
         user_name = request.session['user_name']
         user_obj = auth_db.User.objects.get(user_name=user_name)
-        remote_user_list = user_obj.remoteuser_set.all()
+
+        remote_user_list = auth_db.RemoteUser.objects.all()
+
         return render(request,'sys_batch.html',locals())
 
 
@@ -194,10 +194,7 @@ def batch_run_cmd(request):
     salt_user = SALT_API['user']
     salt_passwd = SALT_API['passwd']
     salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
     hosts = ",".join(ip_list)
-
-
     runas = request.session['remote_user']
     if runas:
         data = salt.salt_run_arg(hosts, "cmd.run", cmd,runas)
@@ -218,38 +215,26 @@ def batch_run_cmd(request):
 @perms_check
 def batch_upload_file(request):
     """批量上传文件"""
-
     upload_path = request.POST.get('upload_path')
-
     upload_file = request.FILES.get("upfile")
-
     ip_list = json.loads(request.POST.get("ip_list"))
-
     up_file_path = os.path.join(BASE_DIR, 'statics', 'upload')
-
     if os.path.exists(up_file_path):
         pass
     else:
         os.makedirs(up_file_path)
-
     file_path = os.path.join(up_file_path, upload_file.name)
-
     src = "salt://" + file_path
-
     dest = upload_path.rstrip("/") + "/" + upload_file.name
-
     if os.path.exists(file_path):
         date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
         os.rename(file_path, file_path + "_" + date_str)
     else:
         pass
-
     f = open(file_path, 'wb')
-
     for chunk in upload_file.chunks():
         f.write(chunk)
     f.close()
-
     salt_url = SALT_API['url']
     salt_user = SALT_API['user']
     salt_passwd = SALT_API['passwd']
@@ -280,47 +265,32 @@ def batch_upload_file(request):
 def batch_script(request):
     """批量执行脚本"""
     up_script = request.FILES.get("script_file")
-
     ip_list = json.loads(request.POST.get("ip_list"))
-
     script_dir = os.path.join(BASE_DIR, 'statics', 'scripts')
-
     if os.path.exists(script_dir):
         pass
     else:
         os.makedirs(script_dir)
-
     script_file = os.path.join(script_dir, up_script.name)
-
     if os.path.exists(script_file):
         date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
         os.rename(script_file, script_file + "_" + date_str)
     else:
         pass
-
     f = open(script_file, 'wb')
 
     for chunk in up_script.chunks():
         f.write(chunk)
-
     f.close()
-
     script_src = "salt://" + script_file
-
-
     salt_url = SALT_API['url']
     salt_user = SALT_API['user']
     salt_passwd = SALT_API['passwd']
-
-
     salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
     hosts = ",".join(ip_list)
-
     runas = request.session['remote_user']
     if runas:
         data = salt.salt_run_arg(hosts, "cmd.script", script_src,runas)
-
         data_txt=''
         for ip in  ip_list:
             head_txt='=================== %s ===================\n' % ip
@@ -347,27 +317,18 @@ class CronView(View):
     def get(self, request):
 
         ip_list = json.loads(request.GET.get('ip_list'))
-
         remote_user = request.GET.get('remote_user')
-
         cmd = 'crontab -u %s -l' % remote_user
-
         salt_url = SALT_API['url']
         salt_user = SALT_API['user']
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
         hosts = ",".join(ip_list)
-
         runas = request.session['remote_user']
         if runas:
-
             data = salt.salt_run_arg(hosts, "cmd.run", cmd,runas)
-
             data_info = []
-
             for ip in data.keys():
-
                 data_list = data[ip].split('\n')
                 cron_list = []
                 if re.match('no', data_list[0]) or re.match('crontab', data_list[0]) or re.search('must be privileged', data_list[0]):

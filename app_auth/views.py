@@ -1,6 +1,6 @@
 import datetime
-import json,re
-import redis
+import json,re,time
+import redis,pymysql
 from statics.scripts import encryption
 from mtrops_v2.settings import SECRET_KEY,DATABASES,REDIS_INFO
 from django.views import View
@@ -272,6 +272,33 @@ class Index(View):
             task_obj = log_db.TaskRecord.objects.filter(task_user_id=user_obj.id).order_by("-create_time")
 
         task_num = task_obj.count()
+
+        cur_month = time.strftime("%Y-%m", time.localtime())
+        #代码提交统计
+        sql="SELECT COUNT(id),from_user from app_code_wchartlog where add_time like '%s%%' GROUP BY(from_user);" % cur_month
+
+        sql_site = "SELECT COUNT(id),site_name from app_code_wchartlog where add_time like '%s%%' GROUP BY(site_name);" % cur_month
+        database_info = DATABASES['default']
+
+        con = pymysql.connect(host=database_info["HOST"], port=int(database_info["PORT"]),
+                              user=database_info["USER"], passwd=database_info["PASSWORD"], db=database_info["NAME"], charset='utf8')
+        cur = con.cursor()
+        cur.execute(sql)
+        user_list = []
+        count_list = []
+        for i,j in cur.fetchall():
+            user_list.append(j)
+            count_list.append(i)
+
+        cur.execute(sql_site)
+        site_list = []
+        count_site_list = []
+        for i, j in cur.fetchall():
+            site_list.append(j)
+            count_site_list.append(i)
+
+        cur.close()
+        con.close()
 
         return  render(request,'base.html',locals())
 
@@ -551,10 +578,7 @@ def get_role_asset(request):
         else:
             nodes.append({"id": netwk_num, "pId": 2, "name": j.netwk_ip, 'open': True})
 
-
     asset_data = json.dumps(nodes)
-
-    print(asset_data)
 
     return HttpResponse(asset_data)
 

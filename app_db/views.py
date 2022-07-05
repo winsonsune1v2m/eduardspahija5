@@ -305,7 +305,7 @@ class OrderLog(View):
     """inception设置"""
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
-    #@method_decorator(perms_check)
+    @method_decorator(perms_check)
     def dispatch(self, request, *args, **kwargs):
         return super(OrderLog,self).dispatch(request,*args,**kwargs)
 
