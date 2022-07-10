@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change beforePath="$PROJECT_DIR$/app_asset/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_auth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_db/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_db/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-    </list>
+    <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,10 +32,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_auth/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
+            <state relative-caret-position="-99">
               <caret line="579" lean-forward="true" selection-start-line="579" selection-end-line="579" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -81,10 +75,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
+            <state relative-caret-position="-2599">
               <caret line="367" column="99" lean-forward="true" selection-start-line="367" selection-start-column="99" selection-end-line="367" selection-end-column="99" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -120,7 +114,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>runas</find>
       <find>远程</find>
       <find>&lt;tr&gt;</find>
       <find>&lt;tbody</find>
@@ -150,6 +143,7 @@
       <find>removefile</find>
       <find>onlin</find>
       <find>remote_user_list</find>
+      <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>req_info</replace>
@@ -496,7 +490,7 @@
       <option name="presentableId" value="Default" />
       <updated>1538025289827</updated>
       <workItem from="1545892466212" duration="10150000" />
-      <workItem from="1545958188837" duration="10653000" />
+      <workItem from="1545958188837" duration="11015000" />
     </task>
     <task id="LOCAL-00001" summary="更新代码">
       <created>1538025534295</created>
@@ -523,7 +517,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20803000" />
+    <option name="totallyTimeSpent" value="21165000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -913,9 +907,19 @@
         <state relative-caret-position="-6607" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app_auth/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-99">
+          <caret line="579" lean-forward="true" selection-start-line="579" selection-end-line="579" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
+        <state relative-caret-position="-2599">
           <caret line="367" column="99" lean-forward="true" selection-start-line="367" selection-start-column="99" selection-end-line="367" selection-end-column="99" />
           <folding>
             <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -926,16 +930,6 @@
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#div#1;n#body#0;n#html#0;n#!!top" />
             <element signature="n#script#6;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_auth/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="579" lean-forward="true" selection-start-line="579" selection-end-line="579" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
