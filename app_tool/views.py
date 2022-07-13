@@ -148,45 +148,30 @@ def Upfile(request):
 @login_check
 def Downfile(request):
     ip = request.POST.get("ip")
-
     file_path = request.POST.get("path")
-
     salt_url = SALT_API['url']
     salt_user = SALT_API['user']
     salt_passwd = SALT_API['passwd']
     salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
     result = salt.salt_run_downfile(ip, "cp.push", file_path)
-
-
     if result[ip]:
-
         salt_file_path = "/var/cache/salt/master/minions/%s/files%s" % (ip,file_path)
-
         downfile_path = os.path.join(BASE_DIR, 'statics', 'download', ip)
-
         if os.path.exists(downfile_path):
             pass
         else:
             os.makedirs(downfile_path)
-
         file_name = file_path.split("/")[-1]
-
         save_file = downfile_path + "/" + file_name
-
         if os.path.exists(save_file):
             date_str = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
             os.rename(save_file, save_file + "_" + date_str)
         else:
             pass
-
         shutil.move(salt_file_path,save_file)
-
         msg = "http://%s:8080/static/download/%s/%s" % (MTROPS_HOST,ip,file_name)
-
     else:
         msg = "下载失败，请检查文件是否存在"
-
     return HttpResponse(msg)
 
 
@@ -202,11 +187,8 @@ class PhpMyadmin(View):
 
     def get(self,request):
         r = redis.Redis(host=REDIS_INFO['host'], port=REDIS_INFO['port'], db=0)
-
         title = "phpMyadmin"
-
         phpmyadmin_url = PHPMYADMIN_URL
-
         mysql_host = r.get('mysql_host')
         mysql_user = r.get('mysql_user')
         mysql_passwd = r.get('mysql_passwd')
@@ -231,13 +213,9 @@ class PhpMyadmin(View):
         db_user = request.POST.get("db_user")
         db_passwd = request.POST.get("db_passwd")
         db_port = int(request.POST.get("db_port"))
-
-        print("post_get",db_ip)
-
-        r.set('mysql_host', db_ip,ex=10,nx=True)
-        r.set('mysql_user', db_user,ex=10,nx=True)
-        r.set('mysql_passwd', db_passwd,ex=10,nx=True)
-        r.set('mysql_port', db_port,ex=10,nx=True)
-
+        r.set('mysql_host', db_ip)
+        r.set('mysql_user', db_user)
+        r.set('mysql_passwd', db_passwd)
+        r.set('mysql_port', db_port)
 
         return HttpResponse("正在连接phpmyadmin！")

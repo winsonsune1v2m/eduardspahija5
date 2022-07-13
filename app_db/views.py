@@ -30,12 +30,10 @@ class DBList(View):
         host_obj = asset_db.Host.objects.filter(Q(role__id=role_id) & Q(hostdetail__host_status="up"))
         user_name = request.session['user_name']
         user = auth_db.User.objects.get(user_name=user_name)
-        if user.role.first().role_title == "administrator":
-            db_obj = db.DB.objects.all()
-            user_obj = auth_db.User.objects.all()
-        else:
-            db_obj = db.DB.objects.filter(user_id=user.id)
-            user_obj = auth_db.User.objects.filter(id=user.id)
+
+        db_obj = db.DB.objects.all()
+        user_obj = auth_db.User.objects.all()
+
         return render(request,'db_list.html', locals())
 
     def post(self,request):
@@ -226,12 +224,8 @@ class WorkOrder(View):
         title = "SQL工单"
         user_name = request.session['user_name']
         user = auth_db.User.objects.get(user_name=user_name)
-        role_obj = auth_db.Role.objects.get(role_title='administrator')
-        user_obj = role_obj.user_set.all()
-        if user.role.first().role_title == "administrator":
-            db_obj = db.DB.objects.all()
-        else:
-            db_obj = db.DB.objects.filter(user_id=user.id)
+        user_obj = auth_db.User.objects.all()
+        db_obj = db.DB.objects.all()
         return render(request,'db_order.html', locals())
 
     def post(self,request):
