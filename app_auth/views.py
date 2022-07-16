@@ -273,11 +273,11 @@ class Index(View):
 
         task_num = task_obj.count()
 
-        cur_month = time.strftime("%Y-%m", time.localtime())
-        #代码提交统计
-        sql="SELECT COUNT(id),from_user from app_code_wchartlog where add_time like '%s%%' GROUP BY(from_user);" % cur_month
 
-        sql_site = "SELECT COUNT(id),site_name from app_code_wchartlog where add_time like '%s%%' GROUP BY(site_name);" % cur_month
+        #代码提交统计
+        sql="SELECT COUNT(id),from_user from app_code_wchartlog where TO_DAYS(NOW()) - TO_DAYS(add_time) <= 30 GROUP BY(from_user);"
+        sql_site = "SELECT COUNT(id),site_name from app_code_wchartlog where TO_DAYS(NOW()) - TO_DAYS(add_time) <= 30 GROUP BY(site_name);"
+
         database_info = DATABASES['default']
 
         con = pymysql.connect(host=database_info["HOST"], port=int(database_info["PORT"]),

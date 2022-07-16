@@ -13,8 +13,9 @@ from app_auth import models as auth_db
 from app_log import models as log_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
-from statics.scripts import salt_api
-from mtrops_v2.settings import SECRET_KEY,CODE_RUNAS,SALT_API,BASE_DIR
+from statics.scripts import salt_api,sendwx,recdn
+from mtrops_v2.settings import SECRET_KEY,CODE_RUNAS,SALT_API,BASE_DIR,WCHART_CORPID,WCHART_CORPSECRET,WCHART_ADMIN_UDSER,WCHART_URL
+from mtrops_v2.settings import MTR_ACCESS_KEY_ID,MTR_ACCESS_KEY_SECRET,MTY_ACCESS_KEY_ID,MTY_ACCESS_KEY_SECRET,REGION_ID
 from app_code.tasks import code_clone
 
 # Create your views here.
@@ -258,9 +259,7 @@ class Publist(View):
 
             code_dir = publist_dir+'/'+git_name
 
-            
             cmd = "cd %s && git stash && git pull origin master" % code_dir
-
 
             result = salt.salt_run_arg(minions, "cmd.run",cmd,CODE_RUNAS)
 
@@ -441,8 +440,7 @@ def  RollBack(request):
     
     
 class CodeLog(View):
-    '''发布记录'''
-
+    '''企业微信发布记录'''
     @method_decorator(csrf_exempt)
     @method_decorator(login_check)
     @method_decorator(perms_check)
@@ -454,5 +452,81 @@ class CodeLog(View):
         wchartlog_obj = code_db.Wchartlog.objects.all().order_by("-add_time")
         return render(request, "code_wchartlog.html", locals())
 
+    def post(self,request):
+        """企业微信更新"""
+        git_id = request.POST.get('git_id')
+        log_obj = code_db.Wchartlog.objects.get(id=git_id)
+        site_name = log_obj.site_name
+        from_user = log_obj.from_user
+        up_data = log_obj.up_connect
+        status = log_obj.status
+
+        test_token = sendwx.get_token(WCHART_URL, WCHART_CORPID, WCHART_CORPSECRET)
+
+        if status == "done":
+            msg = "请求已执行"
+            msg_data = sendwx.params(msg,WCHART_ADMIN_UDSER)
+            sendwx.send_message(WCHART_URL, test_token, msg_data)
+
+        elif status == "waiting":
+            gitcode_obj = code_db.GitCode.objects.get(git_name=site_name)
+            site_id = gitcode_obj.id
+            publist_obj = code_db.Publist.objects.filter(gitcode_id=site_id)
+            for i in publist_obj:
+                ip = i.host_ip.host_ip
+                site_path = i.publist_dir
+                all_up_com = ""
+                for j in up_data.split("##"):
+                    if j:
+                        if re.search(r"commit_msg", j):
+                            continue
+                        else:
+                            up_com = "&& git checkout  origin/master %s" % j
+                        all_up_com += up_com
+                    else:
+                        pass
+
+                code_dir = os.path.join(site_path, site_name)
+                cmd = "cd %s && git fetch %s" % (code_dir, all_up_com)
+
+                #调用salt api 执行更新命令
+                salt_url = SALT_API['url']
+                salt_user = SALT_API['user']
+                salt_passwd = SALT_API['passwd']
+                salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
+                result = salt.salt_run_arg(ip, "cmd.run", cmd, CODE_RUNAS)
+
+                #更新结果处理，发送企业微信小心
+                msg = "++++++++执行结果+++++++\n%s\n%s" % (ip, result[ip])
+                resp_user = WCHART_ADMIN_UDSER + "|" + from_user
+                msg_data = sendwx.params(msg, resp_user)
+                sendwx.send_message(WCHART_URL, test_token, msg_data)
+
+                #更新状态
+                log_obj.status = "done"
+                log_obj.save()
+
+            #刷新CDN
+            for k in up_data.split("##"):
+                if re.search("(\.js$|\.css$|\.jpg$|\.gif$|\.png$)", k):
+                    if re.search(r'mtrp2p', site_name):
+                        access_key_id = MTR_ACCESS_KEY_ID
+                        access_key_secret = MTR_ACCESS_KEY_SECRET
+                    else:
+                        access_key_id = MTY_ACCESS_KEY_ID
+                        access_key_secret = MTY_ACCESS_KEY_SECRET
+                    recdn.ReCDN(REGION_ID, access_key_id, access_key_secret, site_name, k)
+                else:
+                    pass
+        return  HttpResponse("该更新请求已执行")
+
+
+@csrf_exempt
+@login_check
+@perms_check
+def search_log(request):
+    key = request.POST.get('key')
+    wchartlog_obj = code_db.Wchartlog.objects.filter(Q(site_name__icontains=key)|Q(from_user__icontains=key)|Q(up_connect__icontains=key)).order_by("-add_time")
+    return render(request, "code_wchartlog_search.html", locals())
 
 

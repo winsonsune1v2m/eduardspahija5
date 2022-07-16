@@ -50,7 +50,7 @@
   <div class="panel-body" id="site-info">
 
         <div style="margin-bottom: 10px;">
-            <div class="col-sm-12" id="tb-log">
+            <div class="col-sm-12" id="wchart-log">
                 <table class="table table-hover table-bordered">
                   <thead>
                     <tr style="background-color: #f5f5f5; text-align:center">
@@ -77,11 +77,7 @@
                       <td style="color:red">{{ i.status }}</td>
                       {% endif %}
                       <td>
-                          {% if i.status == 'done' %}
-                          <a style="text-decoration:none;cursor: default;color: #9d9d9d" href ="javascript:return false;" onclick="return false;"  git_id="{{ i.id }}" data-toggle="tooltip" data-placement="left" title="更新"><span class="fa fa-cloud-download"></span></a>&nbsp;&nbsp;&nbsp;
-                           {% else %}
                           <a href="javascript:;"  style="text-decoration:none;" name="up-wchartlog" git_id="{{ i.id }}" data-toggle="tooltip" data-placement="left" title="更新"><span class="fa fa-cloud-download"></span></a>&nbsp;&nbsp;&nbsp;
-                          {% endif %}
                           <a href="javascript:;" style="text-decoration:none;" name="del-wchartlog" git_id="{{ i.id }}" data-toggle="tooltip" data-placement="right" title="删除"><span class="fa fa-trash"></span> </a>
                       </td>
                     {% endfor %}
@@ -108,9 +104,6 @@
 {% endblock  %}
 
 {% block js %}
-
-<script type="text/javascript" src="/static/js/code.js"></script>
-
 <script type="text/javascript">
 
 $("div[name='up-connect']").mouseover(function () {
@@ -121,7 +114,6 @@ $("div[name='up-connect']").mouseover(function () {
         str_html+="<p>"+content_list[i]+"</p>";
 
     }
-    //$(this).popover('show');
     $(this).popover({
         trigger:"hover",
         placement:"right",
@@ -132,16 +124,46 @@ $("div[name='up-connect']").mouseover(function () {
 
 });
 
-$("#sub-search").click(function () {
 
-    var key = $("#search-key").val();
-    $.post("/code/searchlog/",{'key':key},function (data) {
-        $("#tb-log").empty();
-        $("#tb-log").append(data);
-    })
-
+$("a[name='up-wchartlog']").click(function () {
+    var git_id = $(this).attr('git_id');
+    var status = $(this).parent().prev().html();
+    console.log(status);
+    if(status=='done'){
+        $("#msg-alert").empty();
+        $("#msg-alert").append("该更新请求已执行，无需重复操作");
+        $("#alert").show();
+        setTimeout("location.reload()",2000);
+    }else {
+        $.post("/code/log/",{'git_id':git_id},function (data) {
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+                setTimeout("location.reload()",2000);
+            }else {
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+                setTimeout("location.reload()",2000);
+            }
+        })
+    }
 });
 
+$("#sub-search").click(function () {
+    var key = $("#search-key").val();
+    $.post("/code/searchlog/",{'key':key},function (data) {
+        if(data=="perms_false"){
+            $("#msg-alert").empty();
+            $("#msg-alert").append("权限不足，请联系管理员");
+            $("#alert").show();
+        }else {
+            $("#wchart-log").empty();
+            $("#wchart-log").append(data);
+        }
+    })
+});
 
 </script>
 {% endblock %}

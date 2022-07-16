@@ -26,5 +26,6 @@ urlpatterns = [
     path("search/", views.search_publist),
 	path("gitlog/<int:id>/", views.git_log),
 	path("rollback/", views.RollBack),
+    path("searchlog/",views.search_log),
 
 ]
