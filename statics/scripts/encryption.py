@@ -6,7 +6,7 @@ from binascii import b2a_hex, a2b_hex
 
 class prpcrypt():
     def __init__(self, key):
-        self.key = key  # key长度为16的任意字符串
+        self.key = key.encode('utf-8')  # key长度为16的任意字符串
         self.mode = AES.MODE_CBC
 
         # 加密函数，如果text不是16的倍数【加密文本text必须为16的倍数！】，那就补足为16的倍数
@@ -21,7 +21,7 @@ class prpcrypt():
         else:
             add = 0
         text = text + ('\0' * add)
-        self.ciphertext = cryptor.encrypt(text)
+        self.ciphertext = cryptor.encrypt(text.encode('utf-8'))
         # 因为AES加密时候得到的字符串不一定是ascii字符集的，输出到终端或者保存时候可能存在问题
         # 所以这里统一把加密后的字符串转化为16进制字符串
         return b2a_hex(self.ciphertext)
@@ -37,4 +37,4 @@ if __name__ == '__main__':
     pc = prpcrypt('keyskeyskeyskeys')  # 初始化密钥
     e = pc.encrypt('0123456789ABCDEF')
     d = pc.decrypt(e)
-    print(type(e),d)
+    print(bytes(e),d)
