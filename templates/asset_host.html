@@ -93,6 +93,7 @@
               <th>厂商</th>
               <th>IDC</th>
               <th>状态</th>
+              <th>过保时间</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -112,6 +113,9 @@
                 {% else %}
               <td><span class="fa fa-lg fa-times-circle" style="color: #cc1111" data-toggle="tooltip" data-placement="right" title="异常"></span></td>
                 {% endif %}
+
+
+                <td>{{ host.overdue_date }}</td>
               <td style="padding-left:5px;">
                 <a href="javascript:;" name="edit-host" host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil" ></span> </a>&nbsp;&nbsp;&nbsp;
                 <a href="/asset/hostdetail/{{ host.id }}/" name="info-host" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;

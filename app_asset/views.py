@@ -231,11 +231,13 @@ class Host(View):
         role_obj = auth_db.Role.objects.get(id=role_id)
 
         host_obj = role_obj.host.all()
+
         host_list = []
 
         for i in host_obj:
             try:
-                host_status = asset_db.HostDetail.objects.get(host_id=i.id).host_status
+                host_detail_obj = asset_db.HostDetail.objects.get(host_id=i.id)
+                host_status = host_detail_obj.host_status
             except:
                 host_status = "None"
             if i.group:
@@ -253,7 +255,7 @@ class Host(View):
                 idc_name = "None"
 
             host_list.append({"id":i.id,"host_ip":i.host_ip,"host_type":i.host_type,"group_name":host_group_name,"host_msg":i.host_msg,
-                              "supplier":supplier_name,"idc_name":idc_name,"host_status":host_status})
+                              "supplier":supplier_name,"idc_name":idc_name,"host_status":host_status,"overdue_date":i.overdue_date})
 
         webssh_url = WEBSSH_URL
 
