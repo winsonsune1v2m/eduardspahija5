@@ -2,96 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fac4fb-b8f0-4d7a-93c5-351c98126f3c" name="Default Changelist" comment="更新代码">
-      <change afterPath="$PROJECT_DIR$/statics/scripts/mysql_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statics/scripts/update_aly_date.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_asset/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_host.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_host.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/AES.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/AES.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/ARC2.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/ARC2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/ARC4.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/ARC4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/Blowfish.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/Blowfish.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/CAST.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/CAST.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/DES.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/DES.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/DES3.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/DES3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/PKCS1_OAEP.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/PKCS1_OAEP.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/PKCS1_v1_5.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/PKCS1_v1_5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/_ARC4.cp36-win_amd64.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/_ARC4.cp36-win_amd64.pyd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Cipher/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/HMAC.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/HMAC.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/MD2.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/MD2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/MD4.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/MD4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/MD5.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/MD5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/RIPEMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/RIPEMD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA224.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA224.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA256.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA256.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA384.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA384.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA512.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/SHA512.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_MD2.cp36-win_amd64.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_MD2.cp36-win_amd64.pyd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_MD4.cp36-win_amd64.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_MD4.cp36-win_amd64.pyd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_RIPEMD160.cp36-win_amd64.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_RIPEMD160.cp36-win_amd64.pyd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_SHA224.cp36-win_amd64.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_SHA224.cp36-win_amd64.pyd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_SHA256.cp36-win_amd64.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_SHA256.cp36-win_amd64.pyd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_SHA384.cp36-win_amd64.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_SHA384.cp36-win_amd64.pyd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_SHA512.cp36-win_amd64.pyd" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/_SHA512.cp36-win_amd64.pyd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Hash/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Protocol/KDF.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Protocol/KDF.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Protocol/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Protocol/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/PublicKey/DSA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/PublicKey/DSA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/PublicKey/ElGamal.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/PublicKey/ElGamal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/PublicKey/RSA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/PublicKey/RSA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/PublicKey/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/PublicKey/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Random/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Random/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Random/random.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Random/random.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_AES.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_AES.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_ARC2.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_ARC2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_ARC4.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_ARC4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_Blowfish.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_Blowfish.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_CAST.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_CAST.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_DES.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_DES.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_DES3.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_DES3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_pkcs1_15.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_pkcs1_15.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_pkcs1_oaep.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Cipher/test_pkcs1_oaep.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_HMAC.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_HMAC.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_MD2.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_MD2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_MD4.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_MD4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_MD5.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_MD5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_SHA224.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_SHA224.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_SHA256.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_SHA256.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_SHA384.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_SHA384.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_SHA512.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Hash/test_SHA512.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Protocol/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Protocol/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Protocol/test_KDF.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Protocol/test_KDF.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Protocol/test_rfc1751.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Protocol/test_rfc1751.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/PublicKey/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/PublicKey/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/PublicKey/test_DSA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/PublicKey/test_DSA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/PublicKey/test_ElGamal.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/PublicKey/test_ElGamal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/PublicKey/test_RSA.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/PublicKey/test_RSA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Random/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Random/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Random/test_random.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Random/test_random.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Signature/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Signature/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Signature/test_pkcs1_15.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Signature/test_pkcs1_15.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Util/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Util/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Util/test_Counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Util/test_Counter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Util/test_asn1.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Util/test_asn1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Util/test_number.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/Util/test_number.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/st_common.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/SelfTest/st_common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Signature/PKCS1_PSS.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Signature/PKCS1_PSS.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Signature/PKCS1_v1_5.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Signature/PKCS1_v1_5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Signature/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Signature/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/Counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/Counter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/RFC1751.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/RFC1751.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/asn1.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/asn1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/number.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/number.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/py3compat.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/Util/py3compat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Crypto/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_sys/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_sys/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -119,7 +31,7 @@
     <SUITE FILE_PATH="coverage/mtrops_v2$tasks.coverage" NAME="tasks Coverage Results" MODIFIED="1540610781805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_asset" />
     <SUITE FILE_PATH="coverage/mtrops_v2$0001_initial.coverage" NAME="0001_initial Coverage Results" MODIFIED="1545896593108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_db/migrations" />
     <SUITE FILE_PATH="coverage/mtrops_v2$encryption.coverage" NAME="encryption Coverage Results" MODIFIED="1546416211446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/statics/scripts" />
-    <SUITE FILE_PATH="coverage/mtrops_v2$manage.coverage" NAME="manage Coverage Results" MODIFIED="1546478789403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mtrops_v2$manage.coverage" NAME="manage Coverage Results" MODIFIED="1546485750787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
@@ -127,58 +39,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_code/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11592">
-              <caret line="522" selection-start-line="522" selection-end-line="522" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/asset_host.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2691">
-              <caret line="117" column="40" selection-start-line="117" selection-start-column="28" selection-end-line="117" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_asset/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5044">
+            <state relative-caret-position="-4699">
               <caret line="257" column="130" selection-start-line="257" selection-start-column="130" selection-end-line="257" selection-end-column="130" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app_asset/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="17" column="16" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/statics/scripts/update_aly_date.py">
+        <entry file="file://$PROJECT_DIR$/app_sys/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/statics/scripts/mysql_api.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="5" selection-end-column="23" />
+            <state relative-caret-position="484">
+              <caret line="845" column="8" lean-forward="true" selection-start-line="845" selection-start-column="8" selection-end-line="845" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -220,12 +93,12 @@
       <find>removefile</find>
       <find>onlin</find>
       <find>remote_user_list</find>
-      <find>print</find>
       <find>searchlog</find>
       <find>Q</find>
       <find>Q(</find>
       <find>host-info</find>
       <find>sub-search</find>
+      <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>req_info</replace>
@@ -295,7 +168,6 @@
         <option value="$PROJECT_DIR$/app_auth/models.py" />
         <option value="$PROJECT_DIR$/app_db/models.py" />
         <option value="$PROJECT_DIR$/app_asset/urls.py" />
-        <option value="$PROJECT_DIR$/app_sys/views.py" />
         <option value="$PROJECT_DIR$/templates/sys_batch.html" />
         <option value="$PROJECT_DIR$/app_db/views.py" />
         <option value="$PROJECT_DIR$/app_tool/views.py" />
@@ -315,10 +187,11 @@
         <option value="$PROJECT_DIR$/statics/scripts/sql_api.py" />
         <option value="$PROJECT_DIR$/statics/scripts/mysql_api.py" />
         <option value="$PROJECT_DIR$/statics/scripts/update_aly_date.py" />
+        <option value="$PROJECT_DIR$/app_sys/views.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="517" />
     <option name="y" value="28" />
     <option name="width" value="1504" />
@@ -342,18 +215,7 @@
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="statics" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="statics" type="462c0819:PsiDirectoryNode" />
-              <item name="scripts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="app_sys" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mtrops_v2" type="b2602c69:ProjectViewProjectNode" />
@@ -375,16 +237,16 @@
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\Dev\mtrops_v2\mtrops_v2" />
-      <recent name="E:\Dev\mtrops_v2" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Dev\mtrops_v2\templates" />
       <recent name="E:\Dev\mtrops_v2\mtrops_v2" />
       <recent name="E:\Dev\mtrops_v2\statics\img" />
       <recent name="E:\Dev\mtrops_v2\app_sys" />
       <recent name="E:\Dev\mtrops_v2\app_code" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Dev\mtrops_v2\mtrops_v2" />
+      <recent name="E:\Dev\mtrops_v2" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -399,7 +261,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.update_aly_date">
+  <component name="RunManager" selected="Python.manage">
     <configuration name="encryption" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mtrops_v2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -543,9 +405,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.manage" />
         <item itemvalue="Python.update_aly_date" />
         <item itemvalue="Python.sql_api" />
-        <item itemvalue="Python.manage" />
         <item itemvalue="Python.encryption" />
         <item itemvalue="Python.sendwx" />
       </list>
@@ -565,7 +427,7 @@
       <workItem from="1545958188837" duration="12759000" />
       <workItem from="1546390192702" duration="20829000" />
       <workItem from="1546417369011" duration="2383000" />
-      <workItem from="1546478709195" duration="3351000" />
+      <workItem from="1546478709195" duration="4587000" />
     </task>
     <task id="LOCAL-00001" summary="更新代码">
       <created>1538025534295</created>
@@ -592,7 +454,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49472000" />
+    <option name="totallyTimeSpent" value="50708000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -605,7 +467,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.119936034" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -615,7 +476,7 @@
       <window_info anchor="bottom" id="Debug" order="2" weight="0.39869988" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.9029851" visible="true" weight="0.3033586" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.9029851" visible="true" weight="0.31419286" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.23987207" weight="0.329718" />
@@ -818,13 +679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_sys/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="179" column="24" selection-start-line="179" selection-start-column="8" selection-end-line="179" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/sys_batch.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="897">
@@ -1022,13 +876,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5044">
-          <caret line="257" column="130" selection-start-line="257" selection-start-column="130" selection-end-line="257" selection-end-column="130" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/statics/scripts/sql_api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="502">
@@ -1043,6 +890,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/statics/scripts/mysql_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-212">
+          <caret line="5" column="13" lean-forward="true" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/statics/scripts/update_aly_date.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="31" lean-forward="true" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app_asset/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -1050,20 +914,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/statics/scripts/mysql_api.py">
+    <entry file="file://$PROJECT_DIR$/app_asset/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" selection-end-column="23" />
+        <state relative-caret-position="-4699">
+          <caret line="257" column="130" selection-start-line="257" selection-start-column="130" selection-end-line="257" selection-end-column="130" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/statics/scripts/update_aly_date.py">
+    <entry file="file://$PROJECT_DIR$/app_sys/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="484">
+          <caret line="845" column="8" lean-forward="true" selection-start-line="845" selection-start-column="8" selection-end-line="845" selection-end-column="8" />
         </state>
       </provider>
     </entry>

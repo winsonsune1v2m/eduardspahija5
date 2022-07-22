@@ -852,8 +852,7 @@ def Editfile(request):
         salt_user = SALT_API['user']
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
-        result = salt.salt_run_arg(ip, "file.diskusage", path)
+        result = salt.salt_run_downfile(ip, "file.diskusage", path)
         print(result[ip])
         if result[ip] > 2097152:
         
