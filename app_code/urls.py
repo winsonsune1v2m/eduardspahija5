@@ -22,10 +22,7 @@ urlpatterns = [
     path("project/",views.Project.as_view()),
     path("gitcode/",views.GitCode.as_view()),
     path("publist/", views.Publist.as_view()),
-    path("log/", views.CodeLog.as_view()),
     path("search/", views.search_publist),
 	path("gitlog/<int:id>/", views.git_log),
 	path("rollback/", views.RollBack),
-    path("searchlog/",views.search_log),
-
 ]

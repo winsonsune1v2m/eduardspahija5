@@ -853,7 +853,7 @@ def Editfile(request):
         salt_passwd = SALT_API['passwd']
         salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
         result = salt.salt_run_downfile(ip, "file.diskusage", path)
-        print(result[ip])
+
         if result[ip] > 2097152:
         
             return HttpResponse('不能在线编辑大于2MB的文件!')    
