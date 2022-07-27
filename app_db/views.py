@@ -1,4 +1,5 @@
 import json,re
+import os
 from django.shortcuts import render,HttpResponse
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -9,7 +10,7 @@ from app_auth import models as auth_db
 from app_asset import models as asset_db
 from django.db.models import Q
 from statics.scripts import sql_test_con,encryption,inception
-from mtrops_v2.settings import SECRET_KEY,BACKDB_PASSWD
+from mtrops_v2.settings import SECRET_KEY,BACKDB_PASSWD,MTROPS_HOST,ANSIBLE_USER
 import pymysql
 from binlog2sql.binlog2sql.binlog2sql import Binlog2sql
 from binlog2sql.binlog2sql.binlog2sql_util import command_line_args
@@ -30,11 +31,9 @@ class DBList(View):
         host_obj = asset_db.Host.objects.filter(Q(role__id=role_id) & Q(hostdetail__host_status="up"))
         user_name = request.session['user_name']
         user = auth_db.User.objects.get(user_name=user_name)
-
         db_obj = db.DB.objects.all()
         user_obj = auth_db.User.objects.all()
-
-        return render(request,'db_list.html', locals())
+        return render(request, 'db/db_list.html', locals())
 
     def post(self,request):
         action = request.POST.get('action')
@@ -156,7 +155,7 @@ class Inception(View):
         inc_obj = db.Inception.objects.all()
         incdb_obj = db.IncDB.objects.first()
         backdb_obj = db.BackDb.objects.first()
-        return render(request,'db_inc.html', locals())
+        return render(request, 'db/db_inc.html', locals())
 
     def post(self,request):
         action = request.POST.get("action")
@@ -226,7 +225,7 @@ class WorkOrder(View):
         user = auth_db.User.objects.get(user_name=user_name)
         user_obj = auth_db.User.objects.all()
         db_obj = db.DB.objects.all()
-        return render(request,'db_order.html', locals())
+        return render(request, 'db/db_order.html', locals())
 
     def post(self,request):
         action = request.POST.get('action')
@@ -234,18 +233,20 @@ class WorkOrder(View):
         sql = request.POST.get('sql')
         msg = request.POST.get('msg')
         review_user_id = request.POST.get('review_user_id')
+
+        db_obj = db.DB.objects.get(id=db_id)
+        db_host = db_obj.db_host.host_ip
+        db_name = db_obj.db_name
+        db_port = db_obj.db_port
+        db_user = db_obj.db_user
+        db_passwd = db_obj.db_passwd
+        # 密码解密
+        key = SECRET_KEY[2:18]
+        pc = encryption.prpcrypt(key)
+        passwd = db_passwd.strip("b").strip("'").encode(encoding="utf-8")
+        de_passwd = pc.decrypt(passwd).decode()
+
         if action == "check_sql":
-            db_obj = db.DB.objects.get(id=db_id)
-            db_host = db_obj.db_host.host_ip
-            db_name = db_obj.db_name
-            db_port = db_obj.db_port
-            db_user = db_obj.db_user
-            db_passwd = db_obj.db_passwd
-            # 密码解密
-            key = SECRET_KEY[2:18]
-            pc = encryption.prpcrypt(key)
-            passwd = db_passwd.strip("b").strip("'").encode(encoding="utf-8")
-            de_passwd = pc.decrypt(passwd).decode()
             incdb_obj = db.IncDB.objects.first()
             operation = '--enable-check'
             # 发布目标服务器
@@ -259,18 +260,17 @@ class WorkOrder(View):
                 return HttpResponse(json.dumps(result))
             except:
                 return HttpResponse(result)
+        elif action == "check_soar":
+            ret_list = []
+            for i in sql.split("\n"):
+                com = "echo '{}'|soar ".format(i)
+                result = os.popen(com).read()
+                if result:
+                    ret_list.append({"sql":i,'soar_log':result})
+                else:
+                    ret_list.append({"sql": i, 'soar_log': "soar 命令执行错误，请检查！"})
+            return HttpResponse(json.dumps(ret_list,ensure_ascii=False))
         else:
-            db_obj = db.DB.objects.get(id=db_id)
-            db_host = db_obj.db_host.host_ip
-            db_name = db_obj.db_name
-            db_port = db_obj.db_port
-            db_user = db_obj.db_user
-            db_passwd = db_obj.db_passwd
-            # 密码解密
-            key = SECRET_KEY[2:18]
-            pc = encryption.prpcrypt(key)
-            passwd = db_passwd.strip("b").strip("'").encode(encoding="utf-8")
-            de_passwd = pc.decrypt(passwd).decode()
             incdb_obj = db.IncDB.objects.first()
             #inc执行参数，仅检查不执行语句
             operation = '--enable-check'
@@ -315,10 +315,12 @@ class OrderLog(View):
                     error_count += int(j['errlevel'])
             except:
                 error_count = 9999
+
             log_list.append({'id':i.id,'create_time':i.create_time,'from_user':i.from_user,'db_env':i.db.db_env,
                              'host_ip':i.db.db_host.host_ip,'db_name':i.db.db_name,'sql':i.sql,'inc_status':i.inc_status,
                              'msg':i.msg,'status':i.status,'ready_name':i.review_user.ready_name,'error_count':error_count})
-        return render(request,'db_orderlog.html', locals())
+
+        return render(request, 'db/db_orderlog.html', locals())
 
     def post(self,request):
         order_id=request.POST.get('order_id')
@@ -468,6 +470,7 @@ class OrderLog(View):
         return HttpResponse(data)
 
 
+
 @login_check
 @perms_check
 def order_detail(request,id):
@@ -543,4 +546,4 @@ def order_detail(request,id):
         con.close()
         # 执行回滚sql语句
         rollbacl_sql = ";\n".join(rollbacl_sql_list)+";"
-    return render(request,"db_order_detail.html",locals())
+    return render(request, "db/db_order_detail.html", locals())

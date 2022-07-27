@@ -29,7 +29,6 @@ def connet(host_ip,db_port,db_user,db_passwd,db_name,sql):
         return ret
     except Exception as e:
         result = e
-
     return result
 
 if __name__ == "__main__":

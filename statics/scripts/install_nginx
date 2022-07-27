@@ -1,0 +1,23 @@
+# -*- coding: utf-8 -*-
+
+# @Time    : 2019-01-10 14:51
+# @Author  : 小贰
+# @FileName: test.py
+# @function: 作者比较懒什么都没写
+
+
+groupadd www && useradd www -g www
+
+yum -y install pcre-devel openssl openssl-devel wget gcc-c++ wget net-tools
+
+wget http://nginx.org/download/nginx-1.14.0.tar.gz
+
+mkdir /usr/local/nginx
+tar -zxf nginx-1.14.0.tar.gz && cd nginx-1.14.0
+./configure --prefix=/usr/local/nginx/ --user=www --group=www
+make && make install
+
+echo 'PATH="/usr/local/nginx/sbin:$PATH"'>> /etc/profile;source /etc/profile
+
+
+mkdir /usr/local/nginx/conf/vhost

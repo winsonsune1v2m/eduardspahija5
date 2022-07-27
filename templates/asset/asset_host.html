@@ -1,0 +1,550 @@
+{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="javascript:;">资产信息</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="margin-bottom:15px;min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+
+          <div class="col-sm-3" style="display:inline-block;margin-bottom:5px;">
+              <a href="javascript:;" class="btn btn-sm btn-success" data-toggle="modal" data-target="#hostModal"> 添加 </a>
+              <a href="javascript:;" class="btn btn-sm btn-danger" id="delhost"> 删除</a>
+              <a href="javascript:;" class="btn btn-sm btn-warning" id="synchost">同步</a>
+              <a href="javascript:;" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#importModal">导入</a>
+          </div>
+
+          <div class="col-sm-6" style="display:inline-block">
+              <div style="width:200px;display: inline-block;">
+                    <select  class="form-control" id="select-idc">
+                         <option value="host_idc">机房</option>
+                         {% for idc in idc_obj %}
+                         <option value="{{ idc.id }}">{{ idc.idc_name }}</option>
+                         {% endfor %}
+                     </select>
+                </div>
+
+              <div style="width:200px;display: inline-block;">
+                <select  class="form-control" id="select-hostgroup">
+                     <option value="host_group">主机组</option>
+                     {% for group in group_obj %}
+                     <option value="{{ group.id }}">{{ group.host_group_name }}</option>
+                     {% endfor %}
+                 </select>
+              </div>
+
+              <div style="width:200px;display: inline-block;">
+                <select  class="form-control" id="select-device">
+                     <option value="host_type">设备类型</option>
+                     <option value="物理机">物理机</option>
+                     <option value="虚拟机">虚拟机</option>
+                     <option value="云主机">云主机</option>
+                 </select>
+              </div>
+          </div>
+
+          <div class="col-sm-3" style="display:inline-block;">
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search for..." id="search-key">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button" id="sub-search">搜索</button>
+                    <button class="btn btn-success" type="button" style="margin-left:5px"  id="export-host">导出</button>
+                  </span>
+                </div><!-- /input-group -->
+
+          </div>
+
+      </div>
+  </div>
+
+  <div class="panel-body" id="host-info">
+        <table class="table table-hover table-bordered" style="margin-top:5px;">
+
+          <thead>
+            <tr style="background-color: #f5f5f5;">
+              <th><input type="checkbox" id="ckb_head" name="check_box" /></th>
+              <th>IP</th>
+              <th>分组</th>
+              <th>描述</th>
+              <th>类型</th>
+              <th>厂商</th>
+              <th>IDC</th>
+              <th>状态</th>
+              <th>过保时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="host_table">
+
+            {% for host in host_info_list %}
+            <tr name="tbody">
+              <td><input id="{{ host.id  }}" type="checkbox" name="ckb"/></td>
+              <td>{{ host.host_ip }}</td>
+              <td>{{ host.group_name }}</td>
+              <td>{{ host.host_msg }}</td>
+              <td>{{ host.host_type }}</td>
+              <td>{{ host.supplier }}</td>
+              <td>{{ host.idc_name }}</td>
+                {% if host.host_status == "up" %}
+              <td><span class="fa fa-lg fa-check-circle" style="color: #00B83F" data-toggle="tooltip" data-placement="right" title="运行中"></span></td>
+                {% else %}
+              <td><span class="fa fa-lg fa-times-circle" style="color: #cc1111" data-toggle="tooltip" data-placement="right" title="异常"></span></td>
+                {% endif %}
+
+
+                <td>{{ host.overdue_date }}</td>
+              <td style="padding-left:5px;">
+                <a href="javascript:;" name="edit-host" host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="left" title="修改"><span class="fa fa-pencil" ></span> </a>&nbsp;&nbsp;&nbsp;
+                <a href="/asset/hostdetail/{{ host.id }}/" name="info-host" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="详情信息"><span class="fa fa-info-circle"></span> </a>&nbsp;&nbsp;&nbsp;
+                <a href="javascript:;" name="del-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="top" title="删除"><span class="fa fa-trash"></span> </a>&nbsp;&nbsp;&nbsp;
+                <a href="/tool/webssh/" target="_blank" name="connect-host"  host_id="{{ host.id }}" style="text-decoration:none;" data-toggle="tooltip" data-placement="right" title="webssh"><span class="fa fa-desktop"></span> </a>
+              </td>
+            </tr>
+          {% endfor %}
+
+
+          </tbody>
+
+
+        </table>
+        <div class="text-right" style="margin-top:-30px;padding-right:9%">
+          <ul class="pagination" id="pager">
+            <li class="previous"><a href="/asset/host/1/">首页</a></li>
+            {#上一页按钮开始#}
+            {# 如果当前页有上一页#}
+            {% if host_list.has_previous %}
+                {#  当前页的上一页按钮正常使用#}
+                <li class="previous"><a href="/asset/host/{{ host_list.previous_page_number }}/">上一页</a></li>
+            {% else %}
+                {# 当前页的不存在上一页时,上一页的按钮不可用#}
+                <li class="previous disabled"><a href="javascript:;">上一页</a></li>
+            {% endif %}
+            {#上一页按钮结束#}
+            {# 页码开始#}
+            {% for num in page_list  %}
+                {% if num == currentPage %}
+                    <li class="item active"><a href="/asset/host/{{ num }}/">{{ num }}</a></li>
+                {% else %}
+                    <li class="item"><a href="/asset/host/{{ num }}/">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {#页码结束#}
+            {# 下一页按钮开始#}
+            {% if host_list.has_next %}
+                <li class="next"><a href="/asset/host/{{ host_list.next_page_number }}/">下一页</a></li>
+            {% else %}
+                <li class="next disabled"><a href="javascript:;">下一页</a></li>
+            {% endif %}
+            <li class="previous"><a href="/asset/host/{{ page_nums }}/">尾页</a></li>
+            {# 下一页按钮结束#}
+          </ul>
+        </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- Modal -->
+{% block modal %}
+
+<!--添加主机模态框-->
+<div class="modal fade" id="hostModal" tabindex="-1" role="dialog" aria-labelledby="hostModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:100px;width: 750px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="hostModalLabel">添加资产</h4>
+      </div>
+      <div class="modal-body">
+
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label >IP地址</label>
+                    <input  class="form-control"  placeholder="IP地址" id="host-ip">
+                  </div>
+
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>远程端口</label>
+                    <input  class="form-control"  placeholder="远程端口" id="host-remove-port">
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>管理账号</label>
+                    <input  class="form-control"  placeholder="管理账号" id="host-user">
+                  </div>
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>账号密码</label>
+                    <input  class="form-control" type="password" placeholder="账号密码" id="host-passwd">
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>设备类型</label>
+                    <select  id="host-type" class="form-control">
+                         <option value="物理机">物理机</option>
+                         <option value="虚拟机">虚拟机</option>
+                         <option value="云主机">云主机</option>
+                     </select>
+                  </div>
+
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>分组</label>
+                    <select  id="host-group" class="form-control">
+                         {% for info in group_obj %}
+                         <option value="{{ info.id }}">{{ info.host_group_name }}</option>
+                         {% endfor %}
+                         <option value="0">其他</option>
+                     </select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>IDC</label>
+                    <select  id="host-idc" class="form-control">
+                         {% for info in idc_obj %}
+                         <option value="{{ info.id }}">{{ info.idc_name }}</option>
+                         {% endfor %}
+                        <option value="0">其他</option>
+                     </select>
+                  </div>
+
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label >厂商</label>
+                         <select  id="host-supplier" class="form-control">
+                             {% for info in supplier_obj %}
+                             <option value="{{ info.id }}">{{ info.supplier }}</option>
+                             {% endfor %}
+                             <option value="0">其他</option>
+                         </select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label>描述</label>
+                    <input  class="form-control" placeholder="描述" id="host-msg">
+                  </div>
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>序列号</label>
+                    <input  class="form-control" placeholder="序列号" id="host-serial-num">
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label>购买日期</label>
+                    <input  class="form-control" placeholder="购买日期" id="host-purchase-date">
+                  </div>
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>过保日期</label>
+                    <input  class="form-control" placeholder="过保日期" id="host-overdue-date">
+                  </div>
+              </div>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-host">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="edit-hostModal" tabindex="-1" role="dialog" aria-labelledby="hostModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:100px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-hostModalLabel">修改主机信息</h4>
+      </div>
+      <div class="modal-body">
+
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label >IP地址</label>
+                    <input  class="form-control"  placeholder="IP地址" id="edit-host-ip">
+                  </div>
+
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>远程端口</label>
+                    <input  class="form-control"  placeholder="远程端口" id="edit-host-remove-port">
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>管理账号</label>
+                    <input  class="form-control"  placeholder="管理账号" id="edit-host-user">
+                  </div>
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>账号密码</label>
+                    <input  class="form-control" type="password" placeholder="账号密码" id="edit-host-passwd">
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>设备类型</label>
+                    <select  id="edit-host-type" class="form-control">
+                         <option value="物理机">物理机</option>
+                         <option value="虚拟机">虚拟机</option>
+                         <option value="云主机">云主机</option>
+                     </select>
+                  </div>
+
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>分组</label>
+                    <select  id="edit-host-group" class="form-control">
+                         {% for info in group_obj %}
+                         <option value="{{ info.id }}">{{ info.host_group_name }}</option>
+                         {% endfor %}
+                        <option value="0">其他</option>
+                     </select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>IDC</label>
+                    <select  id="edit-host-idc" class="form-control">
+                         {% for info in idc_obj %}
+                         <option value="{{ info.id }}">{{ info.idc_name }}</option>
+                         {% endfor %}
+                        <option value="0">其他</option>
+                     </select>
+                  </div>
+
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label >厂商</label>
+                         <select  id="edit-host-supplier" class="form-control">
+                             {% for info in supplier_obj %}
+                             <option value="{{ info.id }}">{{ info.supplier }}</option>
+                             {% endfor %}
+                             <option value="0">其他</option>
+                         </select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label>描述</label>
+                    <input  class="form-control" placeholder="描述" id="edit-host-msg">
+                  </div>
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>序列号</label>
+                    <input  class="form-control" placeholder="序列号" id="edit-host-serial-num">
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label>购买日期</label>
+                    <input  class="form-control" placeholder="购买日期" id="edit-host-purchase-date">
+                  </div>
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>过保日期</label>
+                    <input  class="form-control" placeholder="过保日期" id="edit-host-overdue-date">
+                  </div>
+              </div>
+          </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="sub-edit-host">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:150px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="importModalLabel">导入服务器信息</h4>
+      </div>
+      <div class="modal-body" style="height: 54px;">
+          <form method="post" action="/asset/importhost/" enctype="multipart/form-data">
+              <input id="lefile" type="file" style="display:none" name="upload_file">
+              <div class="input-group" style="margin-bottom: 10px;">
+                  <input id="photoCover" class="input-large form-control" type="text">
+                  <span class="input-group-btn">
+                    <a class="btn btn-success" onclick="$('input[id=lefile]').click();">选择</a>
+					<a class="btn btn-success" href="/static/template_dl/import_asset.xlsx" >模版下载</a>
+                  </span>
+              </div>
+              <button type="submit" class="btn btn-primary pull-right form-control" id="sub-import-host">提交</button>
+          </form>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabe">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top:150px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="importModalLabe">导出成功</h4>
+      </div>
+      <div class="modal-body">
+		 <div class="row">
+			  <div class="col-sm-6">
+				<div class="form-group">
+					<a class="btn btn-success" href="/static/media/cmdb.xlsx">点此下载</a>
+				</div>
+			  </div>
+		</div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock  %}
+
+
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/asset_v2.js"></script>
+
+<script>
+    $(function () {
+       $('[data-toggle="tooltip"]').tooltip()
+     });
+
+
+    $("#ckb_head").click(function(){
+       if($(this).prop("checked")){//全选
+           $("input[name='ckb']").attr("checked","true");
+       }else{//全不选
+           $("input[name='ckb']").removeAttr("checked");
+       }
+    });
+
+    $("#host-purchase-date" ).datepicker();
+    $("#host-overdue-date" ).datepicker();
+    $("#edit-host-purchase-date" ).datepicker();
+    $("#edit-host-overdue-date" ).datepicker();
+    $("#host-purchase-date").datepicker( "option", "dateFormat","yy-mm-dd");
+    $("#host-overdue-date").datepicker( "option", "dateFormat","yy-mm-dd");
+    $("#edit-host-purchase-date").datepicker( "option", "dateFormat","yy-mm-dd");
+    $("#edit-host-overdue-date").datepicker( "option", "dateFormat","yy-mm-dd");
+
+    $('input[id=lefile]').change(function() {
+        $('#photoCover').val($(this).val());
+    });
+
+
+
+</script>
+
+{% endblock %}
+
+
+

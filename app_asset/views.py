@@ -13,12 +13,15 @@ from app_asset import models as asset_db
 from app_auth import models as auth_db
 from app_log import models as log_db
 from app_auth.views import login_check,perms_check
-from mtrops_v2.settings import SERVER_TAG,SALT_API,WEBSSH_URL,REDIS_INFO
+from mtrops_v2.settings import SERVER_TAG,ANSIBLE_USER,WEBSSH_URL,REDIS_INFO
 from django.db.models import Q
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Protection, Font,Color,colors,GradientFill,NamedStyle
 from app_asset.tasks import sync_host
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from statics.scripts import page as pg
+from django.views.decorators.cache import cache_page
 
 
 
@@ -37,7 +40,7 @@ class IDC(View):
     def get(self,request):
         title = "IDC 机房"
         idc_obj = asset_db.IDC.objects.all()
-        return render(request,'asset_idc.html',locals())
+        return render(request, 'asset/asset_idc.html', locals())
 
     def post(self,request):
         idc_name = request.POST.get("idc_name")
@@ -102,7 +105,7 @@ class HostGroup(View):
     def get(self,request):
         title = "主机分组"
         group_obj = asset_db.HostGroup.objects.all()
-        return render(request,'asset_group.html',locals())
+        return render(request, 'asset/asset_group.html', locals())
 
 
     def post(self,request):
@@ -159,7 +162,7 @@ class Supplier(View):
     def get(self,request):
         title = "设备厂商"
         supplier_obj = asset_db.Supplier.objects.all()
-        return render(request,'asset_supplier.html',locals())
+        return render(request, 'asset/asset_supplier.html', locals())
 
 
     def post(self,request):
@@ -220,21 +223,30 @@ class Host(View):
     def dispatch(self, request, *args, **kwargs):
         return super(Host,self).dispatch(request, *args, **kwargs)
 
-    def get(self,request):
+    def get(self,request,page=1):
         title = "服务器"
         supplier_obj = asset_db.Supplier.objects.all()
         group_obj = asset_db.HostGroup.objects.all()
         idc_obj = asset_db.IDC.objects.all()
-
         role_id = request.session['role_id']
-
         role_obj = auth_db.Role.objects.get(id=role_id)
-
         host_obj = role_obj.host.all()
 
-        host_list = []
-
-        for i in host_obj:
+        pagesize = 13
+        paginator = Paginator(host_obj, pagesize)
+        # 从前端获取当前的页码数,默认为1
+        # 把当前的页码数转换成整数类型
+        currentPage = int(page)
+        page_nums = paginator.num_pages
+        page_list = pg.control(currentPage, page_nums)
+        try:
+            host_list = paginator.page(page)  # 获取当前页码的记录
+        except PageNotAnInteger:
+            host_list = paginator.page(1)  # 如果用户输入的页码不是整数时,显示第1页的内容
+        except EmptyPage:
+            host_list = paginator.page(paginator.num_pages)
+        host_info_list = []
+        for i in host_list:
             try:
                 host_detail_obj = asset_db.HostDetail.objects.get(host_id=i.id)
                 host_status = host_detail_obj.host_status
@@ -254,13 +266,11 @@ class Host(View):
             else:
                 idc_name = "None"
 
-            host_list.append({"id":i.id,"host_ip":i.host_ip,"host_type":i.host_type,"group_name":host_group_name,"host_msg":i.host_msg,
+            host_info_list.append({"id":i.id,"host_ip":i.host_ip,"host_type":i.host_type,"group_name":host_group_name,"host_msg":i.host_msg,
                               "supplier":supplier_name,"idc_name":idc_name,"host_status":host_status,"overdue_date":i.overdue_date})
 
         webssh_url = WEBSSH_URL
-
-        return render(request,'asset_host.html',locals())
-
+        return render(request, 'asset/asset_host.html', locals())
 
     def post(self,request):
         host_ip = request.POST.get("host_ip")
@@ -384,6 +394,7 @@ class Host(View):
 
 @login_check
 @perms_check
+@cache_page(60*5)
 def host_detail(request,id):
     """查看服务器详细信息"""
     title = "服务器"
@@ -398,11 +409,38 @@ def host_detail(request,id):
 
         software_list = []
         for i in software_obj:
-            software_list.append(
-                {"server_name": i.server_name, "server_version": i.server_version, "server_port": i.server_port})
+            software_list.append({"server_name": i.server_name, "server_version": i.server_version,
+                                  "server_port": i.server_port})
 
+        mem_info = json.loads(host_detail.mem_info)
+        mem_total = mem_info["total"]
+        mem_used = mem_info["used"]
+        mem_free = mem_info["free"]
+        mem_usage = round((float(mem_used)/float(mem_total))*100,2)
+        mem_free_p = round((100-mem_usage),2)
 
-        return render(request, "asset_host_detail.html", locals())
+        swap_info = json.loads(host_detail.swap_info)
+        swap_total = swap_info["total"]
+        if swap_total==0:
+            swap_usage = 0
+            swap_free_p = 0
+        else:
+            swap_used = swap_info["used"]
+            swap_free = swap_info["free"]
+            swap_usage = round((float(swap_used) / float(swap_total)) * 100, 2)
+            swap_free_p = 100 - swap_usage
+        disk_info = json.loads(host_detail.disk_info)
+        disk_list = []
+        for i in disk_info:
+            device = i['device']
+            mount = i['mount']
+            fstype = i['fstype']
+            total = i['size_total']
+            free = i['size_available']
+            free_rate = round(float(free) / float(total)*100,2)
+            usage = round((100-free_rate),2)
+            disk_list.append({'device':device,"mount":mount,"fstype":fstype,"total":int(total/1024/1024),"usage":usage,"free_rate":free_rate})
+        return render(request, "asset/asset_host_detail.html", locals())
     except:
         return HttpResponse("信息未同步")
 
@@ -426,20 +464,13 @@ def sync_host_info(request):
             host_obj = asset_db.Host.objects.get(id=i)
             ips.append(host_obj.host_ip)
 
-
-    tk = sync_host.delay(json.dumps(ips),json.dumps(SALT_API),json.dumps(SERVER_TAG))
-
+    tk = sync_host.delay(json.dumps(ips),ANSIBLE_USER,json.dumps(SERVER_TAG))
 
     data = "信息同步中,任务ID:{}".format(tk.id)
-
     user_name = request.session['user_name']
-
     user_obj = auth_db.User.objects.get(user_name=user_name)
-
     task_obj = log_db.TaskRecord(task_name="同步服务器信息",task_id=tk.id,status=tk.state,task_user_id=user_obj.id)
-
     task_obj.save()
-
     return  HttpResponse(data)
 
 
@@ -456,32 +487,22 @@ def search_host(request):
 
     if search_key:
         host_obj = asset_db.Host.objects.filter((Q(host_ip__icontains=search_key) | Q(host_msg__icontains=search_key) | Q(host_type__icontains=search_key))& Q(role__id=role_id))
-
     if idc_id:
-
         host_obj = asset_db.Host.objects.filter(Q(idc_id=idc_id) & Q(role__id=role_id))
-
     if group_id:
         host_obj = asset_db.Host.objects.filter(Q(group_id=group_id) & Q(role__id=role_id))
-
     if host_type:
         host_obj = asset_db.Host.objects.filter(Q(host_type=host_type) & Q(role__id=role_id))
-
     host_list = []
-
     for i in host_obj:
         try:
             host_status = asset_db.HostDetail.objects.get(host_id=i.id).host_status
         except:
             host_status = "Unknown"
-
         host_list.append({"id": i.id, "host_ip": i.host_ip, "host_type": i.host_type, "group_name": i.group.host_group_name,
              "host_msg": i.host_msg,
              "supplier": i.supplier.supplier, "idc_name": i.idc.idc_name, "host_status": host_status})
-
-
-    return render(request, "asset_host_search.html", locals())
-
+    return render(request, "asset/asset_host_search.html", locals())
 
 
 @csrf_exempt
@@ -493,9 +514,7 @@ def del_host(request):
     ids = ids.strip(',').split(',')
     for ids in ids:
         asset_db.Host.objects.get(id=ids).delete()
-
     return HttpResponse("服务器已删除,请刷新页面")
-
 
 
 @csrf_exempt
@@ -581,7 +600,6 @@ def import_host(request):
             idc_obj.save()
 
         idc_id = idc_obj.id
-
         try:
             group_obj = asset_db.HostGroup.objects.get(host_group_name=host_group)
         except:
@@ -589,7 +607,6 @@ def import_host(request):
             group_obj.save()
 
         group_id = group_obj.id
-
         try:
             supplier_obj = asset_db.Supplier.objects.get(supplier=host_supplier)
 
@@ -628,14 +645,12 @@ def import_host(request):
 def export_host(request):
     """批量导出服务器"""
     role_id = request.session['role_id']
-
     role_obj = auth_db.Role.objects.get(id=role_id)
     role_obj1 = auth_db.User.objects.get(id=role_id)
-   
+
     host_obj = role_obj.host.all()
     host_obj = host_obj.filter()
     data_list = []
-
     key = SECRET_KEY[2:18]
     pc = encryption.prpcrypt(key)
  
@@ -667,8 +682,6 @@ def export_host(request):
                      supplier_head_phone,supplier_head_email,role_obj1.ready_name,role_obj.role_msg,role_obj1.phone,role_obj1.email]
         
         data_list.append(host_info)
-  
-       
 
     def headStyle():
         ft = Font(size=14,name='SimSun')  # color="0F0F0F"字体颜色,italic=False,是否斜体,字体样式,大小,bold=False是否粗体
@@ -800,7 +813,7 @@ class Netwk(View):
         role_obj = auth_db.Role.objects.get(id=role_id)
         netwk_obj = role_obj.netwk.all()
 
-        return render(request,'asset_netwk.html',locals())
+        return render(request, 'asset/asset_netwk.html', locals())
 
     def post(self,request):
         netwk_ip = request.POST.get("netwk_ip")

@@ -4,7 +4,7 @@ import redis,pymysql
 from statics.scripts import encryption
 from mtrops_v2.settings import SECRET_KEY,DATABASES,REDIS_INFO
 from django.views import View
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,HttpResponse,redirect,render_to_response
 from app_auth import models as auth_db
 from app_asset import models as asset_db
 from app_code import models as code_db
@@ -16,6 +16,9 @@ from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from app_auth.perms_control import menus_list,perms_list
 from django.contrib.sessions.models import Session
+from celery.result import AsyncResult
+from mtrops_v2 import celery_app as app
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 
@@ -194,7 +197,6 @@ class Login(View):
                 return redirect('/')
         else:
             return render(request, 'login.html',{"msg":"用户名或密码错误,请重新登录！"})
-
         return render(request, 'login.html')
 
 
@@ -218,8 +220,10 @@ class Index(View):
 
     def get(self,request,*args,**kwargs):
         title = "运维管理-首页"
-
         # 时间
+
+        test_t = int(time.time())
+
         now = datetime.datetime.now()
         A = now.strftime('%A')
         Y = now.strftime('%Y')
@@ -228,7 +232,6 @@ class Index(View):
         H_M = now.strftime('%H:%M')
 
         # 主机数量
-
         role_id = request.session['role_id']
 
         role_obj = auth_db.Role.objects.get(id=role_id)
@@ -239,6 +242,12 @@ class Index(View):
         except:
             host_count = 0
 
+        try:
+            wchart_update_count = code_db.Wchartlog.objects.filter(status='waiting').count()
+        except:
+            wchart_update_count = 0
+
+        request.session["wchart_update_count"] = wchart_update_count
         try:
             host_obj = asset_db.Host.objects.filter(role__id=role_id)
 
@@ -261,17 +270,6 @@ class Index(View):
 
         #用户数两
         user_num = auth_db.User.objects.all().count()
-
-        role_id = request.session["role_id"]
-        role_type = auth_db.Role.objects.get(id=role_id).role_title
-
-        if role_type == "administrator":
-            task_obj = log_db.TaskRecord.objects.all().order_by("-create_time")
-        else:
-            user_obj = auth_db.User.objects.get(user_name=request.session['user_name'])
-            task_obj = log_db.TaskRecord.objects.filter(task_user_id=user_obj.id).order_by("-create_time")
-
-        task_num = task_obj.count()
 
 
         #代码提交统计
@@ -300,6 +298,42 @@ class Index(View):
         cur.close()
         con.close()
 
+        """刷新任务状态"""
+        role_type = auth_db.Role.objects.get(id=role_id).role_title
+
+        if role_type == "administrator":
+            task_obj = log_db.TaskRecord.objects.all().order_by("-create_time")
+        else:
+            user_obj = auth_db.User.objects.get(user_name=request.session['user_name'])
+            task_obj = log_db.TaskRecord.objects.filter(task_user_id=user_obj.id).order_by("-create_time")
+        task_list = []
+        for i in task_obj:
+            if i.status == "SUCCESS" or i.status == 'FAILURE':
+                status = i.status
+                result = i.task_result
+            else:
+                async = AsyncResult(id=i.task_id, app=app)
+                status = async.state
+                if status == 'SUCCESS':
+                    result = async.get()
+                    i.task_result = result
+                elif status == 'FAILURE':
+                    result = async.traceback
+                    i.task_result = result
+                else:
+                    result = None
+
+                i.status = status
+                i.save()
+
+        if role_type == "administrator":
+            task_obj = log_db.TaskRecord.objects.all().order_by("-create_time")
+        else:
+            user_obj = auth_db.User.objects.get(user_name=request.session['user_name'])
+            task_obj = log_db.TaskRecord.objects.filter(task_user_id=user_obj.id).order_by("-create_time")
+
+        task_num = task_obj.count()
+
         return  render(request,'base.html',locals())
 
 
@@ -315,7 +349,7 @@ class RoleMG(View):
     def get(self,request):
         title = "角色管理"
         role_obj = auth_db.Role.objects.all()
-        return render(request,'rbac_role.html',locals())
+        return render(request, 'rbac/rbac_role.html', locals())
 
 
     def post(self,request):
@@ -733,7 +767,7 @@ class UserMG(View):
             user.status = status
             user.save()
 
-        return render(request, 'rbac_user.html', locals())
+        return render(request, 'rbac/rbac_user.html', locals())
 
 
     def post(self,request):
@@ -947,7 +981,7 @@ class MenuMG(View):
         for node_id in nodes:
             menu_info.append(node_dict[node_id])
 
-        return render(request,'rbac_menu.html',locals())
+        return render(request, 'rbac/rbac_menu.html', locals())
 
     def post(self,request):
         """添加菜单"""
@@ -1074,7 +1108,7 @@ class PermsMG(View):
             one_menu["two_menu"] = one_two_men
             all_menu_perms.append(one_menu)
 
-        return  render(request,'rbac_perms.html',locals())
+        return  render(request, 'rbac/rbac_perms.html', locals())
 
     def post(self,request):
         """添加权限"""
@@ -1147,7 +1181,7 @@ class KeyMG(View):
             key_list = auth_db.Key.objects.filter(user_id=user.id)
             user_obj = auth_db.User.objects.filter(id=user.id)
 
-        return  render(request,'rbac_key.html',locals())
+        return  render(request, 'rbac/rbac_key.html', locals())
 
     def post(self,request):
         """添加秘钥"""

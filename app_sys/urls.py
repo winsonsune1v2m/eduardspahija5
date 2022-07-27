@@ -16,6 +16,7 @@ Including another URLconf
 
 from app_sys import views
 from django.urls import path,include
+from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [
@@ -26,7 +27,7 @@ urlpatterns = [
     path('upfile/',views.batch_upload_file),
     path('script/',views.batch_script),
     path('cron/',views.CronView.as_view()),
-    path("filemg/", views.FileMG.as_view()),
+    path("filemg/", cache_page(60)(views.FileMG.as_view())),
     path("chdir/<str:ip>/<str:ch_dir>/", views.ch_dir),
     path("cddir/", views.cd_dir),
     path('pushfile/', views.Upfile),

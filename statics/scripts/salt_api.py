@@ -70,9 +70,9 @@ class SaltAPI(object):
         run_user = 'runas=%s' % runas
         params = ([('client', 'local'), ('tgt', tgt),('fun', fun),('arg',arg),('expr_form','list'),('arg',run_user)])
         obj = urllib.parse.urlencode(params).encode('utf-8')
-
         self.token_id()
         content = self.postRequest(obj)
+
         ret = content['return'][0]
         return ret
 

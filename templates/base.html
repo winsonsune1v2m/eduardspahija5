@@ -97,7 +97,6 @@
                  <span class="icon-bar"></span>
                 </button>
             </div>
-
             <div class="collapse navbar-collapse" style="padding-right:50px;">
                 <ul class="nav navbar-nav">
                   <li class="li-border"><a class="mystyle-color" href="">MTROPS</a></li>
@@ -105,12 +104,11 @@
 
                 <ul class="nav navbar-nav pull-right">
                    <li class="li-border">
-                      <a href="/code/updatelog/" class="mystyle-color">
+                      <a href="/code/log/" class="mystyle-color">
                         <span class="fa fa-bell"></span>
-                        <span class="topbar-num">0</span>
+                        <span class="topbar-num">{{ request.session.wchart_update_count }}</span>
                       </a>
                   </li>
-
 
                   <li class="dropdown li-border" style="min-width: 80px"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown">{{ request.session.username }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" style="min-width: 80px">
@@ -562,10 +560,15 @@
                 data: {{ user_list|safe }},
                  axisLabel :{
                     interval:0,
-
+                     //文字倾斜度
+                    rotate:30,
                  }
-
             },
+            grid: {
+                //左边距离，底部距离
+                left: '10%',
+                bottom:'18%'
+                },
             yAxis: {},
             series: [{
                 name: '次数',
@@ -592,10 +595,16 @@
             legend: {
                 data:['次数']
             },
+            grid: {
+                left: '10%',
+                bottom:'18%'
+                },
+
             xAxis: {
                 data: {{ site_list|safe }},
                  axisLabel :{
                     interval:0,
+                    rotate:30,
 
                  }
 

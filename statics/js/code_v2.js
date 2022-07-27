@@ -110,9 +110,10 @@ $("#sub-git").click(function(){
     var git_user = $("#git-user").val();
     var git_passwd = $("#git-passwd").val();
     var git_sshkey = $("#git-sshkey").val();
+    var git_language = $("#git-language").val();
 
     $.post('/code/gitcode/',{'git_name':git_name,'git_msg':git_msg,'git_project':git_project,'git_url':git_url,
-                'git_user':git_user,'git_passwd':git_passwd,'git_sshkey':git_sshkey},function(data){
+                'git_user':git_user,'git_passwd':git_passwd,'git_sshkey':git_sshkey,"git_language":git_language},function(data){
         if(data=="perms_false"){
             $("#msg-alert").empty();
             $("#msg-alert").append("权限不足，请联系管理员");
@@ -141,7 +142,6 @@ $('td a[name="edit-git"]').click(function(){
                 $("#msg-alert").append("权限不足，请联系管理员");
                 $("#alert").show();
             }else {
-
                 var info = eval('(' + data + ')');
                 $("#edit-git-name").val(info.git_name);
                 $("#edit-git-msg").val(info.git_msg);
@@ -150,7 +150,7 @@ $('td a[name="edit-git"]').click(function(){
                 $("#edit-git-user").val(info.git_user);
                 $("#edit-git-passwd").val(info.git_passwd);
                 $("#edit-git-sshkey").val(info.git_sshkey);
-
+                $("#edit-git-language").val(info.git_language);
                 $("#sub-edit-git").attr('git_id', info.git_id);
                 $("#div-git-name").css('display', 'block');
                 $("#div-git-msg").css('display', 'block');
@@ -165,47 +165,6 @@ $('td a[name="edit-git"]').click(function(){
 });
 
 
-//获取修改代码信息
-$('td a[name="edit-git-user"]').click(function(){
-    var git_id = $(this).attr("git_id");
-
-    $.ajax({
-        url: "/code/gitcode/",
-        type: "PUT",
-        data: JSON.stringify({'git_id':git_id}),
-        success: function(data) {
-            if(data=="perms_false"){
-                $("#msg-alert").empty();
-                $("#msg-alert").append("权限不足，请联系管理员");
-                $("#alert").show();
-            }else {
-
-                var info = eval('(' + data + ')');
-                $("#edit-git-name").val(info.git_name);
-                $("#edit-git-msg").val(info.git_msg);
-                $("#edit-git-project").val(info.git_project);
-                $("#edit-git-url").val(info.git_url);
-
-                $("#edit-git-user").val(info.git_user);
-                $("#edit-git-passwd").val(info.git_passwd);
-                $("#edit-git-sshkey").val(info.git_sshkey);
-
-                $("#sub-edit-git").attr('git_id', info.git_id);
-
-                $("#div-git-name").css('display', 'none');
-                $("#div-git-msg").css('display', 'none');
-                $("#div-git-project").css('display', 'none');
-                $("#div-git-url").css('display', 'none');
-
-                $("#edit-gitModal").modal('show');
-            }
-
-         }
-        });
-});
-
-
-
 //修改代码信息
 $("#sub-edit-git").click(function(){
     var git_id = $(this).attr('git_id');
@@ -216,14 +175,14 @@ $("#sub-edit-git").click(function(){
     var git_user = $("#edit-git-user").val();
     var git_passwd = $("#edit-git-passwd").val();
     var git_sshkey = $("#edit-git-sshkey").val();
+    var git_language = $("#edit-git-language").val();
 
     $.ajax({
         url: "/code/gitcode/",
         type: "PUT",
         data: JSON.stringify({'action':'edit','git_name':git_name, 'git_msg':git_msg,'git_id':git_id,'git_project':git_project,'git_url':git_url,
-                        'git_user':git_user,'git_passwd':git_passwd,'git_sshkey':git_sshkey}),
+                        'git_user':git_user,'git_passwd':git_passwd,'git_sshkey':git_sshkey,'git_language':git_language}),
         success: function(data) {
-
             if(data=="perms_false"){
                 $("#msg-alert").empty();
                 $("#msg-alert").append("权限不足，请联系管理员");
@@ -234,7 +193,6 @@ $("#sub-edit-git").click(function(){
                 $("#edit-gitModal").modal("hide");
                 $("#alert").show();
             }
-
          }
     });
 });
@@ -270,13 +228,11 @@ $("td a[name='del-git']").click(function(){
 
 //新建发布
 $("#sub-publist").click(function(){
-    var gitcode_name = $("#gitcode-name").val();
+    var gitcode_id = $("#gitcode-name").val();
     var publist_ip = $("#publist-ip").select2('val');
     var publist_dir = $("#publist-dir").val();
     var publist_msg = $("#publist-msg").val();
-    console.log(typeof(publist_ip))
-    $.post('/code/publist/',{'gitcode_name':gitcode_name,'publist_ip':JSON.stringify(publist_ip),'publist_dir':publist_dir,'publist_msg':publist_msg},function(data){
-
+    $.post('/code/publist/',{'gitcode_id':gitcode_id,'publist_ip':JSON.stringify(publist_ip),'publist_dir':publist_dir,'publist_msg':publist_msg},function(data){
         if(data=="perms_false"){
             $("#msg-alert").empty();
             $("#msg-alert").append("权限不足，请联系管理员");
@@ -289,7 +245,6 @@ $("#sub-publist").click(function(){
         }
     })
 });
-
 
 
 //删除代码
@@ -351,7 +306,6 @@ $("td a[name='record_rollback']").click(function(){
    if (statu==true)
     {
         $.post('/code/rollback/',{'record_id':record_id},function(data){
-           
                 if(data=="perms_false"){
                     $("#msg-alert").empty();
                     $("#msg-alert").append("权限不足，请联系管理员");
@@ -361,8 +315,6 @@ $("td a[name='record_rollback']").click(function(){
                     $("#msg-alert").append(data);
                     $("#alert").show();
                 }
-
-             
         });
     }
 });

@@ -25,8 +25,8 @@ class HostDetail(models.Model):
     """服务器基本信息"""
     host = models.ForeignKey(to="Host",on_delete=models.CASCADE)
     host_name = models.CharField(max_length=128, null=True)
-    mem_size = models.CharField(max_length=128, null=True)
-    swap_size = models.CharField(max_length=64,null=True)
+    mem_info = models.TextField(null=True)
+    swap_info = models.TextField(null=True)
     cpu_model = models.CharField(max_length=128,null=True)
     cpu_nums = models.CharField(max_length=128, null=True)
     disk_info = models.TextField(null=True)

@@ -3,21 +3,12 @@ from celery import shared_task
 import json,os
 from app_code import models  as code_db
 from app_asset import models  as asset_db
-from statics.scripts import encryption,salt_api
+from statics.scripts import encryption,ansible_api
+from multiprocessing import current_process
 
 @shared_task
-def install_server(ip_list,script_file,SALT_API):
+def install_server(ip_list,script_file,runas):
+    current_process()._config = {'semprefix': '/mp'}
     ip_list = json.loads(ip_list)
-    SALT_API = json.loads(SALT_API)
-
-
-    salt_url = SALT_API['url']
-    salt_user = SALT_API['user']
-    salt_passwd = SALT_API['passwd']
-    salt = salt_api.SaltAPI(salt_url, salt_user, salt_passwd)
-
-    hosts = ",".join(ip_list)
-    script_file = "salt://%s" % script_file
-    data = salt.salt_run_arg(hosts, "cmd.script", script_file)
-
-    return json.dumps({"result":data},ensure_ascii=False,indent=True)
+    result = ansible_api.run_ansible("script", script_file,ip_list,runas)
+    return result

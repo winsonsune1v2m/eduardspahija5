@@ -15,12 +15,15 @@ Including another URLconf
 """
 
 from app_log import views
-from django.urls import path,include
+from django.urls import path,include,re_path
 
 
 
 urlpatterns = [
     path("opslog/",views.OpsLog.as_view()),
+    path("opslog/<int:page>/",views.OpsLog.as_view()),
     path("userlog/",views.UserLog.as_view()),
+    path("userlog/<int:page>/",views.UserLog.as_view()),
     path("tasklog/",views.TaskRecord.as_view()),
+    path("tasklog/<int:page>/",views.TaskRecord.as_view()),
 ]

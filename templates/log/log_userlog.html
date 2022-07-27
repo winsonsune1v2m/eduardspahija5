@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/ztree3/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
+{% endblock %}
+
+
+{% block center %}
+
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="#">日志管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading">
+      <div class="row" style="padding-top:5px;padding-left:10px;">
+          <div class="col-sm-6">
+
+              <span style="color:#20B320" ><strong>用户日志</strong></span>
+
+          </div>
+
+      </div>
+
+  </div>
+  <div class="panel-body">
+
+        <div style="margin-bottom:10px;">
+
+            <div class="col-sm-12">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr style="background-color: #f5f5f5;">
+
+                      <th>时间</th>
+                      <th>访问</th>
+                      <th>用户</th>
+                      <th>姓名</th>
+                      <th>状态</th>
+                    </tr>
+                  </thead>
+                  <tbody id="audit_table">
+                {% for i in userlog_list %}
+                    <tr name="tbody">
+                      <td>{{ i.create_time|date:"Y-m-d H:i:s" }}</td>
+                      <td>{{ i.url_title }}</td>
+                      <td>{{ i.user_name }}</td>
+                      <td>{{ i.ready_name }}</td>
+                        {% if i.status == "成功" %}
+                      <td style="color:green">{{ i.status }}</td>
+                        {% else %}
+                      <td style="color:red">{{ i.status }}</td>
+                        {% endif %}
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+
+                <div class="text-right" style="margin-top:-30px;padding-right:9%">
+                  <ul class="pagination" id="pager">
+                    <li class="previous"><a href="/log/userlog/1/">首页</a></li>
+                    {#上一页按钮开始#}
+                    {# 如果当前页有上一页#}
+                    {% if userlog_list.has_previous %}
+                        {#  当前页的上一页按钮正常使用#}
+                        <li class="previous"><a href="/log/userlog/{{ userlog_list.previous_page_number }}/">上一页</a></li>
+                    {% else %}
+                        {# 当前页的不存在上一页时,上一页的按钮不可用#}
+                        <li class="previous disabled"><a href="javascript:;">上一页</a></li>
+                    {% endif %}
+                    {#上一页按钮结束#}
+                    {# 页码开始#}
+                    {% for num in page_list  %}
+                        {% if num == "..." %}
+                            <li class="item"><a href="javascript:;">{{ num }}</a></li>
+                        {% else %}
+                            {% if num == currentPage %}
+                                <li class="item active"><a href="/log/userlog/{{ num }}/">{{ num }}</a></li>
+                            {% else %}
+                                <li class="item"><a href="/log/userlog/{{ num }}/">{{ num }}</a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {#页码结束#}
+                    {# 下一页按钮开始#}
+                    {% if userlog_list.has_next %}
+                        <li class="next"><a href="/log/userlog/{{ userlog_list.next_page_number }}/">下一页</a></li>
+                    {% else %}
+                        <li class="next disabled"><a href="javascript:;">下一页</a></li>
+                    {% endif %}
+                    <li class="previous"><a href="/log/userlog/{{ page_nums }}/">尾页</a></li>
+                    {# 下一页按钮结束#}
+                  </ul>
+                </div>
+
+
+            </div>
+
+        </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block modal %}
+
+{% endblock %}
+
+
+
+
+
+{% block js %}
+<script type="text/javascript">
+</script>
+
+{% endblock %}
+
+

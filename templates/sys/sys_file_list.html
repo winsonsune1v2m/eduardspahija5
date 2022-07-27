@@ -1,0 +1,95 @@
+<ul class="list-group" >
+    {% for i in dir_list %}
+
+        {% if i == "dir_reply" %}
+            <li class="list-group-item">
+                <a href="/sys/chdir/{{ ip }}/{{ i }}/" style="text-decoration: none">
+                    <i class="fa fa-refresh" style="color: #f59e1c"></i>
+                    <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>刷新</b></span>
+                </a>
+            </li>
+
+        {% elif i == "dir_reback" %}
+            <li class="list-group-item">
+                <a href="/sys/chdir/{{ ip }}/{{ i }}/" style="text-decoration: none">
+                    <i class="fa fa-reply " style="color: #f59e1c"></i>
+                    <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>返回</b></span>
+                </a>
+            </li>
+        {% else %}
+            <li class="list-group-item">
+                <a href="/sys/chdir/{{ ip }}/{{ i }}/" style="text-decoration: none">
+                    <i class="fa fa-folder-open " style="color: #f59e1c"></i>
+                    <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>{{ i }}</b></span>
+                </a>
+            </li>
+
+        {% endif %}
+
+    {% endfor %}
+
+    {% for i in file_list %}
+    <li class="list-group-item">
+        <a href="javascript:;" style="text-decoration: none" name="file-name" filename="{{ i }}">
+            <i class="fa fa-file" style="color: #85af04"></i>
+            <span style="color: #20B320;word-wrap:break-word;word-break:break-all;"><b>{{ i }}</b></span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+
+<script type="application/javascript">
+
+$("a[name='file-name']").click(function () {
+    var filename=$(this).attr('filename');
+    $("#down-file").val(filename);
+    $('#btn-remove').attr('filename',filename);
+    $('#btn-downfile').attr('filename',filename);
+});
+
+
+$('#btn-remove').click(function(){
+    var formData = new FormData();
+    var filename=$(this).attr('filename');
+    formData.append("filename", filename);
+    if(filename){
+        $.ajax({
+             url: "/sys/removefile/",
+             type: "POST",
+             processData: false,
+             contentType: false,
+             data: formData,
+             success: function(msg) {
+                alert(msg)
+             }
+        });
+    }else{
+        alert("文件不能为空")
+    }
+
+});
+
+$('#btn-downfile').click(function(){
+    var formData = new FormData();
+    var filename=$(this).attr('filename');
+    formData.append("filename", filename);
+    if(filename){
+        $.ajax({
+             url: "/sys/downfile/",
+             type: "POST",
+             processData: false,
+             contentType: false,
+             data: formData,
+             success: function(msg) {
+                 window.location.href=msg
+
+             }
+        });
+    }else{
+        alert("文件不能为空")
+    }
+});
+
+</script>
+

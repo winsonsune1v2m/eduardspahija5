@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from app_asset import models as asset_db
 from app_auth.views import login_check,perms_check
-from mtrops_v2.settings import WEBSSH_URL,REDIS_INFO,SALT_API,BASE_DIR,MTROPS_HOST,PHPMYADMIN_URL,REDIS_INFO
+from mtrops_v2.settings import WEBSSH_URL,REDIS_INFO,BASE_DIR,MTROPS_HOST,PHPMYADMIN_URL,REDIS_INFO
 from statics.scripts import encryption,salt_api
 from django.db.models import Q
 
@@ -57,7 +57,7 @@ class WebSSH(View):
         except:
             cur_host = "远程管理用户未配置，无法认证！"
 
-        return render(request,'tool_webssh.html',locals())
+        return render(request, 'tool/tool_webssh.html', locals())
 
 
     def post(self,request):
@@ -205,7 +205,7 @@ class PhpMyadmin(View):
             mysql_passwd = ""
             mysql_port = ""
 
-        return render(request,'tool_phpmyadmin.html',locals())
+        return render(request, 'tool/tool_phpmyadmin.html', locals())
 
     def post(self,request):
         r = redis.Redis(host=REDIS_INFO['host'], port=REDIS_INFO['port'])

@@ -31,10 +31,10 @@ def send_message(url,token, data):
 if __name__ == '__main__':
     msg = 'test'
     sendto='LiZuXiang'
-    corpid = 'ww99fb5fb904db79e3'
-    corpsecret = 'RKBH0ehGX_ef9DuKoc2rwbqCm9Xa3JZ1Q7TnUFznKBQ'
+    corpid = 'ww99f*************79e3'
+    corpsecret = 'RKBH0ehG*************TnUFznKBQ'
     url = 'https://qyapi.weixin.qq.com'
-    msg = 'ID:1347084470'
+    msg = 'ID:13******470'
 
     test_token = get_token(url, corpid, corpsecret)
     msg_data = params(msg,sendto)

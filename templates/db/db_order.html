@@ -1,0 +1,216 @@
+﻿{% extends "base.html" %}
+
+{% block css %}
+<!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+-->
+<script src="/static/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/ace/language_tools.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/ace/theme-clouds.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/ace/theme-chrome.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/ace/mode-mysql.js" type="text/javascript" charset="utf-8"></script>
+<style>
+
+</style>
+
+{% endblock %}
+
+{% block center %}
+
+<!--头部导航-->
+<div class="panel panel-default center-top" style="min-width:1300px;margin-top:20px;" >
+  <div class="panel-body">
+    <ol class="breadcrumb" style="margin-bottom: 0px;background-color: #FFFFFF;">
+      <li><a href="/" style="color: #377CD8;">首页</a></li>
+      <li><a href="#">数据库管理</a></li>
+      <li class="active">{{ title }}</li>
+    </ol>
+  </div>
+</div>
+
+
+<!--用户信息-->
+<div class="panel panel-default center-top" style="min-width:1300px;">
+  <div class="panel-heading"></div>
+  <div class="panel-body" id="dblist-info">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">创建工单</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <lable> <span style="color: red"> * </span> 数据库</lable>
+                    <select type="text" class="form-control" id="select-db">
+                        <option disabled="disabled" selected style="color:#ddd">选择数据库</option>
+                        {% for  db in db_obj %}
+                        <option value="{{ db.id }}">{{ db.db_env }} | {{ db.db_host.host_ip }} | {{ db.db_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <lable> <span style="color: red"> * </span>  SQL语句</lable>
+                    <!--代码输入框（注意请务必设置高度，否则无法显示）-->
+                    <pre id="code" class="ace_editor" style="min-height:270px"><textarea class="ace_text-input" id="sql"></textarea></pre>
+                </div>
+                <div class="form-group">
+                    <lable>备注</lable>
+                    <textarea class="form-control" id="msg"></textarea>
+                </div>
+                <div class="form-group">
+                    <lable> <span style="color: red"> * </span> 工单核准人</lable>
+                    <select type="text" class="form-control" id="review-user">
+                        {% for  user in user_obj %}
+                        <option value="{{ user.id }}">{{ user.ready_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <lable>操作：</lable>
+                    <button class="btn btn-info" id="check-sql">Inception检查</button>
+                    <button class="btn btn-success" style="margin-left: 50px;" id="check-soar">SOAR检查</button>
+                    <button class="btn btn-primary" style="margin-left: 50px;" id="sub-work">提交工单</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel  panel-default">
+            <div class="panel-heading">检查结果</div>
+            <div class="panel-body" style="height: 610px;overflow: auto" id="check-result">
+
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+<!-- Modal -->
+{% block modal %}
+
+{% endblock  %}
+
+{% block js %}
+
+<script type="text/javascript" src="/static/js/db_v3.js"></script>
+
+<script type="text/javascript">
+//初始化对象
+editor = ace.edit("code");
+
+//设置风格和语言（更多风格和语言，请到github上相应目录查看）
+theme = "chrome";
+language = "mysql";
+editor.setTheme("ace/theme/" + theme);
+editor.session.setMode("ace/mode/" + language);
+
+//字体大小
+editor.setFontSize(18);
+
+//设置只读（true时只读，用于展示代码）
+editor.setReadOnly(false);
+
+//自动换行,设置为off关闭
+editor.setOption("wrap", "free");
+
+//启用提示菜单
+ace.require("ace/ext/language_tools");
+editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+});
+
+
+$("#check-sql").click(function () {
+    var db_id = $("#select-db").val();
+    var sql = editor.getValue();
+    if(sql&&db_id){
+        $.post("/db/order/",{'db_id':db_id,"action":"check_sql","sql":sql},function (data) {
+        var head_html = `
+        <table class="table table-hover table-bordered">
+            <thead id="table-head">
+                <tr style="background-color: #f5f5f5; text-align:center">
+                  <th>ID</th>
+                  <th>SQL</th>
+                  <th>ERRORLEVEL</th>
+                  <th>ERRORMSG</th>
+                </tr>
+            </thead>
+            <tbody>
+            `;
+            var info = eval('('+data+')');
+
+            if(typeof(info)=='object'){
+                var body_html ="";
+                for(i=1;i<info.length;i++){
+                    body_html += '<tr><td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">'+i+'</td><td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">'+info[i].SQL+'</td><td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">'+info[i].errlevel+'</td><td style="text-align: left;text-overflow: ellipsis;vertical-align: middle;">'+info[i].errormessage+'</td></tr>';
+                    }
+                var table_html = head_html+body_html+'</tbody></table>'
+                $("#check-result").empty();
+                $("#check-result").append(table_html);
+            }else{
+                $("#check-result").empty();
+                $("#check-result").append(data);
+            }
+        })
+
+    }else{
+        alert("数据库或SQL语句不能为空！");
+    }
+});
+
+
+
+$("#check-soar").click(function () {
+    var db_id = $("#select-db").val();
+    var sql = editor.getValue();
+    if(sql&&db_id){
+        $.post("/db/order/",{'db_id':db_id,"action":"check_soar","sql":sql},function (data) {
+            var info = eval('('+data+')');
+            if(typeof(info)=='object'){
+                var body_html ="";
+                for(i=0;i<info.length;i++){
+                    console.log(i);
+                   body_html += '<pre>' +info[i].sql+"  \n\n"+info[i].soar_log+'</pre>';
+                    }
+                $("#check-result").empty();
+                $("#check-result").append(body_html);
+            }else{
+                $("#check-result").empty();
+                $("#check-result").append(data);
+            }
+        })
+
+    }else{
+        alert("数据库或SQL语句不能为空！");
+    }
+});
+
+$("#sub-work").click(function () {
+    var db_id = $("#select-db").val();
+    var sql = editor.getValue();
+    var msg = $("#msg").val();
+    var review_user_id = $("#review-user").val();
+    if(sql&&db_id){
+        $.post("/db/order/",{'db_id':db_id,"sql":sql,"review_user_id":review_user_id,"msg":msg},function (data) {
+            if(data=="perms_false"){
+                $("#msg-alert").empty();
+                $("#msg-alert").append("权限不足，请联系管理员");
+                $("#alert").show();
+            }else{
+                $("#msg-alert").empty();
+                $("#msg-alert").append(data);
+                $("#alert").show();
+            }
+        })
+    } else{
+        alert("数据库或SQL语句不能为空!");
+    }
+});
+
+</script>
+{% endblock %}
+
+

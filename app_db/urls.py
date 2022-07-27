@@ -17,7 +17,6 @@ Including another URLconf
 from app_db import views
 from django.urls import path,include
 
-
 urlpatterns = [
     path("list/",views.DBList.as_view()),
     path("inc/",views.Inception.as_view()),

@@ -15,13 +15,13 @@ Including another URLconf
 """
 
 from app_auth.views import Index
-from django.contrib import admin
 from django.urls import path,include
+from django.views.decorators.cache import cache_page
 
 
 
 urlpatterns = [
-    path("",Index.as_view()),
+    path("",cache_page(30)(Index.as_view())),
     path("auth/",include("app_auth.urls")),
     path("asset/",include("app_asset.urls")),
     path("code/",include("app_code.urls")),

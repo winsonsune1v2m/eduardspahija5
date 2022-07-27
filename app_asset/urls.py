@@ -16,12 +16,13 @@ Including another URLconf
 
 from app_asset import views
 from django.urls import path,include
-
+from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     path("idc/",views.IDC.as_view()),
     path("hostgroup/",views.HostGroup.as_view()),
-    path("host/", views.Host.as_view()),
+    path("host/", cache_page(60)(views.Host.as_view())),
+    path("host/<int:page>/", views.Host.as_view()),
     path("netwk/", views.Netwk.as_view()),
     path("supplier/", views.Supplier.as_view()),
     path("hostdetail/<int:id>/", views.host_detail),
