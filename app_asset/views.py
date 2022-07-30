@@ -4,7 +4,7 @@ import json
 import os
 import redis
 from statics.scripts import encryption,read_excel
-from mtrops_v2.settings import SECRET_KEY,BASE_DIR,DATABASES
+from saltops_v2.settings import SECRET_KEY,BASE_DIR,DATABASES
 from django.shortcuts import render,HttpResponse,redirect
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -13,7 +13,7 @@ from app_asset import models as asset_db
 from app_auth import models as auth_db
 from app_log import models as log_db
 from app_auth.views import login_check,perms_check
-from mtrops_v2.settings import SERVER_TAG,ANSIBLE_USER,WEBSSH_URL,REDIS_INFO
+from saltops_v2.settings import SERVER_TAG,ANSIBLE_USER,WEBSSH_URL,REDIS_INFO
 from django.db.models import Q
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter

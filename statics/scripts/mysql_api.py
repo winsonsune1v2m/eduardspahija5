@@ -36,7 +36,7 @@ if __name__ == "__main__":
     db_port = 3306
     db_user = "root"
     db_passwd = "mysql"
-    db_name = "mtrops_v2"
+    db_name = "saltops_v2"
     sql ="show databases"
     result = connet(host_ip, db_port, db_user, db_passwd, db_name,sql)
     print(result)

@@ -35,7 +35,7 @@ if __name__ == "__main__":
     db_port = 3306
     db_user = "root"
     db_passwd = "mysql"
-    db_name = "mtrops_v2"
+    db_name = "saltops_v2"
     sql ="SELECT host_ip,host_remove_port from app_asset_host A,app_asset_hostdetail B WHERE A.id=B.host_id and  B.os_type='Linux'"
     result = connet(host_ip, db_port, db_user, db_passwd, db_name,sql)
     F = open("/etc/ansible/hosts","w")

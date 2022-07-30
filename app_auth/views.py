@@ -2,7 +2,7 @@ import datetime
 import json,re,time
 import redis,pymysql
 from statics.scripts import encryption
-from mtrops_v2.settings import SECRET_KEY,DATABASES,REDIS_INFO
+from saltops_v2.settings import SECRET_KEY,DATABASES,REDIS_INFO
 from django.views import View
 from django.shortcuts import render,HttpResponse,redirect,render_to_response
 from app_auth import models as auth_db
@@ -17,7 +17,7 @@ from django.db.models import Q
 from app_auth.perms_control import menus_list,perms_list
 from django.contrib.sessions.models import Session
 from celery.result import AsyncResult
-from mtrops_v2 import celery_app as app
+from saltops_v2 import celery_app as app
 from django.views.decorators.cache import cache_page
 
 # Create your views here.

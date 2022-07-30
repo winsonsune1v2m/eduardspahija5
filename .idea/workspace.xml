@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2d9d8cc-c328-49dc-b9d1-69d5707d41a6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app_asset/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_asset/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="a2d9d8cc-c328-49dc-b9d1-69d5707d41a6" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/asset/asset_host_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
+            <state relative-caret-position="450">
               <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
             </state>
           </provider>
@@ -36,7 +34,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_auth/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4715">
+            <state relative-caret-position="5125">
               <caret line="225" selection-start-line="225" selection-end-line="225" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -48,7 +46,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3013">
+            <state relative-caret-position="3275">
               <caret line="131" column="52" selection-start-line="131" selection-start-column="52" selection-end-line="131" selection-end-column="52" />
             </state>
           </provider>
@@ -57,7 +55,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_auth/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="851">
+            <state relative-caret-position="925">
               <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
               <folding>
                 <element signature="e#634#660#0" expanded="true" />
@@ -69,7 +67,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
+            <state relative-caret-position="425">
               <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="e#634#659#0" expanded="true" />
@@ -93,7 +91,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mtrops_v2/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
+            <state relative-caret-position="500">
               <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
               <folding>
                 <element signature="e#634#666#0" expanded="true" />
@@ -105,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_asset/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
+            <state relative-caret-position="525">
               <caret line="23" column="54" selection-start-line="23" selection-start-column="54" selection-end-line="23" selection-end-column="54" />
               <folding>
                 <element signature="e#634#661#0" expanded="true" />
@@ -117,7 +115,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1150">
+            <state relative-caret-position="1250">
               <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
             </state>
           </provider>
@@ -222,13 +220,13 @@
         <subPane>
           <expand>
             <path>
-              <item name="mtrop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrop" type="462c0819:PsiDirectoryNode" />
+              <item name="saltops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saltops_v2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="mtrop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mtrop" type="462c0819:PsiDirectoryNode" />
-              <item name="app_asset" type="462c0819:PsiDirectoryNode" />
+              <item name="saltops_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saltops_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="mtrops_v2" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -266,7 +264,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.runserver">
+  <component name="RunManager" selected="Django server.saltops_v2">
     <configuration name="ansible_api" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="mtrop" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -422,6 +420,29 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="saltops_v2" type="Python.DjangoServer" factoryName="Django server">
+      <module name="saltops_v2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Django server.mtrop" />
       <item itemvalue="Python.migrate" />
@@ -430,6 +451,7 @@
       <item itemvalue="Python.git_clone" />
       <item itemvalue="Python.ansible_api" />
       <item itemvalue="Python.page" />
+      <item itemvalue="Django server.saltops_v2" />
     </list>
     <recent_temporary>
       <list>
@@ -463,6 +485,7 @@
       <workItem from="1548490217650" duration="140000" />
       <workItem from="1548552617063" duration="834000" />
       <workItem from="1548570677233" duration="7000" />
+      <workItem from="1569377764627" duration="45000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1547773322454</created>
@@ -699,16 +722,16 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91920000" />
+    <option name="totallyTimeSpent" value="91965000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13432837" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13539445" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.35969663" />
-      <window_info anchor="bottom" id="Docker" order="1" weight="0.32936078" />
+      <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" weight="0.32936078" />
       <window_info anchor="bottom" id="Database Changes" order="2" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.53846157" />
       <window_info anchor="bottom" id="Python Console" order="4" weight="0.32936078" />
@@ -1039,14 +1062,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/asset/asset_host_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
+        <state relative-caret-position="450">
           <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app_auth/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4715">
+        <state relative-caret-position="5125">
           <caret line="225" selection-start-line="225" selection-end-line="225" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -1056,14 +1079,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3013">
+        <state relative-caret-position="3275">
           <caret line="131" column="52" selection-start-line="131" selection-start-column="52" selection-end-line="131" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app_auth/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="851">
+        <state relative-caret-position="925">
           <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
           <folding>
             <element signature="e#634#660#0" expanded="true" />
@@ -1073,7 +1096,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_sys/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
+        <state relative-caret-position="425">
           <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#634#659#0" expanded="true" />
@@ -1083,7 +1106,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mtrops_v2/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
+        <state relative-caret-position="500">
           <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
           <folding>
             <element signature="e#634#666#0" expanded="true" />
@@ -1093,7 +1116,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app_asset/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
+        <state relative-caret-position="525">
           <caret line="23" column="54" selection-start-line="23" selection-start-column="54" selection-end-line="23" selection-end-column="54" />
           <folding>
             <element signature="e#634#661#0" expanded="true" />
@@ -1103,7 +1126,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mtrops_v2/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1150">
+        <state relative-caret-position="1250">
           <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
         </state>
       </provider>

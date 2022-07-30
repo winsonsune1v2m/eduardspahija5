@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from app_auth.views import login_check,perms_check
 from app_log import models as log_db
 from app_auth import  models as auth_db
-from mtrops_v2 import celery_app as app
+from saltops_v2 import celery_app as app
 from celery.result import AsyncResult
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from statics.scripts import page as pg

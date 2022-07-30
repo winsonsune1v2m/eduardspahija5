@@ -5,7 +5,7 @@
  Source Server Type    : MySQL
  Source Server Version : 50640
  Source Host           : 127.0.0.1:3306
- Source Schema         : mtrops_v2
+ Source Schema         : saltops_v2
 
  Target Server Type    : MySQL
  Target Server Version : 50640

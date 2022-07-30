@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from app_asset import models as asset_db
 from app_auth.views import login_check,perms_check
-from mtrops_v2.settings import WEBSSH_URL,REDIS_INFO,BASE_DIR,MTROPS_HOST,PHPMYADMIN_URL,REDIS_INFO
+from saltops_v2.settings import WEBSSH_URL,REDIS_INFO,BASE_DIR,MTROPS_HOST,PHPMYADMIN_URL,REDIS_INFO
 from statics.scripts import encryption,salt_api
 from django.db.models import Q
 

@@ -12,7 +12,7 @@ from app_auth import models as auth_db
 from app_log import models as log_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
-from mtrops_v2.settings import BASE_DIR,MTROPS_HOST,ANSIBLE_USER
+from saltops_v2.settings import BASE_DIR,MTROPS_HOST,ANSIBLE_USER
 from statics.scripts import ansible_api
 from app_sys.tasks import install_server
 

@@ -14,8 +14,8 @@ from app_log import models as log_db
 from app_auth.views import login_check,perms_check
 from django.db.models import Q
 from statics.scripts import ansible_api,sendwx,recdn
-from mtrops_v2.settings import SECRET_KEY,CODE_RUNAS,ANSIBLE_USER,BASE_DIR,WCHART_CORPID,WCHART_CORPSECRET,WCHART_ADMIN_UDSER,WCHART_URL,ALLOWED_HOSTS
-from mtrops_v2.settings import MTR_ACCESS_KEY_ID,MTR_ACCESS_KEY_SECRET,MTY_ACCESS_KEY_ID,MTY_ACCESS_KEY_SECRET,REGION_ID,LANGUAGE_LIST
+from saltops_v2.settings import SECRET_KEY,CODE_RUNAS,ANSIBLE_USER,BASE_DIR,WCHART_CORPID,WCHART_CORPSECRET,WCHART_ADMIN_UDSER,WCHART_URL,ALLOWED_HOSTS
+from saltops_v2.settings import MTR_ACCESS_KEY_ID,MTR_ACCESS_KEY_SECRET,MTY_ACCESS_KEY_ID,MTY_ACCESS_KEY_SECRET,REGION_ID,LANGUAGE_LIST
 from app_code.tasks import code_clone
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from statics.scripts import page as pg

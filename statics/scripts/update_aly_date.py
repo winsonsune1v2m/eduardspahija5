@@ -15,4 +15,4 @@ wms_data = conn.get('wms_ecs')
 mty_data = conn.get('mty_ecs')
 for i in json.loads(mtr_data)+json.loads(wms_data)+json.loads(mty_data):
     sql ="update app_asset_host set overdue_date='%s' where host_ip='%s'" % (i["exp_date"].split()[0],i["{#IP}"])
-    ret = connet("192.168.1.126", 3306, 'root', 'mysql', 'mtrops_v2', sql)
+    ret = connet("192.168.1.126", 3306, 'root', 'mysql', 'saltops_v2', sql)

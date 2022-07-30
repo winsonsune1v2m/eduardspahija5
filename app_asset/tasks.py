@@ -1,9 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 from statics.scripts import get_host,get_sofeware
-from mtrops_v2 import celery_app
+from saltops_v2 import celery_app
 from celery import shared_task
 import json
-from mtrops_v2.settings import SERVER_TAG
+from saltops_v2.settings import SERVER_TAG
 from app_asset import models  as asset_db
 from django.db.models import Q
 from multiprocessing import current_process

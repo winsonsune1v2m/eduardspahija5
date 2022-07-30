@@ -10,7 +10,7 @@ from app_auth import models as auth_db
 from app_asset import models as asset_db
 from django.db.models import Q
 from statics.scripts import sql_test_con,encryption,inception
-from mtrops_v2.settings import SECRET_KEY,BACKDB_PASSWD,MTROPS_HOST,ANSIBLE_USER
+from saltops_v2.settings import SECRET_KEY,BACKDB_PASSWD,MTROPS_HOST,ANSIBLE_USER
 import pymysql
 from binlog2sql.binlog2sql.binlog2sql import Binlog2sql
 from binlog2sql.binlog2sql.binlog2sql_util import command_line_args
