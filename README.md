@@ -21,9 +21,6 @@ rabbitmq，redis，saltstack，mysql
 
 #### 部分功能展示
 ![首页](https://images.gitee.com/uploads/images/2018/1031/112915_405e7bda_578265.png "屏幕截图.png")
-![资产](https://images.gitee.com/uploads/images/2018/1024/151715_ce095ddc_578265.png "屏幕截图.png")
-![代码发布](https://images.gitee.com/uploads/images/2018/1024/151741_87974a28_578265.png "屏幕截图.png")
-![批量管理](https://images.gitee.com/uploads/images/2018/1024/151823_291149ed_578265.png "屏幕截图.png")
 ![操作审计](https://images.gitee.com/uploads/images/2018/1024/151849_9a76790a_578265.png "屏幕截图.png")
 ![任务中心](https://images.gitee.com/uploads/images/2018/1029/172124_e1ab2a5c_578265.png "屏幕截图.png")
 ![授权管理](https://images.gitee.com/uploads/images/2018/1024/151935_5bfdc353_578265.png "屏幕截图.png")
